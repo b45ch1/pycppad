@@ -18,6 +18,7 @@ namespace nu = num_util;
 typedef CppAD::AD<double> AD_double;
 typedef CppAD::vector<double> vector_double;
 typedef CppAD::VecAD<double> VecAD_double;
+typedef CppAD::AD<CppAD::AD<double> > ADD_double;
 typedef CppAD::vector<CppAD::AD<double> > vector_AD_double;
 typedef CppAD::VecAD< CppAD::AD<double> > VecAD_ADdouble;
 
