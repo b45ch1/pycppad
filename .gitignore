@@ -18,6 +18,7 @@ include/*
 *.dot
 *.o
 *.so
+*.os
 *.eps
 *~
 

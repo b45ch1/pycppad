@@ -6,7 +6,6 @@
 
 #include "cppad/cppad.hpp"
 
-
 using namespace std;
 namespace b = boost;
 namespace bp = boost::python;
@@ -31,6 +30,13 @@ typedef CppAD::ADFun<double> ADFun_double;
 typedef CppAD::ADFun<CppAD::AD<double> > ADFun_AD_double;
 typedef CppAD::ADFun<CppAD::AD<CppAD::AD<double> > > ADFun_ADD_double;
 
+
+/* operators */
+AD_double *AD_double_mul_AD_double_AD_double(const AD_double &lhs, const AD_double &rhs){	return new AD_double(CppAD::operator*(lhs,rhs));}
+
+
+
+
 BOOST_PYTHON_MODULE(_cppad)
 {
 	using namespace boost::python;
@@ -40,11 +46,14 @@ BOOST_PYTHON_MODULE(_cppad)
 	scope().attr("__doc__") =" CppAD: docstring \n\
 							   next line";
 
-	class_<AD_double>("AD_double");
-	class_<VecAD_double>("VecAD_double");
-
 	def("Independent",		CppAD::Independent<vector_AD_double>);
 	def("Independent",		CppAD::Independent<vector_ADD_double>);
+		
+	class_<AD_double>("AD_double")
+		.def("__mul__", AD_double_mul_AD_double_AD_double, return_value_policy<manage_new_object>())
+	;
+	class_<VecAD_double>("VecAD_double");
+
 }
 
 #endif
