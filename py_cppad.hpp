@@ -49,7 +49,8 @@ BOOST_PYTHON_MODULE(_cppad)
 	def("Independent",		CppAD::Independent<vector_AD_double>);
 	def("Independent",		CppAD::Independent<vector_ADD_double>);
 		
-	class_<AD_double>("AD_double")
+	class_<AD_double>("AD_double", init<double>())
+		.def(boost::python::self_ns::str(self))
 		.def("__mul__", AD_double_mul_AD_double_AD_double, return_value_policy<manage_new_object>())
 	;
 	class_<VecAD_double>("VecAD_double");
