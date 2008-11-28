@@ -1,0 +1,240 @@
+<html><head>
+<title>OdeGearControl: Example and Test</title>
+<meta name="description" id="description" content="OdeGearControl: Example and Test">
+<meta name="keywords" id="keywords" content=" Odegearcontrol example test ">
+<style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+<script type='text/javascript' language='JavaScript' src='_odegearcontrol.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://www.coin-or.org/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>library</option>
+<option>OdeGearControl</option>
+<option>OdeGearControl.cpp</option>
+</select>
+</td>
+<td><a href="odegearcontrol.htm" target="_top">Prev</a>
+</td><td><a href="benderquad.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>library</option>
+<option>preprocessor</option>
+<option>Example</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>library-&gt;</option>
+<option>ErrorHandler</option>
+<option>NearEqual</option>
+<option>speed_test</option>
+<option>SpeedTest</option>
+<option>NumericType</option>
+<option>CheckNumericType</option>
+<option>SimpleVector</option>
+<option>CheckSimpleVector</option>
+<option>nan</option>
+<option>pow_int</option>
+<option>Poly</option>
+<option>LuDetAndSolve</option>
+<option>RombergOne</option>
+<option>RombergMul</option>
+<option>Runge45</option>
+<option>Rosen34</option>
+<option>OdeErrControl</option>
+<option>OdeGear</option>
+<option>OdeGearControl</option>
+<option>BenderQuad</option>
+<option>LuRatio</option>
+<option>std_math_unary</option>
+<option>CppAD_vector</option>
+<option>TrackNewDel</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>OdeGearControl-&gt;</option>
+<option>OdeGearControl.cpp</option>
+</select>
+</td>
+<td>OdeGearControl.cpp</td>
+<td>Headings</td>
+</tr></table><br>
+
+
+
+<center><b><big><big>OdeGearControl: Example and Test</big></big></b></center>
+Define 
+<code>
+<span style='white-space: nowrap'>&nbsp;X&nbsp;:&nbsp;\R&nbsp;\rightarrow&nbsp;\R^2</span></code>
+ by
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+X_0&nbsp;(t)&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;&nbsp;-&nbsp;\exp&nbsp;(&nbsp;-&nbsp;w_0&nbsp;t&nbsp;)&nbsp;&nbsp;\\<br>
+X_1&nbsp;(t)&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;\frac{w_0}{w_1&nbsp;-&nbsp;w_0}&nbsp;[&nbsp;\exp&nbsp;(&nbsp;-&nbsp;w_0&nbsp;t&nbsp;)&nbsp;-&nbsp;\exp(&nbsp;-&nbsp;w_1&nbsp;t&nbsp;)]<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+It follows that <code>
+<span style='white-space: nowrap'>&nbsp;X_0&nbsp;(0)&nbsp;=&nbsp;1</span></code>
+, <code>
+<span style='white-space: nowrap'>&nbsp;X_1&nbsp;(0)&nbsp;=&nbsp;0</span></code>
+ and
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X_0^{(1)}&nbsp;(t)&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;-&nbsp;w_0&nbsp;X_0&nbsp;(t)&nbsp;&nbsp;\\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X_1^{(1)}&nbsp;(t)&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;+&nbsp;w_0&nbsp;X_0&nbsp;(t)&nbsp;-&nbsp;w_1&nbsp;X_1&nbsp;(t)&nbsp;<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+The example tests OdeGearControl using the relations above:
+
+<code><font color="blue">
+<pre style='display:inline'>
+
+# include &lt;cppad/cppad.hpp&gt;
+# include &lt;cppad/ode_gear_control.hpp&gt;   // CppAD::OdeGearControl
+
+namespace {
+	// --------------------------------------------------------------
+	class Fun {
+	private:
+		 CPPAD_TEST_VECTOR&lt;double&gt; w;
+	public:
+		// constructor
+		Fun(const CPPAD_TEST_VECTOR&lt;double&gt; &amp;w_) : w(w_)
+		{ } 
+
+		// set f = x'(t)
+		template &lt;typename Scalar&gt;
+		void Ode(
+			const Scalar                    &amp;t, 
+			const CPPAD_TEST_VECTOR&lt;Scalar&gt; &amp;x, 
+			CPPAD_TEST_VECTOR&lt;Scalar&gt;       &amp;f)
+		{	f[0] = - w[0] * x[0];
+			f[1] = + w[0] * x[0] - w[1] * x[1];	
+		}
+
+		void Ode_dep(
+			const double                    &amp;t, 
+			const CPPAD_TEST_VECTOR&lt;double&gt; &amp;x, 
+			CPPAD_TEST_VECTOR&lt;double&gt;       &amp;f_x)
+		{	using namespace CppAD;
+
+			size_t n  = x.size();	
+			CPPAD_TEST_VECTOR&lt; AD&lt;double&gt; &gt; T(1);
+			CPPAD_TEST_VECTOR&lt; AD&lt;double&gt; &gt; X(n);
+			CPPAD_TEST_VECTOR&lt; AD&lt;double&gt; &gt; F(n);
+
+			// set argument values
+			T[0] = t;
+			size_t i, j;
+			for(i = 0; i &lt; n; i++)
+				X[i] = x[i];
+
+			// declare independent variables
+			Independent(X);
+
+			// compute f(t, x)
+			this-&gt;Ode(T[0], X, F);
+
+			// define AD function object
+			ADFun&lt;double&gt; Fun(X, F);
+
+			// compute partial of f w.r.t x
+			CPPAD_TEST_VECTOR&lt;double&gt; dx(n);
+			CPPAD_TEST_VECTOR&lt;double&gt; df(n);
+			for(j = 0; j &lt; n; j++)
+				dx[j] = 0.;
+			for(j = 0; j &lt; n; j++)
+			{	dx[j] = 1.;
+				df = Fun.Forward(1, dx);
+				for(i = 0; i &lt; n; i++)
+					f_x [i * n + j] = df[i];
+				dx[j] = 0.;
+			}
+		}
+	};
+}
+
+bool OdeGearControl(void)
+{	bool ok = true;     // initial return value
+
+	CPPAD_TEST_VECTOR&lt;double&gt; w(2);
+	w[0] = 10.;
+	w[1] = 1.;
+	Fun F(w);
+
+	CPPAD_TEST_VECTOR&lt;double&gt; xi(2);
+	xi[0] = 1.;
+	xi[1] = 0.;
+
+	CPPAD_TEST_VECTOR&lt;double&gt; eabs(2);
+	eabs[0] = 1e-4;
+	eabs[1] = 1e-4;
+
+	// return values
+	CPPAD_TEST_VECTOR&lt;double&gt; ef(2);
+	CPPAD_TEST_VECTOR&lt;double&gt; maxabs(2);
+	CPPAD_TEST_VECTOR&lt;double&gt; xf(2);
+	size_t                nstep;
+
+	// input values
+	size_t  M   = 5;
+	double ti   = 0.;
+	double tf   = 1.;
+	double smin = 1e-8;
+	double smax = 1.;
+	double sini = 1e-10;
+	double erel = 0.;
+	
+	xf = CppAD::OdeGearControl(F, M,
+		ti, tf, xi, smin, smax, sini, eabs, erel, ef, maxabs, nstep);
+
+	double x0 = exp(-w[0]*tf);
+	ok &amp;= CppAD::NearEqual(x0, xf[0], 1e-4, 1e-4);
+	ok &amp;= CppAD::NearEqual(0., ef[0], 1e-4, 1e-4);
+
+	double x1 = w[0] * (exp(-w[0]*tf) - exp(-w[1]*tf))/(w[1] - w[0]);
+	ok &amp;= CppAD::NearEqual(x1, xf[1], 1e-4, 1e-4);
+	ok &amp;= CppAD::NearEqual(0., ef[1], 1e-4, 1e-4);
+
+	return ok;
+}
+
+</pre>
+</font></code>
+
+
+<hr>Input File: example/ode_gear_control.cpp
+
+</body>
+</html>

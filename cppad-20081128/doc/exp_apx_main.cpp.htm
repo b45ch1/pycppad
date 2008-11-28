@@ -1,0 +1,139 @@
+<html><head>
+<title>Run the exp_2 and exp_eps Tests</title>
+<meta name="description" id="description" content="Run the exp_2 and exp_eps Tests">
+<meta name="keywords" id="keywords" content=" exp_apx main test run ">
+<style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+<script type='text/javascript' language='JavaScript' src='_exp_apx_main.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://www.coin-or.org/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Introduction</option>
+<option>exp_apx_main.cpp</option>
+</select>
+</td>
+<td><a href="exp_eps_cppad.htm" target="_top">Prev</a>
+</td><td><a href="ad.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>library</option>
+<option>preprocessor</option>
+<option>Example</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Introduction-&gt;</option>
+<option>get_started.cpp</option>
+<option>exp_2</option>
+<option>exp_eps</option>
+<option>exp_apx_main.cpp</option>
+</select>
+</td>
+<td>exp_apx_main.cpp</td>
+<td>Headings</td>
+</tr></table><br>
+
+
+
+<center><b><big><big>Run the exp_2 and exp_eps Tests</big></big></b></center>
+<code><font color="blue"><pre style='display:inline'>// system include files used for I/O
+# include &lt;iostream&gt;
+
+// external complied tests
+extern bool exp_2(void);
+extern bool exp_2_cppad(void);
+extern bool exp_2_for1(void);
+extern bool exp_2_for2(void);
+extern bool exp_2_rev1(void);
+extern bool exp_2_rev2(void);
+extern bool exp_2_for0(void);
+extern bool exp_eps(void);
+extern bool exp_eps_cppad(void);
+extern bool exp_eps_for1(void);
+extern bool exp_eps_for2(void);
+extern bool exp_eps_for0(void);
+extern bool exp_eps_rev1(void);
+extern bool exp_eps_rev2(void);
+
+namespace {
+	// function that runs one test
+	static size_t Run_ok_count    = 0;
+	static size_t Run_error_count = 0;
+	bool Run(bool TestOk(void), const char *name)
+	{	bool ok = true;
+		ok &amp;= TestOk();
+		if( ok )
+		{	std::cout &lt;&lt; &quot;Ok:    &quot; &lt;&lt; name &lt;&lt; std::endl;
+			Run_ok_count++;
+		}
+		else
+		{	std::cout &lt;&lt; &quot;Error: &quot; &lt;&lt; name &lt;&lt; std::endl;
+			Run_error_count++;
+		}
+		return ok;
+	}
+}
+
+// main program that runs all the tests
+int main(void)
+{	bool ok = true;
+	using namespace std;
+
+	// This comment is used by OneTest 
+
+	// external compiled tests
+	ok &amp;= Run( exp_2,           &quot;exp_2&quot;          );
+	ok &amp;= Run( exp_2_cppad,     &quot;exp_2_cppad&quot;    );
+	ok &amp;= Run( exp_2_for0,      &quot;exp_2_for0&quot;     );
+	ok &amp;= Run( exp_2_for1,      &quot;exp_2_for1&quot;     );
+	ok &amp;= Run( exp_2_for2,      &quot;exp_2_for2&quot;     );
+	ok &amp;= Run( exp_2_rev1,      &quot;exp_2_rev1&quot;     );
+	ok &amp;= Run( exp_2_rev2,      &quot;exp_2_rev2&quot;     );
+	ok &amp;= Run( exp_eps,         &quot;exp_eps&quot;        );
+	ok &amp;= Run( exp_eps_cppad,   &quot;exp_eps_cppad&quot;  );
+	ok &amp;= Run( exp_eps_for0,    &quot;exp_eps_for0&quot;   );
+	ok &amp;= Run( exp_eps_for1,    &quot;exp_eps_for1&quot;   );
+	ok &amp;= Run( exp_eps_for2,    &quot;exp_eps_for2&quot;   );
+	ok &amp;= Run( exp_eps_rev1,    &quot;exp_eps_rev1&quot;   );
+	ok &amp;= Run( exp_eps_rev2,    &quot;exp_eps_rev2&quot;   );
+	if( ok )
+		cout &lt;&lt; &quot;All &quot; &lt;&lt; int(Run_ok_count) &lt;&lt; &quot; tests passed.&quot; &lt;&lt; endl;
+	else	cout &lt;&lt; int(Run_error_count) &lt;&lt; &quot; tests failed.&quot; &lt;&lt; endl;
+
+	return static_cast&lt;int&gt;( ! ok );
+}
+</pre>
+</font></code>
+
+
+<hr>Input File: introduction/exp_apx/main.cpp
+
+</body>
+</html>

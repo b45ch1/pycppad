@@ -1,0 +1,50 @@
+CppAD is available with both the CPL and GPL licenses; see the CppAD home page.
+
+http://www.coin-or.org/CppAD
+This is the CppAD home page.
+
+cppad@list.coin-or.org
+This mailing list is used for CppAD discussion and bug reporting. Only members 
+of the mailing list can post messages (this avoids spam on the mailing list).
+You can join the mailing list using its general information page
+	http://list.coin-or.org/mailman/listinfo/CppAD
+
+
+File        Description
+==========  ===========
+AUTHORS     Statement of authorship and copyright.
+COPYING     Statement of user license to use software.
+ChangeLog   Pointer to log of recent changes.
+INSTALL     Pointer to installation instructions.
+NEWS        Pointer to log of recent changes.
+README      This file
+cpl1.0.txt  A copy of the CPL license.
+gpl2.txt    A copy of the GPL license.
+configure   The script file used (on Unix systems) to configure CppAD 
+*.sh        Bash shell scripts used for CppAD development
+
+doc
+sub-directory containing the documentation for this version of CppAD.
+
+doc/*.htm
+Files in the doc directory with with the .htm extension
+represent mathematics using LaTex, for example see doc/poly.htm.
+
+doc/*.xml
+Files in the doc directory with with the .xml extension
+represent mathematics using LaTex, for example see doc/poly.xml.
+
+doc/(cppad.xml or cppad.htm)
+Is the top (root) of the documentation tree for CppAD.
+
+doc/(getstarted.cpp.xml or getstarted.cpp.htm)
+Contains an example for getting started using CppAD.
+
+doc/(introduction.xml or introduction.htm)
+Contains an introduction by example to Algorithmic Differentiation.
+
+doc/(whats_new.xml or whats_new.htm)
+Contains a list of changes and additions to CppAD in reverse order by date.
+
+doc/(install.xml or install.htm)
+Contains documentation for downloading and installing CppAD.

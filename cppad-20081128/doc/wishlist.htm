@@ -1,0 +1,420 @@
+<html><head>
+<title>The CppAD Wish List</title>
+<meta name="description" id="description" content="The CppAD Wish List">
+<meta name="keywords" id="keywords" content=" wish list new features atan2 Condexp sequence operation optimize tape operations ">
+<style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+<script type='text/javascript' language='JavaScript' src='_wishlist_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://www.coin-or.org/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>WishList</option>
+</select>
+</td>
+<td><a href="bugs.htm" target="_top">Prev</a>
+</td><td><a href="whats_new.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>library</option>
+<option>preprocessor</option>
+<option>Example</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>speed</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>Bugs</option>
+<option>WishList</option>
+<option>whats_new</option>
+<option>include_deprecated</option>
+<option>License</option>
+</select>
+</td>
+<td>WishList</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Atan2</option>
+<option>BenderQuad</option>
+<option>CondExp</option>
+<option>Exceptions</option>
+<option>Ipopt</option>
+<option>Library</option>
+<option>Multiple Arguments</option>
+<option>Numeric Limits</option>
+<option>Operation Sequence</option>
+<option>Optimization</option>
+<option>---..Expression Hashing</option>
+<option>---..Microsoft Compiler</option>
+<option>---..Remove Operations From Tape</option>
+<option>Scripting Languages</option>
+<option>Software Guidelines</option>
+<option>---..Boost</option>
+<option>Sparse Jacobians and Hessians</option>
+<option>Sparsity Patterns</option>
+<option>Speed Testing</option>
+<option>Tan and Tanh</option>
+<option>Tracing</option>
+<option>VecAD</option>
+<option>Vector Element Type</option>
+</select>
+</td>
+</tr></table><br>
+
+
+
+<center><b><big><big>The CppAD Wish List</big></big></b></center>
+<br>
+<b><big><a name="Atan2" id="Atan2">Atan2</a></big></b>
+
+<br>
+The <a href="atan2.htm" target="_top"><span style='white-space: nowrap'>atan2</span></a>
+ function could be made faster by adding
+a special operator for it.
+
+<br>
+<br>
+<b><big><a name="BenderQuad" id="BenderQuad">BenderQuad</a></big></b>
+<br>
+See the <a href="benderquad.htm#Problem" target="_top"><span style='white-space: nowrap'>problem</span></a>
+ with the 
+current <code><font color="blue">BenderQuad</font></code> specifications.
+
+<br>
+<br>
+<b><big><a name="CondExp" id="CondExp">CondExp</a></big></b>
+
+<br>
+Extend the conditional expressions <a href="condexp.htm" target="_top"><span style='white-space: nowrap'>CondExp</span></a>
+ so that they are 
+valid for complex types by comparing real parts.
+In addition, use this change to extend <a href="luratio.htm" target="_top"><span style='white-space: nowrap'>LuRatio</span></a>
+ so 
+that it works with complex AD types.
+
+<br>
+<br>
+<b><big><a name="Exceptions" id="Exceptions">Exceptions</a></big></b>
+<br>
+When the function
+<a href="independent.htm" target="_top"><span style='white-space: nowrap'>Independent</span></a>
+ is called,  
+a new tape is created.
+If an exception occurs before the call to the corresponding
+<a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ constructor or <a href="dependent.htm" target="_top"><span style='white-space: nowrap'>Dependent</span></a>
+, 
+the tape recording will never stop.
+Thus, there should be a way to abort a tape recording.
+
+
+<br>
+<br>
+<b><big><a name="Ipopt" id="Ipopt">Ipopt</a></big></b>
+
+<ol type="1"><li>
+A speed test for <a href="ipopt_cppad_nlp.htm" target="_top"><span style='white-space: nowrap'>ipopt_cppad_nlp</span></a>
+ should be added.
+Then changes should be made to improve its speed.
+
+</li><li>
+
+Perhaps it would help to cache the solution of the sparse Jacobian
+and spare Hessian graph coloring algorithm.
+Then, when the sparsity pattern does not depend on the argument value,
+these colorings would not have to be recomputed.
+
+</li><li>
+
+In the case where 
+<code><font color="blue"><span style='white-space: nowrap'>retape(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ is true for some 
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
+,
+one can still use the structure of the representation to compute a 
+sparsity structure. Currently <code><font color="blue">ipopt_cppad_nlp</font></code> uses a dense 
+sparsity structure for this case
+
+</li><li>
+
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>new_x</span></font></i></code>
+ flag could be used to avoid zero order forward mode
+computations. Because the same <code><font color="blue">ADFun</font></code> object is used at different
+argument values, this would require forward mode at multiple argument values
+(see <a href="wishlist.htm#Multiple Arguments" target="_top"><span style='white-space: nowrap'>multiple&nbsp;arguments</span></a>
+). 
+
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="Library" id="Library">Library</a></big></b>
+<br>
+One could build a CppAD library for use with the type <code><font color="blue">AD&lt;double&gt;</font></code>.
+This would speed up compilation for the most common usage where
+the <i>Base</i> type is <code><font color="blue">double</font></code>.
+
+
+<br>
+<br>
+<b><big><a name="Multiple Arguments" id="Multiple Arguments">Multiple Arguments</a></big></b>
+<br>
+It has been suggested that computing and storing forward mode
+results for multiple argument values (and for multiple orders)
+is faster for Adolc. 
+Perhaps CppAD should allow for forward mode at multiple argument values
+(perhaps multiple orders).
+
+<br>
+<br>
+<b><big><a name="Numeric Limits" id="Numeric Limits">Numeric Limits</a></big></b>
+<br>
+Use a multiple of <code><font color="blue">std::numeric_limits&lt;double&gt;::epsilon()</font></code> instead
+<code><font color="blue">1e-10</font></code> for a small number in correctness checks; e.g.,
+see <a href="tan.cpp.htm" target="_top"><span style='white-space: nowrap'>tan.cpp</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Operation Sequence" id="Operation Sequence">Operation Sequence</a></big></b>
+
+
+<br>
+It is possible to detect if the 
+AD of <i>Base</i> 
+<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+ 
+does not depend on any of the
+<a href="glossary.htm#Tape.Independent Variable" target="_top"><span style='white-space: nowrap'>independent&nbsp;variable</span></a>
+ values.
+This could be returned as an extra
+<a href="seqproperty.htm" target="_top"><span style='white-space: nowrap'>SeqProperty</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Optimization" id="Optimization">Optimization</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Optimization.Expression Hashing" id="Optimization.Expression Hashing">Expression Hashing</a></b>
+<br>
+Hash codes could be used to detect expressions that have already
+been computed (and avoid extra entries in the operation sequence).
+This would also involve has coding the constants and avoiding
+duplicate copies in the constant table.
+
+<br>
+<br>
+<b><a name="Optimization.Microsoft Compiler" id="Optimization.Microsoft Compiler">Microsoft Compiler</a></b>
+<br>
+The Microsoft's Visual C++ Version 9.0 generates a warning of the form
+
+<code><font color="blue"><span style='white-space: nowrap'>warning&nbsp;C4396:%...%</span></font></code>
+ 
+for every template function that is declared as a both a friend and inline
+(it thinks it is only doing this for specializations of template functions).
+The <code><font color="blue">CPPAD_INLINE</font></code> preprocessor symbol is used to convert
+these <code><font color="blue">inline</font></code> directives to
+empty code (if a Microsoft Visual C++ is used).
+If it is shown to be faster and does not slow down CppAD with other compilers,
+non-friend functions should be used to map these operations
+to member functions so that both can be compiled inline.
+
+<br>
+<br>
+<b><a name="Optimization.Remove Operations From Tape" id="Optimization.Remove Operations From Tape">Remove Operations From Tape</a></b>
+
+
+
+
+<br>
+A single <a href="revsparsejac.htm" target="_top"><span style='white-space: nowrap'>RevSparseJac</span></a>
+ sweep could be used to determine
+which parts of the operation sequence in an
+<a href="funconstruct.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object can be removed.
+
+<br>
+<br>
+<b><big><a name="Scripting Languages" id="Scripting Languages">Scripting Languages</a></big></b>
+<br>
+One could develop a
+SWIG compatible interface to <code><font color="blue">AD&lt;double&gt;</font></code> and <code><font color="blue">ADFun&lt;double&gt;</font></code> that 
+would make it easy to connect the SWIG languages, e.g., Python, see, 
+<a href="http://www.swig.org/" target="_top"><span style='white-space: nowrap'>SWIG</span></a>
+ for a description of SWIG
+and a list of the languages.
+This could also be used for faster evaluation of algorithms
+that have a fixed <a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+.
+This would require the <a href="wishlist.htm#Library" target="_top"><span style='white-space: nowrap'>library</span></a>
+ wish list 
+entry to be implemented.
+
+
+<br>
+<br>
+<b><big><a name="Software Guidelines" id="Software Guidelines">Software Guidelines</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Software Guidelines.Boost" id="Software Guidelines.Boost">Boost</a></b>
+<br>
+The following is a list of some software guidelines taken from
+<a href="http://www.boost.org/more/lib_guide.htm#Guidelines" target="_top"><span style='white-space: nowrap'>boost</span></a>
+.
+These guidelines are not followed by the current CppAD source code,
+but perhaps they should be:
+
+<ol type="1"><li>
+Names (except as noted below) 
+should be all lowercase, with words separated by underscores.
+For example, acronyms should be treated as ordinary names 
+(xml_parser instead of XML_parser).
+
+</li><li>
+
+Template parameter names should begin with an uppercase letter.
+
+</li><li>
+
+Use spaces rather than tabs.  
+
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="Sparse Jacobians and Hessians" id="Sparse Jacobians and Hessians">Sparse Jacobians and Hessians</a></big></b>
+<br>
+Testing <a href="cppad_sparse_hessian.cpp.htm" target="_top"><span style='white-space: nowrap'>cppad_sparse_hessian.cpp</span></a>
+ 
+with <code><font color="blue">USE_CPPAD_SPARSE_HESSIAN</font></code> equal to 
+<code><font color="blue">1</font></code> (true) and <code><font color="blue">0</font></code> (false) 
+indicates that <code><font color="blue">sparse_hessian</font></code> is more efficient
+than <a href="hessian.htm" target="_top"><span style='white-space: nowrap'>Hessian</span></a>
+ (for large sparse cases).
+Create an implementation of <a href="sparse_hessian.htm" target="_top"><span style='white-space: nowrap'>sparse_hessian</span></a>
+ 
+that is more efficient
+(the initial implementation was only meant as a demonstration).
+For example, use arrays of index sets where for each row (column) the
+index contains the non-zero column (row) indices.
+(Also see <a href="wishlist.htm#Ipopt" target="_top"><span style='white-space: nowrap'>Ipopt</span></a>
+ wish list.)
+
+<br>
+<br>
+<b><big><a name="Sparsity Patterns" id="Sparsity Patterns">Sparsity Patterns</a></big></b>
+<br>
+Add option to use index sets for each variable 
+(instead of a boolean array)
+for the computation of sparsity patterns.
+This should be more efficient for very large problems.
+When using arrays of booleans, use OpenMP to parallelize 
+the computation of the sparsity patterns.
+
+
+<br>
+<br>
+<b><big><a name="Speed Testing" id="Speed Testing">Speed Testing</a></big></b>
+<br>
+Extend the speed tests for Adolc, Fadbad, and Sacado
+to run under MS Windows.
+Run the CppAD <a href="speed.htm" target="_top"><span style='white-space: nowrap'>speed</span></a>
+ tests on a set of different machines
+and operating systems.
+
+<br>
+<br>
+<b><big><a name="Tan and Tanh" id="Tan and Tanh">Tan and Tanh</a></big></b>
+<br>
+The AD <code><font color="blue">tan</font></code> and <code><font color="blue">tanh</font></code> functions
+are implemented using the AD <code><font color="blue">sin</font></code>, <code><font color="blue">cos</font></code>, <code><font color="blue">sinh</font></code>
+and <code><font color="blue">cosh</font></code> functions.
+They could be improved by making them atomic using the equations
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\tan^{(1)}&nbsp;(x)&nbsp;&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;1&nbsp;+&nbsp;\tan&nbsp;(x)^2&nbsp;\\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\tanh^{(1)}&nbsp;(x)&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;1&nbsp;-&nbsp;\tanh&nbsp;(x)^2<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+see <a href="forwardtheory.htm#Standard Math Functions" target="_top"><span style='white-space: nowrap'>standard&nbsp;math&nbsp;functions</span></a>
+.
+
+
+<br>
+<br>
+<b><big><a name="Tracing" id="Tracing">Tracing</a></big></b>
+<br>
+Add forward and reverse mode operation tracing to the developer documentation
+(perhaps it will eventually become part of 
+the user interface and documentation).
+
+<br>
+<br>
+<b><big><a name="VecAD" id="VecAD">VecAD</a></big></b>
+<br>
+Make assignment operation in <a href="vecad.htm" target="_top"><span style='white-space: nowrap'>VecAD</span></a>
+ like
+assignment in <a href="ad_copy.htm" target="_top"><span style='white-space: nowrap'>ad_copy</span></a>
+.
+This will fix slicing to <code><font color="blue">int</font></code> when assigning
+from <code><font color="blue">double</font></code> to 
+<code><font color="blue">VecAD&lt; AD&lt;double&gt; &gt;::reference</font></code> object.
+
+<br>
+<br>
+<b><big><a name="Vector Element Type" id="Vector Element Type">Vector Element Type</a></big></b>
+<br>
+Change cross references from 
+<a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;a&nbsp;specified&nbsp;type</span></a>
+
+to
+<a href="simplevector.htm#Value Type" target="_top"><span style='white-space: nowrap'>value_type</span></a>
+.
+
+
+<hr>Input File: omh/wish_list.omh
+
+</body>
+</html>

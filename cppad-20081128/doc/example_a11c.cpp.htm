@@ -1,0 +1,270 @@
+<html><head>
+<title>A Simple Parallel Loop</title>
+<meta name="description" id="description" content="A Simple Parallel Loop">
+<meta name="keywords" id="keywords" content=" Openmp example A.1.1c ">
+<style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+<script type='text/javascript' language='JavaScript' src='_example_a11c.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://www.coin-or.org/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>omp_max_thread</option>
+<option>openmp_run.sh</option>
+<option>example_a11c.cpp</option>
+</select>
+</td>
+<td><a href="openmp_run.sh.htm" target="_top">Prev</a>
+</td><td><a href="multi_newton.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down3(this)'>
+<option>ADFun-&gt;</option>
+<option>Independent</option>
+<option>FunConstruct</option>
+<option>Dependent</option>
+<option>SeqProperty</option>
+<option>FunEval</option>
+<option>Drivers</option>
+<option>FunCheck</option>
+<option>omp_max_thread</option>
+<option>FunDeprecated</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>omp_max_thread-&gt;</option>
+<option>openmp_run.sh</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>openmp_run.sh-&gt;</option>
+<option>example_a11c.cpp</option>
+<option>multi_newton.cpp</option>
+<option>sum_i_inv.cpp</option>
+</select>
+</td>
+<td>example_a11c.cpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>n_thread</option>
+<option>repeat</option>
+<option>size</option>
+<option>Example Source</option>
+</select>
+</td>
+</tr></table><br>
+<center><b><big><big>A Simple Parallel Loop</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+<code><font color="blue"><span style='white-space: nowrap'>example_a11c&nbsp;</span></font></code><i><span style='white-space: nowrap'>n_thread</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font></code><i><span style='white-space: nowrap'>repeat</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font></code><i><span style='white-space: nowrap'>size</span></i>
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Runs a timing test of Example A.1.1.1c of the OpenMP 2.5 standard document.
+
+<br>
+<br>
+<b><big><a name="n_thread" id="n_thread">n_thread</a></big></b>
+<br>
+If the argument <i>n_thread</i> is equal to <code><font color="blue">automatic</font></code>, 
+dynamic thread adjustment is used.
+Otherwise, <i>n_thread</i> must be a positive number
+specifying the number of OpenMP threads to use.
+
+<br>
+<br>
+<b><big><a name="repeat" id="repeat">repeat</a></big></b>
+<br>
+If the argument <i>repeat</i> is equal to <code><font color="blue">automatic</font></code>,
+the number of times to repeat the calculation of the number of zeros
+in total interval is automatically determined.
+In this case, the rate of execution of the total solution is reported.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>If the argument <i>repeat</i> is not equal to <i>automatic</i>,
+it must be a positive integer.
+In this case <i>repeat</i> determination of the number of times 
+the calculation of the zeros in the total interval is repeated.
+The rate of execution is not reported (it is assumed that the
+program execution time is being calculated some other way).
+
+<br>
+<br>
+<b><big><a name="size" id="size">size</a></big></b>
+<br>
+The argument <i>size</i> is the length of the arrays in the example code.
+
+<br>
+<br>
+<b><big><a name="Example Source" id="Example Source">Example Source</a></big></b>
+
+
+<code><font color='blue'><pre style='display:inline'>
+
+# ifdef _OPENMP
+# include &lt;omp.h&gt;
+# endif
+
+# include &lt;cmath&gt;
+# include &lt;cstring&gt;
+# include &lt;cstdlib&gt;
+
+// see http://www.coin-or.org/CppAD/Doc/cppad_vector.htm
+# include &lt;cppad/vector.hpp&gt;
+
+// see http://www.coin-or.org/CppAD/Doc/speed_test.htm
+# include &lt;cppad/speed_test.hpp&gt;
+
+// Beginning of Example A.1.1.1c of OpenMP 2.5 standard document ---------
+void a1(int n, float *a, float *b)
+{	int i;
+# ifdef _OPENMP
+# pragma omp parallel for
+# endif
+	for(i = 1; i &lt; n; i++) /* i is private by default */
+		b[i] = (a[i] + a[i-1]) / 2.0;
+}
+// End of Example A.1.1.1c of OpenMP 2.5 standard document ---------------
+		
+// routine that is called to repeat the example a number of times
+void test(size_t size, size_t repeat)
+{	// setup
+	size_t i;
+	float *a = new float[size];
+	float *b = new float[size];
+	for(i = 0; i &lt; size; i++)
+		a[i] = float(i);
+	int n = int(size);
+	// run test
+	for(i = 0; i &lt; repeat; i++)
+		a1(n, a, b);
+	// tear down
+	delete [] a;
+	delete [] b;
+	return;
+}
+
+// main program
+int main(int argc, char *argv[])
+{
+	using std::cout;
+	using std::endl;
+
+	// get command line arguments -----------------------------------
+	char *usage = &quot;example_a11c n_thread repeat size&quot;;
+	if( argc != 4 )
+	{	std::cerr &lt;&lt; usage &lt;&lt; endl;
+		exit(1);
+	}
+	argv++;
+	// n_thread 
+	int n_thread;
+	if( std::strcmp(*argv, &quot;automatic&quot;) == 0 )
+		n_thread = 0;
+	else	n_thread = std::atoi(*argv);
+	argv++;
+	// repeat 
+	size_t repeat;
+	if( std::strcmp(*argv, &quot;automatic&quot;) == 0 )
+		repeat = 0;
+	else
+	{	assert( std::atoi(*argv) &gt; 0 );
+		repeat = std::atoi(*argv);
+	}
+	argv++;
+	// size 
+	assert( std::atoi(*argv) &gt; 1 );
+	size_t size = std::atoi(*argv++);
+	// ---------------------------------------------------------------
+
+	// minimum time for test (repeat until this much time)
+	double time_min = 1.;
+# ifdef _OPENMP
+	if( n_thread &gt; 0 )
+	{	omp_set_dynamic(0);            // off dynamic thread adjust
+		omp_set_num_threads(n_thread); // set the number of threads 
+	}
+	// now determine the maximum number of threads
+	n_thread = omp_get_max_threads();
+	assert( n_thread &gt; 0 );
+	
+	// inform the user of the maximum number of threads
+	cout &lt;&lt; &quot;OpenMP: version = &quot;         &lt;&lt; _OPENMP;
+	cout &lt;&lt; &quot;, max number of threads = &quot; &lt;&lt; n_thread &lt;&lt; endl;
+# else
+	cout &lt;&lt; &quot;_OPENMP is not defined, &quot;;
+	cout &lt;&lt; &quot;running in single tread mode&quot; &lt;&lt; endl;
+	n_thread = 1;
+# endif
+	// Correctness check (store result in ok)
+	size_t i;
+	float *a = new float[size];
+	float *b = new float[size];
+	for(i = 0; i &lt; size; i++)
+		a[i] = float(i);
+	int n = size;
+	a1(n, a, b);
+	bool ok = true;
+	for(i = 1; i &lt; size ; i++)
+		ok &amp;= std::fabs( 2. * b[i] - a[i] - a[i-1] ) &lt;= 1e-6; 
+	delete [] a;
+	delete [] b;
+
+	if( repeat &gt; 0 )
+	{	// user specified the number of times to repeat the test
+		test(size, repeat);
+	}
+	else
+	{	// automatic determination of number of times to repeat test
+
+	 	// speed test uses a SimpleVector with size_t elements
+		CppAD::vector&lt;size_t&gt; size_vec(1);
+		size_vec[0] = size;
+		CppAD::vector&lt;size_t&gt; rate_vec =
+			CppAD::speed_test(test, size_vec, time_min);
+
+		// report results
+		cout &lt;&lt; &quot;size             = &quot; &lt;&lt; size_vec[0] &lt;&lt; endl;
+		cout &lt;&lt; &quot;repeats per sec  = &quot; &lt;&lt; rate_vec[0] &lt;&lt; endl;
+	}
+	if( ok )
+		cout &lt;&lt; &quot;Correctness Test Passed&quot; &lt;&lt; endl;
+	else	cout &lt;&lt; &quot;Correctness Test Failed&quot; &lt;&lt; endl;
+
+	return static_cast&lt;int&gt;( ! ok );
+}
+</pre></font></code>
+
+
+<hr>Input File: openmp/example_a11c.cpp
+
+</body>
+</html>

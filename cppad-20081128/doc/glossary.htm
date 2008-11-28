@@ -1,0 +1,434 @@
+<html><head>
+<title>Glossary</title>
+<meta name="description" id="description" content="Glossary">
+<meta name="keywords" id="keywords" content=" ad function of base levels above level Ad type elementary vector operation atomic sequence dependent independent parameter sparsity pattern efficient tape active inactive variable variables taylor coefficient ">
+<style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+<script type='text/javascript' language='JavaScript' src='_glossary_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://www.coin-or.org/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>glossary</option>
+</select>
+</td>
+<td><a href="reverse_identity.htm" target="_top">Prev</a>
+</td><td><a href="bib.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>library</option>
+<option>preprocessor</option>
+<option>Example</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Appendix-&gt;</option>
+<option>Faq</option>
+<option>speed</option>
+<option>Theory</option>
+<option>glossary</option>
+<option>Bib</option>
+<option>Bugs</option>
+<option>WishList</option>
+<option>whats_new</option>
+<option>include_deprecated</option>
+<option>License</option>
+</select>
+</td>
+<td>glossary</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>AD Function</option>
+<option>AD of Base</option>
+<option>AD Levels Above Base</option>
+<option>Base Function</option>
+<option>Base Type</option>
+<option>Elementary Vector</option>
+<option>Operation</option>
+<option>---..Atomic</option>
+<option>---..Sequence</option>
+<option>---..Dependent</option>
+<option>---..Independent</option>
+<option>Parameter</option>
+<option>Sparsity Pattern</option>
+<option>Tape</option>
+<option>---..Active</option>
+<option>---..Inactive</option>
+<option>---..Independent Variable</option>
+<option>---..Dependent Variables</option>
+<option>Taylor Coefficient</option>
+<option>Variable</option>
+</select>
+</td>
+</tr></table><br>
+
+
+
+
+<center><b><big><big>Glossary</big></big></b></center>
+<br>
+<b><big><a name="AD Function" id="AD Function">AD Function</a></big></b>
+<br>
+Given an <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object <i>f</i>
+there is a corresponding
+AD of <i>Base</i> <a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+.
+This operation sequence
+defines a function 
+<code>
+<span style='white-space: nowrap'>&nbsp;F&nbsp;:&nbsp;B^n&nbsp;\rightarrow&nbsp;B^m&nbsp;</span></code>
+
+where <i>B</i> is the space corresponding to objects of type <i>Base</i>.
+We refer to <code>
+<span style='white-space: nowrap'>&nbsp;F</span></code>
+ as the AD function corresponding to 
+the operation sequence and to the object <i>f</i>.
+(See the <a href="funcheck.htm#Discussion" target="_top"><span style='white-space: nowrap'>FunCheck&nbsp;discussion</span></a>
+ for
+possible differences between <code>
+<span style='white-space: nowrap'>&nbsp;F(x)</span></code>
+ and the algorithm that defined
+the operation sequence.)
+
+<br>
+<br>
+<b><big><a name="AD of Base" id="AD of Base">AD of Base</a></big></b>
+<br>
+An object is called an AD of <i>Base</i> object its type is 
+either <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> 
+(see <a href="default.htm" target="_top"><span style='white-space: nowrap'>default</span></a>
+ or 
+<a href="ad_copy.htm#Syntax.Constructor" target="_top"><span style='white-space: nowrap'>constructor</span></a>
+)
+or <code><font color="blue"><span style='white-space: nowrap'>VecAD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;::reference</span></font></code> (see <a href="vecad.htm" target="_top"><span style='white-space: nowrap'>VecAD</span></a>
+)
+for some <i>Base</i> type.
+
+<br>
+<br>
+<b><big><a name="AD Levels Above Base" id="AD Levels Above Base">AD Levels Above Base</a></big></b>
+
+
+<br>
+If <i>Base</i> is a type, 
+the AD levels above <i>Base</i> 
+is the following sequence of types:
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font></code><i><span style='white-space: nowrap'>,</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;AD&lt;&nbsp;AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;&nbsp;</span></font></code><i><span style='white-space: nowrap'>,</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;AD&lt;&nbsp;AD&lt;&nbsp;AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;&nbsp;&gt;&nbsp;</span></font></code><i><span style='white-space: nowrap'>,</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font></code><i><span style='white-space: nowrap'>...</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code><br>
+<b><big><a name="Base Function" id="Base Function">Base Function</a></big></b>
+<br>
+A function <code>
+<span style='white-space: nowrap'>&nbsp;f&nbsp;:&nbsp;B&nbsp;\rightarrow&nbsp;B</span></code>
+ 
+is referred to as a <i>Base</i> function,
+if <i>Base</i> is a C++ type that represent elements of
+the domain and range space of <i>f</i>; i.e. elements of <code>
+<span style='white-space: nowrap'>&nbsp;B</span></code>
+.
+
+<br>
+<br>
+<b><big><a name="Base Type" id="Base Type">Base Type</a></big></b>
+<br>
+If <i>x</i> is an <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object,
+<i>Base</i> is referred to as the base type for <i>x</i>.
+
+<br>
+<br>
+<b><big><a name="Elementary Vector" id="Elementary Vector">Elementary Vector</a></big></b>
+<br>
+The <i>j</i>-th elementary vector <code>
+<span style='white-space: nowrap'>&nbsp;e^j&nbsp;\in&nbsp;B^m</span></code>
+ is defined by
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+e_i^j&nbsp;=&nbsp;\left\{&nbsp;\begin{array}{ll}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&amp;&nbsp;{\rm&nbsp;if}&nbsp;\;&nbsp;i&nbsp;=&nbsp;j&nbsp;\\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&amp;&nbsp;{\rm&nbsp;otherwise}<br>
+\end{array}&nbsp;\right.<br>
+\]&nbsp;</span></code>
+
+
+
+<br>
+<br>
+<b><big><a name="Operation" id="Operation">Operation</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Operation.Atomic" id="Operation.Atomic">Atomic</a></b>
+<br>
+An atomic <i>Type</i> operation is an operation that
+has a <i>Type</i> result and is not made up of other
+more basic operations.
+
+<br>
+<br>
+<b><a name="Operation.Sequence" id="Operation.Sequence">Sequence</a></b>
+<br>
+A sequence of atomic <i>Type</i> operations 
+is called a <i>Type</i> operation sequence.
+A sequence of atomic <a href="glossary.htm#AD of Base" target="_top"><span style='white-space: nowrap'>AD&nbsp;of&nbsp;Base</span></a>
+ operations
+is referred to as an AD of <i>Base</i> operation sequence.
+The abbreviated notation AD operation sequence is often used
+when it is not necessary to specify the base type.
+
+<br>
+<br>
+<b><a name="Operation.Dependent" id="Operation.Dependent">Dependent</a></b>
+<br>
+Suppose that <i>x</i> and <i>y</i> are <i>Type</i> objects and
+the result of 
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;&nbsp;</span></font></code><i><span style='white-space: nowrap'>y</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>has type <code><font color="blue">bool</font></code> (where <i>Type</i> is not the same as <code><font color="blue">bool</font></code>).
+If one executes the following code
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;&nbsp;</span></font></code><i><span style='white-space: nowrap'>y</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>y</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;cos(</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;</span></font></code><i><span style='white-space: nowrap'>y</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;sin(</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>);&nbsp;<br>
+</span></font></code>the choice above depends on the value of <i>x</i> and <i>y</i>
+and the two choices result in a different <i>Type</i> operation sequence.
+In this case, we say that the <i>Type</i> operation sequence depends
+on <i>x</i> and <i>y</i>.
+
+<br>
+<br>
+<b><a name="Operation.Independent" id="Operation.Independent">Independent</a></b>
+<br>
+Suppose that <i>i</i> and <i>n</i> are <code><font color="blue">size_t</font></code> objects,
+and <code><font color="blue"></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>[</span></font></code><i><span style='white-space: nowrap'>i</span></i><code><font color="blue"><span style='white-space: nowrap'>]</span></font></code>, <i>y</i> are <i>Type</i> objects,
+where <i>Type</i> is different from <code><font color="blue">size_t</font></code>.
+The <i>Type</i> sequence of operations corresponding to
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>y</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font></code><i><span style='white-space: nowrap'>Type</span></i><code><font color="blue"><span style='white-space: nowrap'>(0);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(</span></font></code><i><span style='white-space: nowrap'>i</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;0;&nbsp;</span></font></code><i><span style='white-space: nowrap'>i</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;&nbsp;</span></font></code><i><span style='white-space: nowrap'>n</span></i><code><font color="blue"><span style='white-space: nowrap'>;&nbsp;</span></font></code><i><span style='white-space: nowrap'>i</span></i><code><font color="blue"><span style='white-space: nowrap'>++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>y</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;+=&nbsp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>[</span></font></code><i><span style='white-space: nowrap'>i</span></i><code><font color="blue"><span style='white-space: nowrap'>];<br>
+</span></font></code>does not depend on the value of <i>x</i> or <i>y</i>.
+In this case, we say that the <i>Type</i> operation sequence 
+is independent of <i>y</i> and the elements of <i>x</i>.
+
+<br>
+<br>
+<b><big><a name="Parameter" id="Parameter">Parameter</a></big></b>
+<br>
+All <i>Base</i> objects are parameters.
+An <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object <i>u</i> is currently a parameter if
+its value does not depend on the value of 
+an <a href="independent.htm" target="_top"><span style='white-space: nowrap'>Independent</span></a>
+ variable vector for an
+<a href="glossary.htm#Tape.Active" target="_top"><span style='white-space: nowrap'>active&nbsp;tape</span></a>
+.
+If <i>u</i> is a parameter, the function 
+<a href="parvar.htm" target="_top"><span style='white-space: nowrap'>Parameter(u)</span></a>
+ returns true
+and <a href="parvar.htm" target="_top"><span style='white-space: nowrap'>Variable(u)</span></a>
+ returns false.
+
+<br>
+<br>
+<b><big><a name="Sparsity Pattern" id="Sparsity Pattern">Sparsity Pattern</a></big></b>
+
+
+
+<br>
+Given a matrix 
+<code>
+<span style='white-space: nowrap'>&nbsp;A&nbsp;\in&nbsp;B^{m&nbsp;\times&nbsp;n}</span></code>
+,
+a boolean valued <code>
+<span style='white-space: nowrap'>&nbsp;m&nbsp;\times&nbsp;n</span></code>
+ matrix <code>
+<span style='white-space: nowrap'>&nbsp;P</span></code>
+ is a 
+sparsity pattern for <code>
+<span style='white-space: nowrap'>&nbsp;A</span></code>
+ if 
+for <code>
+<span style='white-space: nowrap'>&nbsp;i&nbsp;=&nbsp;0,&nbsp;\ldots&nbsp;,&nbsp;m-1</span></code>
+ and <code>
+<span style='white-space: nowrap'>&nbsp;j&nbsp;=&nbsp;0&nbsp;,&nbsp;\ldots&nbsp;n-1</span></code>
+,
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+A_{i,j}&nbsp;\neq&nbsp;0&nbsp;&nbsp;<br>
+\;&nbsp;\Rightarrow&nbsp;\;&nbsp;<br>
+P_{i,j}&nbsp;=&nbsp;{\rm&nbsp;true}<br>
+\]&nbsp;</span></code>
+
+Given two sparsity patterns <code>
+<span style='white-space: nowrap'>&nbsp;P</span></code>
+ and <i>Q</i> 
+for a matrix <i>A</i>, we say that <i>P</i> is more efficient than
+<i>Q</i> if <i>P</i> has fewer true elements than <i>Q</i>.
+
+<br>
+<br>
+<b><big><a name="Tape" id="Tape">Tape</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Tape.Active" id="Tape.Active">Active</a></b>
+<br>
+A new tape is created and becomes active 
+after each call of the form (see <a href="independent.htm" target="_top"><span style='white-space: nowrap'>Independent</span></a>
+)
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>All operations that depend on the elements of <i>x</i> are
+recorded on this active tape.
+
+<br>
+<br>
+<b><a name="Tape.Inactive" id="Tape.Inactive">Inactive</a></b>
+<br>
+The
+<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+
+stored in a tape must be transferred to a function object using the syntax
+(see <a href="funconstruct.htm" target="_top"><span style='white-space: nowrap'>ADFun&lt;Base&gt;&nbsp;f(x,&nbsp;y)</span></a>
+)
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'>(&nbsp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font></code><i><span style='white-space: nowrap'>y</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>or using the syntax (see <a href="dependent.htm" target="_top"><span style='white-space: nowrap'>f.Dependent(x,&nbsp;y)</span></a>
+)
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'>.Dependent(&nbsp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font></code><i><span style='white-space: nowrap'>y</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>After such a transfer, the tape becomes inactive.
+
+<br>
+<br>
+<b><a name="Tape.Independent Variable" id="Tape.Independent Variable">Independent Variable</a></b>
+<br>
+While the tape is active, we refer to the elements of <i>x</i> 
+as the independent variables for the tape.
+When the tape becomes inactive,
+the corresponding objects become 
+<a href="glossary.htm#Parameter" target="_top"><span style='white-space: nowrap'>parameters</span></a>
+.
+
+<br>
+<br>
+<b><a name="Tape.Dependent Variables" id="Tape.Dependent Variables">Dependent Variables</a></b>
+<br>
+While the tape is active, we use the term dependent variables for the tape
+for any objects whose value depends on the independent variables for the tape.
+When the tape becomes inactive,
+the corresponding objects become 
+<a href="glossary.htm#Parameter" target="_top"><span style='white-space: nowrap'>parameters</span></a>
+.
+
+ 
+<br>
+<br>
+<b><big><a name="Taylor Coefficient" id="Taylor Coefficient">Taylor Coefficient</a></big></b>
+<br>
+Suppose <code>
+<span style='white-space: nowrap'>&nbsp;X&nbsp;:&nbsp;B&nbsp;\rightarrow&nbsp;B^n</span></code>
+ is a 
+is <code>
+<span style='white-space: nowrap'>&nbsp;p</span></code>
+ times continuously differentiable function
+in some neighborhood of zero.
+For <code>
+<span style='white-space: nowrap'>&nbsp;k&nbsp;=&nbsp;0&nbsp;,&nbsp;\ldots&nbsp;,&nbsp;p</span></code>
+, 
+we use the column vector <code>
+<span style='white-space: nowrap'>&nbsp;x^{(k)}&nbsp;\in&nbsp;B^n</span></code>
+ for the <i>k</i>-th order 
+Taylor coefficient corresponding to <code>
+<span style='white-space: nowrap'>&nbsp;X</span></code>
+ 
+which is defined by
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x^{(k)}&nbsp;=&nbsp;\frac{1}{k&nbsp;!}&nbsp;\Dpow{k}{t}&nbsp;X(0)<br>
+\]&nbsp;</span></code>
+
+It follows that 
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X(t)&nbsp;=&nbsp;x^{(0)}&nbsp;+&nbsp;x^{(1)}&nbsp;t&nbsp;+&nbsp;\cdots&nbsp;+&nbsp;x^{(p)}&nbsp;t^p&nbsp;&nbsp;+&nbsp;R(t)<br>
+\]</span></code>
+
+where the remainder <code>
+<span style='white-space: nowrap'>&nbsp;R(t)</span></code>
+ divided by <code>
+<span style='white-space: nowrap'>&nbsp;t^p</span></code>
+ 
+converges to zero and <code>
+<span style='white-space: nowrap'>&nbsp;t</span></code>
+ goes to zero.
+
+
+<br>
+<br>
+<b><big><a name="Variable" id="Variable">Variable</a></big></b>
+<br>
+An <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object <i>u</i> is a variable if
+its value depends on an independent variable vector for
+a currently <a href="glossary.htm#Tape.Active" target="_top"><span style='white-space: nowrap'>active&nbsp;tape</span></a>
+.
+If <i>u</i> is a variable,
+<a href="parvar.htm" target="_top"><span style='white-space: nowrap'>Variable(u)</span></a>
+ returns true and 
+<a href="parvar.htm" target="_top"><span style='white-space: nowrap'>Parameter(u)</span></a>
+ returns false. 
+For example,
+directly after the code sequence
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AD&lt;double&gt;&nbsp;</span></font></code><i><span style='white-space: nowrap'>u</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>[0];<br>
+</span></font></code>the <code><font color="blue"><span style='white-space: nowrap'>AD&lt;double&gt;</span></font></code> object <i>u</i> is currently a variable.
+Directly after the code sequence
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AD&lt;double&gt;&nbsp;</span></font></code><i><span style='white-space: nowrap'>u</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>[0];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>u</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;5;<br>
+</span></font></code><i>u</i>  is currently a <a href="glossary.htm#Parameter" target="_top"><span style='white-space: nowrap'>parameter</span></a>
+
+(not a variable).
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Note that we often drop the word currently and 
+just refer to an <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object as a variable
+or parameter.
+
+
+<hr>Input File: omh/glossary.omh
+
+</body>
+</html>

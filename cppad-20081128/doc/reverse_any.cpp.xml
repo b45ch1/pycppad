@@ -1,0 +1,174 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Any Order Reverse Mode: Example and Test</title>
+<meta name="description" id="description" content="Any Order Reverse Mode: Example and Test"/>
+<meta name="keywords" id="keywords" content=" reverse any order example test "/>
+<style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+<script type='text/javascript' language='JavaScript' src='_reverse_any.cpp_xml.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://www.coin-or.org/CppAD/" target="_top"><img border="0" src="_image.gif"/></a>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>FunEval</option>
+<option>Reverse</option>
+<option>reverse_any</option>
+<option>reverse_any.cpp</option>
+</select>
+</td>
+<td><a href="reverse_any.xml" target="_top">Prev</a>
+</td><td><a href="sparse.xml" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down3(this)'>
+<option>FunEval-&gt;</option>
+<option>Forward</option>
+<option>Reverse</option>
+<option>Sparse</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Reverse-&gt;</option>
+<option>reverse_one</option>
+<option>reverse_two</option>
+<option>reverse_any</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>reverse_any-&gt;</option>
+<option>reverse_any.cpp</option>
+</select>
+</td>
+<td>reverse_any.cpp</td>
+<td>Headings</td>
+</tr></table><br/>
+
+
+
+<center><b><big><big>Any Order Reverse Mode: Example and Test</big></big></b></center>
+<code><font color="blue"><pre style='display:inline'># include &lt;cppad/cppad.hpp&gt;
+namespace { // ----------------------------------------------------------
+// define the template function reverse_any_cases&lt;Vector&gt; in empty namespace
+template &lt;typename Vector&gt; 
+bool reverse_any_cases(void)
+{	bool ok = true;
+	using CppAD::AD;
+	using CppAD::NearEqual;
+
+	// domain space vector
+	size_t n = 3;
+	CPPAD_TEST_VECTOR&lt; AD&lt;double&gt; &gt; X(n);
+	X[0] = 0.; 
+	X[1] = 1.;
+	X[2] = 2.;
+
+	// declare independent variables and start recording
+	CppAD::Independent(X);
+
+	// range space vector
+	size_t m = 1;
+	CPPAD_TEST_VECTOR&lt; AD&lt;double&gt; &gt; Y(m);
+	Y[0] = X[0] * X[1] * X[2];
+
+	// create f : X -&gt; Y and stop recording
+	CppAD::ADFun&lt;double&gt; f(X, Y);
+
+	// define W(t, u) = (u_0 + dx_0*t)*(u_1 + dx_1*t)*(u_2 + dx_2*t)
+	// use zero order forward to evaluate W0(u) = W(0, u)
+	Vector u(n), W0(m);
+	u[0]    = 2.;
+	u[1]    = 3.;
+	u[2]    = 4.;
+	W0      = f.Forward(0, u);
+	double check;
+	check   =  u[0]*u[1]*u[2];
+	ok     &amp;= NearEqual(W0[0] , check, 1e-10, 1e-10);
+
+	// define W_t(t, u) = partial W(t, u) w.r.t t
+	// W_t(t, u)  = (u_0 + dx_0*t)*(u_1 + dx_1*t)*dx_2
+	//            + (u_0 + dx_0*t)*(u_2 + dx_2*t)*dx_1
+	//            + (u_1 + dx_1*t)*(u_2 + dx_2*t)*dx_0
+	// use first order forward mode to evaluate W1(u) = W_t(0, u)
+	Vector dx(n), W1(m);
+	dx[0] = .2;
+	dx[1] = .3;
+	dx[2] = .4;
+	W1    = f.Forward(1, dx);
+        check =  u[0]*u[1]*dx[2] + u[0]*u[2]*dx[1] + u[1]*u[2]*dx[0];
+	ok   &amp;= NearEqual(W1[0], check, 1e-10, 1e-10);
+
+	// define W_tt (t, u) = partial W_t(t, u) w.r.t t
+	// W_tt(t, u) = 2*(u_0 + dx_0*t)*dx_1*dx_2
+	//            + 2*(u_1 + dx_1*t)*dx_0*dx_2
+	//            + 2*(u_3 + dx_3*t)*dx_0*dx_1
+	// use second order forward to evaluate W2(u) = 1/2 * W_tt(0, u)
+	Vector ddx(n), W2(m);
+	ddx[0] = ddx[1] = ddx[2] = 0.;
+        W2     = f.Forward(2, ddx);
+        check  =  u[0]*dx[1]*dx[2] + u[1]*dx[0]*dx[2] + u[2]*dx[0]*dx[1];
+	ok    &amp;= NearEqual(W2[0], check, 1e-10, 1e-10);
+
+	// use third order reverse mode to evaluate derivatives
+	size_t p = 3;
+	Vector w(m), dw(n * p);
+	w[0]   = 1.;
+	dw     = f.Reverse(p, w);
+
+	// check derivative of W0(u) w.r.t. u
+	ok    &amp;= NearEqual(dw[0*p+0], u[1]*u[2], 1e-10, 1e-10);
+	ok    &amp;= NearEqual(dw[1*p+0], u[0]*u[2], 1e-10, 1e-10);
+	ok    &amp;= NearEqual(dw[2*p+0], u[0]*u[1], 1e-10, 1e-10);
+
+	// check derivative of W1(u) w.r.t. u
+	ok    &amp;= NearEqual(dw[0*p+1], u[1]*dx[2] + u[2]*dx[1], 1e-10, 1e-10);
+	ok    &amp;= NearEqual(dw[1*p+1], u[0]*dx[2] + u[2]*dx[0], 1e-10, 1e-10);
+	ok    &amp;= NearEqual(dw[2*p+1], u[0]*dx[1] + u[1]*dx[0], 1e-10, 1e-10);
+
+	// check derivative of W2(u) w.r.t u
+	ok    &amp;= NearEqual(dw[0*p+2], dx[1]*dx[2], 1e-10, 1e-10);
+	ok    &amp;= NearEqual(dw[1*p+2], dx[0]*dx[2], 1e-10, 1e-10);
+	ok    &amp;= NearEqual(dw[2*p+2], dx[0]*dx[1], 1e-10, 1e-10);
+
+	return ok;
+}
+} // End empty namespace 
+# include &lt;vector&gt;
+# include &lt;valarray&gt;
+bool reverse_any(void)
+{	bool ok = true;
+	ok &amp;= reverse_any_cases&lt; CppAD::vector  &lt;double&gt; &gt;();
+	ok &amp;= reverse_any_cases&lt; std::vector    &lt;double&gt; &gt;();
+	ok &amp;= reverse_any_cases&lt; std::valarray  &lt;double&gt; &gt;();
+	return ok;
+}
+</pre>
+</font></code>
+
+
+<hr/>Input File: example/reverse_any.cpp
+
+</body>
+</html>

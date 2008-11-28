@@ -1,0 +1,160 @@
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Common Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+
+$begin SeqProperty$$
+$spell 
+	const
+	bool
+	var
+	VecAD
+$$
+
+$section ADFun Sequence Properties$$
+
+$index ADFun, Domain$$
+$index Domain, ADFun$$
+
+$index ADFun, Range$$
+$index Range, ADFun$$
+
+$index ADFun, Parameter$$
+$index Parameter, ADFun$$
+
+
+$index ADFun, use_VecAD$$
+$index use_VecAD, ADFun$$
+
+$index ADFun, size_var$$
+$index size_var, ADFun$$
+
+$head Syntax$$
+$syntax%%n% = %f%.Domain()%$$
+$pre
+$$
+$syntax%%m% = %f%.Range()%$$
+$pre
+$$
+$syntax%%p% = %f%.Parameter(%i%)%$$
+$pre
+$$
+$syntax%%u% = %f%.use_VecAD()%$$
+$pre
+$$
+$syntax%%v% = %f%.size_var()%$$
+
+
+
+$head Purpose$$
+The operations above return properties of the
+AD of $italic Base$$
+$xref/glossary/Operation/Sequence/operation sequence/1/$$
+stored in the ADFun object $italic f$$. 
+(If there is no operation sequence stored in $italic f$$,
+$code size_var$$ returns zero.)
+
+$head f$$
+The object $italic f$$ has prototype
+$syntax%
+	const ADFun<%Base%> %f%
+%$$
+(see $syntax%ADFun<%Base%>%$$ $xref/FunConstruct//constructor/$$).
+
+$head Domain$$
+The result $italic n$$ has prototype
+$syntax%
+	size_t %n%
+%$$
+and is the dimension of the domain space corresponding to $italic f$$.
+This is equal to the size of the vector $italic x$$ in the call
+$syntax%
+	Independent(%x%)
+%$$
+that starting recording the operation sequence 
+currently stored in $italic f$$
+(see $xref/FunConstruct/$$ and $xref/Dependent/$$). 
+
+$head Range$$
+The result $italic m$$ has prototype
+$syntax%
+	size_t %m%
+%$$
+and is the dimension of the range space corresponding to $italic f$$.
+This is equal to the size of the vector $italic y$$ in syntax
+$syntax%
+	ADFun<%Base> %f%(%x%, %y%)
+%$$
+or
+$syntax%
+	%f%.Dependent(%y%)
+%$$
+depending on which stored the operation sequence currently in $italic f$$
+(see $xref/FunConstruct/$$ and $xref/Dependent/$$). 
+
+$head Parameter$$
+The argument $italic i$$ has prototype
+$syntax%
+	size_t %i%
+%$$
+and $latex 0 \leq i < m$$.
+The result $italic p$$ has prototype
+$syntax%
+	bool %p%
+%$$
+It is true if the $th i$$ component of range space for $latex F$$
+corresponds to a
+$xref/glossary/Parameter/parameter/$$ in the operation sequence.
+In this case,
+the $th i$$ component of $latex F$$ is constant and
+$latex \[
+	\D{F_i}{x_j} (x) = 0
+\] $$
+for $latex j = 0 , \ldots , n-1$$ and all $latex x \in B^n$$.
+
+$head use_VecAD$$
+The result $italic u$$ has prototype
+$syntax%
+	bool %u%
+%$$
+If it is true, the
+AD of $italic Base$$
+$xref/glossary/Operation/Sequence/operation sequence/1/$$
+stored in $italic f$$ contains 
+$xref/VecAD/VecAD<Base>::reference/$$ operands.
+Otherwise $italic u$$ is false.
+
+$head size_var$$
+The result $italic v$$ has prototype
+$syntax%
+	size_t %v%
+%$$
+and is the number of variables in the operation sequence plus the following:
+one for a phantom variable with tape address zero,
+one for each component of the domain that is a parameter.
+The amount of work and memory necessary for computing function values
+and derivatives using $italic f$$ is roughly proportional to $italic v$$.
+$pre
+
+$$
+If there is no operation sequence stored in $italic f$$,
+$code size_var$$ returns zero
+(see $xref/FunConstruct/Default Constructor/default constructor/$$).
+
+$head Example$$
+$children%
+	example/seq_property.cpp
+%$$
+The file
+$xref/SeqProperty.cpp/$$ 
+contains an example and test of these operations.
+It returns true if it succeeds and false otherwise.
+
+
+$end

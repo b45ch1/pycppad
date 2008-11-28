@@ -1,0 +1,235 @@
+<html><head>
+<title>AD Absolute Value Function</title>
+<meta name="description" id="description" content="AD Absolute Value Function">
+<meta name="keywords" id="keywords" content=" abs Ad absolute value value_ directional derivative ">
+<style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+<script type='text/javascript' language='JavaScript' src='_abs_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://www.coin-or.org/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>ADValued</option>
+<option>MathOther</option>
+<option>abs</option>
+</select>
+</td>
+<td><a href="mathother.htm" target="_top">Prev</a>
+</td><td><a href="abs.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down3(this)'>
+<option>AD-&gt;</option>
+<option>Default</option>
+<option>ad_copy</option>
+<option>Convert</option>
+<option>ADValued</option>
+<option>BoolValued</option>
+<option>VecAD</option>
+<option>base_require</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>ADValued-&gt;</option>
+<option>Arithmetic</option>
+<option>std_math_ad</option>
+<option>MathOther</option>
+<option>CondExp</option>
+<option>Discrete</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>MathOther-&gt;</option>
+<option>abs</option>
+<option>atan2</option>
+<option>erf</option>
+<option>pow</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>abs-&gt;</option>
+<option>Abs.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>x</option>
+<option>y</option>
+<option>Operation Sequence</option>
+<option>Complex Types</option>
+<option>Directional Derivative</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+<center><b><big><big>AD Absolute Value Function</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>y</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;abs(</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Evaluates the absolute value function.
+
+
+<br>
+<br>
+<b><big><a name="x" id="x">x</a></big></b>
+<br>
+The argument <i>x</i> has one of the following prototypes
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;VecAD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;::reference&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code><br>
+<b><big><a name="y" id="y">y</a></big></b>
+<br>
+The result <i>y</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font></code><i><span style='white-space: nowrap'>y</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code><br>
+<b><big><a name="Operation Sequence" id="Operation Sequence">Operation Sequence</a></big></b>
+<br>
+This is an AD of <i>Base</i>
+<a href="glossary.htm#Operation.Atomic" target="_top"><span style='white-space: nowrap'>atomic&nbsp;operation</span></a>
+
+and hence is part of the current
+AD of <i>Base</i>
+<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Complex Types" id="Complex Types">Complex Types</a></big></b>
+<br>
+The function <code><font color="blue">abs</font></code> is not defined for the AD type sequences
+above <code><font color="blue">std::complex&lt;float&gt;</font></code> or <code><font color="blue">std::complex&lt;double&gt;</font></code>
+because the complex <code><font color="blue">abs</font></code> function is not complex differentiable
+(see <a href="faq.htm#Complex Types" target="_top"><span style='white-space: nowrap'>complex&nbsp;types&nbsp;faq</span></a>
+).
+
+<br>
+<br>
+<b><big><a name="Directional Derivative" id="Directional Derivative">Directional Derivative</a></big></b>
+
+
+<br>
+The derivative of the absolute value function is one for 
+<code>
+<span style='white-space: nowrap'>&nbsp;x&nbsp;&gt;&nbsp;0</span></code>
+ and minus one for <code>
+<span style='white-space: nowrap'>&nbsp;x&nbsp;&lt;&nbsp;0</span></code>
+.
+The subtitle issue is 
+how to compute its directional derivative
+what <code>
+<span style='white-space: nowrap'>&nbsp;x&nbsp;=&nbsp;0</span></code>
+.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The function corresponding to the argument <i>x</i> 
+and the result <i>y</i> are represented
+by their Taylor coefficients; i.e.,
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X(t)&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;x^{(0)}&nbsp;(t)&nbsp;+&nbsp;x^{(1)}&nbsp;t&nbsp;+&nbsp;\cdots&nbsp;+&nbsp;x^{(p)}&nbsp;t^p<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Y(t)&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;y^{(0)}&nbsp;(t)&nbsp;+&nbsp;y^{(1)}&nbsp;t&nbsp;+&nbsp;\cdots&nbsp;+&nbsp;y^{(p)}&nbsp;t^p<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+Note that <code>
+<span style='white-space: nowrap'>&nbsp;x^{(0)}&nbsp;=&nbsp;X(0)</span></code>
+ is the value of <i>x</i> and
+<code>
+<span style='white-space: nowrap'>&nbsp;y^{(0)}&nbsp;=&nbsp;Y(0)</span></code>
+ is the value of <i>y</i>.
+In the equations above, the order <code>
+<span style='white-space: nowrap'>&nbsp;p</span></code>
+ is specified
+by a call to <a href="forward.htm" target="_top"><span style='white-space: nowrap'>Forward</span></a>
+ or <a href="reverse.htm" target="_top"><span style='white-space: nowrap'>Reverse</span></a>
+ as follows:
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'>.Forward(</span></font></code><i><span style='white-space: nowrap'>p</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font></code><i><span style='white-space: nowrap'>dx</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'>.Reverse(</span></font></code><i><span style='white-space: nowrap'>p</span></i><code><font color="blue"><span style='white-space: nowrap'>+1,&nbsp;</span></font></code><i><span style='white-space: nowrap'>w</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>If all of the Taylor coefficients of <code>
+<span style='white-space: nowrap'>&nbsp;X(t)</span></code>
+ are zero,
+we define <code>
+<span style='white-space: nowrap'>&nbsp;k&nbsp;=&nbsp;p</span></code>
+.
+Otherwise, we define <code>
+<span style='white-space: nowrap'>&nbsp;k</span></code>
+ to be the minimal index such that 
+<code>
+<span style='white-space: nowrap'>&nbsp;x^{(k)}&nbsp;\neq&nbsp;0</span></code>
+.
+Note that if <code>
+<span style='white-space: nowrap'>&nbsp;x&nbsp;\neq&nbsp;0</span></code>
+, <code>
+<span style='white-space: nowrap'>&nbsp;k&nbsp;=&nbsp;0</span></code>
+.
+The Taylor coefficient representation of <code>
+<span style='white-space: nowrap'>&nbsp;Y(t)</span></code>
+
+(and hence it's derivatives) are computed as
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+y^{(\ell)}<br>
+=<br>
+\left\{&nbsp;\begin{array}{ll}&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x^{(\ell)}&nbsp;&nbsp;&nbsp;&amp;&nbsp;{\rm&nbsp;if}&nbsp;\;&nbsp;x^{(k)}&nbsp;&gt;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;{\rm&nbsp;if}&nbsp;\;&nbsp;x^{(k)}&nbsp;=&nbsp;0&nbsp;\\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;x^{(\ell)}&nbsp;&nbsp;&amp;&nbsp;{\rm&nbsp;if}&nbsp;\;&nbsp;x^{(k)}&nbsp;&lt;&nbsp;0<br>
+\end{array}&nbsp;\right.<br>
+\]&nbsp;</span></code>
+
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="abs.cpp.htm" target="_top"><span style='white-space: nowrap'>Abs.cpp</span></a>
+
+contains an example and test of this function.   
+It returns true if it succeeds and false otherwise.
+
+
+<hr>Input File: cppad/local/abs.hpp
+
+</body>
+</html>

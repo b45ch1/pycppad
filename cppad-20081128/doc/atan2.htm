@@ -1,0 +1,166 @@
+<html><head>
+<title>AD Two Argument Inverse Tangent Function</title>
+<meta name="description" id="description" content="AD Two Argument Inverse Tangent Function">
+<meta name="keywords" id="keywords" content=" tan Ad inverse atan2 ">
+<style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+<script type='text/javascript' language='JavaScript' src='_atan2_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://www.coin-or.org/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>ADValued</option>
+<option>MathOther</option>
+<option>atan2</option>
+</select>
+</td>
+<td><a href="abs.cpp.htm" target="_top">Prev</a>
+</td><td><a href="atan2.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down3(this)'>
+<option>AD-&gt;</option>
+<option>Default</option>
+<option>ad_copy</option>
+<option>Convert</option>
+<option>ADValued</option>
+<option>BoolValued</option>
+<option>VecAD</option>
+<option>base_require</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>ADValued-&gt;</option>
+<option>Arithmetic</option>
+<option>std_math_ad</option>
+<option>MathOther</option>
+<option>CondExp</option>
+<option>Discrete</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>MathOther-&gt;</option>
+<option>abs</option>
+<option>atan2</option>
+<option>erf</option>
+<option>pow</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>atan2-&gt;</option>
+<option>Atan2.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>y</option>
+<option>x</option>
+<option>theta</option>
+<option>Operation Sequence</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+
+
+
+
+
+
+
+<center><b><big><big>AD Two Argument Inverse Tangent Function</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>theta</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;atan2(</span></font></code><i><span style='white-space: nowrap'>y</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Determines an angle <code>
+<span style='white-space: nowrap'>&nbsp;\theta&nbsp;\in&nbsp;[&nbsp;-&nbsp;\pi&nbsp;,&nbsp;+&nbsp;\pi&nbsp;]</span></code>
+
+such that 
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\sin&nbsp;(&nbsp;\theta&nbsp;)&nbsp;&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;y&nbsp;/&nbsp;\sqrt{&nbsp;x^2&nbsp;+&nbsp;y^2&nbsp;}&nbsp;&nbsp;\\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\cos&nbsp;(&nbsp;\theta&nbsp;)&nbsp;&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;x&nbsp;/&nbsp;\sqrt{&nbsp;x^2&nbsp;+&nbsp;y^2&nbsp;}<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+
+<br>
+<br>
+<b><big><a name="y" id="y">y</a></big></b>
+<br>
+The argument <i>y</i> has one of the following prototypes
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>y</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;VecAD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;::reference&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>y</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code><br>
+<b><big><a name="x" id="x">x</a></big></b>
+<br>
+The argument <i>x</i> has one of the following prototypes
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;VecAD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;::reference&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code><br>
+<b><big><a name="theta" id="theta">theta</a></big></b>
+<br>
+The result <i>theta</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font></code><i><span style='white-space: nowrap'>theta</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code><br>
+<b><big><a name="Operation Sequence" id="Operation Sequence">Operation Sequence</a></big></b>
+<br>
+The AD of <i>Base</i>
+operation sequence used to calculate <i>theta</i> is
+<a href="glossary.htm#Operation.Independent" target="_top"><span style='white-space: nowrap'>independent</span></a>
+
+of <i>x</i> and <i>y</i>.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="atan2.cpp.htm" target="_top"><span style='white-space: nowrap'>Atan2.cpp</span></a>
+
+contains an example and test of this function.   
+It returns true if it succeeds and false otherwise.
+
+
+<hr>Input File: cppad/local/atan2.hpp
+
+</body>
+</html>

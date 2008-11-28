@@ -1,0 +1,97 @@
+<html><head>
+<title>Number of Ind field Values Corresponding to an Op Code</title>
+<meta name="description" id="description" content="Number of Ind field Values Corresponding to an Op Code">
+<meta name="keywords" id="keywords" content=" Numind ">
+<style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+<script type='text/javascript' language='JavaScript' src='_numind_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>NumInd</option>
+</select>
+</td>
+<td><a href="printop.htm" target="_top">Prev</a>
+</td><td><a href="numvar.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down1(this)'>
+<option>CppAD-&gt;</option>
+<option>Distribute</option>
+<option>NewFeature</option>
+<option>Define</option>
+<option>GreaterThanZero</option>
+<option>GreaterThanOrZero</option>
+<option>LessThanZero</option>
+<option>LessThanOrZero</option>
+<option>IdenticalPar</option>
+<option>IdenticalZero</option>
+<option>IdenticalOne</option>
+<option>IdenticalEqualPar</option>
+<option>OpCode</option>
+<option>printOp</option>
+<option>NumInd</option>
+<option>NumVar</option>
+<option>tape_link</option>
+<option>recorder</option>
+<option>player</option>
+<option>ADTape</option>
+<option>BoolFunLink</option>
+<option>Op</option>
+<option>forward_sweep</option>
+<option>ReverseSweep</option>
+<option>ForJacSweep</option>
+<option>RevJacSweep</option>
+</select>
+</td>
+<td>NumInd</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Description</option>
+</select>
+</td>
+</tr></table><br>
+ 
+
+
+
+<center><b><big><big>Number of Ind field Values Corresponding to an Op Code</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+<code><font color="blue"><span style='white-space: nowrap'>size_t&nbsp;NumInd(OpCode&nbsp;</span></font></code><i><span style='white-space: nowrap'>op</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Description" id="Description">Description</a></big></b>
+<br>
+The syntax
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;NumInd(operator&nbsp;</span></font></code><i><span style='white-space: nowrap'>op</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>returns the number of Ind field values corresponding to each operator value.
+
+
+<hr>Input File: cppad/local/op_code.hpp
+
+</body>
+</html>

@@ -1,0 +1,241 @@
+<html><head>
+<title>Construct an ADFun Object and Stop Recording</title>
+<meta name="description" id="description" content="Construct an ADFun Object and Stop Recording">
+<meta name="keywords" id="keywords" content=" Adfun construct tape stop recording Openmp Dependent ">
+<style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+<script type='text/javascript' language='JavaScript' src='_funconstruct_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://www.coin-or.org/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>FunConstruct</option>
+</select>
+</td>
+<td><a href="independent.cpp.htm" target="_top">Prev</a>
+</td><td><a href="dependent.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>library</option>
+<option>preprocessor</option>
+<option>Example</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>ADFun-&gt;</option>
+<option>Independent</option>
+<option>FunConstruct</option>
+<option>Dependent</option>
+<option>SeqProperty</option>
+<option>FunEval</option>
+<option>Drivers</option>
+<option>FunCheck</option>
+<option>omp_max_thread</option>
+<option>FunDeprecated</option>
+</select>
+</td>
+<td>FunConstruct</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>x</option>
+<option>y</option>
+<option>Default Constructor</option>
+<option>Sequence Constructor</option>
+<option>OpenMP</option>
+<option>Example</option>
+<option>---..Sequence Constructor</option>
+<option>---..Default Constructor</option>
+</select>
+</td>
+</tr></table><br>
+
+
+
+
+
+<center><b><big><big>Construct an ADFun Object and Stop Recording</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+<code><font color="blue"><span style='white-space: nowrap'>ADFun&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code><code><font color="blue"><span style='white-space: nowrap'>ADFun&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'>(</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font></code><i><span style='white-space: nowrap'>y</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code><br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+The <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object <i>f</i> can 
+store an AD of <i>Base</i>
+<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+.
+It can then be used to calculate derivatives of the corresponding
+<a href="glossary.htm#AD Function" target="_top"><span style='white-space: nowrap'>AD&nbsp;function</span></a>
+
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F&nbsp;:&nbsp;B^n&nbsp;\rightarrow&nbsp;B^m<br>
+\]&nbsp;</span></code>
+
+where <code>
+<span style='white-space: nowrap'>&nbsp;B</span></code>
+ is the space corresponding to objects of type <i>Base</i>.
+
+<br>
+<br>
+<b><big><a name="x" id="x">x</a></big></b>
+<br>
+If the argument <i>x</i> is present,
+it must be the vector argument in the previous call to
+<a href="independent.htm" target="_top"><span style='white-space: nowrap'>Independent</span></a>
+.
+Neither its size, or any of its values, are allowed to change
+between calling
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>and 
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'>(</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font></code><i><span style='white-space: nowrap'>y</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>.
+
+<br>
+<br>
+<b><big><a name="y" id="y">y</a></big></b>
+<br>
+The sequence of operations that map <i>x</i>
+to <i>y</i> are stored in the AD function object <i>f</i>.
+
+
+<br>
+<br>
+<b><big><a name="Default Constructor" id="Default Constructor">Default Constructor</a></big></b>
+<br>
+The default constructor 
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>creates an 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object with no corresponding operation sequence; i.e.,
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'>.size_var()<br>
+</span></font></code>returns the value zero (see <a href="seqproperty.htm#size_var" target="_top"><span style='white-space: nowrap'>size_var</span></a>
+).
+
+<br>
+<br>
+<b><big><a name="Sequence Constructor" id="Sequence Constructor">Sequence Constructor</a></big></b>
+<br>
+The sequence constructor 
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'>(</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font></code><i><span style='white-space: nowrap'>y</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>creates the <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object <i>f</i>,
+stops the recording of AD of <i>Base</i> operations
+corresponding to the call
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>and stores the corresponding operation sequence in the object <i>f</i>.
+It then stores the first order taylor_ coefficients 
+(corresponding to the value of <i>x</i>) in <i>f</i>.
+This is equivalent to the following steps using the default constructor:
+<ol type="1"><li>
+Create <i>f</i> with the default constructor
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'>;<br>
+</span></font></code></li><li>
+Stop the tape and storing the operation sequence using
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'>.Dependent(</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font></code><i><span style='white-space: nowrap'>y</span></i><code><font color="blue"><span style='white-space: nowrap'>);<br>
+</span></font></code>(see <a href="dependent.htm" target="_top"><span style='white-space: nowrap'>Dependent</span></a>
+).
+</li><li>
+
+Calculating the first order taylor_ coefficients for all 
+the variables in the operation sequence using
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'>.Forward(</span></font></code><i><span style='white-space: nowrap'>p</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font></code><i><span style='white-space: nowrap'>x_p</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>with <i>p</i> equal to zero and the elements of <i>x_p</i>
+equal to the corresponding elements of <i>x</i>
+(see <a href="forward.htm" target="_top"><span style='white-space: nowrap'>Forward</span></a>
+).
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="OpenMP" id="OpenMP">OpenMP</a></big></b>
+
+
+
+
+<br>
+In the case of multi-threading with OpenMP,
+the call to <code><font color="blue">Independent</font></code>
+and the corresponding call to
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'>(&nbsp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font></code><i><span style='white-space: nowrap'>y</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>or 
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'>.Dependent(&nbsp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font></code><i><span style='white-space: nowrap'>y</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>must be preformed by the same thread.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Example.Sequence Constructor" id="Example.Sequence Constructor">Sequence Constructor</a></b>
+<br>
+The file
+<a href="independent.cpp.htm" target="_top"><span style='white-space: nowrap'>Independent.cpp</span></a>
+ 
+contains an example and test of the sequence constructor.
+It returns true if it succeeds and false otherwise.
+
+<br>
+<br>
+<b><a name="Example.Default Constructor" id="Example.Default Constructor">Default Constructor</a></b>
+<br>
+The files
+<a href="funcheck.cpp.htm" target="_top"><span style='white-space: nowrap'>FunCheck.cpp</span></a>
+ 
+and
+<a href="heslagrangian.cpp.htm" target="_top"><span style='white-space: nowrap'>HesLagrangian.cpp</span></a>
+
+contain an examples and tests using the default constructor.
+They return true if they succeed and false otherwise.
+
+
+<hr>Input File: cppad/local/fun_construct.hpp
+
+</body>
+</html>

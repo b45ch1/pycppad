@@ -1,0 +1,107 @@
+<html><head>
+<title>CppAD Boolean Valued User Defined Functions Implementation</title>
+<meta name="description" id="description" content="CppAD Boolean Valued User Defined Functions Implementation">
+<meta name="keywords" id="keywords" content=" Unarybool Binarybool ">
+<style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+<script type='text/javascript' language='JavaScript' src='_boolfunlink_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>BoolFunLink</option>
+</select>
+</td>
+<td><a href="adtape.htm" target="_top">Prev</a>
+</td><td><a href="op.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down1(this)'>
+<option>CppAD-&gt;</option>
+<option>Distribute</option>
+<option>NewFeature</option>
+<option>Define</option>
+<option>GreaterThanZero</option>
+<option>GreaterThanOrZero</option>
+<option>LessThanZero</option>
+<option>LessThanOrZero</option>
+<option>IdenticalPar</option>
+<option>IdenticalZero</option>
+<option>IdenticalOne</option>
+<option>IdenticalEqualPar</option>
+<option>OpCode</option>
+<option>printOp</option>
+<option>NumInd</option>
+<option>NumVar</option>
+<option>tape_link</option>
+<option>recorder</option>
+<option>player</option>
+<option>ADTape</option>
+<option>BoolFunLink</option>
+<option>Op</option>
+<option>forward_sweep</option>
+<option>ReverseSweep</option>
+<option>ForJacSweep</option>
+<option>RevJacSweep</option>
+</select>
+</td>
+<td>BoolFunLink</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>UnaryBool</option>
+<option>BinaryBool</option>
+</select>
+</td>
+</tr></table><br>
+<center><b><big><big>CppAD Boolean Valued User Defined Functions Implementation</big></big></b></center>
+<br>
+<b><big><a name="UnaryBool" id="UnaryBool">UnaryBool</a></big></b>
+
+<br>
+The procedure call
+<code><font color="blue"><span style='white-space: nowrap'><br>
+inline&nbsp;bool&nbsp;UnaryBool(&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font></code><i><span style='white-space: nowrap'>FunName</span></i><code><font color="blue"><span style='white-space: nowrap'>(const&nbsp;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>uses a call to the procedure <i>FunName</i> to evaluate a unary 
+boolean valued function of a base type argument
+and returns it as the value of the corresponding AD argument.
+
+
+<br>
+<br>
+<b><big><a name="BinaryBool" id="BinaryBool">BinaryBool</a></big></b>
+
+<br>
+The procedure call
+<code><font color="blue"><span style='white-space: nowrap'><br>
+inline&nbsp;bool&nbsp;BinaryBool(&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font></code><i><span style='white-space: nowrap'>FunName</span></i><code><font color="blue"><span style='white-space: nowrap'>(const&nbsp;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;const&nbsp;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>y</span></i><code><font color="blue"><span style='white-space: nowrap'>),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;const&nbsp;AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>y</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>uses a call to the procedure <i>FunName</i> to evaluate a binary 
+boolean valued function of two base type arguments
+and returns it as the value of the corresponding AD arguments.
+
+
+
+
+<hr>Input File: cppad/local/bool_fun_link.hpp
+
+</body>
+</html>

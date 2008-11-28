@@ -1,0 +1,174 @@
+<html><head>
+<title>Forward Mode Acos Function</title>
+<meta name="description" id="description" content="Forward Mode Acos Function">
+<meta name="keywords" id="keywords" content=" acos forward Foracosop ">
+<style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+<script type='text/javascript' language='JavaScript' src='_foracosop_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Op</option>
+<option>ForAcosOp</option>
+</select>
+</td>
+<td><a href="revaddop.htm" target="_top">Prev</a>
+</td><td><a href="revacosop.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Distribute</option>
+<option>NewFeature</option>
+<option>Define</option>
+<option>GreaterThanZero</option>
+<option>GreaterThanOrZero</option>
+<option>LessThanZero</option>
+<option>LessThanOrZero</option>
+<option>IdenticalPar</option>
+<option>IdenticalZero</option>
+<option>IdenticalOne</option>
+<option>IdenticalEqualPar</option>
+<option>OpCode</option>
+<option>printOp</option>
+<option>NumInd</option>
+<option>NumVar</option>
+<option>tape_link</option>
+<option>recorder</option>
+<option>player</option>
+<option>ADTape</option>
+<option>BoolFunLink</option>
+<option>Op</option>
+<option>forward_sweep</option>
+<option>ReverseSweep</option>
+<option>ForJacSweep</option>
+<option>RevJacSweep</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Op-&gt;</option>
+<option>ForAbsOp</option>
+<option>RevAbsOp</option>
+<option>ForAddOp</option>
+<option>RevAddOp</option>
+<option>ForAcosOp</option>
+<option>RevAcosOp</option>
+<option>ForAsinOp</option>
+<option>RevAsinOp</option>
+<option>ForAtanOp</option>
+<option>RevAtanOp</option>
+<option>ForDivvvOp</option>
+<option>RevDivvvOp</option>
+<option>ForExpOp</option>
+<option>RevExpOp</option>
+<option>ForLogOp</option>
+<option>RevLogOp</option>
+<option>ForMulvvOp</option>
+<option>RevMulvvOp</option>
+<option>ForSinCos</option>
+<option>RevSinCos</option>
+<option>ForSqrtOp</option>
+<option>RevSqrtOp</option>
+<option>ForSubvvOp</option>
+<option>RevSubvvOp</option>
+</select>
+</td>
+<td>ForAcosOp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Description</option>
+<option>x</option>
+<option>z</option>
+<option>b</option>
+</select>
+</td>
+</tr></table><br>
+ 
+
+
+
+
+
+
+<center><b><big><big>Forward Mode Acos Function</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+
+<br>
+<code><font color="blue"><span style='white-space: nowrap'>inline&nbsp;void&nbsp;ForAcosOp(size_t&nbsp;</span></font></code><i><span style='white-space: nowrap'>d</span></i><code><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;*</span></font></code><i><span style='white-space: nowrap'>z</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;*</span></font></code><i><span style='white-space: nowrap'>b</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;const&nbsp;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;*</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+<br>
+<br>
+<b><big><a name="Description" id="Description">Description</a></big></b>
+<br>
+Computes the <i>d</i> order Taylor coefficient for 
+<code>
+<span style='white-space: nowrap'>&nbsp;Z</span></code>
+ and <code>
+<span style='white-space: nowrap'>&nbsp;B</span></code>
+ where
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>Z</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;acos(</span></font></code><i><span style='white-space: nowrap'>X</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>B</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;\sqrt{&nbsp;1&nbsp;-&nbsp;</span></font></code><i><span style='white-space: nowrap'>X</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font></code><i><span style='white-space: nowrap'>X</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;}<br>
+</span></font></code><br>
+<b><big><a name="x" id="x">x</a></big></b>
+<br>
+The vector <i>x</i> has length <code>
+<span style='white-space: nowrap'>&nbsp;d+1</span></code>
+ and contains the
+<i>d</i>-th order Taylor coefficient row vector for <i>X</i>.
+
+<br>
+<br>
+<b><big><a name="z" id="z">z</a></big></b>
+<br>
+The vector <i>z</i> has length <code>
+<span style='white-space: nowrap'>&nbsp;d+1</span></code>
+.
+On input it contains the
+<i>d-1</i>-th order Taylor coefficient row vector for <i>Z</i>.
+On output it contains the
+<i>d</i>-th order Taylor coefficient row vector for <i>Z</i>; i.e.,
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>z</span></i><code><font color="blue"><span style='white-space: nowrap'>[</span></font></code><i><span style='white-space: nowrap'>d</span></i><code><font color="blue"><span style='white-space: nowrap'>]</span></font></code> is set equal to the <i>d</i>-th Taylor coefficient for
+the function <i>S</i>.
+
+<br>
+<br>
+<b><big><a name="b" id="b">b</a></big></b>
+<br>
+The vector <i>c</i> has length <code>
+<span style='white-space: nowrap'>&nbsp;d+1</span></code>
+.
+On input it contains the
+<i>d-1</i>-th order Taylor coefficient row vector for <i>B</i>.
+On output it contains the
+<i>d</i>-th order Taylor coefficient row vector for <i>B</i>; i.e.,
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>b</span></i><code><font color="blue"><span style='white-space: nowrap'>[</span></font></code><i><span style='white-space: nowrap'>d</span></i><code><font color="blue"><span style='white-space: nowrap'>]</span></font></code> is set equal to the <i>d</i>-th Taylor coefficient for
+the function <i>B</i>.
+
+
+<hr>Input File: cppad/local/acos_op.hpp
+
+</body>
+</html>

@@ -1,0 +1,478 @@
+<html><head>
+<title>exp_2: Second Order Forward Mode</title>
+<meta name="description" id="description" content="exp_2: Second Order Forward Mode">
+<meta name="keywords" id="keywords" content=" exp_2 forward mode example second order expansion ">
+<style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+<script type='text/javascript' language='JavaScript' src='_exp_2_for2_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://www.coin-or.org/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Introduction</option>
+<option>exp_2</option>
+<option>exp_2_for2</option>
+</select>
+</td>
+<td><a href="exp_2_rev1.cpp.htm" target="_top">Prev</a>
+</td><td><a href="exp_2_for2.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>library</option>
+<option>preprocessor</option>
+<option>Example</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Introduction-&gt;</option>
+<option>get_started.cpp</option>
+<option>exp_2</option>
+<option>exp_eps</option>
+<option>exp_apx_main.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>exp_2-&gt;</option>
+<option>exp_2.hpp</option>
+<option>exp_2.cpp</option>
+<option>exp_2_for0</option>
+<option>exp_2_for1</option>
+<option>exp_2_rev1</option>
+<option>exp_2_for2</option>
+<option>exp_2_rev2</option>
+<option>exp_2_cppad</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>exp_2_for2-&gt;</option>
+<option>exp_2_for2.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Second Order Expansion</option>
+<option>Purpose</option>
+<option>Mathematical Form</option>
+<option>Operation Sequence</option>
+<option>---..Index</option>
+<option>---..Zero</option>
+<option>---..Operation</option>
+<option>---..First</option>
+<option>---..Derivative</option>
+<option>---..Second</option>
+<option>---..Sweep</option>
+<option>Return Value</option>
+<option>Verification</option>
+<option>Exercises</option>
+</select>
+</td>
+</tr></table><br>
+
+
+
+<center><b><big><big>exp_2: Second Order Forward Mode</big></big></b></center>
+<br>
+<b><big><a name="Second Order Expansion" id="Second Order Expansion">Second Order Expansion</a></big></b>
+
+
+
+<br>
+We define <code>
+<span style='white-space: nowrap'>&nbsp;x(t)</span></code>
+ near <code>
+<span style='white-space: nowrap'>&nbsp;t&nbsp;=&nbsp;0</span></code>
+ by the second order expansion
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x(t)&nbsp;=&nbsp;x^{(0)}&nbsp;+&nbsp;x^{(1)}&nbsp;*&nbsp;t&nbsp;+&nbsp;x^{(2)}&nbsp;*&nbsp;t^2&nbsp;/&nbsp;2<br>
+\]</span></code>
+
+It follows that for <code>
+<span style='white-space: nowrap'>&nbsp;k&nbsp;=&nbsp;0&nbsp;,&nbsp;1&nbsp;,&nbsp;2</span></code>
+,
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x^{(k)}&nbsp;=&nbsp;\dpow{k}{t}&nbsp;x&nbsp;(0)<br>
+\]&nbsp;</span></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+In general, a second order forward sweep is given the
+<a href="exp_2_for1.htm#First Order Expansion" target="_top"><span style='white-space: nowrap'>first&nbsp;order&nbsp;expansion</span></a>
+
+for all of the variables in an operation sequence,
+and the second order derivatives for the independent variables.
+It uses these to compute the second order derivative,
+and thereby obtain the second order expansion,
+for all the variables in the operation sequence.
+
+<br>
+<br>
+<b><big><a name="Mathematical Form" id="Mathematical Form">Mathematical Form</a></big></b>
+<br>
+Suppose that we use the algorithm <a href="exp_2.hpp.htm" target="_top"><span style='white-space: nowrap'>exp_2.hpp</span></a>
+ to compute 
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;f(x)&nbsp;=&nbsp;1&nbsp;+&nbsp;x&nbsp;+&nbsp;x^2&nbsp;/&nbsp;2<br>
+\]&nbsp;</span></code>
+
+The corresponding second derivative function is 
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\Dpow{2}{x}&nbsp;f&nbsp;(x)&nbsp;=&nbsp;&nbsp;&nbsp;1<br>
+\]&nbsp;</span></code>
+
+
+<br>
+<br>
+<b><big><a name="Operation Sequence" id="Operation Sequence">Operation Sequence</a></big></b>
+<br>
+We consider the case where <a href="exp_2.hpp.htm" target="_top"><span style='white-space: nowrap'>exp_2.hpp</span></a>
+ is executed with
+<code>
+<span style='white-space: nowrap'>&nbsp;x&nbsp;=&nbsp;.5</span></code>
+.
+The corresponding operation sequence,
+zero order forward sweep values,
+and first order forward sweep values
+are inputs and are used by a second order forward sweep.
+
+<br>
+<br>
+<b><a name="Operation Sequence.Index" id="Operation Sequence.Index">Index</a></b>
+<br>
+The Index column contains the index in the operation sequence
+of the corresponding atomic operation. 
+A Forward sweep starts with the first operation 
+and ends with the last.
+
+<br>
+<br>
+<b><a name="Operation Sequence.Zero" id="Operation Sequence.Zero">Zero</a></b>
+<br>
+The Zero column contains the zero order sweep results
+for the corresponding variable in the operation sequence
+(see <a href="exp_2_for0.htm#Operation Sequence.Sweep" target="_top"><span style='white-space: nowrap'>zero&nbsp;order&nbsp;sweep</span></a>
+).
+
+<br>
+<br>
+<b><a name="Operation Sequence.Operation" id="Operation Sequence.Operation">Operation</a></b>
+<br>
+The Operation column contains the 
+first order sweep operation for this variable.
+
+<br>
+<br>
+<b><a name="Operation Sequence.First" id="Operation Sequence.First">First</a></b>
+<br>
+The First column contains the first order sweep results
+for the corresponding variable in the operation sequence
+(see <a href="exp_2_for1.htm#Operation Sequence.Sweep" target="_top"><span style='white-space: nowrap'>first&nbsp;order&nbsp;sweep</span></a>
+).
+
+<br>
+<br>
+<b><a name="Operation Sequence.Derivative" id="Operation Sequence.Derivative">Derivative</a></b>
+<br>
+The Derivative column contains the
+mathematical function corresponding to the second derivative
+with respect to <code>
+<span style='white-space: nowrap'>&nbsp;t</span></code>
+,
+at <code>
+<span style='white-space: nowrap'>&nbsp;t&nbsp;=&nbsp;0</span></code>
+, for each variable in the sequence.
+
+<br>
+<br>
+<b><a name="Operation Sequence.Second" id="Operation Sequence.Second">Second</a></b>
+<br>
+The Second column contains the second order derivatives
+for the corresponding variable in the operation sequence; i.e.,
+the second order expansion for the <i>i</i>-th variable is given by
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_i&nbsp;(t)&nbsp;=&nbsp;v_i^{(0)}&nbsp;+&nbsp;v_i^{(1)}&nbsp;*&nbsp;t&nbsp;+&nbsp;&nbsp;v_i^{(2)}&nbsp;*&nbsp;t^2&nbsp;/&nbsp;2<br>
+\]&nbsp;</span></code>
+
+We use <code>
+<span style='white-space: nowrap'>&nbsp;x^{(0)}&nbsp;=&nbsp;1</span></code>
+, and <code>
+<span style='white-space: nowrap'>&nbsp;x^{(2)}&nbsp;=&nbsp;0</span></code>
+
+so that second order differentiation
+with respect to <code>
+<span style='white-space: nowrap'>&nbsp;t</span></code>
+, at <code>
+<span style='white-space: nowrap'>&nbsp;t&nbsp;=&nbsp;0</span></code>
+, 
+is the same as the second partial differentiation 
+with respect to <code>
+<span style='white-space: nowrap'>&nbsp;x</span></code>
+ at <code>
+<span style='white-space: nowrap'>&nbsp;x&nbsp;=&nbsp;x^{(0)}</span></code>
+.
+
+
+<br>
+<br>
+<b><a name="Operation Sequence.Sweep" id="Operation Sequence.Sweep">Sweep</a></b>
+
+
+<center>
+<table><tr><td align='left'  valign='top'>
+
+<b>Index</b>
+	</td><td align='left'  valign='top'>
+ <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ <b>Zero</b>
+	</td><td align='left'  valign='top'>
+ <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ <b>Operation</b> 
+	</td><td align='left'  valign='top'>
+ <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ <b>First</b>
+	</td><td align='left'  valign='top'>
+ <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ <b>Derivative</b>
+	</td><td align='left'  valign='top'>
+ <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ <b>Second</b>
+</td></tr><tr><td align='left'  valign='top'>
+
+1
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 0.5
+	</td><td align='left'  valign='top'>
+ <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ <code>
+<span style='white-space: nowrap'>&nbsp;v_1^{(1)}&nbsp;=&nbsp;x^{(1)}&nbsp;</span></code>
+
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 1
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 
+	<code>
+<span style='white-space: nowrap'>&nbsp;v_1^{(2)}&nbsp;=&nbsp;x^{(2)}</span></code>
+
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ <code>
+<span style='white-space: nowrap'>&nbsp;v_1^{(2)}&nbsp;=&nbsp;0</span></code>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+2
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 1.5
+	</td><td align='left'  valign='top'>
+ <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ <code>
+<span style='white-space: nowrap'>&nbsp;v_2^{(1)}&nbsp;=&nbsp;v_1^{(1)}</span></code>
+
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 1
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 
+	<code>
+<span style='white-space: nowrap'>&nbsp;v_2^{(2)}&nbsp;=&nbsp;v_1^{(2)}</span></code>
+
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ <code>
+<span style='white-space: nowrap'>&nbsp;v_2^{(2)}&nbsp;=&nbsp;0</span></code>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+3
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 0.25
+	</td><td align='left'  valign='top'>
+ <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ <code>
+<span style='white-space: nowrap'>&nbsp;v_3^{(1)}&nbsp;=&nbsp;2&nbsp;*&nbsp;v_1^{(0)}&nbsp;*&nbsp;v_1^{(1)}</span></code>
+
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 1
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 
+<code>
+<span style='white-space: nowrap'>&nbsp;v_3^{(2)}&nbsp;=&nbsp;2&nbsp;*&nbsp;(v_1^{(1)}&nbsp;*&nbsp;v_1^{(1)}&nbsp;+&nbsp;v_1^{(0)}&nbsp;*&nbsp;v_1^{(2)}&nbsp;)</span></code>
+
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ <code>
+<span style='white-space: nowrap'>&nbsp;v_3^{(2)}&nbsp;=&nbsp;2</span></code>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+4
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 0.125
+	</td><td align='left'  valign='top'>
+ <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ <code>
+<span style='white-space: nowrap'>&nbsp;v_4^{(1)}&nbsp;=&nbsp;v_3^{(1)}&nbsp;/&nbsp;2</span></code>
+
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ .5
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 
+	<code>
+<span style='white-space: nowrap'>&nbsp;v_4^{(2)}&nbsp;=&nbsp;v_3^{(2)}&nbsp;/&nbsp;2</span></code>
+
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ <code>
+<span style='white-space: nowrap'>&nbsp;v_4^{(2)}&nbsp;=&nbsp;1</span></code>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+5
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 1.625
+	</td><td align='left'  valign='top'>
+ <code><span style='white-space: nowrap'>&nbsp;</span></code>  </td><td align='left'  valign='top'>
+ <code>
+<span style='white-space: nowrap'>&nbsp;v_5^{(1)}&nbsp;=&nbsp;v_2^{(1)}&nbsp;+&nbsp;v_4^{(1)}</span></code>
+
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 1.5
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+
+	<code>
+<span style='white-space: nowrap'>&nbsp;v_5^{(2)}&nbsp;=&nbsp;v_2^{(2)}&nbsp;+&nbsp;v_4^{(2)}</span></code>
+
+	</td><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ <code>
+<span style='white-space: nowrap'>&nbsp;v_5^{(2)}&nbsp;=&nbsp;1</span></code>
+
+</td></tr>
+</table>
+</center><b><big><a name="Return Value" id="Return Value">Return Value</a></big></b>
+<br>
+The second derivative of the return value for this case is
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;=&nbsp;&amp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_5^{(2)}&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\left[&nbsp;\Dpow{2}{t}&nbsp;v_5&nbsp;\right]_{t=0}&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\left[&nbsp;\Dpow{2}{t}&nbsp;f(&nbsp;x^{(0)}&nbsp;+&nbsp;x^{(1)}&nbsp;*&nbsp;t&nbsp;)&nbsp;\right]_{t=0}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;=&nbsp;&amp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x^{(1)}&nbsp;*&nbsp;\Dpow{2}{x}&nbsp;f&nbsp;(&nbsp;x^{(0)}&nbsp;)&nbsp;*&nbsp;x^{(1)}&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\Dpow{2}{x}&nbsp;f&nbsp;(&nbsp;x^{(0)}&nbsp;)<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+(We have used the fact that
+<code>
+<span style='white-space: nowrap'>&nbsp;x^{(1)}&nbsp;=&nbsp;1</span></code>
+ and <code>
+<span style='white-space: nowrap'>&nbsp;x^{(2)}&nbsp;=&nbsp;0</span></code>
+.)
+
+
+<br>
+<br>
+<b><big><a name="Verification" id="Verification">Verification</a></big></b>
+<br>
+The file <a href="exp_2_for2.cpp.htm" target="_top"><span style='white-space: nowrap'>exp_2_for2.cpp</span></a>
+ contains a routine 
+which verifies the values computed above.
+It returns true for success and false for failure.
+
+<br>
+<br>
+<b><big><a name="Exercises" id="Exercises">Exercises</a></big></b>
+
+<ol type="1"><li>
+Which statement in the routine defined by <a href="exp_2_for2.cpp.htm" target="_top"><span style='white-space: nowrap'>exp_2_for2.cpp</span></a>
+ uses 
+the values that are calculated by the routine 
+defined by <a href="exp_2_for1.cpp.htm" target="_top"><span style='white-space: nowrap'>exp_2_for1.cpp</span></a>
+ ?
+</li><li>
+
+Suppose that <code>
+<span style='white-space: nowrap'>&nbsp;x&nbsp;=&nbsp;.1</span></code>
+,
+what are the results of a zero, first, and second order forward sweep for 
+the operation sequence above; 
+i.e., what are the corresponding values for
+<code>
+<span style='white-space: nowrap'>&nbsp;v_i^{(k)}</span></code>
+ for <code>
+<span style='white-space: nowrap'>&nbsp;i&nbsp;=&nbsp;1,&nbsp;\ldots&nbsp;,&nbsp;5</span></code>
+ and <code>
+<span style='white-space: nowrap'>&nbsp;k&nbsp;=&nbsp;0,&nbsp;1,&nbsp;2</span></code>
+.
+</li><li>
+
+Create a modified version of <a href="exp_2_for2.cpp.htm" target="_top"><span style='white-space: nowrap'>exp_2_for2.cpp</span></a>
+ that verifies 
+the derivative values from the previous exercise.
+Also create and run a main program that reports the result
+of calling the modified version of
+<a href="exp_2_for2.cpp.htm" target="_top"><span style='white-space: nowrap'>exp_2_for2.cpp</span></a>
+.
+</li></ol>
+
+
+
+<hr>Input File: introduction/exp_apx/exp_2.omh
+
+</body>
+</html>

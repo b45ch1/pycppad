@@ -1,0 +1,137 @@
+<html><head>
+<title>The Tape Operator Codes</title>
+<meta name="description" id="description" content="The Tape Operator Codes">
+<meta name="keywords" id="keywords" content=" tape operator ">
+<style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+<script type='text/javascript' language='JavaScript' src='_opcode_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>OpCode</option>
+</select>
+</td>
+<td><a href="identicalequalpar.htm" target="_top">Prev</a>
+</td><td><a href="printop.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down1(this)'>
+<option>CppAD-&gt;</option>
+<option>Distribute</option>
+<option>NewFeature</option>
+<option>Define</option>
+<option>GreaterThanZero</option>
+<option>GreaterThanOrZero</option>
+<option>LessThanZero</option>
+<option>LessThanOrZero</option>
+<option>IdenticalPar</option>
+<option>IdenticalZero</option>
+<option>IdenticalOne</option>
+<option>IdenticalEqualPar</option>
+<option>OpCode</option>
+<option>printOp</option>
+<option>NumInd</option>
+<option>NumVar</option>
+<option>tape_link</option>
+<option>recorder</option>
+<option>player</option>
+<option>ADTape</option>
+<option>BoolFunLink</option>
+<option>Op</option>
+<option>forward_sweep</option>
+<option>ReverseSweep</option>
+<option>ForJacSweep</option>
+<option>RevJacSweep</option>
+</select>
+</td>
+<td>OpCode</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Description</option>
+</select>
+</td>
+</tr></table><br>
+<center><b><big><big>The Tape Operator Codes</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+<code><font color="blue"><span style='white-space: nowrap'>OpCode</span></font></code><i></i><code><font color="blue"><span style='white-space: nowrap'>op</span></font></code> <code><span style='white-space: nowrap'><br>
+</span></code><br>
+<b><big><a name="Description" id="Description">Description</a></big></b>
+<br>
+The value <i>op</i> is one of the following enum type values:
+<code><font color='blue'><pre style='display:inline'>
+
+namespace CppAD {
+
+	// alphabetical order (ignoring the Op at the end)
+	enum OpCode {
+		AbsOp,    //  abs(variable)
+		AcosOp,   // asin(variable)
+		AddpvOp,  //      parameter  + variable
+		AddvpOp,  //      variable   + parameter
+		AddvvOp,  //      variable   + variable
+		AsinOp,   // asin(variable)
+		AtanOp,   // atan(variable)
+		CExpOp,   // CondExp(cop, left, right, trueCase, falseCase)
+		ComOp,    // Compare(cop, result, left, right)
+		CosOp,    //  cos(variable)
+		CoshOp,   // cosh(variable)
+		DisOp,    //  dis(variable,    index)
+		DivpvOp,  //      parameter  / variable
+		DivvpOp,  //      variable   / parameter
+		DivvvOp,  //      variable   / variable
+		ExpOp,    //  exp(variable)
+		LdpOp,    //    z[parameter]
+		LdvOp,    //    z[variable]
+		InvOp,    //                             independent variable
+		LogOp,    //  log(variable)
+		MulpvOp,  //      parameter  * variable
+		MulvpOp,  //      variable   * parameter
+		MulvvOp,  //      variable   * variable
+		NonOp,    //                             space holder
+		ParOp,    //      parameter
+		PowvpOp,  //  pow(variable,    parameter)
+		PowpvOp,  //  pow(parameter,   variable)
+		PowvvOp,  //  pow(variable,    variable)
+		PripOp,   //      text         parameter
+		PrivOp,   //      text         parameter
+		SinOp,    //  sin(variable)
+		SinhOp,   // sinh(variable)
+		SqrtOp,   // sqrt(variable)
+		StppOp,   //    z[parameter] = parameter
+		StvpOp,   //    z[variable]  = parameter
+		StpvOp,   //    z[parameter] = variable
+		StvvOp,   //    z[variable]  = variable
+		SubpvOp,  //      parameter  - variable
+		SubvpOp,  //      variable   - parameter
+		SubvvOp   //      variable   - variable
+	};
+}
+</pre></font></code>
+
+
+
+<hr>Input File: cppad/local/op_code.hpp
+
+</body>
+</html>

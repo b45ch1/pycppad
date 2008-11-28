@@ -1,0 +1,624 @@
+<html><head>
+<title>Fitting an Ode Using the CppAD Interface to Ipopt</title>
+<meta name="description" id="description" content="Fitting an Ode Using the CppAD Interface to Ipopt">
+<meta name="keywords" id="keywords" content=" optimizing Ode solution using Ad example ipopt_cppad_nlp ">
+<style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+<script type='text/javascript' language='JavaScript' src='_ipopt_cppad_ode.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://www.coin-or.org/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Example</option>
+<option>General</option>
+<option>ipopt_cppad_nlp</option>
+<option>ipopt_cppad_ode.cpp</option>
+</select>
+</td>
+<td><a href="ipopt_cppad_simple.cpp.htm" target="_top">Prev</a>
+</td><td><a href="interface2c.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down3(this)'>
+<option>Example-&gt;</option>
+<option>General</option>
+<option>ExampleUtility</option>
+<option>ListAllExamples</option>
+<option>test_vector</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>General-&gt;</option>
+<option>ipopt_cppad_nlp</option>
+<option>Interface2C.cpp</option>
+<option>JacMinorDet.cpp</option>
+<option>JacLuDet.cpp</option>
+<option>HesMinorDet.cpp</option>
+<option>HesLuDet.cpp</option>
+<option>OdeStiff.cpp</option>
+<option>ode_taylor.cpp</option>
+<option>ode_taylor_adolc.cpp</option>
+<option>StackMachine.cpp</option>
+<option>mul_level</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>ipopt_cppad_nlp-&gt;</option>
+<option>ipopt_cppad_windows</option>
+<option>ipopt_cppad_simple.cpp</option>
+<option>ipopt_cppad_ode.cpp</option>
+</select>
+</td>
+<td>ipopt_cppad_ode.cpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Purpose</option>
+<option>General Problem</option>
+<option>ODE Discrete Approximation</option>
+<option>Optimization Problem</option>
+<option>eval_r(k, u)</option>
+<option>Source Code</option>
+</select>
+</td>
+</tr></table><br>
+
+
+
+
+<center><b><big><big>Fitting an Ode Using the CppAD Interface to Ipopt</big></big></b></center>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+The CppAD interface to Ipopt 
+<a href="ipopt_cppad_nlp.htm" target="_top"><span style='white-space: nowrap'>ipopt_cppad_nlp</span></a>
+
+enables one to represent an optimization problem
+with a large number of variables and constraints in terms of functions
+with a few domain and range variables.
+This is a demonstration of how to use this representation.
+
+<br>
+<br>
+<b><big><a name="General Problem" id="General Problem">General Problem</a></big></b>
+<br>
+This example solves a problem of the form
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+{\rm&nbsp;minimize}&nbsp;\;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\sum_{k=0}^{nd-1}&nbsp;H_k&nbsp;(&nbsp;y(&nbsp;td[k+1]&nbsp;,&nbsp;a&nbsp;)&nbsp;,&nbsp;a&nbsp;)&nbsp;\;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{\rm&nbsp;with&nbsp;\;&nbsp;respect&nbsp;\;&nbsp;to}&nbsp;\;&nbsp;a&nbsp;\in&nbsp;\R^{na}<br>
+\]&nbsp;</span></code>
+
+where the function 
+<code>
+<span style='white-space: nowrap'>&nbsp;H_k&nbsp;:&nbsp;\R^{ny}&nbsp;\times&nbsp;\R^{na}&nbsp;\rightarrow&nbsp;\R</span></code>
+ is known 
+and the function <code>
+<span style='white-space: nowrap'>&nbsp;y&nbsp;:&nbsp;\R&nbsp;\times&nbsp;\R^{na}&nbsp;\rightarrow&nbsp;\R^{ny}</span></code>
+ 
+is the solution of the initial value ordinary differential equation
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y(0,&nbsp;a)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;&nbsp;F(a)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\partial_t&nbsp;y(t,&nbsp;a)&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;G(&nbsp;y(t,&nbsp;a)&nbsp;,&nbsp;a&nbsp;)<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+
+
+<br>
+<br>
+<b><big><a name="ODE Discrete Approximation" id="ODE Discrete Approximation">ODE Discrete Approximation</a></big></b>
+<br>
+The ODE solution is approximated using a trapezoidal rule with <code>
+<span style='white-space: nowrap'>&nbsp;ns</span></code>
+
+uniformly spaced time intervals before the first measurement time
+and between all the other measurement times. 
+We use <code>
+<span style='white-space: nowrap'>&nbsp;ts[M]</span></code>
+ for <code>
+<span style='white-space: nowrap'>&nbsp;M&nbsp;=&nbsp;0&nbsp;,&nbsp;\ldots&nbsp;,&nbsp;ns&nbsp;*&nbsp;nd</span></code>
+ to denote
+the corresponding time points; i.e.,
+for <code>
+<span style='white-space: nowrap'>&nbsp;k&nbsp;=&nbsp;0&nbsp;,&nbsp;\ldots&nbsp;,&nbsp;nd&nbsp;-&nbsp;1</span></code>
+ 
+and for <code>
+<span style='white-space: nowrap'>&nbsp;\ell&nbsp;=&nbsp;0&nbsp;,&nbsp;\ldots&nbsp;,&nbsp;ns</span></code>
+
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dt[k&nbsp;*&nbsp;ns&nbsp;+&nbsp;\ell&nbsp;]&nbsp;&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;\frac{td[k+1]&nbsp;-&nbsp;td[k]}{ns}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ts[&nbsp;k&nbsp;*&nbsp;ns&nbsp;+&nbsp;\ell&nbsp;]&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;td[k]&nbsp;+&nbsp;dt[k&nbsp;*&nbsp;ns&nbsp;+&nbsp;\ell&nbsp;]&nbsp;*&nbsp;\ell<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+where the value <code>
+<span style='white-space: nowrap'>&nbsp;td[0]</span></code>
+ is defined to be zero.
+We use <code>
+<span style='white-space: nowrap'>&nbsp;y[M]</span></code>
+ to denote our approximate value for 
+<code>
+<span style='white-space: nowrap'>&nbsp;y(&nbsp;ts[M]&nbsp;,&nbsp;a)</span></code>
+.
+Our trapezoidal approximation to the differential equation is given by
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y[M+1]&nbsp;=&nbsp;y[M]&nbsp;+&nbsp;\frac{G(&nbsp;y[M]&nbsp;,&nbsp;a)&nbsp;+&nbsp;G(&nbsp;y[M+1]&nbsp;,&nbsp;a&nbsp;)}{2}&nbsp;*&nbsp;dt[M]<br>
+\]&nbsp;</span></code>
+
+for <code>
+<span style='white-space: nowrap'>&nbsp;M&nbsp;=&nbsp;0&nbsp;,&nbsp;\ldots&nbsp;,&nbsp;ns&nbsp;*&nbsp;nd&nbsp;-&nbsp;1</span></code>
+.
+
+<br>
+<br>
+<b><big><a name="Optimization Problem" id="Optimization Problem">Optimization Problem</a></big></b>
+<br>
+We use <code>
+<span style='white-space: nowrap'>&nbsp;x</span></code>
+ for the argument to the  optimization problem where
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;=&nbsp;(&nbsp;y[1]&nbsp;,&nbsp;y[2]&nbsp;,&nbsp;\ldots&nbsp;,&nbsp;y[ns&nbsp;*&nbsp;nd]&nbsp;,&nbsp;a&nbsp;)<br>
+\]&nbsp;</span></code>
+
+Note that the initial value <code>
+<span style='white-space: nowrap'>&nbsp;y[0]</span></code>
+ is given by <code>
+<span style='white-space: nowrap'>&nbsp;F(a)</span></code>
+.
+The optimization problem that we solve includes our ODE approximation
+as constraints; i.e.
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{lcr}<br>
+{\rm&nbsp;minimize}&nbsp;&amp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\sum_{k=0}^{nd-1}&nbsp;H_k&nbsp;(&nbsp;y[ns&nbsp;*&nbsp;(k+1)],&nbsp;a&nbsp;)&nbsp;&amp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{\rm&nbsp;w.r.t.}&nbsp;\;&nbsp;x&nbsp;\in&nbsp;\R^{ns&nbsp;*&nbsp;nd&nbsp;*&nbsp;ny&nbsp;+&nbsp;na}<br>
+\\<br>
+{\rm&nbsp;subject&nbsp;\;&nbsp;to}&nbsp;&amp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;=&nbsp;y[M+1]&nbsp;-&nbsp;y[M]&nbsp;-&nbsp;\frac{G(&nbsp;y[M]&nbsp;,&nbsp;a)&nbsp;+&nbsp;G(&nbsp;y[M+1]&nbsp;,&nbsp;a&nbsp;)}{2}&nbsp;*&nbsp;dt[M]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;{\rm&nbsp;for}&nbsp;\;&nbsp;M&nbsp;=&nbsp;0&nbsp;,&nbsp;\ldots&nbsp;,&nbsp;ns&nbsp;*&nbsp;nd<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+
+<br>
+<br>
+<b><big><a name="eval_r(k, u)" id="eval_r(k, u)">eval_r(k, u)</a></big></b>
+<br>
+The <code><font color="blue">eval_r</font></code> function in the code below uses the index <i>k</i>
+and the vector u in the following way:
+
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+<br>
+0&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nd</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+In this case, <code>
+<span style='white-space: nowrap'>&nbsp;u&nbsp;=&nbsp;[&nbsp;y[M],&nbsp;y[M+1],&nbsp;a]&nbsp;\in&nbsp;\R^{ny&nbsp;+&nbsp;ny&nbsp;+&nbsp;na}</span></code>
+ and
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+r_k&nbsp;(u)&nbsp;=&nbsp;y[M+1]&nbsp;-&nbsp;y[M]&nbsp;-&nbsp;\frac{G(&nbsp;y[M]&nbsp;,&nbsp;a)&nbsp;+&nbsp;G(&nbsp;y[M+1]&nbsp;,&nbsp;a&nbsp;)}{2}&nbsp;*&nbsp;dt[M]<br>
+\]&nbsp;</span></code>
+
+
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nd</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;<br>
+</span></font></code>
+In this case, <code>
+<span style='white-space: nowrap'>&nbsp;u&nbsp;=&nbsp;[&nbsp;y[1],&nbsp;a]&nbsp;\in&nbsp;\R^{ny&nbsp;+&nbsp;na}</span></code>
+ and
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+r_k&nbsp;(u)&nbsp;=&nbsp;y[1]&nbsp;-&nbsp;F(a)&nbsp;-&nbsp;\frac{G(&nbsp;F(a)&nbsp;,&nbsp;a)&nbsp;+&nbsp;G(&nbsp;y[1]&nbsp;,&nbsp;a&nbsp;)}{2}&nbsp;*&nbsp;dt[M]<br>
+\]&nbsp;</span></code>
+
+
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nd</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+For <code>
+<span style='white-space: nowrap'>&nbsp;k&nbsp;=&nbsp;nd&nbsp;+&nbsp;1&nbsp;,&nbsp;...&nbsp;,&nbsp;nd&nbsp;+&nbsp;nd</span></code>
+,  
+define <code>
+<span style='white-space: nowrap'>&nbsp;M&nbsp;=&nbsp;(k&nbsp;-&nbsp;nd)&nbsp;*&nbsp;ns</span></code>
+.
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
+ to 
+<code><font color="blue"><span style='white-space: nowrap'>r_eval</span></font></code>
+ is
+given by <code>
+<span style='white-space: nowrap'>&nbsp;u&nbsp;=&nbsp;[&nbsp;y[M],&nbsp;a&nbsp;]&nbsp;\in&nbsp;\R^{ny&nbsp;+&nbsp;na}</span></code>
+,
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;r_k&nbsp;(u)&nbsp;=&nbsp;H_{nd&nbsp;+&nbsp;1&nbsp;-&nbsp;k}&nbsp;(&nbsp;y[M],&nbsp;a&nbsp;)<br>
+\]&nbsp;</span></code>
+
+
+
+<br>
+<br>
+<b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
+<br>
+Almost all the code below is for the general problem but some of it
+for a specific case defined by the function <code><font color="blue">y_one(t)</font></code>.
+<code><font color="blue">
+<pre style='display:inline'>
+# include &quot;ipopt_cppad_nlp.hpp&quot;
+
+// include a definition for Number.
+typedef Ipopt::Number Number;
+
+namespace {
+	//------------------------------------------------------------------
+	// simulated data
+	Number a0 = 1.;  // simulation value for a[0]
+	Number a1 = 2.;  // simulation value for a[1]
+	Number a2 = 1.;  // simulatioln value for a[2]
+
+	// function used to simulate data
+	Number y_one(Number t)
+	{	Number y_1 =  a0*a1 * (exp(-a2*t) - exp(-a1*t)) / (a1 - a2);
+		return y_1;
+	}
+
+	// time points were we have data (no data at first point)
+	double td[] = { 0.,        .5,         1.,         1.5  }; 
+	// Simulated data for case with no noise (first point is not used)
+	double yd[] = { 0.,  y_one(.5),  y_one(1.),  y_one(1.5) };
+	// number of actual data values
+	size_t nd   = sizeof(td) / sizeof(td[0]) - 1;
+}
+// ---------------------------------------------------------------------------
+namespace { // Begin empty namespace 
+
+size_t ny = 2;   // dimension of y(t, a) for this case
+size_t na = 3;   // dimension of a for this case 
+size_t ns = 5;   // number of grid intervals with in each data interval
+
+// F(a) = y(0, a); i.e., initial condition
+template &lt;class Vector&gt;
+Vector eval_F(const Vector &amp;a)
+{	// This particual F is a case where ny == 2 and na == 3	
+	Vector F(ny);
+	// y_0 (t) = a[0]*exp(-a[1] * t)
+	F[0] = a[0];
+	// y_1 (t) = a[0]*a[1]*(exp(-a[2] * t) - exp(-a[1] * t))/(a[1] - a[2])
+	F[1] = 0.; 
+	return F;
+}
+// G(y, a) =  y'(t, a); i.e. ODE
+template &lt;class Vector&gt;
+Vector eval_G(const Vector &amp;y , const Vector &amp;a)
+{	// This particular G is for a case where ny == 2 and na == 3
+	Vector G(ny);
+	// y_0 (t) = a[0]*exp(-a[1] * t)
+	G[0] = -a[1] * y[0];  
+	// y_1 (t) = a[0]*a[1]*(exp(-a[2] * t) - exp(-a[1] * t))/(a[1] - a[2])
+	G[1] = - G[0] - a[2] * y[1]; 
+	return G;
+} 
+// H(k, y, a) = contribution to objective at k-th data point
+template &lt;class Scalar, class Vector&gt;
+Scalar eval_H(size_t k, const Vector &amp;y, const Vector &amp;a)
+{	// This particular H is for a case where y_1 (t) is measured
+	Scalar diff = yd[k+1] - y[1];
+ 	return diff * diff;
+}
+
+// -----------------------------------------------------------------------------
+class FG_info : public ipopt_cppad_fg_info
+{
+private:
+	bool retape_;
+public:
+	// derived class part of constructor
+	FG_info(bool retape)
+	: retape_ (retape)
+	{ }
+	size_t number_functions(void)
+	{	return nd + 1 + nd; }
+	ADVector eval_r(size_t k, const ADVector &amp;u)
+	{	size_t j;
+		// objective function case
+		if( k &gt; nd )
+		{	// We use a differnent k for each data point
+			// (there may be more efficient ways to do this).
+			ADVector r(1);
+			size_t j;
+			// u is [y(t) , a] where t = td[ell + 1]
+			ADVector y_M(ny), a(na);
+			for(j = 0; j &lt; ny; j++)
+				y_M[j] = u[j];
+			for(j = 0; j &lt; na; j++)
+				a[j] = u[ny + j];
+			r[0] = eval_H&lt;ADNumber&gt;(k - nd - 1, y_M, a);
+			return r;
+		}
+		ADVector y_M(ny), y_M1(ny), a(na);
+		Number dt;
+		if( k == nd )
+		{	// u = [y_M1 , a] where y_M1 is y(t) at t = ts[1]
+			for(j = 0; j &lt; ny; j++)
+				y_M1[j] = u[j];
+			for(j = 0; j &lt; na; j++)
+				a[j] = u[ny + j];
+			// y_M is value of y(t) at t = ts[0]
+			y_M = eval_F(a);
+			// size of subinterval
+			dt = (td[1] - td[0]) / Number(ns);
+		}
+		else
+		{	// u = [y_M, y_M1, a] where y_M is y(t) at 
+			// t = ts[ k * ns + ell + 1 ] for k = 0 case 
+			// t = ts[ k * ns + ell ]     for 0 &lt; k &lt; nd cases
+			for(j = 0; j &lt; ny; j++)
+			{	y_M[j]  = u[j];
+				y_M1[j] = u[ny + j];
+			}
+			for(j = 0; j &lt; na; j++)
+				a[j] = u[2 * ny + j];
+			dt = (td[k+1] - td[k]) / Number(ns);
+		}
+		ADVector G_M   = eval_G(y_M,  a);
+		ADVector G_M1  = eval_G(y_M1, a);
+		ADVector r(ny);
+		for(j = 0; j &lt; ny; j++)
+			r[j] = y_M1[j] - y_M[j] - (G_M1[j] + G_M[j]) * dt/2.;
+		return r;
+	}
+	// Operation sequence does not depend on u so retape = false should
+	// work and be faster. Allow for both for testing.
+	bool retape(size_t k)
+	{	return retape_; }
+	// size of the vector u in eval_r
+	size_t domain_size(size_t k)
+	{	if( k &gt; nd )
+			return ny + na;   // objective function
+		if( k == nd )
+			return ny + na;  // initial difference equation
+		return 2 * ny + na;      // other difference equations
+	}
+	// size of the vector r in eval_r
+	size_t range_size(size_t k)
+	{	if( k &gt; nd )
+			return 1;
+		return ny; 
+	}
+	size_t number_terms(size_t k)
+	{
+		if( k &gt; nd )
+			return 1;        // one objective function term
+		if( k == nd )
+			return 1;        // one initial difference equation
+		if( k == 0 )
+			return ns - 1;   // exclude initial difference equation
+		return ns;               // number difference equations
+	}
+	// k is index of time interal between data values
+	// ell is index of grid point within data interval
+	void index(size_t k, size_t ell, SizeVector&amp; I, SizeVector&amp; J)
+	{	size_t i, j;
+		// number of constraints, one for each subinterval interval
+		// times the number of components in y(t)
+		size_t m = nd * ns * ny;
+		if( k &gt; nd )
+		{	// must use range index zero for the objective function
+			I[0] = 0;
+			// The first ny components of u is y(t) at 
+			// 	t = td[k-nd] = ts[(k-nd)*ns]
+			// Note that x starts with y(t) at time ts[1]. 
+			// Also Note that there are ns subintervals between 
+			// each data point.
+			for(j = 0; j &lt; ny; j++)
+				J[j] = ( (k - nd) * ns - 1) * ny + j;
+			// All of a (which is last na components of x)
+			for(j = 0; j &lt; na; j++)
+				J[ny + j] = m + j; 
+			return;
+		}
+		// special grid equaiton for initial value
+		if( k == nd )
+		{	// range index in fg for first ny components of g
+			for(i = 0; i &lt; ny; i++)
+				I[i] = 1 + i;
+			// u starts with the first j components of x
+			// (which corresponding to y(t) at ts[1])
+			for(j = 0; j &lt; ny; j++)
+				J[j] = j;
+			// following that, u contains the vector a 
+			for(j = 0; j &lt; na; j++)
+				J[ny + j] = m + j;
+			return;
+		}
+		// index of first grid point in ts for difference equation
+		size_t M; 
+		if( k == 0 )
+			M = k * ns + ell + 1;
+		else	M = k * ns + ell;
+		for(j = 0; j &lt; ny; j++)
+		{	J[j]          = (M - 1) * ny  + j; // index of y_M in x
+			J[ny + j]     = J[j] + ny;         // index of y_M1
+		}
+		for(j = 0; j &lt; na; j++)
+			J[2 * ny + j] = m + j;                      // a
+		// There are ny difference equations for each grid point.
+		// (add one for the objective function index).
+		for(i = 0; i &lt; ny; i++)
+			I[i] = M * ny + 1 + i;
+	} 
+};
+
+} // End empty namespace
+// ---------------------------------------------------------------------------
+
+bool ipopt_cppad_ode(void)
+{	bool ok = true;
+	size_t j, I;
+
+	// number of constraints (range dimension of g)
+	size_t m = nd * ns * ny;
+	// number of independent variables (domain dimension for f and g)
+	size_t n = m + na;
+	// the argument vector for the optimization is 
+	// y(t) at t = ts[1] , ... , ts[nd*ns] , followed by a
+	NumberVector x_i(n), x_l(n), x_u(n);
+	for(j = 0; j &lt; m; j++)
+	{	x_i[j] = 0.;       // initial y(t) for optimization
+		x_l[j] = -1.0e19;  // no lower limit
+		x_u[j] = +1.0e19;  // no upper limit
+	}
+	for(j = 0; j &lt; na; j++)
+	{	x_i[m + j ] = .5;       // initiali a for optimization
+		x_l[m + j ] =  -1.e19;  // no lower limit
+		x_u[m + j ] =  +1.e19;  // no upper
+	}
+	// all of the difference equations are constrained to the value zero
+	NumberVector g_l(m), g_u(m);
+	for(I = 0; I &lt; m; I++)
+	{	g_l[I] = 0.;
+		g_u[I] = 0.;
+	}
+	// derived class object
+	
+	for(size_t icase = 0; icase &lt;= 1; icase++)
+	{	// Retaping is slow, so only do icase = 0 for large values 
+		// of ns.
+		bool retape = icase != 0;
+
+		// object defining the objective f(x) and constraints g(x)
+		FG_info fg_info(retape);
+
+		// create the CppAD Ipopt interface
+		ipopt_cppad_solution solution;
+		Ipopt::SmartPtr&lt;Ipopt::TNLP&gt; cppad_nlp = new ipopt_cppad_nlp(
+			n, m, x_i, x_l, x_u, g_l, g_u, &amp;fg_info, &amp;solution
+		);
+
+		// Create an Ipopt application
+		using Ipopt::IpoptApplication;
+		Ipopt::SmartPtr&lt;IpoptApplication&gt; app = new IpoptApplication();
+
+		// turn off any printing
+		app-&gt;Options()-&gt;SetIntegerValue(&quot;print_level&quot;, -2);
+
+		// maximum number of iterations
+		app-&gt;Options()-&gt;SetIntegerValue(&quot;max_iter&quot;, 30);
+
+		// approximate accuracy in first order necessary conditions;
+		// see Mathematical Programming, Volume 106, Number 1, 
+		// Pages 25-57, Equation (6)
+		app-&gt;Options()-&gt;SetNumericValue(&quot;tol&quot;, 1e-9);
+
+		// Derivative testing is very slow for large problems
+		// so comment this out if you use a large value for ns.
+		app-&gt;Options()-&gt; SetStringValue(
+			&quot;derivative_test&quot;, &quot;second-order&quot;
+		);
+
+		// Initialize the application and process the options
+		Ipopt::ApplicationReturnStatus status = app-&gt;Initialize();
+		ok    &amp;= status == Ipopt::Solve_Succeeded;
+
+		// Run the application
+		status = app-&gt;OptimizeTNLP(cppad_nlp);
+		ok    &amp;= status == Ipopt::Solve_Succeeded;
+
+		// Check some of the return values
+		Number rel_tol = 1e-2; // use a larger value of ns
+		Number abs_tol = 1e-2; // to get better accuracy here.
+		Number check_a[] = {a0, a1, a2}; // see the y_one function
+		for(j = 0; j &lt; na; j++)
+		{
+			ok &amp;= CppAD::NearEqual( 
+				check_a[j], solution.x[m+j], rel_tol, abs_tol
+			);
+		}
+		rel_tol = 1e-9;
+		abs_tol = 1e-9;
+
+		// split out return values
+		NumberVector a(na), y_0(ny), y_1(ny), y_2(ny);
+		for(j = 0; j &lt; na; j++)
+			a[j] = solution.x[m+j];
+		y_0 = eval_F(a);
+		for(j = 0; j &lt; ny; j++)
+		{	y_1[j] = solution.x[j];
+			y_2[j] = solution.x[ny + j];
+		} 
+		//
+		// check the initial difference equation
+		NumberVector G_0 = eval_G(y_0, a);
+		NumberVector G_1 = eval_G(y_1, a);
+		Number dt = (td[1] - td[0]) / Number(ns);
+		for(j = 0; j &lt; ny; j++)
+		{	Number check = y_1[j] - y_0[j] - (G_1[j]+G_0[j])*dt/2;
+			ok &amp;= CppAD::NearEqual( check, 0., rel_tol, abs_tol);
+		}
+		//
+		// check the second difference equation
+		NumberVector G_2 = eval_G(y_2, a);
+		if( ns == 1 )
+			dt = (td[2] - td[1]) / Number(ns);
+		for(j = 0; j &lt; ny; j++)
+		{	Number check = y_2[j] - y_1[j] - (G_2[j]+G_1[j])*dt/2;
+			ok &amp;= CppAD::NearEqual( check, 0., rel_tol, abs_tol);
+		}
+		//
+		// check the objective function (specialized to this case)
+		Number check = 0.;
+		NumberVector y_M(ny);
+		for(size_t k = 0; k &lt; nd; k++)
+		{	for(j = 0; j &lt; ny; j++)
+			{	size_t M = (k + 1) * ns;
+				y_M[j] =  solution.x[(M-1) * ny + j];
+			}
+			check += eval_H&lt;Number&gt;(k, y_M, a);
+		}
+		Number obj_value = solution.obj_value;
+		ok &amp;= CppAD::NearEqual(check, obj_value, rel_tol, abs_tol);
+	}
+	return ok;
+}
+</pre>
+</font></code>
+
+
+
+<hr>Input File: ipopt_cppad/ipopt_cppad_ode.cpp
+
+</body>
+</html>

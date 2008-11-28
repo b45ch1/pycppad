@@ -1,0 +1,139 @@
+<html><head>
+<title>Tracking Use of New and Delete: Example and Test</title>
+<meta name="description" id="description" content="Tracking Use of New and Delete: Example and Test">
+<meta name="keywords" id="keywords" content=" new example test delete ">
+<style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+<script type='text/javascript' language='JavaScript' src='_tracknewdel.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://www.coin-or.org/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>library</option>
+<option>TrackNewDel</option>
+<option>TrackNewDel.cpp</option>
+</select>
+</td>
+<td><a href="tracknewdel.htm" target="_top">Prev</a>
+</td><td><a href="preprocessor.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>library</option>
+<option>preprocessor</option>
+<option>Example</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>library-&gt;</option>
+<option>ErrorHandler</option>
+<option>NearEqual</option>
+<option>speed_test</option>
+<option>SpeedTest</option>
+<option>NumericType</option>
+<option>CheckNumericType</option>
+<option>SimpleVector</option>
+<option>CheckSimpleVector</option>
+<option>nan</option>
+<option>pow_int</option>
+<option>Poly</option>
+<option>LuDetAndSolve</option>
+<option>RombergOne</option>
+<option>RombergMul</option>
+<option>Runge45</option>
+<option>Rosen34</option>
+<option>OdeErrControl</option>
+<option>OdeGear</option>
+<option>OdeGearControl</option>
+<option>BenderQuad</option>
+<option>LuRatio</option>
+<option>std_math_unary</option>
+<option>CppAD_vector</option>
+<option>TrackNewDel</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>TrackNewDel-&gt;</option>
+<option>TrackNewDel.cpp</option>
+</select>
+</td>
+<td>TrackNewDel.cpp</td>
+<td>Headings</td>
+</tr></table><br>
+
+
+<center><b><big><big>Tracking Use of New and Delete: Example and Test</big></big></b></center>
+<code><font color="blue"><pre style='display:inline'># include &lt;cppad/track_new_del.hpp&gt;
+
+bool TrackNewDel(void)
+{	bool ok = true;
+
+	// initial count
+	size_t count = CPPAD_TRACK_COUNT();
+
+	// allocate an array of lenght 5
+	double *ptr = 0;
+	size_t  newlen = 5;
+	ptr = CPPAD_TRACK_NEW_VEC(newlen, ptr);
+
+	// copy data into the array
+	size_t ncopy = newlen;
+	size_t i;
+	for(i = 0; i &lt; ncopy; i++)
+		ptr[i] = double(i);
+
+	// extend the buffer to be lenght 10
+	newlen = 10;
+	ptr    = CPPAD_TRACK_EXTEND(newlen, ncopy, ptr);
+		
+	// copy data into the new part of the array
+	for(i = ncopy; i &lt; newlen; i++)
+		ptr[i] = double(i);
+
+	// check the values in the array
+ 	for(i = 0; i &lt; newlen; i++)
+		ok &amp;= (ptr[i] == double(i));
+
+	// free the memory allocated since previous call to TrackCount
+	CPPAD_TRACK_DEL_VEC(ptr);
+
+	// check for memory leak
+	ok &amp;= (count == CPPAD_TRACK_COUNT());
+
+	return ok;
+}
+
+</pre>
+</font></code>
+
+
+<hr>Input File: example/track_new_del.cpp
+
+</body>
+</html>

@@ -1,0 +1,5 @@
+This PyCPPAD, a Python module to differentiate complex algorithms written in Python.
+It wraps the functionality of the library CPPAD (C++).
+
+
+

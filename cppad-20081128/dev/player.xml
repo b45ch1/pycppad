@@ -1,0 +1,430 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Playback a CppAD Operation Sequence</title>
+<meta name="description" id="description" content="Playback a CppAD Operation Sequence"/>
+<meta name="keywords" id="keywords" content=" tape playback player Erase Getop Getind Getpar Getvecind Numop Numind Numpar Numvecind Replaceind recorder Totnumvar Memory "/>
+<style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+<script type='text/javascript' language='JavaScript' src='_player_xml.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>player</option>
+</select>
+</td>
+<td><a href="recorder.xml" target="_top">Prev</a>
+</td><td><a href="adtape.xml" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down1(this)'>
+<option>CppAD-&gt;</option>
+<option>Distribute</option>
+<option>NewFeature</option>
+<option>Define</option>
+<option>GreaterThanZero</option>
+<option>GreaterThanOrZero</option>
+<option>LessThanZero</option>
+<option>LessThanOrZero</option>
+<option>IdenticalPar</option>
+<option>IdenticalZero</option>
+<option>IdenticalOne</option>
+<option>IdenticalEqualPar</option>
+<option>OpCode</option>
+<option>printOp</option>
+<option>NumInd</option>
+<option>NumVar</option>
+<option>tape_link</option>
+<option>recorder</option>
+<option>player</option>
+<option>ADTape</option>
+<option>BoolFunLink</option>
+<option>Op</option>
+<option>forward_sweep</option>
+<option>ReverseSweep</option>
+<option>ForJacSweep</option>
+<option>RevJacSweep</option>
+</select>
+</td>
+<td>player</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Default Constructors</option>
+<option>Assignment Operator</option>
+<option>Erase</option>
+<option>GetOp</option>
+<option>GetInd</option>
+<option>GetPar</option>
+<option>GetVecInd</option>
+<option>NumOp</option>
+<option>NumInd</option>
+<option>NumPar</option>
+<option>NumVecInd</option>
+<option>ReplaceInd</option>
+<option>TotNumVar</option>
+<option>Memory</option>
+</select>
+</td>
+</tr></table><br/>
+ 
+
+
+
+<center><b><big><big>Playback a CppAD Operation Sequence</big></big></b></center>
+<br/>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br/>
+
+<code><font color="blue"><span style='white-space: nowrap'>player&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>play</span></font></i></code>
+
+
+
+<br/>
+<br/>
+<b><big><a name="Default Constructors" id="Default Constructors">Default Constructors</a></big></b>
+<br/>
+The default constructor 
+
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;player&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>play</span></font></i><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>
+creates an empty operation sequence.
+
+<br/>
+<br/>
+<b><big><a name="Assignment Operator" id="Assignment Operator">Assignment Operator</a></big></b>
+<br/>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>rec</span></font></i></code>
+ is 
+
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;const&#xA0;recorder&#xA0;&amp;</span></font><i><font color="black"><span style='white-space: nowrap'>rec</span></font></i><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>
+object, the assignment operation 
+
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>play</span></font></i><font color="blue"><span style='white-space: nowrap'>&#xA0;=&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>rec</span></font></i><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>
+copies the operation sequence from the 
+<a href="recorder.xml" target="_top"><span style='white-space: nowrap'>recorder</span></a>
+ 
+<code><i><font color="black"><span style='white-space: nowrap'>rec</span></font></i></code>
+ to the <code><font color="blue">player</font></code> 
+<code><i><font color="black"><span style='white-space: nowrap'>play</span></font></i></code>
+.
+
+<br/>
+<br/>
+<b><big><a name="Erase" id="Erase">Erase</a></big></b>
+
+
+<br/>
+The function call
+
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;void&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>play</span></font></i><font color="blue"><span style='white-space: nowrap'>.Erase()<br/>
+</span></font></code>
+erases the operation sequence stored in 
+<code><i><font color="black"><span style='white-space: nowrap'>play%</span></font></i></code>
+
+(the operation sequence is empty after this operation).
+The buffers used to store the tape information are returned
+to the system (so as to conserve on memory).
+
+<br/>
+<br/>
+<b><big><a name="GetOp" id="GetOp">GetOp</a></big></b>
+
+<br/>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>op</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+ have prototypes
+
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;OpCode&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>op</span></font></i><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>
+The syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>op</span></font></i><font color="blue"><span style='white-space: nowrap'>&#xA0;=&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>play</span></font></i><font color="blue"><span style='white-space: nowrap'>.GetOp(</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br/>
+</span></font></code>
+sets 
+<code><i><font color="black"><span style='white-space: nowrap'>op</span></font></i></code>
+ to the operation code for the <i>i</i>-th operation in the 
+operation sequence.
+
+<br/>
+<br/>
+<b><big><a name="GetInd" id="GetInd">GetInd</a></big></b>
+
+<br/>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>offset</span></font></i></code>
+ have prototypes
+
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;const&#xA0;size_t&#xA0;*</span></font><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>offset</span></font></i><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>
+The syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'>&#xA0;=&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>play</span></font></i><font color="blue"><span style='white-space: nowrap'>.GetInd(</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>,&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>offset</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br/>
+</span></font></code>
+returns a pointer to the 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ the values that start at the 
+specified offset in the operation sequence index vector.
+
+<br/>
+<br/>
+<b><big><a name="GetPar" id="GetPar">GetPar</a></big></b>
+
+<br/>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+ have prototypes
+
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;const&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&#xA0;*</span></font><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>
+The syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>p</span></font></i><font color="blue"><span style='white-space: nowrap'>&#xA0;=&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>play</span></font></i><font color="blue"><span style='white-space: nowrap'>.GetPar(</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br/>
+</span></font></code>
+returns a pointer to the value with index 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+
+in the operation sequence parameter vector.
+
+<br/>
+<br/>
+<b><big><a name="GetVecInd" id="GetVecInd">GetVecInd</a></big></b>
+
+<br/>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>iv</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+ have prototypes
+
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>iv</span></font></i><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>
+the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>iv</span></font></i><font color="blue"><span style='white-space: nowrap'>&#xA0;=&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>play</span></font></i><font color="blue"><span style='white-space: nowrap'>.GetVecInd(</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br/>
+</span></font></code>
+returns the value with index 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+ in the
+operation sequence vec_ind vector.
+
+<br/>
+<br/>
+<b><big><a name="NumOp" id="NumOp">NumOp</a></big></b>
+
+<br/>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>
+the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>&#xA0;=&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>play</span></font></i><font color="blue"><span style='white-space: nowrap'>.NumOp()<br/>
+</span></font></code>
+sets 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ to the number of 
+operations in the operation sequence.
+
+<br/>
+<br/>
+<b><big><a name="NumInd" id="NumInd">NumInd</a></big></b>
+
+<br/>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>
+the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>&#xA0;=&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>play</span></font></i><font color="blue"><span style='white-space: nowrap'>.NumInd()<br/>
+</span></font></code>
+sets 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ to the number of elements in the 
+operation sequence index vector.
+
+<br/>
+<br/>
+<b><big><a name="NumPar" id="NumPar">NumPar</a></big></b>
+
+<br/>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>
+the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>&#xA0;=&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>play</span></font></i><font color="blue"><span style='white-space: nowrap'>.NumPar()<br/>
+</span></font></code>
+sets 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ to the number of parameters
+in the operation sequence parameter vector.
+
+<br/>
+<br/>
+<b><big><a name="NumVecInd" id="NumVecInd">NumVecInd</a></big></b>
+
+<br/>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>
+the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>&#xA0;=&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>play</span></font></i><font color="blue"><span style='white-space: nowrap'>.NumVecInd()<br/>
+</span></font></code>
+sets 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ to the number of element in the 
+operation sequence vec_ind vector.
+
+
+<br/>
+<br/>
+<b><big><a name="ReplaceInd" id="ReplaceInd">ReplaceInd</a></big></b>
+
+<br/>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+ have prototypes
+
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>
+the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>play</span></font></i><font color="blue"><span style='white-space: nowrap'>.ReplaceInd(</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>,&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br/>
+</span></font></code>
+replaces the element with index 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+,
+in the operation sequence index vector,
+with the value 
+<code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
+.
+
+<br/>
+<br/>
+<b><big><a name="TotNumVar" id="TotNumVar">TotNumVar</a></big></b>
+
+
+<br/>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>
+the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>&#xA0;=&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>rec</span></font></i><font color="blue"><span style='white-space: nowrap'>.TotNumVar()<br/>
+</span></font></code>
+sets 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ to the number of variables that are in the 
+operation sequence.
+
+
+<br/>
+<br/>
+<b><big><a name="Memory" id="Memory">Memory</a></big></b>
+
+
+<br/>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>
+the syntax
+
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>&#xA0;=&#xA0;</span></font><i><font color="black"><span style='white-space: nowrap'>rec</span></font></i><font color="blue"><span style='white-space: nowrap'>.Memory()<br/>
+</span></font></code>
+sets 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ to the number of memory units (<code><font color="blue">sizeof</font></code>) 
+required to store the current operation sequence in 
+<code><i><font color="black"><span style='white-space: nowrap'>rec</span></font></i></code>
+.
+
+
+
+
+<hr/>Input File: cppad/local/player.hpp
+
+</body>
+</html>

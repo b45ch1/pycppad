@@ -1,0 +1,243 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Forward Mode Multiplication Operator</title>
+<meta name="description" id="description" content="Forward Mode Multiplication Operator"/>
+<meta name="keywords" id="keywords" content=" multiply forward operator Formul "/>
+<style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+<script type='text/javascript' language='JavaScript' src='_formulvvop_xml.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Op</option>
+<option>ForMulvvOp</option>
+</select>
+</td>
+<td><a href="revlogop.xml" target="_top">Prev</a>
+</td><td><a href="revmulvvop.xml" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Distribute</option>
+<option>NewFeature</option>
+<option>Define</option>
+<option>GreaterThanZero</option>
+<option>GreaterThanOrZero</option>
+<option>LessThanZero</option>
+<option>LessThanOrZero</option>
+<option>IdenticalPar</option>
+<option>IdenticalZero</option>
+<option>IdenticalOne</option>
+<option>IdenticalEqualPar</option>
+<option>OpCode</option>
+<option>printOp</option>
+<option>NumInd</option>
+<option>NumVar</option>
+<option>tape_link</option>
+<option>recorder</option>
+<option>player</option>
+<option>ADTape</option>
+<option>BoolFunLink</option>
+<option>Op</option>
+<option>forward_sweep</option>
+<option>ReverseSweep</option>
+<option>ForJacSweep</option>
+<option>RevJacSweep</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Op-&gt;</option>
+<option>ForAbsOp</option>
+<option>RevAbsOp</option>
+<option>ForAddOp</option>
+<option>RevAddOp</option>
+<option>ForAcosOp</option>
+<option>RevAcosOp</option>
+<option>ForAsinOp</option>
+<option>RevAsinOp</option>
+<option>ForAtanOp</option>
+<option>RevAtanOp</option>
+<option>ForDivvvOp</option>
+<option>RevDivvvOp</option>
+<option>ForExpOp</option>
+<option>RevExpOp</option>
+<option>ForLogOp</option>
+<option>RevLogOp</option>
+<option>ForMulvvOp</option>
+<option>RevMulvvOp</option>
+<option>ForSinCos</option>
+<option>RevSinCos</option>
+<option>ForSqrtOp</option>
+<option>RevSqrtOp</option>
+<option>ForSubvvOp</option>
+<option>RevSubvvOp</option>
+</select>
+</td>
+<td>ForMulvvOp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Description</option>
+<option>x</option>
+<option>y</option>
+<option>p</option>
+<option>z</option>
+</select>
+</td>
+</tr></table><br/>
+ 
+
+
+
+
+
+
+
+
+<center><b><big><big>Forward Mode Multiplication Operator</big></big></b></center>
+<br/>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+
+<br/>
+<code><font color="blue"><span style='white-space: nowrap'>inline&#xA0;void&#xA0;ForMulvvOp(size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>d</span></i><code><font color="blue"><span style='white-space: nowrap'>,<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;*</span></font></code><i><span style='white-space: nowrap'>z</span></i><code><font color="blue"><span style='white-space: nowrap'>,&#xA0;const&#xA0;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;*</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>,&#xA0;const&#xA0;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;*</span></font></code><i><span style='white-space: nowrap'>y</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+<code><span style='white-space: nowrap'><br/>
+</span></code><code><font color="blue"><span style='white-space: nowrap'>inline&#xA0;void&#xA0;ForMulpvOp(size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>d</span></i><code><font color="blue"><span style='white-space: nowrap'>,<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;*</span></font></code><i><span style='white-space: nowrap'>z</span></i><code><font color="blue"><span style='white-space: nowrap'>,&#xA0;const&#xA0;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;*</span></font></code><i><span style='white-space: nowrap'>p</span></i><code><font color="blue"><span style='white-space: nowrap'>,&#xA0;const&#xA0;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;*</span></font></code><i><span style='white-space: nowrap'>v</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+<code><span style='white-space: nowrap'><br/>
+</span></code><code><font color="blue"><span style='white-space: nowrap'>inline&#xA0;void&#xA0;ForMulvpOp(size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>d</span></i><code><font color="blue"><span style='white-space: nowrap'>,<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;*</span></font></code><i><span style='white-space: nowrap'>z</span></i><code><font color="blue"><span style='white-space: nowrap'>,&#xA0;const&#xA0;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;*</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>,&#xA0;const&#xA0;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;*</span></font></code><i><span style='white-space: nowrap'>p</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br/>
+<br/>
+<b><big><a name="Description" id="Description">Description</a></big></b>
+<br/>
+Computes the <i>d</i> order Taylor coefficient for 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>Z</mi>
+</mrow></math>
+
+ where
+<table><tr><td align='left'  valign='top'>
+
+Operation  </td><td align='left'  valign='top'>
+ Value  </td></tr><tr><td align='left'  valign='top'>
+
+Mulvv       </td><td align='left'  valign='top'>
+ 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>Z</mi>
+<mo stretchy="false">=</mo>
+<mi mathvariant='italic'>X</mi>
+<mo stretchy="false">*</mo>
+<mi mathvariant='italic'>Y</mi>
+</mrow></math>
+
+ </td></tr><tr><td align='left'  valign='top'>
+
+Mulpv       </td><td align='left'  valign='top'>
+ 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>Z</mi>
+<mo stretchy="false">=</mo>
+<mi mathvariant='italic'>P</mi>
+<mo stretchy="false">*</mo>
+<mi mathvariant='italic'>Y</mi>
+</mrow></math>
+
+ </td></tr><tr><td align='left'  valign='top'>
+
+Mulvp       </td><td align='left'  valign='top'>
+ 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>Z</mi>
+<mo stretchy="false">=</mo>
+<mi mathvariant='italic'>X</mi>
+<mo stretchy="false">*</mo>
+<mi mathvariant='italic'>P</mi>
+</mrow></math>
+
+ 
+</td></tr>
+</table>
+<br/>
+<b><big><a name="x" id="x">x</a></big></b>
+<br/>
+The vector <i>x</i> has length 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>d</mi>
+<mo stretchy="false">+</mo>
+<mn>1</mn>
+</mrow></math>
+
+ and contains the
+<i>d</i>-th order Taylor coefficient row vector for <i>X</i>.
+
+<br/>
+<br/>
+<b><big><a name="y" id="y">y</a></big></b>
+<br/>
+The vector <i>y</i> has length 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>d</mi>
+<mo stretchy="false">+</mo>
+<mn>1</mn>
+</mrow></math>
+
+ and contains the
+<i>d</i>-th order Taylor coefficient row vector for <i>Y</i>.
+The vector <i>y</i> is not present in the MulL and MulR cases.
+
+<br/>
+<br/>
+<b><big><a name="p" id="p">p</a></big></b>
+<br/>
+The scalar <code><font color="blue"><span style='white-space: nowrap'>*</span></font></code><i><span style='white-space: nowrap'>p</span></i> contains the value of the parameter <i>P</i>.
+
+<br/>
+<br/>
+<b><big><a name="z" id="z">z</a></big></b>
+<br/>
+The vector <i>z</i> has length 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>d</mi>
+<mo stretchy="false">+</mo>
+<mn>1</mn>
+</mrow></math>
+
+.
+On input it contains the
+<i>d-1</i>-th order Taylor coefficient row vector for <i>Z</i>.
+On output it contains the
+<i>d</i>-th order Taylor coefficient row vector for <i>Z</i>; i.e.,
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>z</span></i><code><font color="blue"><span style='white-space: nowrap'>[</span></font></code><i><span style='white-space: nowrap'>d</span></i><code><font color="blue"><span style='white-space: nowrap'>]</span></font></code> is set equal to the <i>d</i>-th Taylor coefficient for
+the function <i>Z</i>.
+
+
+<hr/>Input File: cppad/local/mul_op.hpp
+
+</body>
+</html>

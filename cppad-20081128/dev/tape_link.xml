@@ -1,0 +1,228 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Routines that Link AD&lt;Base&gt; and ADTape&lt;Base&gt; Objects</title>
+<meta name="description" id="description" content="Routines that Link AD&lt;Base&gt; and ADTape&lt;Base&gt; Objects"/>
+<meta name="keywords" id="keywords" content=" tape_this id_handle tape_handle tape_new tape_delete tape_ptr "/>
+<style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+<script type='text/javascript' language='JavaScript' src='_tape_link_xml.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>tape_link</option>
+</select>
+</td>
+<td><a href="numvar.xml" target="_top">Prev</a>
+</td><td><a href="recorder.xml" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down1(this)'>
+<option>CppAD-&gt;</option>
+<option>Distribute</option>
+<option>NewFeature</option>
+<option>Define</option>
+<option>GreaterThanZero</option>
+<option>GreaterThanOrZero</option>
+<option>LessThanZero</option>
+<option>LessThanOrZero</option>
+<option>IdenticalPar</option>
+<option>IdenticalZero</option>
+<option>IdenticalOne</option>
+<option>IdenticalEqualPar</option>
+<option>OpCode</option>
+<option>printOp</option>
+<option>NumInd</option>
+<option>NumVar</option>
+<option>tape_link</option>
+<option>recorder</option>
+<option>player</option>
+<option>ADTape</option>
+<option>BoolFunLink</option>
+<option>Op</option>
+<option>forward_sweep</option>
+<option>ReverseSweep</option>
+<option>ForJacSweep</option>
+<option>RevJacSweep</option>
+</select>
+</td>
+<td>tape_link</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>tape_this</option>
+<option>id_handle</option>
+<option>---..thread</option>
+<option>---..id</option>
+<option>tape_handle</option>
+<option>---..thread</option>
+<option>---..tape</option>
+<option>tape_new</option>
+<option>tape_delete</option>
+<option>tape_ptr</option>
+</select>
+</td>
+</tr></table><br/>
+ 
+
+<center><b><big><big>Routines that Link AD&lt;Base&gt; and ADTape&lt;Base&gt; Objects</big></big></b></center>
+<br/>
+<b><big><a name="tape_this" id="tape_this">tape_this</a></big></b>
+
+<br/>
+The syntax
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font></code><i><span style='white-space: nowrap'>ptr</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;=&#xA0;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>.tape_this()<br/>
+</span></font></code>returns the tape corresponding to <i>x</i>
+where <i>x</i> and <i>ptr</i> have the prototypes
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;const&#xA0;AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&#xA0;&amp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ADTape&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&#xA0;&#xA0;*</span></font></code><i><span style='white-space: nowrap'>ptr</span></i><code><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>The argument <i>x</i> must a variable.
+
+<br/>
+<br/>
+<b><big><a name="id_handle" id="id_handle">id_handle</a></big></b>
+
+<br/>
+The syntax
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font></code><i><span style='white-space: nowrap'>id</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;=&#xA0;AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;::id_handle(</span></font></code><i><span style='white-space: nowrap'>thread</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br/>
+</span></font></code>returns a pointer to the currently active tape identifier
+for the specified OpenMP thread.
+
+<br/>
+<br/>
+<b><a name="id_handle.thread" id="id_handle.thread">thread</a></b>
+<br/>
+The argument <i>thread</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;&#xA0;</span></font></code><i><span style='white-space: nowrap'>thread</span></i><code><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>It must be less that <code><font color="blue">CPPAD_MAX_NUM_THREADS</font></code> and
+specifies the OpenMP thread that the tape identifier is for.
+In the case where the preprocessor symbol <code><font color="blue">_OPENMP</font></code> is not defined,
+<i>thread</i> must be zero.
+
+<br/>
+<br/>
+<b><a name="id_handle.id" id="id_handle.id">id</a></b>
+<br/>
+The return value <i>id</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;*</span></font></code><i><span style='white-space: nowrap'>id</span></i><code><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>and is a pointer to the tape identifier for the specified thread.
+The initial value, for the tape identifier is zero.
+This way it is not equal to the default <code><font color="blue">id_ = 1</font></code> value
+in each <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object.
+Either <code><font color="blue"><span style='white-space: nowrap'>*id_handle(</span></font></code><i><span style='white-space: nowrap'>thread</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code> is zero (its initial value) or
+the current thread number satisfies the equation
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font></code><i><span style='white-space: nowrap'>thread</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;==&#xA0;*id_handle(</span></font></code><i><span style='white-space: nowrap'>thread</span></i><code><font color="blue"><span style='white-space: nowrap'>)&#xA0;%&#xA0;CPPAD_MAX_NUM_THREADS<br/>
+</span></font></code>(This is a restriction on how <code><font color="blue"><span style='white-space: nowrap'>*id_handle(</span></font></code><i><span style='white-space: nowrap'>thread</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code> may be changed.)
+
+
+<br/>
+<br/>
+<b><big><a name="tape_handle" id="tape_handle">tape_handle</a></big></b>
+
+<br/>
+The syntax
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font></code><i><span style='white-space: nowrap'>tape</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;=&#xA0;AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;::tape_handle(</span></font></code><i><span style='white-space: nowrap'>thread</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br/>
+</span></font></code>returns a pointer to a pointer to the current tape
+for the specified OpenMP thread.
+
+<br/>
+<br/>
+<b><a name="tape_handle.thread" id="tape_handle.thread">thread</a></b>
+<br/>
+The argument <i>thread</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;&#xA0;</span></font></code><i><span style='white-space: nowrap'>thread</span></i><code><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>It must be less that <code><font color="blue">CPPAD_MAX_NUM_THREADS</font></code> and
+specifies the OpenMP thread that the tape identifier is for.
+In the case where the preprocessor symbol <code><font color="blue">_OPENMP</font></code> is not defined,
+<i>thread</i> must be zero.
+
+<br/>
+<br/>
+<b><a name="tape_handle.tape" id="tape_handle.tape">tape</a></b>
+<br/>
+The return value <i>tape</i> has prototype
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>ADTape&lt;</span></i><code><font color="blue"><span style='white-space: nowrap'>Base</span></font></code><i><span style='white-space: nowrap'>&gt;&#xA0;**tape</span></i>.
+If the tape is currently active,
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;*</span></font></code><i><span style='white-space: nowrap'>tape</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;!=&#xA0;CPPAD_NULL<br/>
+</span></font></code><br/>
+<b><big><a name="tape_new" id="tape_new">tape_new</a></big></b>
+
+<br/>
+The syntax
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font></code><i><span style='white-space: nowrap'>id</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;=&#xA0;AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;::tape_new()<br/>
+</span></font></code>creates a new tape and returns the corresponding tape identifier.
+The resulting tape identifier is not equal to zero, one, or to any
+of the previous values return by <code><font color="blue">tape_new</font></code>.
+In addition, the current thread number is given by
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font></code><i><span style='white-space: nowrap'>thread</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;=&#xA0;</span></font></code><i><span style='white-space: nowrap'>id</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;%&#xA0;CPPAD_MAX_NUM_THREADS<br/>
+</span></font></code>The return value <i>id</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>id</span></i><code><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>This function is only called by the user <code><font color="blue">Independent</font></code> routine
+and hence usage errors can be reported as coming from that routine.
+
+<br/>
+<br/>
+<b><big><a name="tape_delete" id="tape_delete">tape_delete</a></big></b>
+
+<br/>
+The syntax
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;::tape_delete(</span></font></code><i><span style='white-space: nowrap'>id</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br/>
+</span></font></code>deletes the tape corresponding to the tape identifier <i>id</i>.
+The value <code><font color="blue"><span style='white-space: nowrap'>*id_handle(</span></font></code><i><span style='white-space: nowrap'>thread</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code> for this thread
+is set to a value larger than any previous value returned by
+<code><font color="blue">tape_new()</font></code>.
+
+<br/>
+<br/>
+<b><big><a name="tape_ptr" id="tape_ptr">tape_ptr</a></big></b>
+
+<br/>
+The syntax
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font></code><i><span style='white-space: nowrap'>ptr</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;=&#xA0;AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;::tape_ptr()<br/>
+</span></font></code>returns the a pointer to the tape corresponding to the current thread.
+The corresponding tape is active if and only if <code><font color="blue"></font></code><i><span style='white-space: nowrap'>ptr</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;==&#xA0;CPPAD_NULL</span></font></code>.
+The syntax
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font></code><i><span style='white-space: nowrap'>ptr</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;=&#xA0;AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;::tape_ptr(</span></font></code><i><span style='white-space: nowrap'>id</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br/>
+</span></font></code>does the same thing but if NDEBUG is not defined, it also check that
+the <i>id</i> is the corresponding tape identifier and that <i>ptr</i>
+is not equal to <code><font color="blue">CPPAD_NULL</font></code>.
+The argument <i>id</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>id</span></i><code><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>
+<hr/>Input File: cppad/local/tape_link.hpp
+
+</body>
+</html>

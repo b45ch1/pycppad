@@ -1,0 +1,187 @@
+<html><head>
+<title>Print the Information Corresponding to One Tape Operation</title>
+<meta name="description" id="description" content="Print the Information Corresponding to One Tape Operation">
+<meta name="keywords" id="keywords" content=" printop operator print trace tape operation ">
+<style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+<script type='text/javascript' language='JavaScript' src='_printop_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>printOp</option>
+</select>
+</td>
+<td><a href="opcode.htm" target="_top">Prev</a>
+</td><td><a href="numind.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down1(this)'>
+<option>CppAD-&gt;</option>
+<option>Distribute</option>
+<option>NewFeature</option>
+<option>Define</option>
+<option>GreaterThanZero</option>
+<option>GreaterThanOrZero</option>
+<option>LessThanZero</option>
+<option>LessThanOrZero</option>
+<option>IdenticalPar</option>
+<option>IdenticalZero</option>
+<option>IdenticalOne</option>
+<option>IdenticalEqualPar</option>
+<option>OpCode</option>
+<option>printOp</option>
+<option>NumInd</option>
+<option>NumVar</option>
+<option>tape_link</option>
+<option>recorder</option>
+<option>player</option>
+<option>ADTape</option>
+<option>BoolFunLink</option>
+<option>Op</option>
+<option>forward_sweep</option>
+<option>ReverseSweep</option>
+<option>ForJacSweep</option>
+<option>RevJacSweep</option>
+</select>
+</td>
+<td>printOp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Base</option>
+<option>Value</option>
+<option>os</option>
+<option>Rec</option>
+<option>i_var</option>
+<option>op</option>
+<option>ind</option>
+<option>nfz</option>
+<option>fz</option>
+<option>nrz</option>
+<option>rz</option>
+</select>
+</td>
+</tr></table><br>
+ 
+
+
+
+
+
+<center><b><big><big>Print the Information Corresponding to One Tape Operation</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+<code><font color="blue"><span style='white-space: nowrap'>void&nbsp;printOp(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std::ostream&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>os</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;player&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;*</span></font></code><i><span style='white-space: nowrap'>Rec</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font></code><i><span style='white-space: nowrap'>i_var</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OpCode&nbsp;</span></font></code><i><span style='white-space: nowrap'>op</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;size_t&nbsp;*</span></font></code><i><span style='white-space: nowrap'>ind</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font></code><i><span style='white-space: nowrap'>nfz</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font></code><i><span style='white-space: nowrap'>Value</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;*</span></font></code><i><span style='white-space: nowrap'>fz</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font></code><i><span style='white-space: nowrap'>nrz</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font></code><i><span style='white-space: nowrap'>Value</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;*</span></font></code><i><span style='white-space: nowrap'>rz</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Base" id="Base">Base</a></big></b>
+<br>
+Determines the type of tape we are printing from.
+
+<br>
+<br>
+<b><big><a name="Value" id="Value">Value</a></big></b>
+<br>
+Determines the type of the values that we are printing
+(expected to be either <i>Base</i> or <i>Pack</i> where
+<i>Pack</i> is the type used to pace sparsity patterns).
+
+<br>
+<br>
+<b><big><a name="os" id="os">os</a></big></b>
+<br>
+is the output stream that the information is printed on.
+
+<br>
+<br>
+<b><big><a name="Rec" id="Rec">Rec</a></big></b>
+<br>
+Is the entire recording for the tape that this operator is in.
+
+<br>
+<br>
+<b><big><a name="i_var" id="i_var">i_var</a></big></b>
+<br>
+is the variable index for the result of this operation
+(ignored if <code><font color="blue"><span style='white-space: nowrap'>NumVar(</span></font></code><i><span style='white-space: nowrap'>op</span></i><code><font color="blue"><span style='white-space: nowrap'>)&nbsp;==&nbsp;0</span></font></code>).
+
+<br>
+<br>
+<b><big><a name="op" id="op">op</a></big></b>
+<br>
+The operator code for this operation.
+
+<br>
+<br>
+<b><big><a name="ind" id="ind">ind</a></big></b>
+<br>
+is the vector of indices for this operation
+(must have  <code><font color="blue"><span style='white-space: nowrap'>NumInd(</span></font></code><i><span style='white-space: nowrap'>op</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code> elements).
+
+<br>
+<br>
+<b><big><a name="nfz" id="nfz">nfz</a></big></b>
+<br>
+is the number of forward calculated values of type <i>Value</i>
+that correspond to this operation
+(ignored if <code><font color="blue"><span style='white-space: nowrap'>NumVar(</span></font></code><i><span style='white-space: nowrap'>op</span></i><code><font color="blue"><span style='white-space: nowrap'>)&nbsp;==&nbsp;0</span></font></code>).
+
+<br>
+<br>
+<b><big><a name="fz" id="fz">fz</a></big></b>
+<br>
+points to the first forward calculated value
+that correspond to this operation
+(ignored if <code><font color="blue"><span style='white-space: nowrap'>NumVar(</span></font></code><i><span style='white-space: nowrap'>op</span></i><code><font color="blue"><span style='white-space: nowrap'>)&nbsp;==&nbsp;0</span></font></code>).
+
+<br>
+<br>
+<b><big><a name="nrz" id="nrz">nrz</a></big></b>
+<br>
+is the number of reverse calculated values of type <i>Value</i>
+that correspond to this operation
+(ignored if <code><font color="blue"><span style='white-space: nowrap'>NumVar(</span></font></code><i><span style='white-space: nowrap'>op</span></i><code><font color="blue"><span style='white-space: nowrap'>)&nbsp;==&nbsp;0</span></font></code>).
+
+<br>
+<br>
+<b><big><a name="rz" id="rz">rz</a></big></b>
+<br>
+points to the first reverse calculated value
+that correspond to this operation
+(ignored if <code><font color="blue"><span style='white-space: nowrap'>NumVar(</span></font></code><i><span style='white-space: nowrap'>op</span></i><code><font color="blue"><span style='white-space: nowrap'>)&nbsp;==&nbsp;0</span></font></code>).
+
+
+<hr>Input File: cppad/local/op_code.hpp
+
+</body>
+</html>

@@ -1,0 +1,115 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Other AD Math Functions</title>
+<meta name="description" id="description" content="Other AD Math Functions"/>
+<meta name="keywords" id="keywords" content=" atan2 Ad other math "/>
+<style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+<script type='text/javascript' language='JavaScript' src='_mathother_xml.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://www.coin-or.org/CppAD/" target="_top"><img border="0" src="_image.gif"/></a>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>ADValued</option>
+<option>MathOther</option>
+</select>
+</td>
+<td><a href="tanh.cpp.xml" target="_top">Prev</a>
+</td><td><a href="abs.xml" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>library</option>
+<option>preprocessor</option>
+<option>Example</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>AD-&gt;</option>
+<option>Default</option>
+<option>ad_copy</option>
+<option>Convert</option>
+<option>ADValued</option>
+<option>BoolValued</option>
+<option>VecAD</option>
+<option>base_require</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>ADValued-&gt;</option>
+<option>Arithmetic</option>
+<option>std_math_ad</option>
+<option>MathOther</option>
+<option>CondExp</option>
+<option>Discrete</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>MathOther-&gt;</option>
+<option>abs</option>
+<option>atan2</option>
+<option>erf</option>
+<option>pow</option>
+</select>
+</td>
+<td>Headings</td>
+</tr></table><br/>
+
+
+
+
+
+
+
+
+<center><b><big><big>Other AD Math Functions</big></big></b></center>
+<table><tr><td align='left'  valign='top'>
+<a href="abs.xml" target="_top">abs</a></td><td>
+AD Absolute Value Function</td></tr>
+<tr><td>
+<a href="atan2.xml" target="_top">atan2</a></td><td>
+AD Two Argument Inverse Tangent Function</td></tr>
+<tr><td>
+<a href="erf.xml" target="_top">erf</a></td><td>
+The AD Error Function</td></tr>
+<tr><td>
+<a href="pow.xml" target="_top">pow</a></td><td>
+The AD Power Function</td></tr>
+<tr><td>
+</td></tr>
+</table>
+
+<hr/>Input File: cppad/local/math_other.hpp
+
+</body>
+</html>

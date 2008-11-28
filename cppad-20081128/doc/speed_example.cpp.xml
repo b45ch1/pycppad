@@ -1,0 +1,147 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Program That Runs the Speed Examples</title>
+<meta name="description" id="description" content="Program That Runs the Speed Examples"/>
+<meta name="keywords" id="keywords" content=" speed example program "/>
+<style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+<script type='text/javascript' language='JavaScript' src='_speed_example.cpp_xml.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://www.coin-or.org/CppAD/" target="_top"><img border="0" src="_image.gif"/></a>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Example</option>
+<option>ExampleUtility</option>
+<option>speed_example.cpp</option>
+</select>
+</td>
+<td><a href="example.cpp.xml" target="_top">Prev</a>
+</td><td><a href="luvecad.xml" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>library</option>
+<option>preprocessor</option>
+<option>Example</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Example-&gt;</option>
+<option>General</option>
+<option>ExampleUtility</option>
+<option>ListAllExamples</option>
+<option>test_vector</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>ExampleUtility-&gt;</option>
+<option>Example.cpp</option>
+<option>speed_example.cpp</option>
+<option>LuVecAD</option>
+</select>
+</td>
+<td>speed_example.cpp</td>
+<td>Headings</td>
+</tr></table><br/>
+
+
+
+
+
+
+
+
+<center><b><big><big>Program That Runs the Speed Examples</big></big></b></center>
+<code><font color="blue"><pre style='display:inline'># include &lt;cppad/cppad.hpp&gt;
+
+// various example routines
+extern bool det_of_minor(void);
+extern bool det_by_lu(void);
+extern bool det_by_minor(void);
+extern bool ode_evaluate(void);
+extern bool sparse_evaluate(void);
+extern bool speed_test(void);
+
+namespace {
+	// function that runs one test
+	static size_t Run_ok_count    = 0;
+	static size_t Run_error_count = 0;
+	bool Run(bool TestOk(void), const char *name)
+	{	bool ok = true;
+		using namespace std;
+	
+		ok &amp;= TestOk();
+	
+		if( ok )
+		{	std::cout &lt;&lt; &quot;Ok:    &quot; &lt;&lt; name &lt;&lt; std::endl;
+			Run_ok_count++;
+		}
+		else
+		{	std::cout &lt;&lt; &quot;Error: &quot; &lt;&lt; name &lt;&lt; std::endl;
+			Run_error_count++;
+		}
+	
+		return ok;
+	}
+}
+
+// main program that runs all the tests
+int main(void)
+{	bool ok = true;
+	using namespace std;
+
+	ok &amp;= Run(det_of_minor,          &quot;det_of_minor&quot;   );
+	ok &amp;= Run(det_by_minor,         &quot;det_by_minor&quot;    );
+	ok &amp;= Run(det_by_lu,               &quot;det_by_lu&quot;    );
+	ok &amp;= Run(ode_evaluate,         &quot;ode_evaluate&quot;    );
+	ok &amp;= Run(sparse_evaluate,   &quot;sparse_evaluate&quot;    );
+	ok &amp;= Run(speed_test,             &quot;speed_test&quot;    );
+
+	// check for memory leak in previous calculations
+	if( CPPAD_TRACK_COUNT() != 0 )
+		cout &lt;&lt; &quot;Error: memroy leak detected&quot; &lt;&lt; endl;
+
+	assert( ok || (Run_error_count &gt; 0) );
+	if( ok )
+		cout &lt;&lt; &quot;All &quot; &lt;&lt; int(Run_ok_count) &lt;&lt; &quot; tests passed.&quot; &lt;&lt; endl;
+	else	cout &lt;&lt; int(Run_error_count) &lt;&lt; &quot; tests failed.&quot; &lt;&lt; endl;
+
+	return static_cast&lt;int&gt;( ! ok );
+}
+
+</pre>
+</font></code>
+
+
+<hr/>Input File: speed/example/example.cpp
+
+</body>
+</html>

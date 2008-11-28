@@ -1,0 +1,168 @@
+<html><head>
+<title>Sparse Hessian: Example and Test</title>
+<meta name="description" id="description" content="Sparse Hessian: Example and Test">
+<meta name="keywords" id="keywords" content=" Hessian sparse example test spare ">
+<style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+<script type='text/javascript' language='JavaScript' src='_sparse_hessian.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://www.coin-or.org/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>Drivers</option>
+<option>sparse_hessian</option>
+<option>sparse_hessian.cpp</option>
+</select>
+</td>
+<td><a href="sparse_hessian.htm" target="_top">Prev</a>
+</td><td><a href="funcheck.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down3(this)'>
+<option>ADFun-&gt;</option>
+<option>Independent</option>
+<option>FunConstruct</option>
+<option>Dependent</option>
+<option>SeqProperty</option>
+<option>FunEval</option>
+<option>Drivers</option>
+<option>FunCheck</option>
+<option>omp_max_thread</option>
+<option>FunDeprecated</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Drivers-&gt;</option>
+<option>Jacobian</option>
+<option>ForOne</option>
+<option>RevOne</option>
+<option>Hessian</option>
+<option>ForTwo</option>
+<option>RevTwo</option>
+<option>sparse_jacobian</option>
+<option>sparse_hessian</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>sparse_hessian-&gt;</option>
+<option>sparse_hessian.cpp</option>
+</select>
+</td>
+<td>sparse_hessian.cpp</td>
+<td>Headings</td>
+</tr></table><br>
+
+
+
+<center><b><big><big>Sparse Hessian: Example and Test</big></big></b></center>
+<code><font color="blue"><pre style='display:inline'># include &lt;cppad/cppad.hpp&gt;
+namespace { // ---------------------------------------------------------
+// define the template function in empty namespace
+template &lt;class BaseVector, class BoolVector&gt; 
+bool Case()
+{	bool ok = true;
+	using CppAD::AD;
+	using CppAD::NearEqual;
+	size_t i, j, k;
+
+	// domain space vector
+	size_t n = 3;
+	CPPAD_TEST_VECTOR&lt; AD&lt;double&gt; &gt;  X(n);
+	for(i = 0; i &lt; n; i++)
+		X[i] = AD&lt;double&gt; (0);
+
+	// declare independent variables and starting recording
+	CppAD::Independent(X);
+
+	size_t m = 1;
+	CPPAD_TEST_VECTOR&lt; AD&lt;double&gt; &gt;  Y(m);
+	Y[0] = X[0] * X[0] + X[0] * X[1] + X[1] * X[1] + X[2] * X[2];
+
+	// create f: X -&gt; Y and stop tape recording
+	CppAD::ADFun&lt;double&gt; f(X, Y);
+
+	// new value for the independent variable vector
+	BaseVector x(n);
+	for(i = 0; i &lt; n; i++)
+		x[i] = double(i);
+
+	// second derivative of y[1] 
+	BaseVector w(m);
+	w[0] = 1.;
+	BaseVector h( n * n );
+	h = f.SparseHessian(x, w);
+	/*
+	    [ 2 1 0 ]
+	h = [ 1 2 0 ]
+            [ 0 0 2 ]
+	*/
+	BaseVector check(n * n);
+	check[0] = 2.; check[1] = 1.; check[2] = 0.;
+	check[3] = 1.; check[4] = 2.; check[5] = 0.;
+	check[6] = 0.; check[7] = 0.; check[8] = 2.;
+	for(k = 0; k &lt; n * n; k++)
+		ok &amp;=  NearEqual(check[k], h[k], 1e-10, 1e-10 );
+
+	// determine the sparsity pattern p for Hessian of w^T F
+        BoolVector r(n * n);
+        for(j = 0; j &lt; n; j++)
+        {       for(k = 0; k &lt; n; k++)
+                        r[j * n + k] = false;
+                r[j * n + j] = true;
+        }
+        f.ForSparseJac(n, r);
+        //
+        BoolVector s(m);
+        for(i = 0; i &lt; m; i++)
+                s[i] = w[i] != 0;
+        BoolVector p = f.RevSparseHes(n, s);
+
+	// test passing sparsity pattern
+	h = f.SparseHessian(x, w, p);
+	for(k = 0; k &lt; n * n; k++)
+		ok &amp;=  NearEqual(check[k], h[k], 1e-10, 1e-10 );
+
+	return ok;
+}
+} // End empty namespace 
+# include &lt;vector&gt;
+# include &lt;valarray&gt;
+bool sparse_hessian(void)
+{	bool ok = true;
+	// Run with BaseVector equal to three different cases
+	// all of which are Simple Vectors with elements of type double.
+	// Also vary the type of vector for BoolVector.
+	ok &amp;= Case&lt; CppAD::vector  &lt;double&gt;, CppAD::vectorBool   &gt;();
+	ok &amp;= Case&lt; std::vector    &lt;double&gt;, CppAD::vector&lt;bool&gt; &gt;();
+	ok &amp;= Case&lt; std::valarray  &lt;double&gt;, std::vector&lt;bool&gt;   &gt;();
+	return ok;
+}
+</pre>
+</font></code>
+
+
+<hr>Input File: example/sparse_hessian.cpp
+
+</body>
+</html>

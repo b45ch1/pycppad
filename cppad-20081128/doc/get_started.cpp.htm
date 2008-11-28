@@ -1,0 +1,255 @@
+<html><head>
+<title>A Simple Program Using CppAD to Compute Derivatives</title>
+<meta name="description" id="description" content="A Simple Program Using CppAD to Compute Derivatives">
+<meta name="keywords" id="keywords" content=" getstarted simple example start using Cppad ">
+<style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+<script type='text/javascript' language='JavaScript' src='_get_started.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://www.coin-or.org/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Introduction</option>
+<option>get_started.cpp</option>
+</select>
+</td>
+<td><a href="introduction.htm" target="_top">Prev</a>
+</td><td><a href="exp_2.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>library</option>
+<option>preprocessor</option>
+<option>Example</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Introduction-&gt;</option>
+<option>get_started.cpp</option>
+<option>exp_2</option>
+<option>exp_eps</option>
+<option>exp_apx_main.cpp</option>
+</select>
+</td>
+<td>get_started.cpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Purpose</option>
+<option>Function</option>
+<option>Derivative</option>
+<option>Value</option>
+<option>Poly</option>
+<option>Exercises</option>
+<option>Program</option>
+<option>Output</option>
+</select>
+</td>
+</tr></table><br>
+<center><b><big><big>A Simple Program Using CppAD to Compute Derivatives</big></big></b></center>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Demonstrate the use of CppAD by computing the derivative 
+of a simple example function.
+
+<br>
+<br>
+<b><big><a name="Function" id="Function">Function</a></big></b>
+<br>
+The example function <code>
+<span style='white-space: nowrap'>&nbsp;f&nbsp;:&nbsp;\R&nbsp;\rightarrow&nbsp;\R</span></code>
+ is defined by 
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;f(x)&nbsp;=&nbsp;a_0&nbsp;+&nbsp;a_1&nbsp;*&nbsp;x^1&nbsp;+&nbsp;\cdots&nbsp;+&nbsp;a_{k-1}&nbsp;*&nbsp;x^{k-1}<br>
+\]&nbsp;</span></code>
+
+where <i>a</i> is a fixed vector of length <i>k</i>.
+
+<br>
+<br>
+<b><big><a name="Derivative" id="Derivative">Derivative</a></big></b>
+<br>
+The derivative of <code>
+<span style='white-space: nowrap'>&nbsp;f(x)</span></code>
+ is given by
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;f'&nbsp;(x)&nbsp;=&nbsp;a_1&nbsp;+&nbsp;2&nbsp;*&nbsp;a_2&nbsp;*&nbsp;x&nbsp;+&nbsp;&nbsp;\cdots&nbsp;+&nbsp;(k-1)&nbsp;*&nbsp;a_{k-1}&nbsp;*&nbsp;x^{k-2}&nbsp;<br>
+\]&nbsp;</span></code>
+
+
+<br>
+<br>
+<b><big><a name="Value" id="Value">Value</a></big></b>
+<br>
+For the particular case in this example,
+<code>
+<span style='white-space: nowrap'>&nbsp;k</span></code>
+ is equal to 5, 
+<code>
+<span style='white-space: nowrap'>&nbsp;a&nbsp;=&nbsp;(1,&nbsp;1,&nbsp;1,&nbsp;1,&nbsp;1)</span></code>
+, and 
+<code>
+<span style='white-space: nowrap'>&nbsp;x&nbsp;=&nbsp;3</span></code>
+.
+If follows that 
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;f'&nbsp;(&nbsp;3&nbsp;)&nbsp;=&nbsp;1&nbsp;+&nbsp;2&nbsp;*&nbsp;3&nbsp;+&nbsp;3&nbsp;*&nbsp;3^2&nbsp;+&nbsp;4&nbsp;*&nbsp;3^3&nbsp;=&nbsp;142<br>
+\]&nbsp;</span></code>
+
+
+<br>
+<br>
+<b><big><a name="Poly" id="Poly">Poly</a></big></b>
+<br>
+The routine <code><font color="blue">Poly</font></code> is defined below for this particular application.
+A general purpose polynomial evaluation routine is documented and
+distributed with CppAD (see <a href="poly.htm" target="_top"><span style='white-space: nowrap'>Poly</span></a>
+).
+
+<br>
+<br>
+<b><big><a name="Exercises" id="Exercises">Exercises</a></big></b>
+<br>
+Modify the program below to accomplish the following tasks
+using CppAD:
+<ol type="1"><li>
+Compute and print the derivative of <code>
+<span style='white-space: nowrap'>&nbsp;f(x)&nbsp;=&nbsp;1&nbsp;+&nbsp;x&nbsp;+&nbsp;x^2&nbsp;+&nbsp;x^3&nbsp;+&nbsp;x^4</span></code>
+
+at the point <code>
+<span style='white-space: nowrap'>&nbsp;x&nbsp;=&nbsp;2</span></code>
+. 
+</li><li>
+
+Compute and print the derivative of <code>
+<span style='white-space: nowrap'>&nbsp;f(x)&nbsp;=&nbsp;1&nbsp;+&nbsp;x&nbsp;+&nbsp;x^2&nbsp;/&nbsp;2</span></code>
+
+at the point <code>
+<span style='white-space: nowrap'>&nbsp;x&nbsp;=&nbsp;.5</span></code>
+.
+</li><li>
+
+Compute and print the derivative of <code>
+<span style='white-space: nowrap'>&nbsp;f(x)&nbsp;=&nbsp;\exp&nbsp;(x)&nbsp;-&nbsp;1&nbsp;-&nbsp;x&nbsp;-&nbsp;x^2&nbsp;/&nbsp;2</span></code>
+
+at the point <code>
+<span style='white-space: nowrap'>&nbsp;x&nbsp;=&nbsp;.5</span></code>
+.
+</li></ol>
+
+
+
+<br>
+<br>
+<b><big><a name="Program" id="Program">Program</a></big></b>
+
+<code><font color='blue'><pre style='display:inline'>
+#include &lt;iostream&gt;      // standard input/output 
+#include &lt;vector&gt;        // standard vector
+#include &lt;cppad/cppad.hpp&gt; // the CppAD package http://www.coin-or.org/CppAD/
+
+namespace { 
+      // define y(x) = Poly(a, x) in the empty namespace
+      template &lt;class Type&gt;
+      Type Poly(const std::vector&lt;double&gt; &amp;a, const Type &amp;x)
+      {     size_t k  = a.size();
+            Type y   = 0.;  // initialize summation
+            Type x_i = 1.;  // initialize x^i
+            size_t i;
+            for(i = 0; i &lt; k; i++)
+            {     y   += a[i] * x_i;  // y   = y + a_i * x^i
+                  x_i *= x;           // x_i = x_i * x
+            }
+            return y;
+      }
+}
+// main program
+int main(void)
+{     using CppAD::AD;           // use AD as abbreviation for CppAD::AD
+      using std::vector;         // use vector as abbreviation for std::vector
+      size_t i;                  // a temporary index
+
+      // vector of polynomial coefficients
+      size_t k = 5;              // number of polynomial coefficients
+      vector&lt;double&gt; a(k);       // vector of polynomial coefficients
+      for(i = 0; i &lt; k; i++)
+            a[i] = 1.;           // value of polynomial coefficients
+
+      // domain space vector
+      size_t n = 1;              // number of domain space variables
+      vector&lt; AD&lt;double&gt; &gt; X(n); // vector of domain space variables
+      X[0] = 3.;                 // value corresponding to operation sequence
+
+      // declare independent variables and start recording operation sequence
+      CppAD::Independent(X);
+
+      // range space vector
+      size_t m = 1;              // number of ranges space variables
+      vector&lt; AD&lt;double&gt; &gt; Y(m); // vector of ranges space variables
+      Y[0] = Poly(a, X[0]);      // value during recording of operations
+
+      // store operation sequence in f: X -&gt; Y and stop recording
+      CppAD::ADFun&lt;double&gt; f(X, Y);
+
+      // compute derivative using operation sequence stored in f
+      vector&lt;double&gt; jac(m * n); // Jacobian of f (m by n matrix)
+      vector&lt;double&gt; x(n);       // domain space vector
+      x[0] = 3.;                 // argument value for derivative
+      jac  = f.Jacobian(x);      // Jacobian for operation sequence
+
+      // print the results
+      std::cout &lt;&lt; &quot;f'(3) computed by CppAD = &quot; &lt;&lt; jac[0] &lt;&lt; std::endl;
+
+      // check if the derivative is correct
+      int error_code;
+      if( jac[0] == 142. )
+            error_code = 0;      // return code for correct case
+      else  error_code = 1;      // return code for incorrect case
+
+      return error_code;
+}
+</pre></font></code>
+
+<br>
+<br>
+<b><big><a name="Output" id="Output">Output</a></big></b>
+<br>
+Executing the program above will generate the following output:
+<code><font color='blue'><pre style='display:inline'>
+	f'(3) computed by CppAD = 142
+</pre></font></code>
+
+
+<hr>Input File: introduction/get_started/get_started.cpp
+
+</body>
+</html>

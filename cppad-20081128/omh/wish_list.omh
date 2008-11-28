@@ -1,0 +1,247 @@
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Common Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+$begin WishList$$
+$spell
+	Microsoft
+	inline
+	std
+	tanh
+	cos
+	booleans
+	parallelize
+	Jacobian
+	recomputed
+	Ipopt
+	Adolc
+	Fadbad
+	Sacado
+	Python
+	xml
+	hpp
+	CondExp
+	Vec
+	Cpp
+	Atan
+	retape
+	cppad
+	nlp
+	Jacobians
+$$
+
+$section The CppAD Wish List$$
+$index wish list$$
+$index new, features$$
+$index features, new$$
+
+$head Atan2$$
+$index atan2$$
+The $xref/Atan2//atan2/$$ function could be made faster by adding
+a special operator for it.
+
+$head BenderQuad$$
+See the $cref/problem/BenderQuad/Problem/$$ with the 
+current $code BenderQuad$$ specifications.
+
+$head CondExp$$
+$index CondExp$$
+Extend the conditional expressions $xref/CondExp/$$ so that they are 
+valid for complex types by comparing real parts.
+In addition, use this change to extend $xref/LuRatio/$$ so 
+that it works with complex AD types.
+
+$head Exceptions$$
+When the function
+$xref/Independent/$$ is called,  
+a new tape is created.
+If an exception occurs before the call to the corresponding
+$xref/ADFun/$$ constructor or $cref/Dependent/$$, 
+the tape recording will never stop.
+Thus, there should be a way to abort a tape recording.
+
+
+$head Ipopt$$
+$list number$$
+A speed test for $cref/ipopt_cppad_nlp/$$ should be added.
+Then changes should be made to improve its speed.
+
+$lnext
+Perhaps it would help to cache the solution of the sparse Jacobian
+and spare Hessian graph coloring algorithm.
+Then, when the sparsity pattern does not depend on the argument value,
+these colorings would not have to be recomputed.
+
+$lnext
+In the case where $codei%retape(%k%)%$$ is true for some $icode k$$,
+one can still use the structure of the representation to compute a 
+sparsity structure. Currently $code ipopt_cppad_nlp$$ uses a dense 
+sparsity structure for this case
+
+$lnext
+The $icode new_x$$ flag could be used to avoid zero order forward mode
+computations. Because the same $code ADFun$$ object is used at different
+argument values, this would require forward mode at multiple argument values
+(see $cref/multiple arguments/WishList/Multiple Arguments/$$). 
+
+$lend
+
+$head Library$$
+One could build a CppAD library for use with the type $code AD<double>$$.
+This would speed up compilation for the most common usage where
+the $italic Base$$ type is $code double$$.
+
+
+$head Multiple Arguments$$
+It has been suggested that computing and storing forward mode
+results for multiple argument values (and for multiple orders)
+is faster for Adolc. 
+Perhaps CppAD should allow for forward mode at multiple argument values
+(perhaps multiple orders).
+
+$head Numeric Limits$$
+Use a multiple of $code std::numeric_limits<double>::epsilon()$$ instead
+$code 1e-10$$ for a small number in correctness checks; e.g.,
+see $cref/tan.cpp/$$.
+
+$head Operation Sequence$$
+$index sequence, operation$$
+$index operation, sequence$$
+It is possible to detect if the 
+AD of $italic Base$$ 
+$xref/glossary/Operation/Sequence/operation sequence/1/$$ 
+does not depend on any of the
+$cref/independent variable/glossary/Tape/Independent Variable/$$ values.
+This could be returned as an extra
+$xref/SeqProperty/$$.
+
+$head Optimization$$
+
+$subhead Expression Hashing$$
+Hash codes could be used to detect expressions that have already
+been computed (and avoid extra entries in the operation sequence).
+This would also involve has coding the constants and avoiding
+duplicate copies in the constant table.
+
+$subhead Microsoft Compiler$$
+The Microsoft's Visual C++ Version 9.0 generates a warning of the form
+$codei warning C4396:%...%$$ 
+for every template function that is declared as a both a friend and inline
+(it thinks it is only doing this for specializations of template functions).
+The $code CPPAD_INLINE$$ preprocessor symbol is used to convert
+these $code inline$$ directives to
+empty code (if a Microsoft Visual C++ is used).
+If it is shown to be faster and does not slow down CppAD with other compilers,
+non-friend functions should be used to map these operations
+to member functions so that both can be compiled inline.
+
+$subhead Remove Operations From Tape$$
+$index optimize, operation sequence$$
+$index tape, optimize$$
+$index sequence, optimize operations$$
+$index operation, optimize sequence$$
+A single $cref/RevSparseJac/$$ sweep could be used to determine
+which parts of the operation sequence in an
+$cref/ADFun/FunConstruct/$$ object can be removed.
+
+$head Scripting Languages$$
+One could develop a
+SWIG compatible interface to $code AD<double>$$ and $code ADFun<double>$$ that 
+would make it easy to connect the SWIG languages, e.g., Python, see, 
+$href%http://www.swig.org/%SWIG%$$ for a description of SWIG
+and a list of the languages.
+This could also be used for faster evaluation of algorithms
+that have a fixed $cref/operation sequence/glossary/Operation/Sequence/$$.
+This would require the $cref/library/WishList/Library/$$ wish list 
+entry to be implemented.
+
+
+$head Software Guidelines$$
+
+$subhead Boost$$
+The following is a list of some software guidelines taken from
+$href%http://www.boost.org/more/lib_guide.htm#Guidelines%boost%$$.
+These guidelines are not followed by the current CppAD source code,
+but perhaps they should be:
+
+$list number$$
+Names (except as noted below) 
+should be all lowercase, with words separated by underscores.
+For example, acronyms should be treated as ordinary names 
+(xml_parser instead of XML_parser).
+
+$lnext
+Template parameter names should begin with an uppercase letter.
+
+$lnext
+Use spaces rather than tabs.  
+
+$lend
+
+$head Sparse Jacobians and Hessians$$
+Testing $cref/cppad_sparse_hessian.cpp/$$ 
+with $code USE_CPPAD_SPARSE_HESSIAN$$ equal to 
+$code 1$$ (true) and $code 0$$ (false) 
+indicates that $code sparse_hessian$$ is more efficient
+than $cref/Hessian/$$ (for large sparse cases).
+Create an implementation of $cref/sparse_hessian/$$ 
+that is more efficient
+(the initial implementation was only meant as a demonstration).
+For example, use arrays of index sets where for each row (column) the
+index contains the non-zero column (row) indices.
+(Also see $cref/Ipopt/WishList/Ipopt/$$ wish list.)
+
+$head Sparsity Patterns$$
+Add option to use index sets for each variable 
+(instead of a boolean array)
+for the computation of sparsity patterns.
+This should be more efficient for very large problems.
+When using arrays of booleans, use OpenMP to parallelize 
+the computation of the sparsity patterns.
+
+
+$head Speed Testing$$
+Extend the speed tests for Adolc, Fadbad, and Sacado
+to run under MS Windows.
+Run the CppAD $cref/speed/$$ tests on a set of different machines
+and operating systems.
+
+$head Tan and Tanh$$
+The AD $code tan$$ and $code tanh$$ functions
+are implemented using the AD $code sin$$, $code cos$$, $code sinh$$
+and $code cosh$$ functions.
+They could be improved by making them atomic using the equations
+$latex \[
+\begin{array}{rcl}
+	\tan^{(1)} (x)  & = & 1 + \tan (x)^2 \\
+	\tanh^{(1)} (x) & = & 1 - \tanh (x)^2
+\end{array}
+\] $$
+see $cref/standard math functions/ForwardTheory/Standard Math Functions/$$.
+
+
+$head Tracing$$
+Add forward and reverse mode operation tracing to the developer documentation
+(perhaps it will eventually become part of 
+the user interface and documentation).
+
+$head VecAD$$
+Make assignment operation in $cref/VecAD/$$ like
+assignment in $cref/ad_copy/$$.
+This will fix slicing to $code int$$ when assigning
+from $code double$$ to 
+$code VecAD< AD<double> >::reference$$ object.
+
+$head Vector Element Type$$
+Change cross references from 
+$xref/SimpleVector/Elements of Specified Type/elements of a specified type/$$
+to
+$xref/SimpleVector/Value Type/value_type/$$.
+
+$end

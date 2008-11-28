@@ -1,0 +1,259 @@
+<html><head>
+<title>ADFun Object Deprecated Member Functions</title>
+<meta name="description" id="description" content="ADFun Object Deprecated Member Functions">
+<meta name="keywords" id="keywords" content=" Adfun Dependent deprecated Order Memory Size taylor_size ">
+<style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+<script type='text/javascript' language='JavaScript' src='_fundeprecated_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://www.coin-or.org/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>FunDeprecated</option>
+</select>
+</td>
+<td><a href="sum_i_inv.cpp.htm" target="_top">Prev</a>
+</td><td><a href="library.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>library</option>
+<option>preprocessor</option>
+<option>Example</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>ADFun-&gt;</option>
+<option>Independent</option>
+<option>FunConstruct</option>
+<option>Dependent</option>
+<option>SeqProperty</option>
+<option>FunEval</option>
+<option>Drivers</option>
+<option>FunCheck</option>
+<option>omp_max_thread</option>
+<option>FunDeprecated</option>
+</select>
+</td>
+<td>FunDeprecated</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Dependent</option>
+<option>---..Deprecated</option>
+<option>Order</option>
+<option>---..Deprecated</option>
+<option>Memory</option>
+<option>---..Deprecated</option>
+<option>Size</option>
+<option>---..Deprecated</option>
+<option>taylor_size</option>
+<option>---..Deprecated</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+
+
+
+<center><b><big><big>ADFun Object Deprecated Member Functions</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'>.Dependent(</span></font></code><i><span style='white-space: nowrap'>y</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code><code><font color="blue"></font></code><i><span style='white-space: nowrap'>o</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'>.Order()<br>
+</span></font></code><code><font color="blue"></font></code><i><span style='white-space: nowrap'>m</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'>.Memory()<br>
+</span></font></code><code><font color="blue"></font></code><i><span style='white-space: nowrap'>s</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'>.Size()<br>
+</span></font></code><code><font color="blue"></font></code><i><span style='white-space: nowrap'>t</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'>.taylor_size()</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+The <code><font color="blue"><span style='white-space: nowrap'>ADFun&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> functions documented here have been deprecated;
+i.e., they are no longer approved of and may be removed from some future
+version of CppAD.
+
+<br>
+<br>
+<b><big><a name="Dependent" id="Dependent">Dependent</a></big></b>
+
+
+
+<br>
+A recording of and AD of <i>Base</i>
+<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+
+is started by a call of the form
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>If there is only one such recording at the current time,
+you can use <code><font color="blue"></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'>.Dependent(</span></font></code><i><span style='white-space: nowrap'>y</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code> in place of
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'>.Dependent(</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font></code><i><span style='white-space: nowrap'>y</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>See <a href="dependent.htm" target="_top"><span style='white-space: nowrap'>Dependent</span></a>
+ for a description of this operation.
+
+<br>
+<br>
+<b><a name="Dependent.Deprecated" id="Dependent.Deprecated">Deprecated</a></b>
+<br>
+This syntax was deprecated when CppAD was extended to allow
+for more than one <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> recording to be
+active at one time. 
+This was necessary to allow for multiple threading applications.
+
+
+<br>
+<br>
+<b><big><a name="Order" id="Order">Order</a></big></b>
+
+
+
+<br>
+The result <i>o</i> has prototype 
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font></code><i><span style='white-space: nowrap'>o</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>and is the order of the previous forward operation
+using the function <i>f</i>.
+This is the highest order of the 
+<a href="glossary.htm#Taylor Coefficient" target="_top"><span style='white-space: nowrap'>Taylor&nbsp;coefficients</span></a>
+
+that are currently stored in <i>f</i>.
+
+<br>
+<br>
+<b><a name="Order.Deprecated" id="Order.Deprecated">Deprecated</a></b>
+<br>
+Zero order corresponds to function values being stored in <i>f</i>.
+In the future, we would like to be able to erase the function
+values so that <i>f</i> uses less memory. 
+In this case, the return value of <code><font color="blue">Order</font></code> would not make sense.
+Use <a href="size_taylor.htm" target="_top"><span style='white-space: nowrap'>size_taylor</span></a>
+ to obtain 
+the number of Taylor coefficients currently stored
+in the ADFun object <i>f</i> 
+(which is equal to the order plus one).
+
+
+<br>
+<br>
+<b><big><a name="Memory" id="Memory">Memory</a></big></b>
+
+
+
+<br>
+The result 
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font></code><i><span style='white-space: nowrap'>m</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>and is the number of memory units (<code><font color="blue">sizeof</font></code>) required for the
+information currently stored in <i>f</i>.
+This memory is returned to the system when the destructor for 
+<i>f</i> is called.
+
+<br>
+<br>
+<b><a name="Memory.Deprecated" id="Memory.Deprecated">Deprecated</a></b>
+<br>
+It used to be the case that an ADFun object just kept increasing its
+buffers to the maximum size necessary during its lifetime.
+It would then return the buffers to the system when its destructor
+was called.
+This is no longer the case, an ADFun object now returns memory
+when it no longer needs the values stored in that memory.
+Thus the <code><font color="blue">Memory</font></code> function is no longer well defined.
+
+<br>
+<br>
+<b><big><a name="Size" id="Size">Size</a></big></b>
+
+
+
+<br>
+The result <i>s</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font></code><i><span style='white-space: nowrap'>s</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>and is the number of variables in the operation sequence plus the following:
+one for a phantom variable with tape address zero,
+one for each component of the domain that is a parameter.
+The amount of work and memory necessary for computing function values
+and derivatives using <i>f</i> is roughly proportional to <i>s</i>.
+
+<br>
+<br>
+<b><a name="Size.Deprecated" id="Size.Deprecated">Deprecated</a></b>
+<br>
+There are other sizes attached to an ADFun object, for example,
+the number of operations in the sequence.
+In order to avoid confusion with these other sizes,
+use <a href="seqproperty.htm#size_var" target="_top"><span style='white-space: nowrap'>size_var</span></a>
+ to obtain 
+the number of variables in the operation sequence.
+
+<br>
+<br>
+<b><big><a name="taylor_size" id="taylor_size">taylor_size</a></big></b>
+
+
+
+<br>
+The result <i>t</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font></code><i><span style='white-space: nowrap'>t</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>and is the number of Taylor coefficients, 
+per variable in the AD operation sequence,
+currently calculated and stored in the ADFun object <i>f</i>.
+
+<br>
+<br>
+<b><a name="taylor_size.Deprecated" id="taylor_size.Deprecated">Deprecated</a></b>
+<br>
+For the purpose of uniform naming,
+this function has been replaced by <a href="size_taylor.htm" target="_top"><span style='white-space: nowrap'>size_taylor</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file
+<a href="forward.cpp.htm" target="_top"><span style='white-space: nowrap'>Forward.cpp</span></a>
+
+contains an example and test of this operation.
+It returns true if it succeeds and false otherwise.
+
+
+<hr>Input File: omh/fun_deprecated.omh
+
+</body>
+</html>

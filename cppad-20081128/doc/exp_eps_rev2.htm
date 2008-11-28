@@ -1,0 +1,663 @@
+<html><head>
+<title>exp_eps: Second Order Reverse Sweep</title>
+<meta name="description" id="description" content="exp_eps: Second Order Reverse Sweep">
+<meta name="keywords" id="keywords" content=" exp_eps reverse mode example second order ">
+<style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+<script type='text/javascript' language='JavaScript' src='_exp_eps_rev2_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://www.coin-or.org/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Introduction</option>
+<option>exp_eps</option>
+<option>exp_eps_rev2</option>
+</select>
+</td>
+<td><a href="exp_eps_for2.cpp.htm" target="_top">Prev</a>
+</td><td><a href="exp_eps_rev2.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down3(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>library</option>
+<option>preprocessor</option>
+<option>Example</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>Introduction-&gt;</option>
+<option>get_started.cpp</option>
+<option>exp_2</option>
+<option>exp_eps</option>
+<option>exp_apx_main.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>exp_eps-&gt;</option>
+<option>exp_eps.hpp</option>
+<option>exp_eps.cpp</option>
+<option>exp_eps_for0</option>
+<option>exp_eps_for1</option>
+<option>exp_eps_rev1</option>
+<option>exp_eps_for2</option>
+<option>exp_eps_rev2</option>
+<option>exp_eps_cppad</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>exp_eps_rev2-&gt;</option>
+<option>exp_eps_rev2.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Purpose</option>
+<option>Mathematical Form</option>
+<option>epsilon</option>
+<option>f_7</option>
+<option>Index 7: f_6</option>
+<option>Index 6: f_5</option>
+<option>Index 5: f_4</option>
+<option>Index 4: f_3</option>
+<option>Index 3: f_2</option>
+<option>Index 2: f_1</option>
+<option>Verification</option>
+<option>Exercises</option>
+</select>
+</td>
+</tr></table><br>
+
+
+
+<center><b><big><big>exp_eps: Second Order Reverse Sweep</big></big></b></center>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+In general, a second order reverse sweep is given the
+<a href="exp_eps_for1.htm#First Order Expansion" target="_top"><span style='white-space: nowrap'>first&nbsp;order&nbsp;expansion</span></a>
+
+for all of the variables in an operation sequence.
+Given a choice of a particular variable, 
+it computes the derivative, 
+of that variables first order expansion coefficient, 
+with respect to all of the independent variables.
+
+<br>
+<br>
+<b><big><a name="Mathematical Form" id="Mathematical Form">Mathematical Form</a></big></b>
+<br>
+Suppose that we use the algorithm <a href="exp_eps.hpp.htm" target="_top"><span style='white-space: nowrap'>exp_eps.hpp</span></a>
+
+to compute <code><font color="blue"><span style='white-space: nowrap'>exp_eps(</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font></code><i><span style='white-space: nowrap'>epsilon</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+with <i>x</i> is equal to .5
+and <i>epsilon</i> is equal to .2. 
+For this case, the mathematical function for the operation sequence
+corresponding to <code><font color="blue">exp_eps</font></code> is
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+f&nbsp;(&nbsp;x&nbsp;,&nbsp;\varepsilon&nbsp;)&nbsp;=&nbsp;&nbsp;&nbsp;1&nbsp;+&nbsp;x&nbsp;+&nbsp;x^2&nbsp;/&nbsp;2&nbsp;&nbsp;<br>
+\]&nbsp;</span></code>
+
+The corresponding derivative of the
+partial derivative with respect to <code>
+<span style='white-space: nowrap'>&nbsp;x</span></code>
+ is
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+\Dpow{2}{x}&nbsp;f&nbsp;(&nbsp;x&nbsp;,&nbsp;\varepsilon&nbsp;)&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;&nbsp;1<br>
+\\<br>
+\partial_\varepsilon&nbsp;\partial_x&nbsp;f&nbsp;(&nbsp;x&nbsp;,&nbsp;\varepsilon&nbsp;)&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;&nbsp;0<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+
+<br>
+<br>
+<b><big><a name="epsilon" id="epsilon">epsilon</a></big></b>
+<br>
+Since <code>
+<span style='white-space: nowrap'>&nbsp;\varepsilon</span></code>
+ is an independent variable,
+it could included as an argument to all of the
+<code>
+<span style='white-space: nowrap'>&nbsp;f_j</span></code>
+ functions below.
+The result would be that all the partials with respect to 
+<code>
+<span style='white-space: nowrap'>&nbsp;\varepsilon</span></code>
+ would be zero and hence we drop it to simplify
+the presentation.
+
+<br>
+<br>
+<b><big><a name="f_7" id="f_7">f_7</a></big></b>
+<br>
+In reverse mode we choose one dependent variable and
+compute its derivative with respect to all the independent variables.
+For our example, we chose the value returned by <a href="exp_eps.hpp.htm" target="_top"><span style='white-space: nowrap'>exp_eps.hpp</span></a>
+
+which is <code>
+<span style='white-space: nowrap'>&nbsp;v_7</span></code>
+.
+We begin with the function <code>
+<span style='white-space: nowrap'>&nbsp;f_7</span></code>
+ where <code>
+<span style='white-space: nowrap'>&nbsp;v_7</span></code>
+ 
+is both an argument and the value of the function; i.e.,
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+f_7&nbsp;\left(&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_1^{(0)}&nbsp;,&nbsp;v_1^{(1)}&nbsp;,&nbsp;\ldots&nbsp;,&nbsp;v_7^{(0)}&nbsp;,&nbsp;v_7^{(1)}&nbsp;<br>
+\right)&nbsp;<br>
+&amp;&nbsp;=&nbsp;&amp;&nbsp;v_7^{(1)}&nbsp;<br>
+\\<br>
+\D{f_7}{v_7^{(1)}}&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;1<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+All the other partial derivatives of <code>
+<span style='white-space: nowrap'>&nbsp;f_7</span></code>
+ are zero.
+
+<br>
+<br>
+<b><big><a name="Index 7: f_6" id="Index 7: f_6">Index 7: f_6</a></big></b>
+<br>
+The last operation has index 7,
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_7^{(0)}&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;&nbsp;&nbsp;v_4^{(0)}&nbsp;+&nbsp;v_6^{(0)}&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_7^{(1)}&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;&nbsp;&nbsp;v_4^{(1)}&nbsp;+&nbsp;v_6^{(1)}&nbsp;&nbsp;<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+We define the function 
+<code>
+<span style='white-space: nowrap'>&nbsp;f_6&nbsp;\left(&nbsp;v_1^{(0)}&nbsp;,&nbsp;\ldots&nbsp;,&nbsp;v_6^{(1)}&nbsp;\right)&nbsp;</span></code>
+
+as equal to <code>
+<span style='white-space: nowrap'>&nbsp;f_7</span></code>
+
+except that <code>
+<span style='white-space: nowrap'>&nbsp;v_7^{(0)}</span></code>
+ and <code>
+<span style='white-space: nowrap'>&nbsp;v_7^{(1)}</span></code>
+ are eliminated using 
+this operation; i.e.
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+f_6&nbsp;&nbsp;=&nbsp;<br>
+f_7&nbsp;\left[&nbsp;v_1^{(0)}&nbsp;,&nbsp;\ldots&nbsp;,&nbsp;v_6^{(1)}&nbsp;,&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_7^{(0)}&nbsp;\left(&nbsp;v_4^{(0)}&nbsp;,&nbsp;v_6^{(0)}&nbsp;\right)&nbsp;&nbsp;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_7^{(1)}&nbsp;\left(&nbsp;v_4^{(1)}&nbsp;,&nbsp;v_6^{(1)}&nbsp;\right)&nbsp;&nbsp;<br>
+\right]<br>
+\]&nbsp;</span></code>
+
+It follows that 
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcll}<br>
+\D{f_6}{v_4^{(1)}}&nbsp;<br>
+&amp;&nbsp;=&nbsp;&amp;&nbsp;\D{f_7}{v_4^{(1)}}&nbsp;+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\D{f_7}{v_7^{(1)}}&nbsp;*&nbsp;\D{v_7^{(1)}}{v_4^{(1)}}&nbsp;<br>
+&amp;&nbsp;=&nbsp;1<br>
+\\<br>
+\D{f_6}{v_6^{(1)}}&nbsp;<br>
+&amp;&nbsp;=&nbsp;&amp;&nbsp;\D{f_7}{v_6^{(1)}}&nbsp;+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\D{f_7}{v_7^{(1)}}&nbsp;*&nbsp;\D{v_7^{(1)}}{v_6^{(1)}}&nbsp;<br>
+&amp;&nbsp;=&nbsp;1<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+All the other partial derivatives of <code>
+<span style='white-space: nowrap'>&nbsp;f_6</span></code>
+ are zero.
+
+<br>
+<br>
+<b><big><a name="Index 6: f_5" id="Index 6: f_5">Index 6: f_5</a></big></b>
+<br>
+The previous operation has index 6, 
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_6^{(0)}&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;v_5^{(0)}&nbsp;/&nbsp;2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_6^{(1)}&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;v_5^{(1)}&nbsp;/&nbsp;2<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+We define the function 
+<code>
+<span style='white-space: nowrap'>&nbsp;f_5&nbsp;\left(&nbsp;v_1^{(0)}&nbsp;,&nbsp;\ldots&nbsp;,&nbsp;v_5^{(1)}&nbsp;\right)&nbsp;</span></code>
+
+as equal to <code>
+<span style='white-space: nowrap'>&nbsp;f_6&nbsp;</span></code>
+
+except that <code>
+<span style='white-space: nowrap'>&nbsp;v_6^{(0)}</span></code>
+ and <code>
+<span style='white-space: nowrap'>&nbsp;v_6^{(1)}</span></code>
+ are eliminated using 
+this operation; i.e.
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+f_5&nbsp;=&nbsp;<br>
+f_6&nbsp;\left[&nbsp;v_1^{(0)}&nbsp;,&nbsp;\ldots&nbsp;,&nbsp;v_5^{(1)}&nbsp;,&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_6^{(0)}&nbsp;\left(&nbsp;v_5^{(0)}&nbsp;\right)&nbsp;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_6^{(1)}&nbsp;\left(&nbsp;v_5^{(1)}&nbsp;\right)&nbsp;<br>
+\right]<br>
+\]&nbsp;</span></code>
+
+It follows that 
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcll}<br>
+\D{f_5}{v_4^{(1)}}&nbsp;<br>
+&amp;&nbsp;=&nbsp;&amp;&nbsp;\D{f_6}{v_4^{(1)}}&nbsp;<br>
+&amp;&nbsp;=&nbsp;1<br>
+\\<br>
+\D{f_5}{v_5^{(1)}}&nbsp;<br>
+&amp;&nbsp;=&nbsp;&amp;&nbsp;\D{f_6}{v_5}&nbsp;+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\D{f_6}{v_6^{(1)}}&nbsp;*&nbsp;\D{v_6^{(1)}}{v_5^{(1)}}&nbsp;<br>
+&amp;&nbsp;=&nbsp;0.5<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+All the other partial derivatives of <code>
+<span style='white-space: nowrap'>&nbsp;f_5</span></code>
+ are zero.
+
+<br>
+<br>
+<b><big><a name="Index 5: f_4" id="Index 5: f_4">Index 5: f_4</a></big></b>
+<br>
+The previous operation has index 5,
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_5^{(0)}&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;v_3^{(0)}&nbsp;*&nbsp;v_1^{(0)}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_5^{(1)}&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;v_3^{(1)}&nbsp;*&nbsp;v_1^{(0)}&nbsp;+&nbsp;v_3^{(0)}&nbsp;*&nbsp;v_1^{(1)}<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+We define the function 
+<code>
+<span style='white-space: nowrap'>&nbsp;f_4&nbsp;\left(&nbsp;v_1^{(0)}&nbsp;,&nbsp;\ldots&nbsp;,&nbsp;v_4^{(1)}&nbsp;\right)&nbsp;</span></code>
+
+as equal to <code>
+<span style='white-space: nowrap'>&nbsp;f_5&nbsp;</span></code>
+
+except that <code>
+<span style='white-space: nowrap'>&nbsp;v_5^{(0)}</span></code>
+ and <code>
+<span style='white-space: nowrap'>&nbsp;v_5^{(1)}</span></code>
+ are eliminated using 
+this operation; i.e.
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+f_4&nbsp;=&nbsp;<br>
+f_5&nbsp;\left[&nbsp;&nbsp;v_1^{(0)}&nbsp;,&nbsp;\ldots&nbsp;,&nbsp;v_4^{(1)}&nbsp;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_5^{(0)}&nbsp;\left(&nbsp;v_1^{(0)},&nbsp;v_3^{(0)}&nbsp;\right)&nbsp;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_5^{(1)}&nbsp;\left(&nbsp;v_1^{(0)},&nbsp;v_1^{(1)},&nbsp;v_3^{(0)}&nbsp;,&nbsp;v_3^{(1)}&nbsp;\right)&nbsp;,<br>
+\right]<br>
+\]&nbsp;</span></code>
+
+Given the information from the forward sweep, we have
+<code>
+<span style='white-space: nowrap'>&nbsp;v_1^{(0)}&nbsp;=&nbsp;&nbsp;0.5</span></code>
+,
+<code>
+<span style='white-space: nowrap'>&nbsp;v_3^{(0)}&nbsp;=&nbsp;&nbsp;0.5</span></code>
+,
+<code>
+<span style='white-space: nowrap'>&nbsp;v_1^{(1)}&nbsp;=&nbsp;&nbsp;1</span></code>
+,
+<code>
+<span style='white-space: nowrap'>&nbsp;v_3^{(1)}&nbsp;=&nbsp;&nbsp;1</span></code>
+,
+and the fact that the partial of <code>
+<span style='white-space: nowrap'>&nbsp;f_5</span></code>
+ with respect to
+<code>
+<span style='white-space: nowrap'>&nbsp;v_5^{(0)}</span></code>
+ is zero, we have
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcll}<br>
+\D{f_4}{v_1^{(0)}}<br>
+&amp;&nbsp;=&nbsp;&amp;&nbsp;\D{f_5}{v_1^{(0)}}<br>
+&nbsp;&nbsp;+&nbsp;&nbsp;&nbsp;\D{f_5}{v_5^{(1)}}&nbsp;*&nbsp;\D{v_5^{(1)}}{v_1^{(0)}}&nbsp;<br>
+&amp;&nbsp;=&nbsp;0.5<br>
+\\<br>
+\D{f_4}{v_1^{(1)}}<br>
+&amp;&nbsp;=&nbsp;&amp;&nbsp;\D{f_5}{v_1^{(1)}}<br>
+&nbsp;&nbsp;+&nbsp;&nbsp;&nbsp;\D{f_5}{v_5^{(1)}}&nbsp;*&nbsp;\D{v_5^{(1)}}{v_1^{(1)}}&nbsp;<br>
+&amp;&nbsp;=&nbsp;0.25<br>
+\\<br>
+\D{f_4}{v_3^{(0)}}<br>
+&amp;&nbsp;=&nbsp;&amp;&nbsp;\D{f_5}{v_3^{(0)}}<br>
+&nbsp;&nbsp;+&nbsp;&nbsp;&nbsp;\D{f_5}{v_5^{(1)}}&nbsp;*&nbsp;\D{v_5^{(1)}}{v_3^{(0)}}&nbsp;<br>
+&amp;&nbsp;=&nbsp;0.5<br>
+\\<br>
+\D{f_4}{v_3^{(1)}}<br>
+&amp;&nbsp;=&nbsp;&amp;&nbsp;\D{f_3}{v_1^{(1)}}<br>
+&nbsp;&nbsp;+&nbsp;&nbsp;&nbsp;\D{f_5}{v_5^{(1)}}&nbsp;*&nbsp;\D{v_5^{(1)}}{v_3^{(1)}}&nbsp;<br>
+&amp;&nbsp;=&nbsp;0.25<br>
+\\<br>
+\D{f_4}{v_4^{(1)}}<br>
+&amp;&nbsp;=&nbsp;&amp;&nbsp;\D{f_5}{v_4^{(1)}}<br>
+&amp;&nbsp;=&nbsp;1<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+All the other partial derivatives of <code>
+<span style='white-space: nowrap'>&nbsp;f_5</span></code>
+ are zero.
+
+<br>
+<br>
+<b><big><a name="Index 4: f_3" id="Index 4: f_3">Index 4: f_3</a></big></b>
+<br>
+The previous operation has index 4,
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_4^{(0)}&nbsp;=&nbsp;1&nbsp;+&nbsp;v_3^{(0)}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_4^{(1)}&nbsp;=&nbsp;v_3^{(1)}<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+We define the function 
+<code>
+<span style='white-space: nowrap'>&nbsp;f_3&nbsp;\left(&nbsp;v_1^{(0)}&nbsp;,&nbsp;\ldots&nbsp;,&nbsp;v_3^{(1)}&nbsp;\right)&nbsp;</span></code>
+
+as equal to <code>
+<span style='white-space: nowrap'>&nbsp;f_4&nbsp;</span></code>
+
+except that <code>
+<span style='white-space: nowrap'>&nbsp;v_4^{(0)}</span></code>
+ and <code>
+<span style='white-space: nowrap'>&nbsp;v_4^{(1)}</span></code>
+ are eliminated using 
+this operation; i.e.
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+f_3&nbsp;=&nbsp;<br>
+f_4&nbsp;\left[&nbsp;v_1^{(0)}&nbsp;,&nbsp;\ldots&nbsp;,&nbsp;v_3^{(1)}&nbsp;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_4^{(0)}&nbsp;\left(&nbsp;v_3^{(0)}&nbsp;\right)&nbsp;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_4^{(1)}&nbsp;\left(&nbsp;v_3^{(1)}&nbsp;\right)&nbsp;&nbsp;<br>
+\right]<br>
+\]&nbsp;</span></code>
+
+It follows that 
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcll}<br>
+\D{f_3}{v_1^{(0)}}&nbsp;<br>
+&amp;&nbsp;=&nbsp;&amp;&nbsp;\D{f_4}{v_1^{(0)}}<br>
+&amp;&nbsp;=&nbsp;&nbsp;0.5<br>
+\\<br>
+\D{f_3}{v_1^{(1)}}&nbsp;<br>
+&amp;&nbsp;=&nbsp;&amp;&nbsp;\D{f_4}{v_1^{(1)}}<br>
+&amp;&nbsp;=&nbsp;&nbsp;0.25<br>
+\\<br>
+\D{f_3}{v_2^{(0)}}&nbsp;<br>
+&amp;&nbsp;=&nbsp;&amp;&nbsp;\D{f_4}{v_2^{(0)}}&nbsp;&nbsp;<br>
+&amp;&nbsp;=&nbsp;0<br>
+\\<br>
+\D{f_3}{v_2^{(1)}}&nbsp;<br>
+&amp;&nbsp;=&nbsp;&amp;&nbsp;\D{f_4}{v_2^{(1)}}&nbsp;&nbsp;<br>
+&amp;&nbsp;=&nbsp;0<br>
+\\<br>
+\D{f_3}{v_3^{(0)}}&nbsp;<br>
+&amp;&nbsp;=&nbsp;&amp;&nbsp;\D{f_4}{v_3^{(0)}}&nbsp;<br>
+&nbsp;&nbsp;+&nbsp;&nbsp;&nbsp;\D{f_4}{v_4^{(0)}}&nbsp;*&nbsp;\D{v_4^{(0)}}{v_3^{(0)}}&nbsp;<br>
+&amp;&nbsp;=&nbsp;0.5<br>
+\\<br>
+\D{f_3}{v_3^{(1)}}&nbsp;<br>
+&amp;&nbsp;=&nbsp;&amp;&nbsp;\D{f_4}{v_3^{(1)}}&nbsp;<br>
+&nbsp;&nbsp;+&nbsp;&nbsp;&nbsp;\D{f_4}{v_4^{(1)}}&nbsp;*&nbsp;\D{v_4^{(1)}}{v_3^{(1)}}&nbsp;<br>
+&amp;&nbsp;=&nbsp;1.25<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+
+
+<br>
+<br>
+<b><big><a name="Index 3: f_2" id="Index 3: f_2">Index 3: f_2</a></big></b>
+<br>
+The previous operation has index 3,
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_3^{(0)}&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;v_2^{(0)}&nbsp;/&nbsp;1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_3^{(1)}&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;v_2^{(1)}&nbsp;/&nbsp;1<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+We define the function 
+<code>
+<span style='white-space: nowrap'>&nbsp;f_2&nbsp;\left(&nbsp;v_1^{(0)}&nbsp;,&nbsp;\ldots&nbsp;,&nbsp;v_2^{(1)}&nbsp;\right)&nbsp;</span></code>
+
+as equal to <code>
+<span style='white-space: nowrap'>&nbsp;f_3&nbsp;</span></code>
+
+except that <code>
+<span style='white-space: nowrap'>&nbsp;v_3^{(0)}</span></code>
+ and <code>
+<span style='white-space: nowrap'>&nbsp;v_3^{(1)}</span></code>
+ are eliminated using 
+this operation; i.e.
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+f_2&nbsp;=&nbsp;<br>
+f_3&nbsp;\left[&nbsp;v_1^{(0)}&nbsp;,&nbsp;\ldots&nbsp;,&nbsp;v_2^{(1)}&nbsp;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_3^{(0)}&nbsp;\left(&nbsp;v_2^{(0)}&nbsp;\right)&nbsp;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_3^{(1)}&nbsp;\left(&nbsp;v_2^{(1)}&nbsp;\right)<br>
+\right]<br>
+\]&nbsp;</span></code>
+
+It follows that 
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcll}<br>
+\D{f_2}{v_1^{(0)}}&nbsp;<br>
+&amp;&nbsp;=&nbsp;&amp;&nbsp;\D{f_3}{v_1^{(0)}}<br>
+&amp;&nbsp;=&nbsp;&nbsp;0.5<br>
+\\<br>
+\D{f_2}{v_1^{(1)}}&nbsp;<br>
+&amp;&nbsp;=&nbsp;&amp;&nbsp;\D{f_3}{v_1^{(1)}}<br>
+&amp;&nbsp;=&nbsp;&nbsp;0.25<br>
+\\<br>
+\D{f_2}{v_2^{(0)}}&nbsp;<br>
+&amp;&nbsp;=&nbsp;&amp;&nbsp;\D{f_3}{v_2^{(0)}}&nbsp;&nbsp;<br>
+&nbsp;&nbsp;+&nbsp;&nbsp;&nbsp;\D{f_3}{v_3^{(0)}}&nbsp;*&nbsp;\D{v_3^{(0)}}{v_2^{(0)}}<br>
+&amp;&nbsp;=&nbsp;0.5<br>
+\\<br>
+\D{f_2}{v_2^{(1)}}&nbsp;<br>
+&amp;&nbsp;=&nbsp;&amp;&nbsp;\D{f_3}{v_2^{(1)}}&nbsp;&nbsp;<br>
+&nbsp;&nbsp;+&nbsp;&nbsp;&nbsp;\D{f_3}{v_3^{(1)}}&nbsp;*&nbsp;\D{v_3^{(1)}}{v_2^{(0)}}<br>
+&amp;&nbsp;=&nbsp;1.25<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+
+<br>
+<br>
+<b><big><a name="Index 2: f_1" id="Index 2: f_1">Index 2: f_1</a></big></b>
+<br>
+The previous operation has index 1,
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_2^{(0)}&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;1&nbsp;*&nbsp;v_1^{(0)}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_2^{(1)}&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;1&nbsp;*&nbsp;v_1^{(1)}<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+We define the function 
+<code>
+<span style='white-space: nowrap'>&nbsp;f_1&nbsp;\left(&nbsp;v_1^{(0)}&nbsp;,&nbsp;v_1^{(1)}&nbsp;\right)&nbsp;</span></code>
+
+as equal to <code>
+<span style='white-space: nowrap'>&nbsp;f_2&nbsp;</span></code>
+
+except that <code>
+<span style='white-space: nowrap'>&nbsp;v_2^{(0)}</span></code>
+ and <code>
+<span style='white-space: nowrap'>&nbsp;v_2^{(1)}</span></code>
+ are eliminated using 
+this operation; i.e.
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+f_1&nbsp;=&nbsp;<br>
+f_2&nbsp;\left[&nbsp;&nbsp;v_1^{(0)}&nbsp;,&nbsp;v_1^{(1)}&nbsp;,&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_2^{(0)}&nbsp;\left(&nbsp;v_1^{(0)}&nbsp;\right)&nbsp;&nbsp;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_2^{(1)}&nbsp;\left(&nbsp;v_1^{(1)}&nbsp;\right)&nbsp;&nbsp;<br>
+\right]<br>
+\]&nbsp;</span></code>
+
+It follows that 
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcll}<br>
+\D{f_1}{v_1^{(0)}}&nbsp;<br>
+&amp;&nbsp;=&nbsp;&amp;&nbsp;\D{f_2}{v_1^{(0)}}<br>
+&nbsp;&nbsp;+&nbsp;&nbsp;&nbsp;\D{f_2}{v_2^{(0)}}&nbsp;*&nbsp;\D{v_2^{(0)}}{v_1^{(0)}}<br>
+&amp;&nbsp;=&nbsp;&nbsp;1<br>
+\\<br>
+\D{f_1}{v_1^{(1)}}&nbsp;<br>
+&amp;&nbsp;=&nbsp;&amp;&nbsp;\D{f_2}{v_1^{(1)}}<br>
+&nbsp;&nbsp;+&nbsp;&nbsp;&nbsp;\D{f_2}{v_2^{(1)}}&nbsp;*&nbsp;\D{v_2^{(1)}}{v_1^{(1)}}<br>
+&amp;&nbsp;=&nbsp;1.5<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+Note that <code>
+<span style='white-space: nowrap'>&nbsp;v_1</span></code>
+ is equal to <code>
+<span style='white-space: nowrap'>&nbsp;x</span></code>
+,
+so the second partial derivative of 
+<code><font color="blue"><span style='white-space: nowrap'>exp_eps(</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font></code><i><span style='white-space: nowrap'>epsilon</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code> 
+at <i>x</i> equal to .5 and <i>epsilon</i> equal .2 is 
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\Dpow{2}{x}&nbsp;v_7^{(0)}<br>
+=&nbsp;\D{v_7^{(1)}}{x}&nbsp;<br>
+=&nbsp;\D{f_1}{v_1^{(0)}}<br>
+=&nbsp;1<br>
+\]&nbsp;</span></code>
+
+There is a theorem about algorithmic differentiation that explains why
+the other partial of <code>
+<span style='white-space: nowrap'>&nbsp;f_1</span></code>
+ is equal to the first partial of
+<code><font color="blue"><span style='white-space: nowrap'>exp_eps(</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font></code><i><span style='white-space: nowrap'>epsilon</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code> 
+with respect to <code>
+<span style='white-space: nowrap'>&nbsp;x</span></code>
+.
+
+
+
+
+<br>
+<br>
+<b><big><a name="Verification" id="Verification">Verification</a></big></b>
+<br>
+The file <a href="exp_eps_rev2.cpp.htm" target="_top"><span style='white-space: nowrap'>exp_eps_rev2.cpp</span></a>
+ contains a routine 
+that verifies the values computed above.
+It returns true for success and false for failure.
+It only tests the partial derivatives of
+<code>
+<span style='white-space: nowrap'>&nbsp;f_j</span></code>
+ that might not be equal to the corresponding
+partials of <code>
+<span style='white-space: nowrap'>&nbsp;f_{j+1}</span></code>
+; i.e., the
+other partials of <code>
+<span style='white-space: nowrap'>&nbsp;f_j</span></code>
+ must be equal to the corresponding
+partials of <code>
+<span style='white-space: nowrap'>&nbsp;f_{j+1}</span></code>
+.
+
+<br>
+<br>
+<b><big><a name="Exercises" id="Exercises">Exercises</a></big></b>
+
+<ol type="1"><li>
+Consider the case where <code>
+<span style='white-space: nowrap'>&nbsp;x&nbsp;=&nbsp;.1</span></code>
+
+and we first preform a zero order forward mode sweep
+for the operation sequence used above (in reverse order).
+What are the results of a 
+first order reverse mode sweep; i.e.,
+what are the corresponding values for 
+<code>
+<span style='white-space: nowrap'>&nbsp;\D{f_j}{v_k}</span></code>
+ for all <code>
+<span style='white-space: nowrap'>&nbsp;j,&nbsp;k</span></code>
+ such that
+<code>
+<span style='white-space: nowrap'>&nbsp;\D{f_j}{v_k}&nbsp;\neq&nbsp;0</span></code>
+.
+</li><li>
+
+Create a modified version of 
+<a href="exp_eps_rev2.cpp.htm" target="_top"><span style='white-space: nowrap'>exp_eps_rev2.cpp</span></a>
+ 
+that verifies the values you obtained for the previous exercise.
+Also create and run a main program that reports the result
+of calling the modified version of
+<a href="exp_eps_rev2.cpp.htm" target="_top"><span style='white-space: nowrap'>exp_eps_rev2.cpp</span></a>
+.
+</li></ol>
+
+
+
+<hr>Input File: introduction/exp_apx/exp_eps.omh
+
+</body>
+</html>

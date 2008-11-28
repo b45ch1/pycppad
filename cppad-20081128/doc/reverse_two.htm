@@ -1,0 +1,358 @@
+<html><head>
+<title>Second Order Reverse Mode</title>
+<meta name="description" id="description" content="Second Order Reverse Mode">
+<meta name="keywords" id="keywords" content=" reverse second order mode derivative ">
+<style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+<script type='text/javascript' language='JavaScript' src='_reverse_two_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://www.coin-or.org/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>FunEval</option>
+<option>Reverse</option>
+<option>reverse_two</option>
+</select>
+</td>
+<td><a href="reverse_one.cpp.htm" target="_top">Prev</a>
+</td><td><a href="reverse_two.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down3(this)'>
+<option>ADFun-&gt;</option>
+<option>Independent</option>
+<option>FunConstruct</option>
+<option>Dependent</option>
+<option>SeqProperty</option>
+<option>FunEval</option>
+<option>Drivers</option>
+<option>FunCheck</option>
+<option>omp_max_thread</option>
+<option>FunDeprecated</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>FunEval-&gt;</option>
+<option>Forward</option>
+<option>Reverse</option>
+<option>Sparse</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Reverse-&gt;</option>
+<option>reverse_one</option>
+<option>reverse_two</option>
+<option>reverse_any</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>reverse_two-&gt;</option>
+<option>reverse_two.cpp</option>
+<option>HesTimesDir.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>x^(k)</option>
+<option>W</option>
+<option>f</option>
+<option>w</option>
+<option>dw</option>
+<option>---..First Order Partials</option>
+<option>---..Second Order Partials</option>
+<option>Vector</option>
+<option>Hessian Times Direction</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+
+
+<center><b><big><big>Second Order Reverse Mode</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>dw</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'>.Reverse(2,&nbsp;</span></font></code><i><span style='white-space: nowrap'>w</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+We use <code>
+<span style='white-space: nowrap'>&nbsp;F&nbsp;:&nbsp;B^n&nbsp;\rightarrow&nbsp;B^m</span></code>
+ to denote the
+<a href="glossary.htm#AD Function" target="_top"><span style='white-space: nowrap'>AD&nbsp;function</span></a>
+ corresponding to <i>f</i>.
+Reverse mode computes the derivative of the <a href="forward.htm" target="_top"><span style='white-space: nowrap'>Forward</span></a>
+ mode
+<a href="glossary.htm#Taylor Coefficient" target="_top"><span style='white-space: nowrap'>Taylor&nbsp;coefficients</span></a>
+
+with respect to the domain variable <code>
+<span style='white-space: nowrap'>&nbsp;x</span></code>
+.
+
+<br>
+<br>
+<b><big><a name="x^(k)" id="x^(k)">x^(k)</a></big></b>
+<br>
+For <code>
+<span style='white-space: nowrap'>&nbsp;k&nbsp;=&nbsp;0,&nbsp;1</span></code>
+,
+the vector <code>
+<span style='white-space: nowrap'>&nbsp;x^{(k)}&nbsp;\in&nbsp;B^n</span></code>
+ is defined as the value of 
+<i>x_k</i> in the previous call (counting this call) of the form
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'>.Forward(</span></font></code><i><span style='white-space: nowrap'>k</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font></code><i><span style='white-space: nowrap'>x_k</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>If there is no previous call with <code>
+<span style='white-space: nowrap'>&nbsp;k&nbsp;=&nbsp;0</span></code>
+,
+<code>
+<span style='white-space: nowrap'>&nbsp;x^{(0)}</span></code>
+ is the value of the independent variables when the 
+corresponding 
+AD of <i>Base</i>
+<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+ was recorded.
+
+
+<br>
+<br>
+<b><big><a name="W" id="W">W</a></big></b>
+<br>
+The functions 
+<code>
+<span style='white-space: nowrap'>&nbsp;W_0&nbsp;:&nbsp;B^n&nbsp;\rightarrow&nbsp;B</span></code>
+ and 
+<code>
+<span style='white-space: nowrap'>&nbsp;W_1&nbsp;:&nbsp;B^n&nbsp;\rightarrow&nbsp;B</span></code>
+ 
+are defined by
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+W_0&nbsp;(&nbsp;u&nbsp;)&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;w_0&nbsp;*&nbsp;F_0&nbsp;(&nbsp;u&nbsp;)&nbsp;+&nbsp;\cdots&nbsp;+&nbsp;w_{m-1}&nbsp;*&nbsp;F_{m-1}&nbsp;(u)<br>
+\\<br>
+W_1&nbsp;(&nbsp;u&nbsp;)&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;<br>
+w_0&nbsp;*&nbsp;F_0^{(1)}&nbsp;(&nbsp;u&nbsp;)&nbsp;*&nbsp;x^{(1)}&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;\cdots&nbsp;+&nbsp;w_{m-1}&nbsp;*&nbsp;F_{m-1}^{(1)}&nbsp;(u)&nbsp;*&nbsp;x^{(1)}<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+ 
+This operation computes the derivatives 
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+W_0^{(1)}&nbsp;(u)&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;w_0&nbsp;*&nbsp;F_0^{(1)}&nbsp;(&nbsp;u&nbsp;)&nbsp;+&nbsp;\cdots&nbsp;+&nbsp;w_{m-1}&nbsp;*&nbsp;F_{m-1}^{(1)}&nbsp;(u)<br>
+\\<br>
+W_1^{(1)}&nbsp;(u)&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;w_0&nbsp;*&nbsp;\left(&nbsp;x^{(1)}&nbsp;\right)^\T&nbsp;*&nbsp;F_0^{(2)}&nbsp;(&nbsp;u&nbsp;)&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;\cdots&nbsp;+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;w_{m-1}&nbsp;*&nbsp;\left(&nbsp;x^{(1)}&nbsp;\right)^\T&nbsp;F_{m-1}^{(2)}&nbsp;(u)<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+at <code>
+<span style='white-space: nowrap'>&nbsp;u&nbsp;=&nbsp;x^{(0)}</span></code>
+.
+
+<br>
+<br>
+<b><big><a name="f" id="f">f</a></big></b>
+<br>
+The object <i>f</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;ADFun&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>Before this call to <code><font color="blue">Reverse</font></code>, the value returned by
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'>.size_taylor()<br>
+</span></font></code>must be greater than or equal two (see <a href="size_taylor.htm" target="_top"><span style='white-space: nowrap'>size_taylor</span></a>
+).
+
+<br>
+<br>
+<b><big><a name="w" id="w">w</a></big></b>
+<br>
+The argument <i>w</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font></code><i><span style='white-space: nowrap'>Vector</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>w</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>(see <a href="reverse_two.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
+ below)
+and its size 
+must be equal to <i>m</i>, the dimension of the
+<a href="seqproperty.htm#Range" target="_top"><span style='white-space: nowrap'>range</span></a>
+ space for <i>f</i>.
+
+<br>
+<br>
+<b><big><a name="dw" id="dw">dw</a></big></b>
+<br>
+The result <i>dw</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>Vector</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font></code><i><span style='white-space: nowrap'>dw</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>(see <a href="reverse_two.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
+ below).
+It contains both the derivative
+<code>
+<span style='white-space: nowrap'>&nbsp;W^{(1)}&nbsp;(x)</span></code>
+ and the derivative <code>
+<span style='white-space: nowrap'>&nbsp;U^{(1)}&nbsp;(x)</span></code>
+.
+The size of <i>dw</i> 
+is equal to <code>
+<span style='white-space: nowrap'>&nbsp;n&nbsp;\times&nbsp;2</span></code>
+, 
+where <code>
+<span style='white-space: nowrap'>&nbsp;n</span></code>
+ is the dimension of the
+<a href="seqproperty.htm#Domain" target="_top"><span style='white-space: nowrap'>domain</span></a>
+ space for <i>f</i>.
+
+<br>
+<br>
+<b><a name="dw.First Order Partials" id="dw.First Order Partials">First Order Partials</a></b>
+<br>
+For <code>
+<span style='white-space: nowrap'>&nbsp;j&nbsp;=&nbsp;0&nbsp;,&nbsp;\ldots&nbsp;,&nbsp;n&nbsp;-&nbsp;1</span></code>
+,
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+dw&nbsp;[&nbsp;j&nbsp;*&nbsp;2&nbsp;+&nbsp;0&nbsp;]&nbsp;<br>
+=&nbsp;&nbsp;<br>
+\D{&nbsp;W_0&nbsp;}{&nbsp;u_j&nbsp;}&nbsp;\left(&nbsp;x^{(0)}&nbsp;\right)&nbsp;<br>
+=<br>
+w_0&nbsp;*&nbsp;\D{&nbsp;F_0&nbsp;}{&nbsp;u_j&nbsp;}&nbsp;\left(&nbsp;x^{(0)}&nbsp;\right)<br>
++&nbsp;\cdots&nbsp;+&nbsp;<br>
+w_{m-1}&nbsp;*&nbsp;\D{&nbsp;F_{m-1}&nbsp;}{&nbsp;u_j&nbsp;}&nbsp;\left(&nbsp;x^{(0)}&nbsp;\right)<br>
+\]&nbsp;</span></code>
+
+This part of <i>dw</i> contains the same values as are returned
+by <a href="reverse_one.htm" target="_top"><span style='white-space: nowrap'>reverse_one</span></a>
+.
+
+<br>
+<br>
+<b><a name="dw.Second Order Partials" id="dw.Second Order Partials">Second Order Partials</a></b>
+<br>
+For <code>
+<span style='white-space: nowrap'>&nbsp;j&nbsp;=&nbsp;0&nbsp;,&nbsp;\ldots&nbsp;,&nbsp;n&nbsp;-&nbsp;1</span></code>
+,
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+dw&nbsp;[&nbsp;j&nbsp;*&nbsp;2&nbsp;+&nbsp;1&nbsp;]&nbsp;<br>
+=&nbsp;<br>
+\D{&nbsp;W_1&nbsp;}{&nbsp;u_j&nbsp;}&nbsp;\left(&nbsp;x^{(0)}&nbsp;\right)&nbsp;<br>
+=<br>
+\sum_{\ell=0}^{n-1}&nbsp;x_\ell^{(1)}&nbsp;\left[<br>
+w_0&nbsp;*&nbsp;\DD{&nbsp;F_0&nbsp;}{&nbsp;u_\ell&nbsp;}{&nbsp;u_j&nbsp;}&nbsp;\left(&nbsp;x^{(0)}&nbsp;\right)<br>
++&nbsp;\cdots&nbsp;+&nbsp;<br>
+w_{m-1}&nbsp;*&nbsp;\DD{&nbsp;F_{m-1}&nbsp;}{&nbsp;u_\ell&nbsp;}{&nbsp;u_j&nbsp;}&nbsp;\left(&nbsp;x^{(0)}&nbsp;\right)<br>
+\right]<br>
+\]&nbsp;</span></code>
+
+
+
+<br>
+<br>
+<b><big><a name="Vector" id="Vector">Vector</a></big></b>
+<br>
+The type <i>Vector</i> must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type</span></a>
+
+<i>Base</i>.
+The routine <a href="checksimplevector.htm" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+ will generate an error message
+if this is not the case.
+
+
+<br>
+<br>
+<b><big><a name="Hessian Times Direction" id="Hessian Times Direction">Hessian Times Direction</a></big></b>
+<br>
+Suppose that <code>
+<span style='white-space: nowrap'>&nbsp;w</span></code>
+ is the <i>i</i>-th elementary vector. 
+It follows that for <code>
+<span style='white-space: nowrap'>&nbsp;j&nbsp;=&nbsp;0,&nbsp;\ldots,&nbsp;n-1</span></code>
+
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+dw[&nbsp;j&nbsp;*&nbsp;2&nbsp;+&nbsp;1&nbsp;]&nbsp;<br>
+&amp;&nbsp;=&nbsp;&amp;&nbsp;<br>
+w_i&nbsp;\sum_{\ell=0}^{n-1}&nbsp;<br>
+\DD{F_i}{&nbsp;u_j&nbsp;}{&nbsp;u_\ell&nbsp;}&nbsp;\left(&nbsp;x^{(0)}&nbsp;\right)&nbsp;x_\ell^{(1)}&nbsp;<br>
+\\<br>
+&amp;&nbsp;=&nbsp;&amp;<br>
+\left[&nbsp;F_i^{(2)}&nbsp;\left(&nbsp;x^{(0)}&nbsp;\right)&nbsp;*&nbsp;x^{(1)}&nbsp;\right]_j<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+Thus the vector <code>
+<span style='white-space: nowrap'>&nbsp;(&nbsp;dw[1],&nbsp;dw[3],&nbsp;\ldots&nbsp;,&nbsp;dw[&nbsp;n&nbsp;*&nbsp;p&nbsp;-&nbsp;1&nbsp;]&nbsp;)</span></code>
+
+is equal to the Hessian of <code>
+<span style='white-space: nowrap'>&nbsp;F_i&nbsp;(x)</span></code>
+ times the direction
+<code>
+<span style='white-space: nowrap'>&nbsp;x^{(1)}</span></code>
+.
+In the special case where 
+<code>
+<span style='white-space: nowrap'>&nbsp;x^{(1)}</span></code>
+ is the <i>l</i>-th
+<a href="glossary.htm#Elementary Vector" target="_top"><span style='white-space: nowrap'>elementary&nbsp;vector</span></a>
+,
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+dw[&nbsp;j&nbsp;*&nbsp;2&nbsp;+&nbsp;1&nbsp;]&nbsp;=&nbsp;\DD{&nbsp;F_i&nbsp;}{&nbsp;x_j&nbsp;}{&nbsp;x_\ell&nbsp;}&nbsp;\left(&nbsp;x^{(0)}&nbsp;\right)<br>
+\]&nbsp;</span></code>
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+The files
+<a href="reverse_two.cpp.htm" target="_top"><span style='white-space: nowrap'>reverse_two.cpp</span></a>
+
+and
+<a href="hestimesdir.cpp.htm" target="_top"><span style='white-space: nowrap'>HesTimesDir.cpp</span></a>
+
+contain a examples and tests of reverse mode calculations.
+They return true if they succeed and false otherwise.
+
+
+<hr>Input File: omh/reverse.omh
+
+</body>
+</html>

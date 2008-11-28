@@ -1,0 +1,384 @@
+<html><head>
+<title>Any Order Reverse Mode</title>
+<meta name="description" id="description" content="Any Order Reverse Mode">
+<meta name="keywords" id="keywords" content=" reverse any order mode derivative ">
+<style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+<script type='text/javascript' language='JavaScript' src='_reverse_any_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://www.coin-or.org/CppAD/" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>FunEval</option>
+<option>Reverse</option>
+<option>reverse_any</option>
+</select>
+</td>
+<td><a href="hestimesdir.cpp.htm" target="_top">Prev</a>
+</td><td><a href="reverse_any.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down3(this)'>
+<option>ADFun-&gt;</option>
+<option>Independent</option>
+<option>FunConstruct</option>
+<option>Dependent</option>
+<option>SeqProperty</option>
+<option>FunEval</option>
+<option>Drivers</option>
+<option>FunCheck</option>
+<option>omp_max_thread</option>
+<option>FunDeprecated</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>FunEval-&gt;</option>
+<option>Forward</option>
+<option>Reverse</option>
+<option>Sparse</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>Reverse-&gt;</option>
+<option>reverse_one</option>
+<option>reverse_two</option>
+<option>reverse_any</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>reverse_any-&gt;</option>
+<option>reverse_any.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>x^(k)</option>
+<option>X(t, u)</option>
+<option>W(t, u)</option>
+<option>f</option>
+<option>p</option>
+<option>w</option>
+<option>dw</option>
+<option>---..First Order</option>
+<option>---..Second Order</option>
+<option>Vector</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+
+
+
+<center><b><big><big>Any Order Reverse Mode</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>dw</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'>.Reverse(</span></font></code><i><span style='white-space: nowrap'>p</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font></code><i><span style='white-space: nowrap'>w</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+We use <code>
+<span style='white-space: nowrap'>&nbsp;F&nbsp;:&nbsp;B^n&nbsp;\rightarrow&nbsp;B^m</span></code>
+ to denote the
+<a href="glossary.htm#AD Function" target="_top"><span style='white-space: nowrap'>AD&nbsp;function</span></a>
+ corresponding to <i>f</i>.
+Reverse mode computes the derivative of the <a href="forward.htm" target="_top"><span style='white-space: nowrap'>Forward</span></a>
+ mode
+<a href="glossary.htm#Taylor Coefficient" target="_top"><span style='white-space: nowrap'>Taylor&nbsp;coefficients</span></a>
+
+with respect to the domain variable <code>
+<span style='white-space: nowrap'>&nbsp;x</span></code>
+.
+
+<br>
+<br>
+<b><big><a name="x^(k)" id="x^(k)">x^(k)</a></big></b>
+<br>
+For <code>
+<span style='white-space: nowrap'>&nbsp;k&nbsp;=&nbsp;0,&nbsp;\ldots&nbsp;,&nbsp;p-1</span></code>
+,
+the vector <code>
+<span style='white-space: nowrap'>&nbsp;x^{(k)}&nbsp;\in&nbsp;B^n</span></code>
+ is defined as the value of 
+<i>x_k</i> in the previous call (counting this call) of the form
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'>.Forward(</span></font></code><i><span style='white-space: nowrap'>k</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font></code><i><span style='white-space: nowrap'>x_k</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>If there is no previous call with <code>
+<span style='white-space: nowrap'>&nbsp;k&nbsp;=&nbsp;0</span></code>
+,
+<code>
+<span style='white-space: nowrap'>&nbsp;x^{(0)}</span></code>
+ is the value of the independent variables when the 
+corresponding 
+AD of <i>Base</i>
+<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+ was recorded.
+
+
+<br>
+<br>
+<b><big><a name="X(t, u)" id="X(t, u)">X(t, u)</a></big></b>
+<br>
+The function
+<code>
+<span style='white-space: nowrap'>&nbsp;X&nbsp;:&nbsp;B&nbsp;\times&nbsp;B^n&nbsp;\rightarrow&nbsp;B^n</span></code>
+ is defined using
+a sequence of Taylor coefficients <code>
+<span style='white-space: nowrap'>&nbsp;x^{(k)}&nbsp;\in&nbsp;B^n</span></code>
+:
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X&nbsp;(&nbsp;t&nbsp;,&nbsp;u&nbsp;)&nbsp;=&nbsp;u&nbsp;+&nbsp;x^{(1)}&nbsp;*&nbsp;t&nbsp;+&nbsp;\cdots&nbsp;+&nbsp;x^{(p-1)}&nbsp;*&nbsp;t^{p-1}&nbsp;<br>
+\]&nbsp;</span></code>
+ 
+Note that for <code>
+<span style='white-space: nowrap'>&nbsp;k&nbsp;=&nbsp;1&nbsp;,&nbsp;\ldots&nbsp;,&nbsp;p-1</span></code>
+,
+<code>
+<span style='white-space: nowrap'>&nbsp;x^{(k)}</span></code>
+ is related to the <i>k</i>-th partial of <code>
+<span style='white-space: nowrap'>&nbsp;X(t,&nbsp;u)</span></code>
+ 
+with respect to <code>
+<span style='white-space: nowrap'>&nbsp;t</span></code>
+ by
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x^{(k)}&nbsp;=&nbsp;\frac{1}{k&nbsp;!}&nbsp;\Dpow{k}{t}&nbsp;X(0,&nbsp;u)&nbsp;<br>
+\]&nbsp;</span></code>
+
+Hence, these partial derivatives are constant; i.e., do not depend
+on <code>
+<span style='white-space: nowrap'>&nbsp;u</span></code>
+.
+
+<br>
+<br>
+<b><big><a name="W(t, u)" id="W(t, u)">W(t, u)</a></big></b>
+<br>
+The function
+<code>
+<span style='white-space: nowrap'>&nbsp;W&nbsp;:&nbsp;B&nbsp;\times&nbsp;B^n&nbsp;\rightarrow&nbsp;B</span></code>
+ is defined by
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+W(t,&nbsp;u)&nbsp;=&nbsp;w_0&nbsp;*&nbsp;F_0&nbsp;[&nbsp;X(t,u)&nbsp;]&nbsp;+&nbsp;\cdots&nbsp;+&nbsp;w_{m-1}&nbsp;*&nbsp;F_{m-1}&nbsp;[&nbsp;X(t,&nbsp;u)&nbsp;]<br>
+\]</span></code>
+
+For <code>
+<span style='white-space: nowrap'>&nbsp;k&nbsp;=&nbsp;0&nbsp;,&nbsp;\ldots&nbsp;,&nbsp;p-1</span></code>
+,
+we use <code>
+<span style='white-space: nowrap'>&nbsp;W_k&nbsp;:&nbsp;B^n&nbsp;\rightarrow&nbsp;B^m</span></code>
+ to denote the
+<i>k</i>-th order Taylor coefficient of <code>
+<span style='white-space: nowrap'>&nbsp;W(t,&nbsp;u)</span></code>
+ with 
+respect to <code>
+<span style='white-space: nowrap'>&nbsp;t</span></code>
+; i.e.,
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;W_k&nbsp;(u)&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;\frac{1}{k&nbsp;!}&nbsp;\Dpow{k}{t}&nbsp;W(&nbsp;0&nbsp;,&nbsp;u&nbsp;)&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;W(t,&nbsp;u)&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;W_0&nbsp;(u)&nbsp;+&nbsp;W_1&nbsp;(u)&nbsp;*&nbsp;t&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;\cdots&nbsp;+&nbsp;W_{p-1}&nbsp;(u)&nbsp;*&nbsp;t^{p-1}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;o&nbsp;(&nbsp;t^{p-1}&nbsp;)<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+where 
+<code>
+<span style='white-space: nowrap'>&nbsp;o&nbsp;(&nbsp;t^{p-1}&nbsp;)&nbsp;*&nbsp;t^{1-p}&nbsp;\rightarrow&nbsp;0</span></code>
+ as <code>
+<span style='white-space: nowrap'>&nbsp;t&nbsp;\rightarrow&nbsp;0</span></code>
+.
+
+
+<br>
+<br>
+<b><big><a name="f" id="f">f</a></big></b>
+<br>
+The object <i>f</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;ADFun&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>Before this call to <code><font color="blue">Reverse</font></code>, the value returned by
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'>.size_taylor()<br>
+</span></font></code>must be greater than or equal <i>p</i>
+(see <a href="size_taylor.htm" target="_top"><span style='white-space: nowrap'>size_taylor</span></a>
+).
+
+<br>
+<br>
+<b><big><a name="p" id="p">p</a></big></b>
+<br>
+The argument <i>p</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font></code><i><span style='white-space: nowrap'>p</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>and specifies the number of Taylor coefficients to be differentiated.
+
+
+<br>
+<br>
+<b><big><a name="w" id="w">w</a></big></b>
+<br>
+The argument <i>w</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font></code><i><span style='white-space: nowrap'>Vector</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>w</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>(see <a href="reverse_any.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
+ below)
+and its size 
+must be equal to <i>m</i>, the dimension of the
+<a href="seqproperty.htm#Range" target="_top"><span style='white-space: nowrap'>range</span></a>
+ space for <i>f</i>.
+It specifies the weighting vector <i>w</i>
+in the definition of <code>
+<span style='white-space: nowrap'>&nbsp;W(t,&nbsp;x)</span></code>
+ above.
+
+
+<br>
+<br>
+<b><big><a name="dw" id="dw">dw</a></big></b>
+<br>
+The return value <i>dw</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>Vector</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font></code><i><span style='white-space: nowrap'>dw</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>(see <a href="reverse_any.htm#Vector" target="_top"><span style='white-space: nowrap'>Vector</span></a>
+ below).
+It is a vector with size <code>
+<span style='white-space: nowrap'>&nbsp;n&nbsp;\times&nbsp;p</span></code>
+.
+For <code>
+<span style='white-space: nowrap'>&nbsp;j&nbsp;=&nbsp;0,&nbsp;\ldots,&nbsp;n-1</span></code>
+ and <code>
+<span style='white-space: nowrap'>&nbsp;k&nbsp;=&nbsp;0&nbsp;,&nbsp;\ldots&nbsp;,&nbsp;p-1</span></code>
+
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dw[&nbsp;j&nbsp;*&nbsp;p&nbsp;+&nbsp;k&nbsp;]&nbsp;=&nbsp;W_k^{(1)}&nbsp;\left(&nbsp;x^{(0)}&nbsp;\right)&nbsp;<br>
+\]&nbsp;</span></code>
+
+
+<br>
+<br>
+<b><a name="dw.First Order" id="dw.First Order">First Order</a></b>
+<br>
+The first order derivatives computed by this call can be expressed as
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+W_0^{(1)}&nbsp;\left(&nbsp;x^{(0)}&nbsp;\right)&nbsp;<br>
+&amp;&nbsp;=&nbsp;&amp;<br>
+w_0&nbsp;*&nbsp;\left[&nbsp;\D{&nbsp;F_0&nbsp;\circ&nbsp;X&nbsp;}{&nbsp;u&nbsp;}&nbsp;&nbsp;(&nbsp;0,&nbsp;u&nbsp;)&nbsp;\right]_{u&nbsp;=&nbsp;x^{(0)}}&nbsp;<br>
++&nbsp;\cdots&nbsp;+&nbsp;<br>
+w_{m-1}&nbsp;*&nbsp;\left[&nbsp;\D{&nbsp;F_{m-1}&nbsp;\circ&nbsp;X&nbsp;}{&nbsp;u&nbsp;}&nbsp;&nbsp;(&nbsp;0,&nbsp;u&nbsp;)&nbsp;\right]_{u&nbsp;=&nbsp;x^{(0)}}&nbsp;<br>
+\\<br>
+&amp;&nbsp;=&nbsp;&amp;<br>
+w_0&nbsp;*&nbsp;F_0^{(1)}&nbsp;\left(&nbsp;x^{(0)}&nbsp;\right)&nbsp;<br>
++&nbsp;\cdots&nbsp;+&nbsp;<br>
+w_{m-1}&nbsp;*&nbsp;F_{m-1}^{(1)}&nbsp;\left(&nbsp;x^{(0)}&nbsp;\right)&nbsp;<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+This is the same as the result documented in <a href="reverse_one.htm" target="_top"><span style='white-space: nowrap'>reverse_one</span></a>
+.
+
+<br>
+<br>
+<b><a name="dw.Second Order" id="dw.Second Order">Second Order</a></b>
+<br>
+The second order derivatives computed by this call can be expressed as
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+W_1^{(1)}&nbsp;\left(&nbsp;x^{(0)}&nbsp;\right)&nbsp;<br>
+&amp;&nbsp;=&nbsp;&amp;<br>
+w_0&nbsp;*&nbsp;\left[&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\D{}{u}&nbsp;\D{&nbsp;F_0&nbsp;\circ&nbsp;X&nbsp;}{&nbsp;t&nbsp;}&nbsp;&nbsp;(&nbsp;0,&nbsp;u&nbsp;)&nbsp;<br>
+\right]_{u&nbsp;=&nbsp;x^{(0)}}&nbsp;<br>
++&nbsp;\cdots&nbsp;+&nbsp;w_{m-1}&nbsp;*&nbsp;\left[&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\D{}{u}&nbsp;\D{&nbsp;F_{m-1}&nbsp;\circ&nbsp;X&nbsp;}{&nbsp;t&nbsp;}&nbsp;&nbsp;(&nbsp;0,&nbsp;u&nbsp;)&nbsp;<br>
+\right]_{u&nbsp;=&nbsp;x^{(0)}}&nbsp;<br>
+\\<br>
+&amp;&nbsp;=&nbsp;&amp;<br>
+w_0&nbsp;*&nbsp;\left[&nbsp;\D{&nbsp;}{&nbsp;u&nbsp;}&nbsp;F_0^{(1)}&nbsp;(&nbsp;u&nbsp;)&nbsp;*&nbsp;x^{(1)}&nbsp;\right]_{u&nbsp;=&nbsp;x^{(0)}}&nbsp;<br>
++&nbsp;\cdots&nbsp;+&nbsp;<br>
+w_{m-1}&nbsp;*&nbsp;\left[&nbsp;\D{&nbsp;}{&nbsp;u&nbsp;}&nbsp;F_{m-1}^{(1)}&nbsp;(&nbsp;u&nbsp;)&nbsp;*&nbsp;x^{(1)}&nbsp;\right]_{u&nbsp;=&nbsp;x^{(0)}}&nbsp;<br>
+\\<br>
+&amp;&nbsp;=&nbsp;&amp;<br>
+w_0&nbsp;*&nbsp;\left(&nbsp;x^{(1)}&nbsp;\right)^\T&nbsp;*&nbsp;F_0^{(2)}&nbsp;\left(&nbsp;x^{(0)}&nbsp;\right)&nbsp;<br>
++&nbsp;\cdots&nbsp;+&nbsp;<br>
+w_{m-1}&nbsp;*&nbsp;\left(&nbsp;x^{(1)}&nbsp;\right)^\T&nbsp;*&nbsp;F_{m-1}^{(2)}&nbsp;\left(&nbsp;x^{(0)}&nbsp;\right)&nbsp;<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+This is the same as the result documented in <a href="reverse_two.htm" target="_top"><span style='white-space: nowrap'>reverse_two</span></a>
+.
+
+
+<br>
+<br>
+<b><big><a name="Vector" id="Vector">Vector</a></big></b>
+<br>
+The type <i>Vector</i> must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector.htm#Elements of Specified Type" target="_top"><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type</span></a>
+
+<i>Base</i>.
+The routine <a href="checksimplevector.htm" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+ will generate an error message
+if this is not the case.
+
+This agrees with the simplification 
+in <a href="reverse_one.htm" target="_top"><span style='white-space: nowrap'>reverse_one</span></a>
+.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="reverse_any.cpp.htm" target="_top"><span style='white-space: nowrap'>reverse_any.cpp</span></a>
+
+contains an example and test of this operation.
+It returns true if they succeeds and false otherwise.
+
+
+<hr>Input File: omh/reverse.omh
+
+</body>
+</html>

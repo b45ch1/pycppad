@@ -1,0 +1,265 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Multiple Tapes: Example and Test</title>
+<meta name="description" id="description" content="Multiple Tapes: Example and Test"/>
+<meta name="keywords" id="keywords" content=" multiple Ad level "/>
+<style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+<script type='text/javascript' language='JavaScript' src='_mul_level.cpp_xml.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://www.coin-or.org/CppAD/" target="_top"><img border="0" src="_image.gif"/></a>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Example</option>
+<option>General</option>
+<option>mul_level</option>
+<option>mul_level.cpp</option>
+</select>
+</td>
+<td><a href="mul_level.xml" target="_top">Prev</a>
+</td><td><a href="exampleutility.xml" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down3(this)'>
+<option>Example-&gt;</option>
+<option>General</option>
+<option>ExampleUtility</option>
+<option>ListAllExamples</option>
+<option>test_vector</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>General-&gt;</option>
+<option>ipopt_cppad_nlp</option>
+<option>Interface2C.cpp</option>
+<option>JacMinorDet.cpp</option>
+<option>JacLuDet.cpp</option>
+<option>HesMinorDet.cpp</option>
+<option>HesLuDet.cpp</option>
+<option>OdeStiff.cpp</option>
+<option>ode_taylor.cpp</option>
+<option>ode_taylor_adolc.cpp</option>
+<option>StackMachine.cpp</option>
+<option>mul_level</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>mul_level-&gt;</option>
+<option>mul_level.cpp</option>
+</select>
+</td>
+<td>mul_level.cpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Purpose</option>
+</select>
+</td>
+</tr></table><br/>
+
+
+
+<center><b><big><big>Multiple Tapes: Example and Test</big></big></b></center>
+<br/>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br/>
+This is an example and test of using the <code><font color="blue">AD&lt;double&gt;</font></code> type,
+together with the <code><font color="blue">AD&lt; AD&lt;double&gt; &gt;</font></code> type,
+for multiple levels of taping.
+The example computes
+the value
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow>
+<mfrac><mrow><mi mathvariant='italic'>d</mi>
+</mrow>
+<mrow><mi mathvariant='italic'>dx</mi>
+</mrow>
+</mfrac>
+<mrow><mo stretchy="true">[</mo><mrow><msup><mi mathvariant='italic'>f</mi>
+<mrow><mo stretchy="false">(</mo>
+<mn>1</mn>
+<mo stretchy="false">)</mo>
+</mrow>
+</msup>
+<mo stretchy="false">(</mo>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">*</mo>
+<mi mathvariant='italic'>v</mi>
+</mrow><mo stretchy="true">]</mo></mrow>
+</mrow></math>
+
+where 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>f</mi>
+<mo stretchy="false">:</mo>
+<msup><mrow><mstyle mathvariant='bold'><mi mathvariant='bold'>R</mi>
+</mstyle></mrow>
+<mi mathvariant='italic'>n</mi>
+</msup>
+<mo stretchy="false">&#x02192;</mo>
+<mrow><mstyle mathvariant='bold'><mi mathvariant='bold'>R</mi>
+</mstyle></mrow>
+</mrow></math>
+
+ and
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>v</mi>
+<mo stretchy="false">&#x02208;</mo>
+<msup><mrow><mstyle mathvariant='bold'><mi mathvariant='bold'>R</mi>
+</mstyle></mrow>
+<mi mathvariant='italic'>n</mi>
+</msup>
+</mrow></math>
+
+.
+The example <a href="hestimesdir.cpp.xml" target="_top"><span style='white-space: nowrap'>HesTimesDir.cpp</span></a>
+ computes the same value using only
+one level of taping (more efficient) and the identity
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow>
+<mfrac><mrow><mi mathvariant='italic'>d</mi>
+</mrow>
+<mrow><mi mathvariant='italic'>dx</mi>
+</mrow>
+</mfrac>
+<mrow><mo stretchy="true">[</mo><mrow><msup><mi mathvariant='italic'>f</mi>
+<mrow><mo stretchy="false">(</mo>
+<mn>1</mn>
+<mo stretchy="false">)</mo>
+</mrow>
+</msup>
+<mo stretchy="false">(</mo>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">*</mo>
+<mi mathvariant='italic'>v</mi>
+</mrow><mo stretchy="true">]</mo></mrow>
+<mo stretchy="false">=</mo>
+<msup><mi mathvariant='italic'>f</mi>
+<mrow><mo stretchy="false">(</mo>
+<mn>2</mn>
+<mo stretchy="false">)</mo>
+</mrow>
+</msup>
+<mo stretchy="false">(</mo>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">*</mo>
+<mi mathvariant='italic'>v</mi>
+</mrow></math>
+
+The example <a href="mul_level_adolc.cpp.xml" target="_top"><span style='white-space: nowrap'>mul_level_adolc.cpp</span></a>
+ computes the same values using
+Adolc's type <code><font color="blue">adouble</font></code> and CppAD's type <code><font color="blue">AD&lt;adouble&gt;</font></code>.
+
+<code><font color="blue">
+<pre style='display:inline'>
+
+# include &lt;cppad/cppad.hpp&gt;
+
+namespace { // put this function in the empty namespace
+	// f(x) = |x|^2 = .5 * ( x[0]^2 + ... + x[n-1]^2 + .5 )
+	template &lt;class Type&gt;
+	Type f(CPPAD_TEST_VECTOR&lt;Type&gt; &amp;x)
+	{	Type sum;
+
+		// check assignment of AD&lt; AD&lt;double&gt; &gt; = double
+		sum  = .5;
+		sum += .5;
+
+		size_t i = x.size();
+		while(i--)
+			sum += x[i] * x[i];
+
+		// check computed assignment AD&lt; AD&lt;double&gt; &gt; -= int
+		sum -= 1; 
+	
+		// check double * AD&lt; AD&lt;double&gt; &gt; 
+		return .5 * sum;
+	} 
+}
+
+bool mul_level(void) 
+{	bool ok = true;                          // initialize test result
+
+	typedef CppAD::AD&lt;double&gt;   ADdouble;    // for one level of taping
+	typedef CppAD::AD&lt;ADdouble&gt; ADDdouble;   // for two levels of taping
+	size_t n = 5;                            // dimension for example
+	size_t j;                                // a temporary index variable
+
+	CPPAD_TEST_VECTOR&lt;double&gt;       x(n);
+	CPPAD_TEST_VECTOR&lt;ADdouble&gt;   a_x(n);
+	CPPAD_TEST_VECTOR&lt;ADDdouble&gt; aa_x(n);
+
+	// value of the independent variables
+	for(j = 0; j &lt; n; j++)
+		a_x[j] = x[j] = double(j); // x[j] = j
+	Independent(a_x);                  // a_x is indedendent for ADdouble
+	for(j = 0; j &lt; n; j++)
+		aa_x[j] = a_x[j];          // track how aa_x depends on a_x
+	CppAD::Independent(aa_x);          // aa_x is independent for ADDdouble
+
+	// compute function
+	CPPAD_TEST_VECTOR&lt;ADDdouble&gt; aa_f(1);    // scalar valued function
+	aa_f[0] = f(aa_x);                 // has only one component
+
+	// declare inner function (corresponding to ADDdouble calculation)
+	CppAD::ADFun&lt;ADdouble&gt; a_F(aa_x, aa_f);
+
+	// compute f'(x) 
+	size_t p = 1;                        // order of derivative of a_F
+	CPPAD_TEST_VECTOR&lt;ADdouble&gt; a_w(1);  // weight vector for a_F
+	CPPAD_TEST_VECTOR&lt;ADdouble&gt; a_df(n); // value of derivative
+	a_w[0] = 1;                          // weighted function same as a_F
+	a_df   = a_F.Reverse(p, a_w);        // gradient of f
+
+	// declare outter function (corresponding to ADdouble calculation)
+	CppAD::ADFun&lt;double&gt; df(a_x, a_df);
+
+	// compute the d/dx of f'(x) * v = f''(x) * v
+	CPPAD_TEST_VECTOR&lt;double&gt; v(n);
+	CPPAD_TEST_VECTOR&lt;double&gt; ddf_v(n);
+	for(j = 0; j &lt; n; j++)
+		v[j] = double(n - j);
+	ddf_v = df.Reverse(p, v);
+
+	// f(x)       = .5 * ( x[0]^2 + x[1]^2 + ... + x[n-1]^2 )
+	// f'(x)      = (x[0], x[1], ... , x[n-1])
+	// f''(x) * v = ( v[0], v[1],  ... , x[n-1] )
+	for(j = 0; j &lt; n; j++)
+		ok &amp;= CppAD::NearEqual(ddf_v[j], v[j], 1e-10, 1e-10);
+
+	return ok;
+}
+</pre>
+</font></code>
+
+
+<hr/>Input File: example/mul_level.cpp
+
+</body>
+</html>

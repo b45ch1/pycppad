@@ -1,0 +1,296 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>ADFun Sequence Properties</title>
+<meta name="description" id="description" content="ADFun Sequence Properties"/>
+<meta name="keywords" id="keywords" content=" Adfun Domain Range Parameter use_vecad size_var "/>
+<style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+<script type='text/javascript' language='JavaScript' src='_seqproperty_xml.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="http://www.coin-or.org/CppAD/" target="_top"><img border="0" src="_image.gif"/></a>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>SeqProperty</option>
+</select>
+</td>
+<td><a href="dependent.xml" target="_top">Prev</a>
+</td><td><a href="seqproperty.cpp.xml" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down2(this)'>
+<option>CppAD-&gt;</option>
+<option>Install</option>
+<option>Introduction</option>
+<option>AD</option>
+<option>ADFun</option>
+<option>library</option>
+<option>preprocessor</option>
+<option>Example</option>
+<option>Appendix</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>ADFun-&gt;</option>
+<option>Independent</option>
+<option>FunConstruct</option>
+<option>Dependent</option>
+<option>SeqProperty</option>
+<option>FunEval</option>
+<option>Drivers</option>
+<option>FunCheck</option>
+<option>omp_max_thread</option>
+<option>FunDeprecated</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>SeqProperty-&gt;</option>
+<option>SeqProperty.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>f</option>
+<option>Domain</option>
+<option>Range</option>
+<option>Parameter</option>
+<option>use_VecAD</option>
+<option>size_var</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br/>
+
+
+
+<center><b><big><big>ADFun Sequence Properties</big></big></b></center>
+<br/>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br/>
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>n</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;=&#xA0;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'>.Domain()</span></font></code>
+<code><span style='white-space: nowrap'><br/>
+</span></code><code><font color="blue"></font></code><i><span style='white-space: nowrap'>m</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;=&#xA0;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'>.Range()</span></font></code>
+<code><span style='white-space: nowrap'><br/>
+</span></code><code><font color="blue"></font></code><i><span style='white-space: nowrap'>p</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;=&#xA0;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'>.Parameter(</span></font></code><i><span style='white-space: nowrap'>i</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+<code><span style='white-space: nowrap'><br/>
+</span></code><code><font color="blue"></font></code><i><span style='white-space: nowrap'>u</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;=&#xA0;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'>.use_VecAD()</span></font></code>
+<code><span style='white-space: nowrap'><br/>
+</span></code><code><font color="blue"></font></code><i><span style='white-space: nowrap'>v</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;=&#xA0;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'>.size_var()</span></font></code>
+
+
+
+<br/>
+<br/>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br/>
+The operations above return properties of the
+AD of <i>Base</i>
+<a href="glossary.xml#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&#xA0;sequence</span></a>
+
+stored in the ADFun object <i>f</i>. 
+(If there is no operation sequence stored in <i>f</i>,
+<code><font color="blue">size_var</font></code> returns zero.)
+
+<br/>
+<br/>
+<b><big><a name="f" id="f">f</a></big></b>
+<br/>
+The object <i>f</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;const&#xA0;ADFun&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&#xA0;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>(see <code><font color="blue"><span style='white-space: nowrap'>ADFun&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> <a href="funconstruct.xml" target="_top"><span style='white-space: nowrap'>constructor</span></a>
+).
+
+<br/>
+<br/>
+<b><big><a name="Domain" id="Domain">Domain</a></big></b>
+<br/>
+The result <i>n</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>n</span></i><code><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>and is the dimension of the domain space corresponding to <i>f</i>.
+This is equal to the size of the vector <i>x</i> in the call
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Independent(</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br/>
+</span></font></code>that starting recording the operation sequence 
+currently stored in <i>f</i>
+(see <a href="funconstruct.xml" target="_top"><span style='white-space: nowrap'>FunConstruct</span></a>
+ and <a href="dependent.xml" target="_top"><span style='white-space: nowrap'>Dependent</span></a>
+). 
+
+<br/>
+<br/>
+<b><big><a name="Range" id="Range">Range</a></big></b>
+<br/>
+The result <i>m</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>m</span></i><code><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>and is the dimension of the range space corresponding to <i>f</i>.
+This is equal to the size of the vector <i>y</i> in syntax
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ADFun&lt;</span></font></code><i><span style='white-space: nowrap'>Base&gt;</span></i><code><font color="blue"><span style='white-space: nowrap'>f</span></font></code><i><span style='white-space: nowrap'>(</span></i><code><font color="blue"><span style='white-space: nowrap'>x</span></font></code><i><span style='white-space: nowrap'>,</span></i><code><font color="blue"><span style='white-space: nowrap'>y</span></font></code><i><span style='white-space: nowrap'>)</span></i>
+or
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'>.Dependent(</span></font></code><i><span style='white-space: nowrap'>y</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br/>
+</span></font></code>depending on which stored the operation sequence currently in <i>f</i>
+(see <a href="funconstruct.xml" target="_top"><span style='white-space: nowrap'>FunConstruct</span></a>
+ and <a href="dependent.xml" target="_top"><span style='white-space: nowrap'>Dependent</span></a>
+). 
+
+<br/>
+<br/>
+<b><big><a name="Parameter" id="Parameter">Parameter</a></big></b>
+<br/>
+The argument <i>i</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>i</span></i><code><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>and 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mn>0</mn>
+<mo stretchy="false">&#x02264;</mo>
+<mi mathvariant='italic'>i</mi>
+<mo stretchy="false">&lt;</mo>
+<mi mathvariant='italic'>m</mi>
+</mrow></math>
+
+.
+The result <i>p</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;bool&#xA0;</span></font></code><i><span style='white-space: nowrap'>p</span></i><code><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>It is true if the <i>i</i>-th component of range space for 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>F</mi>
+</mrow></math>
+
+
+corresponds to a
+<a href="glossary.xml#Parameter" target="_top"><span style='white-space: nowrap'>parameter</span></a>
+ in the operation sequence.
+In this case,
+the <i>i</i>-th component of 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>F</mi>
+</mrow></math>
+
+ is constant and
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow>
+<mfrac><mrow><mo stretchy="false">&#x02202;</mo>
+<msub><mi mathvariant='italic'>F</mi>
+<mi mathvariant='italic'>i</mi>
+</msub>
+</mrow>
+<mrow><mo stretchy="false">&#x02202;</mo>
+<msub><mi mathvariant='italic'>x</mi>
+<mi mathvariant='italic'>j</mi>
+</msub>
+</mrow>
+</mfrac>
+<mo stretchy="false">(</mo>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">=</mo>
+<mn>0</mn>
+</mrow></math>
+
+for 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>j</mi>
+<mo stretchy="false">=</mo>
+<mn>0</mn>
+<mo stretchy="false">,</mo>
+<mo stretchy="false">&#x02026;</mo>
+<mo stretchy="false">,</mo>
+<mi mathvariant='italic'>n</mi>
+<mn>-1</mn>
+</mrow></math>
+
+ and all 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">&#x02208;</mo>
+<msup><mi mathvariant='italic'>B</mi>
+<mi mathvariant='italic'>n</mi>
+</msup>
+</mrow></math>
+
+.
+
+<br/>
+<br/>
+<b><big><a name="use_VecAD" id="use_VecAD">use_VecAD</a></big></b>
+<br/>
+The result <i>u</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;bool&#xA0;</span></font></code><i><span style='white-space: nowrap'>u</span></i><code><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>If it is true, the
+AD of <i>Base</i>
+<a href="glossary.xml#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&#xA0;sequence</span></a>
+
+stored in <i>f</i> contains 
+<a href="vecad.xml#VecAD&lt;Base&gt;::reference" target="_top"><span style='white-space: nowrap'>VecAD</span></a>
+ operands.
+Otherwise <i>u</i> is false.
+
+<br/>
+<br/>
+<b><big><a name="size_var" id="size_var">size_var</a></big></b>
+<br/>
+The result <i>v</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>v</span></i><code><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>and is the number of variables in the operation sequence plus the following:
+one for a phantom variable with tape address zero,
+one for each component of the domain that is a parameter.
+The amount of work and memory necessary for computing function values
+and derivatives using <i>f</i> is roughly proportional to <i>v</i>.
+<code><span style='white-space: nowrap'><br/>
+<br/>
+</span></code>If there is no operation sequence stored in <i>f</i>,
+<code><font color="blue">size_var</font></code> returns zero
+(see <a href="funconstruct.xml#Default Constructor" target="_top"><span style='white-space: nowrap'>default&#xA0;constructor</span></a>
+).
+
+<br/>
+<br/>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+<br/>
+The file
+<a href="seqproperty.cpp.xml" target="_top"><span style='white-space: nowrap'>SeqProperty.cpp</span></a>
+ 
+contains an example and test of these operations.
+It returns true if it succeeds and false otherwise.
+
+
+
+<hr/>Input File: omh/seq_property.omh
+
+</body>
+</html>
