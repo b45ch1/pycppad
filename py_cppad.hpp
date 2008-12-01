@@ -30,12 +30,27 @@ typedef CppAD::ADFun<double> ADFun_double;
 typedef CppAD::ADFun<CppAD::AD<double> > ADFun_AD_double;
 typedef CppAD::ADFun<CppAD::AD<CppAD::AD<double> > > ADFun_ADD_double;
 
+class MyVec{
+	public:
+	double _x;
+	MyVec(double x):_x(x){}
+};
+
 
 /* operators */
 AD_double *AD_double_mul_AD_double_AD_double(const AD_double &lhs, const AD_double &rhs);
 
 /* functions */
 void Independent_numpy_AD_double(bpn::array &bpn_x);
+
+void test_my_vec(bp::object &o){
+	bp::extract<MyVec&> x(o);
+	if (x.check()) {
+		MyVec& v = x();
+	}
+	cout<<x()._x<<endl;
+// 	double x = o.attr("x");
+}
 
 
 BOOST_PYTHON_MODULE(_cppad)
@@ -50,12 +65,18 @@ BOOST_PYTHON_MODULE(_cppad)
 // 	def("Independent",		CppAD::Independent<vector_AD_double>);
 // 	def("Independent",		CppAD::Independent<vector_ADD_double>);
 	def("Independent",		Independent_numpy_AD_double);
+	def("test_my_vec",		test_my_vec);
+
 		
 	class_<AD_double>("AD_double", init<double>())
 		.def(boost::python::self_ns::str(self))
 		.def("__mul__", AD_double_mul_AD_double_AD_double, return_value_policy<manage_new_object>())
 	;
 	class_<VecAD_double>("VecAD_double");
+
+	class_<MyVec>("MyVec",init<double>())
+		.add_property("x", &MyVec::_x)
+	;
 
 }
 

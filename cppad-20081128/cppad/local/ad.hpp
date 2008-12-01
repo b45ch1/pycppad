@@ -141,8 +141,9 @@ public:
 
 	// construction and assingment from base type
 	inline AD(const Base &b);
-	inline AD& operator=(const Base &b); 
-
+	inline AD& operator=(const Base &b);
+	
+	
 	// contructor and assignment from VecAD<Base>::reference
 	inline AD(const VecAD_reference<Base> &x);
 	inline AD& operator=(const VecAD_reference<Base> &x);

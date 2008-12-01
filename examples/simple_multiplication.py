@@ -16,9 +16,9 @@ print ay
 print az
 
 # numpy arrays of AD_double
-av = numpy.array([AD_double(1.5*i) for i in range(10)])
-
-print av
-print type(av[0])
-
+av = numpy.array([AD_double(1.5*i) for i in range(10)],dtype=object)
 Independent(av)
+
+#x = MyVec(23.)
+
+#test_my_vec(x)

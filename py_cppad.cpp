@@ -15,24 +15,15 @@ void Independent_numpy_AD_double(bpn::array &bpn_x){
 	}
 	nu::check_rank(bpn_x,1);
 
-	/* create new tape */
-	size_t id = AD_double::tape_new();
-// 	AD_double::tape_ptr(id)->Independent_numpy_AD_double(bpn_x);
-
-		
-// 	vector<intp> shp(nu::shape(bpn_x));
-// 	int N = shp[0];
-// 	CppAD::vector<AD_double> x(N);
-// 	bp::object* in_x = (bp::object*) nu::data(bpn_x);
-// 
-// 	cout<<"type="<<nu::type(bpn_x)<<endl;
-// Vec2& v = extract<Vec2&>(o);
-// 	for(int n=0; n!=N; ++n){
-// 		x[n] = bp::extract<AD_double&>(in_x[n]);
-// 	}
-// // 	CppAD::vector<AD_double> x((AD_double*) nu::data(bpn_x), N);
-// 	cout<<x[0]<<endl;
-
+	vector<intp> shp(nu::shape(bpn_x));
+	int N = shp[0];
+	
+	CppAD::vector<AD_double> x(N);
+	bp::object* obj_x = (bp::object*) nu::data(bpn_x);
+	for(int n=0; n!=N; ++n){
+		x[n] = bp::extract<AD_double&>(obj_x[n])();
+	}
+	CppAD::Independent(x);
 }
 
 
