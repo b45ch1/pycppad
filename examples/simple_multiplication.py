@@ -1,14 +1,24 @@
 #!/usr/bin/env python
 
 import sys
-sys.path = ['../release'] + sys.path
+sys.path = ['./release'] + sys.path
 
 from cppad import *
+import numpy
 
 
-ax = AD_double(3.)
-ay = AD_double(2.)
+# simple multiplication
+ax = AD_double(1.5)
+ay = AD_double(1.7)
 az = ax*ay
 print ax
 print ay
 print az
+
+# numpy arrays of AD_double
+av = numpy.array([AD_double(1.5*i) for i in range(10)])
+
+print av
+print type(av[0])
+
+Independent(av)

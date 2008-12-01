@@ -32,9 +32,10 @@ typedef CppAD::ADFun<CppAD::AD<CppAD::AD<double> > > ADFun_ADD_double;
 
 
 /* operators */
-AD_double *AD_double_mul_AD_double_AD_double(const AD_double &lhs, const AD_double &rhs){	return new AD_double(CppAD::operator*(lhs,rhs));}
+AD_double *AD_double_mul_AD_double_AD_double(const AD_double &lhs, const AD_double &rhs);
 
-
+/* functions */
+void Independent_numpy_AD_double(bpn::array &bpn_x);
 
 
 BOOST_PYTHON_MODULE(_cppad)
@@ -46,8 +47,9 @@ BOOST_PYTHON_MODULE(_cppad)
 	scope().attr("__doc__") =" CppAD: docstring \n\
 							   next line";
 
-	def("Independent",		CppAD::Independent<vector_AD_double>);
-	def("Independent",		CppAD::Independent<vector_ADD_double>);
+// 	def("Independent",		CppAD::Independent<vector_AD_double>);
+// 	def("Independent",		CppAD::Independent<vector_ADD_double>);
+	def("Independent",		Independent_numpy_AD_double);
 		
 	class_<AD_double>("AD_double", init<double>())
 		.def(boost::python::self_ns::str(self))

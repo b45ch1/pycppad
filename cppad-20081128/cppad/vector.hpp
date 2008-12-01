@@ -263,6 +263,11 @@ public:
 		if( length > 0 )
 			data = CPPAD_TRACK_NEW_VEC(capacity, data);
 	}
+	// constructor using already allocated memory
+		inline vector(Type *in_data, size_t n) : capacity(n), length(n)
+	{
+		data = in_data;
+	}
 	// copy constructor
 	inline vector(const vector &x) : capacity(x.length), length(x.length)
 	{	size_t i;
