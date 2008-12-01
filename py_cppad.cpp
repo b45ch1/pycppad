@@ -1,7 +1,7 @@
 #include "py_cppad.hpp"
 
 
-
+/* operators */
 AD_double *AD_double_mul_AD_double_AD_double(const AD_double &lhs, const AD_double &rhs){
 	return new AD_double(CppAD::operator*(lhs,rhs));
 }
@@ -25,49 +25,3 @@ void Independent_numpy_AD_double(bpn::array &bpn_x){
 	}
 	CppAD::Independent(x);
 }
-
-
-// void AD_double::Independent_numpy_AD_double(bpn::array &bpn_x)
-// {
-// 	bp::object* in_x = (bp::object*) nu::data(bpn_x);
-// 	vector<intp> shp(nu::shape(bpn_x));
-// 	size_t n = shp[0];
-// 
-// 	CPPAD_ASSERT_UNKNOWN( Rec_.TotNumVar() == 0 );
-// 
-// 	// skip the first record (parameters use taddr zero)
-// 	CPPAD_ASSERT_UNKNOWN( NumVar(NonOp) == 1 );
-// 	CPPAD_ASSERT_UNKNOWN( NumInd(NonOp) == 0 );
-// 	Rec_.PutOp(NonOp);
-// 
-// 
-// 	// place each of the independent variables in the tape
-// 	CPPAD_ASSERT_UNKNOWN( NumVar(InvOp) == 1 );
-// 	CPPAD_ASSERT_UNKNOWN( NumInd(InvOp) == 0 );
-// 	size_t j;
-// 	for(j = 0; j < n; j++)
-// 	{	// tape address for this independent variable
-// 		x[j].taddr_ = Rec_.PutOp(InvOp);
-// 		x[j].id_    = id_;
-// 		CPPAD_ASSERT_UNKNOWN( bp::extract<AD_double&>(in_x[j]).taddr_ == j+1 );
-// 		CPPAD_ASSERT_UNKNOWN( Variable(bp::extract<AD_double&>(in_x[j]) ) );
-// 	}
-// 
-// 	// done specifying all of the independent variables
-// 	size_independent_ = n;
-// }
-
-// template <typename VectorAD>
-// inline void Independent(VectorAD &x)
-// {	typedef typename VectorAD::value_type ADBase;
-// 	typedef typename ADBase::value_type   Base;
-// 	CPPAD_ASSERT_KNOWN(
-// 		ADBase::tape_ptr() == CPPAD_NULL,
-// 		"Independent: cannot create a new tape because"
-// 		"\na previous tape is still active (for this thread)."
-// 	);
-// 	size_t id = ADBase::tape_new();
-// 
-// 	ADBase::tape_ptr(id)->Independent(x); 
-// }
-// 
