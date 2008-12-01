@@ -39,7 +39,7 @@ AD_double	(*cos_AD_double) 		( const AD_double & ) = &CppAD::cos;
 
 /* general functions */
 void Independent_numpy_AD_double(bpn::array &bpn_x);
-
+AD_double *AD_double_mul_AD_double_AD_double(const AD_double &lhs, const AD_double &rhs);
 
 BOOST_PYTHON_MODULE(_cppad)
 {
@@ -59,7 +59,7 @@ BOOST_PYTHON_MODULE(_cppad)
 
 	;
 // 	class_<ADFun_double>("ADFun_double")
-// 		.def("__init__",)
+// 	.def(init<const bpn::array&,const bpn::array&>())
 // 	;
 }
 
