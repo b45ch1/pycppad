@@ -1,2 +1,3 @@
 python_cppad.*
+libpython_cppad.*
 !python_cppad.sh
