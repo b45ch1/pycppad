@@ -129,7 +129,7 @@ template <typename VectorAD>
 void ADTape<Base>::Independent(VectorAD &x)
 {
 	// check VectorAD is Simple Vector class with AD<Base> elements
-	CheckSimpleVector< AD<Base>, VectorAD>();
+	// CheckSimpleVector< AD<Base>, VectorAD>();
 
 	// dimension of the domain space
 	size_t n = x.size();
