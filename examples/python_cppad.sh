@@ -2,7 +2,8 @@
 # 
 python_version="2.5"
 python_config_dir="/usr/include/python$python_version"
-cppad_dir="/home/walter/workspace/pycppad/cppad-20081128"
+numpy_dir="/usr/lib/python2.5/site-packages/numpy/core/include"
+cppad_dir="../cppad-20081128"
 # -------------------------------------------------------------------
 if [ ! -e "$python_config_dir/pyconfig.h" ]
 then
@@ -31,6 +32,7 @@ cat << EOF > python_cppad.cpp
 using namespace std;
 
 typedef CppAD::AD<double>        ad_double;
+
 
 ad_double my_factorial(boost::python::numeric::array &bpn_x){
 	int* dims_ptr = PyArray_DIMS(bpn_x.ptr());
@@ -85,7 +87,7 @@ EOF
 # -------------------------------------------------------------------
 echo "# Compile python_cppad.cpp -------------------------------------------" 
 #
-cmd="g++ -fpic -g -c -Wall -I $python_config_dir -I $cppad_dir python_cppad.cpp"
+cmd="g++ -fpic -g -c -Wall -I $python_config_dir -I $numpy_dir -I $cppad_dir python_cppad.cpp"
 echo $cmd
 if ! $cmd
 then
