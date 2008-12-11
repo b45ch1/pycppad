@@ -50,21 +50,18 @@ namespace {
 	using boost::python::handle;
 	using boost::python::object;
 	using boost::python::numeric::array;
-	//
 	// -------------------------------------------------------------
-	template <class Scalar>
-	class vector {
+	class ad_double_vec {
 	private:
-		size_t   length_;  // set by constructor only
-		Scalar  *pointer_; // set by constructor only
-		Scalar **handle_;  // set by constructor only
+		size_t       length_; // set by constructor only
+		ad_double  *pointer_; // set by constructor only
+		ad_double **handle_;  // set by constructor only
 	public:
-		typedef Scalar value_type;
+		typedef ad_double value_type;
 
 		// constructor from a python array
-		vector(array& py_array)
+		ad_double_vec(array& py_array)
 		{	// get array info
-cout << "vector(array): begin" << endl;
 			int* dims_ptr = PyArray_DIMS(py_array.ptr());
 			int ndim      = PyArray_NDIM(py_array.ptr());
 			int length    = dims_ptr[0];
@@ -78,28 +75,18 @@ cout << "vector(array): begin" << endl;
 				PyArray_DATA(py_array.ptr()) 
 			);
 
-cout << "vector(array): set private data" << endl;
 			// set private data
 			using boost::python::extract;
 			length_  = static_cast<size_t>(length);
-cout << "vector(array): length_ = " << length_ << endl;
 			pointer_ = 0;
 			handle_  = CPPAD_TRACK_NEW_VEC(length_, handle_);
-cout << "vector(array): handle_ = " << handle_ << endl;
-			for(size_t i = 0; i < length_; i++)
-			{
-cout << "vector(array): i = " << i << endl;
-			Scalar w = extract<Scalar&>(obj_ptr[i]);
-cout << "vector(array): array[i] = " << w <<  endl;
-		
-				handle_[i] = & extract<Scalar&>(obj_ptr[i])(); 
-			}
-cout << "vector(array): end" << endl;
+			for(size_t i = 0; i < length_; i++) handle_[i] = 
+				& extract<ad_double&>(obj_ptr[i])(); 
 			return;
 		}
 
 		// constructor from size
-		vector(size_t length)
+		ad_double_vec(size_t length)
 		{	// set private data
 			length_  = length;
 			pointer_ = CPPAD_TRACK_NEW_VEC(length, pointer_);
@@ -109,7 +96,7 @@ cout << "vector(array): end" << endl;
 		}
 
 		// destructor
-		~vector(void)
+		~ad_double_vec(void)
 		{	CPPAD_TRACK_DEL_VEC(handle_); 
 			if( pointer_ != 0 )
 				CPPAD_TRACK_DEL_VEC(pointer_);	
@@ -120,19 +107,79 @@ cout << "vector(array): end" << endl;
 		{	return length_; }
 
 		// non constant element access
-		Scalar& operator[](size_t i)
+		ad_double& operator[](size_t i)
 		{	assert( i < length_ );
 			return *handle_[i];
 		}
 
 		// constant element access
-		const Scalar& operator[](size_t i) const
+		const ad_double& operator[](size_t i) const
 		{	assert( i < length_ );
 			return *handle_[i];
 		}
 	};
 	// -------------------------------------------------------------
-	array vector2array(const vector<double>& vec)
+	class double_vec {
+	private:
+		size_t    length_;  // set by constructor only
+		double  *pointer_;  // set by constructor only
+		bool    allocated_; // set by constructor only
+	public:
+		typedef double value_type;
+
+		// constructor from a python array
+		double_vec(array& py_array)
+		{	// get array info
+			int* dims_ptr = PyArray_DIMS(py_array.ptr());
+			int ndim      = PyArray_NDIM(py_array.ptr());
+			int length    = dims_ptr[0];
+
+			// check array info
+			assert( ndim == 1 );
+			assert( length >= 0 );
+
+			// set private data
+			length_    = static_cast<size_t>( length );
+			pointer_   = static_cast<double*>( 
+				PyArray_DATA(py_array.ptr()) 
+			);
+			allocated_ = false;
+			return;
+		}
+
+		// constructor from size
+		double_vec(size_t length)
+		{	// set private data
+			length_    = length;
+			pointer_   = CPPAD_TRACK_NEW_VEC(length, pointer_);
+			allocated_ = true;
+			return;
+		}
+
+		// destructor
+		~double_vec(void)
+		{	if( allocated_ )
+				CPPAD_TRACK_DEL_VEC(pointer_);	
+		}
+
+		// size member function
+		size_t size(void) const
+		{	return length_; }
+
+		// non constant element access
+		double& operator[](size_t i)
+		{	assert( i < length_ );
+			return pointer_[i];
+		}
+
+		// constant element access
+		const double& operator[](size_t i) const
+		{	assert( i < length_ );
+			return pointer_[i];
+		}
+	};
+	// -------------------------------------------------------------
+	array vector2array(const double_vec& vec)
 	{	int n = static_cast<int>( vec.size() );
 		assert( n >= 0 );
 
@@ -142,13 +189,14 @@ cout << "vector(array): end" << endl;
 		double *ptr = static_cast<double*> ( PyArray_DATA (
 			(PyArrayObject*) ( obj.ptr() )
 		));
+cout << "vec = [" << vec[0] << "]" << endl;
 		for(size_t i = i; i < vec.size(); i++)
 			ptr[i] = vec[i];
 		return  static_cast<array>( obj );
 	}
 	// -------------------------------------------------------------
 	void independent(array& x_array)
-	{	vector<ad_double> x_vec(x_array);
+	{	ad_double_vec x_vec(x_array);
 		CppAD::Independent(x_vec);
 		return;
 	}
@@ -158,19 +206,17 @@ cout << "vector(array): end" << endl;
 		CppAD::ADFun<double> f_;
 	public:
 		adfun_double(array& x_array, array& y_array)
-		{	vector<ad_double> x_vec(x_array);
-			vector<ad_double> y_vec(y_array);
+		{	ad_double_vec x_vec(x_array);
+			ad_double_vec y_vec(y_array);
 
 			f_.Dependent(x_vec, y_vec);
 		}
 
 		array Forward(int p, array& xp)
-		{	cout << "Forward: begin" << endl;
-			size_t         p_sz(p);
-			vector<double> xp_vec(xp);
-			cout << "Forward: f_Forward" << endl;
-			vector<double> result = f_.Forward(p_sz, xp_vec);
-			cout << "Forward: end" << endl;
+		{	size_t     p_sz(p);
+			double_vec xp_vec(xp);
+cout << "xp_vec = [" << xp_vec[0] << ", " << xp_vec[1] << "]" << endl;
+			double_vec result = f_.Forward(p_sz, xp_vec);
 			return vector2array(result);
 		}
 	};
