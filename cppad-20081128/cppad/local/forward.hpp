@@ -46,7 +46,7 @@ Vector ADFun<Base>::Forward(size_t p, const Vector &up)
 	size_t m = dep_taddr_.size();
 
 	// check Vector is Simple Vector class with Base type elements
-	CheckSimpleVector<Base, Vector>();
+	// CheckSimpleVector<Base, Vector>();
 
 	CPPAD_ASSERT_KNOWN(
 		up.size() == n,
