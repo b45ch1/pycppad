@@ -196,9 +196,9 @@ namespace {
 		double *ptr = static_cast<double*> ( PyArray_DATA (
 			(PyArrayObject*) ( obj.ptr() )
 		));
-cout << "vec = [" << vec[0] << "]" << endl;
-		for(size_t i = i; i < vec.size(); i++)
+		for(size_t i = 0; i < vec.size(); i++){
 			ptr[i] = vec[i];
+		}
 		return  static_cast<array>( obj );
 	}
 	// -------------------------------------------------------------
@@ -222,9 +222,7 @@ cout << "vec = [" << vec[0] << "]" << endl;
 		array Forward(int p, array& xp)
 		{	size_t     p_sz(p);
 			double_vec xp_vec(xp);
-cout << "xp_vec = [" << xp_vec[0] << ", " << xp_vec[1] << "]" << endl;
 			double_vec result = f_.Forward(p_sz, xp_vec);
-			cout<<"result="<<result[0]<<endl;
 			return vector2array(result);
 		}
 	};
