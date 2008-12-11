@@ -224,6 +224,7 @@ cout << "vec = [" << vec[0] << "]" << endl;
 			double_vec xp_vec(xp);
 cout << "xp_vec = [" << xp_vec[0] << ", " << xp_vec[1] << "]" << endl;
 			double_vec result = f_.Forward(p_sz, xp_vec);
+			cout<<"result="<<result[0]<<endl;
 			return vector2array(result);
 		}
 	};
