@@ -191,10 +191,8 @@ namespace {
 		assert( n >= 0 );
 
 		object obj(handle<>( PyArray_FromDims(1, &n, PyArray_DOUBLE) ));
-		// for some unknown reason,
-		// static_cast<PyArrayObject*> ( obj.ptr() ) does not work ?
 		double *ptr = static_cast<double*> ( PyArray_DATA (
-			(PyArrayObject*) ( obj.ptr() )
+			reinterpret_cast<PyArrayObject*> ( obj.ptr() )
 		));
 		for(size_t i = 0; i < vec.size(); i++){
 			ptr[i] = vec[i];
