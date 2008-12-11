@@ -2,20 +2,27 @@
 # 
 python_version="2.5"
 python_config_dir="/usr/include/python$python_version"
-cppad_dir="../cppad-20081128"
-numpy_dir="/usr/lib/python2.5/site-packages/numpy/core/include"
-# -------------------------------------------------------------------
-if [ ! -e "$cppad_dir/cppad/cppad.hpp" ]
+
+if [ -e "$HOME/CppAD/trunk/cppad/cppad.hpp" ]
 then
+	cppad_dir="$HOME/CppAD/trunk"
+else if [ -e "$HOME/workspace/pycppad/cppad-20081128/cppad/cppad.hpp" ]
+then
+	numpy_dir="/usr/lib/python2.5/site-packages/numpy/core/include"
+	cppad_dir="../cppad-20081128"
+else if [ -e "/u/walter/workspace/PyCPPAD/cppad-20081128/cppad/cppad.hpp" ]
+then
+	echo "this is wronski"
+	numpy_dir="/usr/lib/python2.5/site-packages/numpy/core/include"
+	cppad_dir="/u/walter/workspace/PyCPPAD/cppad-20081128"
+else
 	echo "Cannot find cppad/cppad.hpp"
 	exit 1
 fi
-# -------------------------------------------------------------------
-if [ ! -d "$numpy_dir" ]
-then
-	echo "Must change numpy_dir in python_cppad.sh"
-	exit 1
 fi
+fi
+
+
 # -------------------------------------------------------------------
 if [ ! -e "$python_config_dir/pyconfig.h" ]
 then
@@ -221,7 +228,7 @@ EOF
 # -------------------------------------------------------------------
 echo "# Compile python_cppad.cpp -------------------------------------------" 
 #
-cmd="g++ -fpic -g -c -Wall -I $python_config_dir -I $cppad_dir python_cppad.cpp"
+cmd="g++ -fpic -g -c -Wall -I $python_config_dir -I $numpy_dir -I $cppad_dir python_cppad.cpp"
 echo $cmd
 if ! $cmd
 then
