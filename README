@@ -14,6 +14,17 @@ Requirements:
 * boost::python
 * scons
 
+Rename the SConstruct.example to SConstruct and adapt it to your needs.
+Build the extension. Below is a sample what it should look like:
+
+walter@wronski$ scons
+scons: Building targets ...
+g++ -o py_cppad.os -c -ftemplate-depth-100 -DBOOST_PYTHON_DYNAMIC_LIB -O2 -fPIC -I/usr/include/python2.5 -I/usr/lib/python2.5/site-packages/numpy/core/include -Iinclude -I/data/walter/opt_software/boost_1_34_1 -I/usr/include/python2.5 py_cppad.cpp
+g++ -o _cppad.so -Wl,-rpath=/data/walter/opt_software/boost_1_34_1/bin.v2/libs/python/build/gcc-4.2.1/release -shared py_cppad.os num_util.os -L/usr/lib/python2.5/config -L/data/walter/opt_software/boost_1_34_1/bin.v2/libs/python/build/gcc-4.2.1/release -lboost_python-gcc42-1_34_1
+Install file: "_cppad.so" as "release/cppad/_cppad.so"
+scons: done building targets.
+
+
 
 
 Remark:
