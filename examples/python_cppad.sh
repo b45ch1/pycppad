@@ -159,6 +159,23 @@ cat << EOF > python_cppad.cpp
 #define PY_ARRAY_UNIQUE_SYMBOL PyArrayHandle
 
 namespace {
+	// Replacement for the CppAD error handler
+	void python_cppad_error_handler(
+		bool known           ,
+		int  line            ,
+		const char *file     ,
+		const char *exp      ,
+		const char *msg      )
+	{	if( ! known ) msg = 
+			"Bug detected in python_cppad, Please report this.";
+
+		PyErr_SetString(PyExc_ValueError, msg);
+		boost::python::throw_error_already_set();
+		// erorr handler must not return
+	}
+	// This ojbect lasts forever, so forever replacement of 
+	// the default CppAD erorr handler 
+	CppAD::ErrorHandler myhandler(python_cppad_error_handler);
 	// -------------------------------------------------------------
 	// class AD_double_vec
 	//
@@ -420,7 +437,7 @@ BOOST_PYTHON_MODULE(python_cppad)
 EOF
 # -------------------------------------------------------------------
 echo "# Create the file python_cppad.py"
-cat << EOF > python_cppad.tmp
+cat << EOF > python_cppad.py
 from python_cppad import *
 from numpy import array
 x = array( [ AD_double(2) , AD_double(3) ] )
@@ -432,13 +449,18 @@ p  = 0
 xp = array( [ 3. , 4. ] )
 fp = f.Forward(p, xp)
 print 'f(3, 4)            = ', fp
-p = 1
+p  = 1
 xp = array( [ 1. , 0. ] )
 fp = f.Forward(p, xp)
 print 'partial_x0 f(3, 4) = ' , fp
+p  = 1
 xp = array( [ 0. , 1. ] )
 fp = f.Forward(p, xp)
 print 'partial_x1 f(3, 4) = ' , fp
+print 'Begin: example python_cppad error message'
+p  = 1
+xp = array( [ 0. , 1., 0. ] )
+fp = f.Forward(p, xp)
 EOF
 # -------------------------------------------------------------------
 echo "# Compile python_cppad.cpp -------------------------------------------" 
