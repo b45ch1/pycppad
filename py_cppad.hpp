@@ -76,8 +76,7 @@ namespace{
 
 	/* atomic (aka elementary) operations */
 	AD_double	(*cos_AD_double) 		( const AD_double & ) = &CppAD::cos;
-// 	AD_double *AD_double_mul_AD_double_AD_double(const AD_double &lhs, const AD_double &rhs);
-
+	AD_double	(*sin_AD_double) 		( const AD_double & ) = &CppAD::sin;
 }
 
 BOOST_PYTHON_MODULE(_cppad)
@@ -94,9 +93,26 @@ BOOST_PYTHON_MODULE(_cppad)
 
 	class_<AD_double>("AD_double", init<double>())
 		.def(boost::python::self_ns::str(self))
+		
+		.def(self+self)
+		.def(self-self)
 		.def(self*self)
-// 		.def("__mul__", AD_double_mul_AD_double_AD_double, return_value_policy<manage_new_object>())
+		.def(self/self)
+
+		.def(-self)
+		.def(+self)
+		.def(self += double() )
+		.def(self -= double() )
+		.def(self *= double() )
+		.def(self /= double() )
+
+		.def(self += self )
+		.def(self -= self )
+		.def(self *= self )
+		.def(self /= self )
+
 		.def("cos", cos_AD_double  )
+		.def("sin", sin_AD_double  )
 	;
 
 	class_<ADFun_double>("ADFun_double", init< bpn::array& , bpn::array& >())

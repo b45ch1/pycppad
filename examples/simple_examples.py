@@ -31,16 +31,40 @@ from numpy import *
 #fp = f.Forward(p, xp)
 
 
-# testing cos
-x = array([AD_double(pi)])
+## testing cos, sin
+#x = array([AD_double(pi)])
+#Independent(x)
+#y = cos(x)
+#f = ADFun_double(x, y)
+#print y
+
+#p = 0
+#xp = array( [ pi ] )
+#print f.Forward(p, xp)
+
+#p = 1
+#xp = array( [ 1. ] )
+#print f.Forward(p,xp)
+#print -sin(x)
+
+
+# testing composite function
+N = 10
+x = array([AD_double(pi+0.2*i) for i in range(N)])
 Independent(x)
-y = cos(x)
+y = array(sum(x))
+print x
+print y
 f = ADFun_double(x, y)
+#print y
 
-p = 0
-xp = array( [ 1.  ] )
-print f.Forward(p, xp)
+#p = 0
+#xp = array( [ pi ] )
+#print f.Forward(p, xp)
 
+#p = 1
+#xp = array( [ 1. ] )
+#print f.Forward(p,xp)
 
 
 
