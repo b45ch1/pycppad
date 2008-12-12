@@ -73,18 +73,12 @@ namespace{
 	/* general functions */
 	void Independent(bpn::array& x_array);
 
-// 	AD_double	(*cos_AD_double) 		( const AD_double & ) = &CppAD::cos;
+
+	/* atomic (aka elementary) operations */
+	AD_double	(*cos_AD_double) 		( const AD_double & ) = &CppAD::cos;
 // 	AD_double *AD_double_mul_AD_double_AD_double(const AD_double &lhs, const AD_double &rhs);
 
 }
-
-
-
-
-
-
-
-
 
 BOOST_PYTHON_MODULE(_cppad)
 {
@@ -102,7 +96,7 @@ BOOST_PYTHON_MODULE(_cppad)
 		.def(boost::python::self_ns::str(self))
 		.def(self*self)
 // 		.def("__mul__", AD_double_mul_AD_double_AD_double, return_value_policy<manage_new_object>())
-// 		.def("cos", cos_AD_double  )
+		.def("cos", cos_AD_double  )
 	;
 
 	class_<ADFun_double>("ADFun_double", init< bpn::array& , bpn::array& >())
