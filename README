@@ -1,5 +1,28 @@
 This PyCPPAD, a Python module to differentiate complex algorithms written in Python.
 It wraps the functionality of the library CPPAD (C++).
 
+Authors: Sebastian F. Walter and Brad Bell
+
+Licence: TBA
+probably BSD or LGPL???
+
+
+INSTALLATION:
+Requirements:
+
+* Python and Numpy, both with header files
+* boost::python
+* scons
+
+
+
+Remark:
+In the future, it is likely that the dependency on scons is removed to ease the installation.
+
+
+
+
+
+
 
 
