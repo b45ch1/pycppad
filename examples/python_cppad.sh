@@ -34,14 +34,18 @@ then
 	exit 1
 fi
 # -------------------------------------------------------------------
+# setup.hpp
 if [ $use_existing_cpp_hpp_py == "true" ]
 then
 	file="python_cppad.tmp"
 else
-	file="python_cppad.hpp"
-	echo "# Create the file python_cppad.hpp"
+	file="setup.hpp"
+	echo "# Create the file setup.hpp"
 fi
 cat << EOF > $file
+# ifndef PYTHON_CPPAD_SETUP_INCLUDED
+# define PYTHON_CPPAD_SETUP_INCLUDED
+
 # include <cppad/cppad.hpp>
 # include <boost/python.hpp>
 # include <numpy/noprefix.h>
@@ -50,120 +54,337 @@ cat << EOF > $file
 # include <string>
 # include <cassert>
 
-typedef CppAD::AD<double>      AD_double;
+# define PYTHON_CPPAD_ASSERT(expression, message) \\
+{ 	if( ! ( expression ) )                    \\
+        CppAD::ErrorHandler::Call(                \\
+ 		(message[0] != '\0') ,            \\
+ 		__LINE__             ,            \\
+ 		__FILE__             ,            \\
+		#expression          ,            \\
+		message              );           }
 
-# define PYTHON_CPPAD_ASSERT(expression, message) \
-{	if( ! ( expression ) )                    \
-	CppAD::ErrorHandler::Call(                \
-		(message[0] != '\0') ,            \
-		__LINE__             ,            \
-		__FILE__             ,            \
-		#expression          ,            \
-		message              );           \
-}
 
-namespace {
+namespace python_cppad {
+	typedef CppAD::AD<double>      AD_double;
+
 	using std::cout;
 	using std::endl;
 	using boost::python::handle;
 	using boost::python::object;
 	using boost::python::numeric::array;
-	// -------------------------------------------------------------
-	class AD_double_vec {
-	private:
-		size_t       length_; // set by constructor only
-		AD_double  *pointer_; // set by constructor only
-		AD_double **handle_;  // set by constructor only
-	public:
-		typedef AD_double value_type;
-
-		// constructor from a python array
-		AD_double_vec(array& py_array);
-
-		// constructor from size
-		AD_double_vec(size_t length);
-
-		// copy constructor
-		AD_double_vec(const AD_double_vec& vec);
-
-		// default constructor
-		AD_double_vec(void);
-
-		// destructor
-		~AD_double_vec(void);
-
-		// assignment operator
-		void operator=(const AD_double_vec& vec);
-
-		// size member function
-		size_t size(void) const;
-
-		// resize member function
-		void resize(size_t length);
-
-		// non constant element access
-		AD_double& operator[](size_t i);
-
-		// constant element access
-		const AD_double& operator[](size_t i) const;
-	};
-	// -------------------------------------------------------------
-	class double_vec {
-	private:
-		size_t    length_;  // set by constructor only
-		double  *pointer_;  // set by constructor only
-		bool    allocated_; // set by constructor only
-	public:
-		typedef double value_type;
-
-		// constructor from a python array
-		double_vec(array& py_array);
-
-		// constructor from size
-		double_vec(size_t length);
-
-		// copy constructor
-		double_vec(const double_vec& vec);
-
-		// default constructor
-		double_vec(void);
-
-		// destructor
-		~double_vec(void);
-
-		// assignment operator
-		void operator=(const double_vec& vec);
-
-		// size member function
-		size_t size(void) const;
-
-		// resize member function
-		void resize(size_t length);
-
-		// non constant element access
-		double& operator[](size_t i);
-
-		// constant element access
-		const double& operator[](size_t i) const;
-	};
-	// -------------------------------------------------------------
-	array vector2array(const double_vec& vec);
-	// -------------------------------------------------------------
-	void Independent(array& x_array);
-	// -------------------------------------------------------------
-	class ADFun_double {
-	private:
-		CppAD::ADFun<double> f_;
-	public:
-		// constructor
-		ADFun_double(array& x_array, array& y_array);
-		// Forwoard member function
-		array Forward(int p, array& xp);
-	};
-	// -------------------------------------------------------------
 }
+
+# endif
 EOF
 # -------------------------------------------------------------------
+# vector.hpp
+if [ $use_existing_cpp_hpp_py == "true" ]
+then
+	file="python_cppad.tmp"
+else
+	file="vector.hpp"
+	echo "# Create the file vector.hpp"
+fi
+cat << EOF > $file
+# ifndef PYTHON_CPPAD_VECTOR_INCLUDED
+# define PYTHON_CPPAD_VECTOR_INCLUDED
+
+# include "setup.hpp"
+
+namespace python_cppad {
+// ========================================================================
+class AD_double_vec {
+private:
+	size_t       length_; // set by constructor only
+	AD_double  *pointer_; // set by constructor only
+	AD_double **handle_;  // set by constructor only
+public:
+	typedef AD_double value_type;
+
+	// constructor from a python array
+	AD_double_vec(array& py_array);
+
+	// constructor from size
+	AD_double_vec(size_t length);
+
+	// copy constructor
+	AD_double_vec(const AD_double_vec& vec);
+
+	// default constructor
+	AD_double_vec(void);
+
+	// destructor
+	~AD_double_vec(void);
+
+	// assignment operator
+	void operator=(const AD_double_vec& vec);
+
+	// size member function
+	size_t size(void) const;
+
+	// resize member function
+	void resize(size_t length);
+
+	// non constant element access
+	AD_double& operator[](size_t i);
+
+	// constant element access
+	const AD_double& operator[](size_t i) const;
+};
+// -------------------------------------------------------------
+class double_vec {
+private:
+	size_t    length_;  // set by constructor only
+	double  *pointer_;  // set by constructor only
+	bool    allocated_; // set by constructor only
+public:
+	typedef double value_type;
+
+	// constructor from a python array
+	double_vec(array& py_array);
+
+	// constructor from size
+	double_vec(size_t length);
+
+	// copy constructor
+	double_vec(const double_vec& vec);
+
+	// default constructor
+	double_vec(void);
+
+	// destructor
+	~double_vec(void);
+
+	// assignment operator
+	void operator=(const double_vec& vec);
+
+	// size member function
+	size_t size(void) const;
+
+	// resize member function
+	void resize(size_t length);
+
+	// non constant element access
+	double& operator[](size_t i);
+
+	// constant element access
+	const double& operator[](size_t i) const;
+};
+// ========================================================================
+} // end of python_cppad namespace
+
+# endif
+EOF
+# -------------------------------------------------------------------
+# vector.cpp
+if [ $use_existing_cpp_hpp_py == "true" ]
+then
+	file="python_cppad.tmp"
+else
+	file="vector.cpp"
+	echo "# Create the file vector.cpp"
+fi
+cat << EOF > $file
+# include "vector.hpp"
+
+namespace python_cppad {
+// ========================================================================
+// class AD_double_vec
+//
+// constructor from a python array
+AD_double_vec::AD_double_vec(array& py_array)
+{
+	// get array info
+	int* dims_ptr = PyArray_DIMS(py_array.ptr());
+	int ndim      = PyArray_NDIM(py_array.ptr());
+	int length    = dims_ptr[0];
+
+	// check array info
+	PYTHON_CPPAD_ASSERT( ndim == 1 , "Argument is not a vector.");
+	PYTHON_CPPAD_ASSERT( length >= 0 , "");
+	// pointer to object
+	object *obj_ptr = static_cast<object*>( 
+		PyArray_DATA(py_array.ptr()) 
+	);
+
+	// set private data
+	using boost::python::extract;
+	length_  = static_cast<size_t>(length);
+	pointer_ = 0;
+	handle_  = CPPAD_TRACK_NEW_VEC(length_, handle_);
+	for(size_t i = 0; i < length_; i++) handle_[i] = 
+		& extract<AD_double&>(obj_ptr[i])(); 
+	return;
+}
+// constructor from size
+AD_double_vec::AD_double_vec(size_t length)
+{
+	length_  = length;
+	pointer_ = CPPAD_TRACK_NEW_VEC(length, pointer_);
+	handle_  = CPPAD_TRACK_NEW_VEC(length, handle_);
+	for(size_t i = 0; i < length_; i++)
+		handle_[i] = pointer_ + i;
+	return;
+}
+
+// copy constructor
+AD_double_vec::AD_double_vec(const AD_double_vec& vec)
+{
+	length_   = vec.length_;
+	pointer_  = CPPAD_TRACK_NEW_VEC(length_, pointer_);
+	handle_   = CPPAD_TRACK_NEW_VEC(length_, handle_);
+	for(size_t i = 0; i < length_; i++)
+	{	handle_[i]  = pointer_ + i;
+		pointer_[i] = vec[i];
+	}
+}
+
+// default constructor
+AD_double_vec::AD_double_vec(void)
+{
+	length_  = 0;
+	pointer_ = 0;
+	handle_  = 0;
+}
+
+// destructor
+AD_double_vec::~AD_double_vec(void)
+{
+	if( handle_ != 0 )
+		CPPAD_TRACK_DEL_VEC(handle_); 
+	if( pointer_ != 0 )
+		CPPAD_TRACK_DEL_VEC(pointer_);	
+}
+
+// assignment operator
+void AD_double_vec::operator=(const AD_double_vec& vec)
+{
+	PYTHON_CPPAD_ASSERT( length_ == vec.length_ , ""); 
+	for(size_t i = 0; i < length_; i++)
+		*handle_[i] = *(vec.handle_[i]);
+	return;
+}
+
+// size member function
+size_t AD_double_vec::size(void) const
+{	return length_; }
+
+// resize 
+void AD_double_vec::resize(size_t length)
+{
+	if( handle_ != 0 )
+		CPPAD_TRACK_DEL_VEC(handle_);
+	if( pointer_ != 0 )
+		CPPAD_TRACK_DEL_VEC(pointer_);
+	pointer_   = CPPAD_TRACK_NEW_VEC(length, pointer_);
+	handle_    = CPPAD_TRACK_NEW_VEC(length, handle_);
+	length_    = length;
+	for(size_t i = 0; i < length_; i++)
+		handle_[i]  = pointer_ + i;
+}
+
+// non constant element access
+AD_double& AD_double_vec::operator[](size_t i)
+{	assert( i < length_ );
+	return *handle_[i];
+}
+
+// constant element access
+const AD_double& AD_double_vec::operator[](size_t i) const
+{	assert( i < length_ );
+	return *handle_[i];
+}
+// -------------------------------------------------------------
+// class double_vec
+//
+// constructor from a python array
+double_vec::double_vec(array& py_array)
+{	// get array info
+	int* dims_ptr = PyArray_DIMS(py_array.ptr());
+	int ndim      = PyArray_NDIM(py_array.ptr());
+	int length    = dims_ptr[0];
+
+	// check array info
+	assert( ndim == 1 );
+	assert( length >= 0 );
+
+	// set private data
+	length_    = static_cast<size_t>( length );
+	pointer_   = static_cast<double*>( 
+		PyArray_DATA(py_array.ptr()) 
+	);
+	allocated_ = false;
+	return;
+}
+
+// constructor from size
+double_vec::double_vec(size_t length)
+{	// set private data
+	length_    = length;
+	pointer_   = CPPAD_TRACK_NEW_VEC(length, pointer_);
+	allocated_ = true;
+	return;
+}
+
+// copy constructor
+double_vec::double_vec(const double_vec& vec)
+{	length_    = vec.length_;
+	pointer_   = CPPAD_TRACK_NEW_VEC(length_, pointer_);
+	allocated_ = true;
+	for(size_t i = 0; i < length_; i++)
+		pointer_[i] = vec[i];
+}
+
+// default constructor
+double_vec::double_vec(void)
+{	length_    = 0;
+	pointer_   = 0;
+	allocated_ = false;
+}
+
+// destructor
+double_vec::~double_vec(void)
+{	if( allocated_ )
+		CPPAD_TRACK_DEL_VEC(pointer_);	
+}
+
+// assignment operator
+void double_vec::operator=(const double_vec& vec)
+{	assert( length_ == vec.length_ ); 
+	for(size_t i = 0; i < length_; i++)
+		pointer_[i] = vec.pointer_[i];
+	return;
+}
+
+// size member function
+size_t double_vec::size(void) const
+{	return length_; }
+
+// resize 
+void double_vec::resize(size_t length)
+{	if( allocated_ )
+		CPPAD_TRACK_DEL_VEC(pointer_);
+	pointer_   = CPPAD_TRACK_NEW_VEC(length, pointer_);
+	length_    = length;
+	allocated_ = true;
+}
+
+// non constant element access
+double& double_vec::operator[](size_t i)
+{	assert( i < length_ );
+	return pointer_[i];
+}
+
+// constant element access
+const double& double_vec::operator[](size_t i) const
+{	assert( i < length_ );
+	return pointer_[i];
+}
+// ========================================================================
+} // end namespace python_cppad
+EOF
+# -------------------------------------------------------------------
+# python_cppad.cpp
 if [ $use_existing_cpp_hpp_py == "true" ]
 then
 	file="python_cppad.tmp"
@@ -172,11 +393,12 @@ else
 	echo "# Create the file python_cppad.cpp"
 fi
 cat << EOF > $file
-# include "python_cppad.hpp"
+# include "setup.hpp"
+# include "vector.hpp"
 
 #define PY_ARRAY_UNIQUE_SYMBOL PyArrayHandle
 
-namespace {
+namespace python_cppad {
 	// Replacement for the CppAD error handler
 	void python_cppad_error_handler(
 		bool known           ,
@@ -194,198 +416,6 @@ namespace {
 	// This ojbect lasts forever, so forever replacement of 
 	// the default CppAD erorr handler 
 	CppAD::ErrorHandler myhandler(python_cppad_error_handler);
-	// -------------------------------------------------------------
-	// class AD_double_vec
-	//
-	// constructor from a python array
-	AD_double_vec::AD_double_vec(array& py_array)
-	{
-		// get array info
-		int* dims_ptr = PyArray_DIMS(py_array.ptr());
-		int ndim      = PyArray_NDIM(py_array.ptr());
-		int length    = dims_ptr[0];
-
-		// check array info
-		PYTHON_CPPAD_ASSERT( ndim == 1 , "Argument is not a vector.");
-		PYTHON_CPPAD_ASSERT( length >= 0 , "");
-		// pointer to object
-		object *obj_ptr = static_cast<object*>( 
-			PyArray_DATA(py_array.ptr()) 
-		);
-
-		// set private data
-		using boost::python::extract;
-		length_  = static_cast<size_t>(length);
-		pointer_ = 0;
-		handle_  = CPPAD_TRACK_NEW_VEC(length_, handle_);
-		for(size_t i = 0; i < length_; i++) handle_[i] = 
-			& extract<AD_double&>(obj_ptr[i])(); 
-		return;
-	}
-	// constructor from size
-	AD_double_vec::AD_double_vec(size_t length)
-	{
-		length_  = length;
-		pointer_ = CPPAD_TRACK_NEW_VEC(length, pointer_);
-		handle_  = CPPAD_TRACK_NEW_VEC(length, handle_);
-		for(size_t i = 0; i < length_; i++)
-			handle_[i] = pointer_ + i;
-		return;
-	}
-
-	// copy constructor
-	AD_double_vec::AD_double_vec(const AD_double_vec& vec)
-	{
-		length_   = vec.length_;
-		pointer_  = CPPAD_TRACK_NEW_VEC(length_, pointer_);
-		handle_   = CPPAD_TRACK_NEW_VEC(length_, handle_);
-		for(size_t i = 0; i < length_; i++)
-		{	handle_[i]  = pointer_ + i;
-			pointer_[i] = vec[i];
-		}
-	}
-
-	// default constructor
-	AD_double_vec::AD_double_vec(void)
-	{
-		length_  = 0;
-		pointer_ = 0;
-		handle_  = 0;
-	}
-
-	// destructor
-	AD_double_vec::~AD_double_vec(void)
-	{
-		if( handle_ != 0 )
-			CPPAD_TRACK_DEL_VEC(handle_); 
-		if( pointer_ != 0 )
-			CPPAD_TRACK_DEL_VEC(pointer_);	
-	}
-
-	// assignment operator
-	void AD_double_vec::operator=(const AD_double_vec& vec)
-	{
-		PYTHON_CPPAD_ASSERT( length_ == vec.length_ , ""); 
-		for(size_t i = 0; i < length_; i++)
-			*handle_[i] = *(vec.handle_[i]);
-		return;
-	}
-
-	// size member function
-	size_t AD_double_vec::size(void) const
-	{	return length_; }
-
-	// resize 
-	void AD_double_vec::resize(size_t length)
-	{
-		if( handle_ != 0 )
-			CPPAD_TRACK_DEL_VEC(handle_);
-		if( pointer_ != 0 )
-			CPPAD_TRACK_DEL_VEC(pointer_);
-		pointer_   = CPPAD_TRACK_NEW_VEC(length, pointer_);
-		handle_    = CPPAD_TRACK_NEW_VEC(length, handle_);
-		length_    = length;
-		for(size_t i = 0; i < length_; i++)
-			handle_[i]  = pointer_ + i;
-	}
-
-	// non constant element access
-	AD_double& AD_double_vec::operator[](size_t i)
-	{	assert( i < length_ );
-		return *handle_[i];
-	}
-
-	// constant element access
-	const AD_double& AD_double_vec::operator[](size_t i) const
-	{	assert( i < length_ );
-		return *handle_[i];
-	}
-	// -------------------------------------------------------------
-	// class double_vec
-	//
-	// constructor from a python array
-	double_vec::double_vec(array& py_array)
-	{	// get array info
-		int* dims_ptr = PyArray_DIMS(py_array.ptr());
-		int ndim      = PyArray_NDIM(py_array.ptr());
-		int length    = dims_ptr[0];
-
-		// check array info
-		assert( ndim == 1 );
-		assert( length >= 0 );
-
-		// set private data
-		length_    = static_cast<size_t>( length );
-		pointer_   = static_cast<double*>( 
-			PyArray_DATA(py_array.ptr()) 
-		);
-		allocated_ = false;
-		return;
-	}
-
-	// constructor from size
-	double_vec::double_vec(size_t length)
-	{	// set private data
-		length_    = length;
-		pointer_   = CPPAD_TRACK_NEW_VEC(length, pointer_);
-		allocated_ = true;
-		return;
-	}
-
-	// copy constructor
-	double_vec::double_vec(const double_vec& vec)
-	{	length_    = vec.length_;
-		pointer_   = CPPAD_TRACK_NEW_VEC(length_, pointer_);
-		allocated_ = true;
-		for(size_t i = 0; i < length_; i++)
-			pointer_[i] = vec[i];
-	}
-
-	// default constructor
-	double_vec::double_vec(void)
-	{	length_    = 0;
-		pointer_   = 0;
-		allocated_ = false;
-	}
-
-	// destructor
-	double_vec::~double_vec(void)
-	{	if( allocated_ )
-			CPPAD_TRACK_DEL_VEC(pointer_);	
-	}
-
-	// assignment operator
-	void double_vec::operator=(const double_vec& vec)
-	{	assert( length_ == vec.length_ ); 
-		for(size_t i = 0; i < length_; i++)
-			pointer_[i] = vec.pointer_[i];
-		return;
-	}
-
-	// size member function
-	size_t double_vec::size(void) const
-	{	return length_; }
-
-	// resize 
-	void double_vec::resize(size_t length)
-	{	if( allocated_ )
-			CPPAD_TRACK_DEL_VEC(pointer_);
-		pointer_   = CPPAD_TRACK_NEW_VEC(length, pointer_);
-		length_    = length;
-		allocated_ = true;
-	}
-
-	// non constant element access
-	double& double_vec::operator[](size_t i)
-	{	assert( i < length_ );
-		return pointer_[i];
-	}
-
-	// constant element access
-	const double& double_vec::operator[](size_t i) const
-	{	assert( i < length_ );
-		return pointer_[i];
-	}
 	// -------------------------------------------------------------
 	array vector2array(const double_vec& vec)
 	{	int n = static_cast<int>( vec.size() );
@@ -411,30 +441,42 @@ namespace {
 	// -------------------------------------------------------------
 	// class ADFun_double
 	//
-	ADFun_double::ADFun_double(array& x_array, array& y_array)
-	{	AD_double_vec x_vec(x_array);
-		AD_double_vec y_vec(y_array);
+	class ADFun_double {
+	private:
+		CppAD::ADFun<double> f_;
+	public:
+		// constructor
+		ADFun_double(array& x_array, array& y_array)
+		{	AD_double_vec x_vec(x_array);
+			AD_double_vec y_vec(y_array);
 
-		f_.Dependent(x_vec, y_vec);
-	}
-
-	array ADFun_double::Forward(int p, array& xp)
-	{	size_t     p_sz(p);
-		double_vec xp_vec(xp);
-		double_vec result = f_.Forward(p_sz, xp_vec);
-		return vector2array(result);
-	}
+			f_.Dependent(x_vec, y_vec);
+		}
+		// member function Forward
+		array Forward(int p, array& xp)
+		{	size_t     p_sz(p);
+			double_vec xp_vec(xp);
+			double_vec result = f_.Forward(p_sz, xp_vec);
+			return vector2array(result);
+		}
+	};
 	// -------------------------------------------------------------
 }
 
 BOOST_PYTHON_MODULE(python_cppad)
 {
+	// AD_double is used in python_cppad namespace
+	typedef CppAD::AD<double> AD_double;
+
 	// here are the things we are using from boost::python
 	using boost::python::numeric::array;
 	using boost::python::class_;
 	using boost::python::init;
 	using boost::python::self;
 	using boost::python::self_ns::str;
+
+	using python_cppad::Independent;
+	using python_cppad::ADFun_double;
 
 	// some kind of hack to get numpy working  ---------------------------
 	import_array(); 
@@ -491,7 +533,8 @@ EOF
 # -------------------------------------------------------------------
 echo "# Compile python_cppad.cpp -------------------------------------------" 
 #
-cmd="g++ -fpic -g -c -Wall -I $python_config_dir -I $numpy_dir -I $cppad_dir python_cppad.cpp"
+cmd="g++ -fpic -g -c -Wall -I $python_config_dir -I $numpy_dir -I $cppad_dir"
+cmd="$cmd python_cppad.cpp vector.cpp"
 echo $cmd
 if ! $cmd
 then
@@ -503,7 +546,7 @@ echo "# Create python_cppad.so dynamic link library -----------------------"
 # needed to link boost python
 library_flags="-lboost_python"
 cmd="g++ -shared -Wl,-soname,libpython_cppad.so.1 $library_flags"
-cmd="$cmd -o libpython_cppad.so.1.0 python_cppad.o -lc"
+cmd="$cmd -o libpython_cppad.so.1.0 python_cppad.o vector.o -lc"
 echo $cmd
 if ! $cmd
 then
