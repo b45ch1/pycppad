@@ -9,13 +9,13 @@ numpy_dir="/usr/lib/python2.5/site-packages/numpy/core/include"
 # -------------------------------------------------------------------
 if [ ! -e "$python_config_dir/pyconfig.h" ]
 then
-echo "Must change python_config_dir or python_version in boost_python_and_numpy_tutorial.sh"
+echo "Must change python_config_dir or python_version in error_example.sh"
 	exit 1
 fi
 
 # -------------------------------------------------------------------
-echo "# Create the file boost_python_and_numpy_tutorial.cpp"
-cat << EOF > boost_python_and_numpy_tutorial.cpp
+echo "# Create the file error_example.cpp"
+cat << EOF > error_example.cpp
 #define PY_ARRAY_UNIQUE_SYMBOL PyArrayHandle
 
 # include <boost/python.hpp>
@@ -92,7 +92,7 @@ namespace {
 	}
 }
 
-BOOST_PYTHON_MODULE(boost_python_and_numpy_tutorial)
+BOOST_PYTHON_MODULE(error_example)
 {
 	using namespace boost::python;
 	using boost::python::self_ns::str;
@@ -110,9 +110,9 @@ BOOST_PYTHON_MODULE(boost_python_and_numpy_tutorial)
 }
 EOF
 # -------------------------------------------------------------------
-echo "# Create the file boost_python_and_numpy_tutorial.tmp"
-cat << EOF > boost_python_and_numpy_tutorial.py
-from boost_python_and_numpy_tutorial import *
+echo "# Create the file error_example.tmp"
+cat << EOF > error_example.py
+from error_example import *
 from numpy import array
 
 print 'testing double arrays'
@@ -133,9 +133,9 @@ y = my_factorial(x)
 
 EOF
 # -------------------------------------------------------------------
-echo "# Compile boost_python_and_numpy_tutorial.cpp -------------------------------------------"
+echo "# Compile error_example.cpp -------------------------------------------"
 #
-cmd="g++ -fpic -g -c -Wall -I $python_config_dir -I $numpy_dir  boost_python_and_numpy_tutorial.cpp"
+cmd="g++ -fpic -g -c -Wall -I $python_config_dir -I $numpy_dir  error_example.cpp"
 echo $cmd
 if ! $cmd
 then
@@ -143,24 +143,24 @@ then
 	exit 1
 fi
 # -------------------------------------------------------------------
-echo "# Create boost_python_and_numpy_tutorial.so dynamic link library -----------------------"
+echo "# Create error_example.so dynamic link library -----------------------"
 # needed to link boost python
 library_flags="-lboost_python"
-cmd="g++ -shared -Wl,-soname,libboost_python_and_numpy_tutorial.so.1 $library_flags"
-cmd="$cmd -o libboost_python_and_numpy_tutorial.so.1.0 boost_python_and_numpy_tutorial.o -lc"
+cmd="g++ -shared -Wl,-soname,liberror_example.so.1 $library_flags"
+cmd="$cmd -o liberror_example.so.1.0 error_example.o -lc"
 echo $cmd
 if ! $cmd
 then
 	echo "command failed"
 	exit 1
 fi
-if [ -e boost_python_and_numpy_tutorial.so ]
+if [ -e error_example.so ]
 then
-	cmd="rm boost_python_and_numpy_tutorial.so"
+	cmd="rm error_example.so"
 	echo $cmd
 	$cmd
 fi
-cmd="ln libboost_python_and_numpy_tutorial.so.1.0 boost_python_and_numpy_tutorial.so"
+cmd="ln liberror_example.so.1.0 error_example.so"
 echo $cmd
 if ! $cmd
 then
@@ -168,8 +168,8 @@ then
 	exit 1
 fi
 # -------------------------------------------------------------------
-echo "# Run boost_python_and_numpy_tutorial.py -----------------------------------------------"
-cmd="python boost_python_and_numpy_tutorial.py"
+echo "# Run error_example.py -----------------------------------------------"
+cmd="python error_example.py"
 echo $cmd
 if ! $cmd
 then
