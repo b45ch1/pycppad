@@ -1,20 +1,18 @@
 #! /bin/bash
 # 
+use_existing_cpp_hpp_py="false"
 python_version="2.5"
 python_config_dir="/usr/include/python$python_version"
-
+numpy_dir="/usr/lib/python2.5/site-packages/numpy/core/include"
 if [ "$USER" == "bradbell" ]
 then
 	cppad_dir="$HOME/CppAD/trunk"
-	numpy_dir="/usr/lib/python2.5/site-packages/numpy/core/include"
 else if [ -e "$HOME/workspace/pycppad/cppad-20081128/cppad/cppad.hpp" ]
 then
-	numpy_dir="/usr/lib/python2.5/site-packages/numpy/core/include"
 	cppad_dir="../cppad-20081128"
 else if [ -e "/u/walter/workspace/PyCPPAD/cppad-20081128/cppad/cppad.hpp" ]
 then
 	echo "this is wronski"
-	numpy_dir="/usr/lib/python2.5/site-packages/numpy/core/include"
 	cppad_dir="/u/walter/workspace/PyCPPAD/cppad-20081128"
 else
 	echo "Cannot find cppad/cppad.hpp"
@@ -22,8 +20,6 @@ else
 fi
 fi
 fi
-
-
 # -------------------------------------------------------------------
 if [ ! -e "$python_config_dir/pyconfig.h" ]
 then
@@ -38,8 +34,14 @@ then
 	exit 1
 fi
 # -------------------------------------------------------------------
-echo "# Create the file python_cppad.hpp"
-cat << EOF > python_cppad.hpp
+if [ $use_existing_cpp_hpp_py == "true" ]
+then
+	file="python_cppad.tmp"
+else
+	file="python_cppad.hpp"
+	echo "# Create the file python_cppad.hpp"
+fi
+cat << EOF > $file
 # include <cppad/cppad.hpp>
 # include <boost/python.hpp>
 # include <numpy/noprefix.h>
@@ -49,6 +51,16 @@ cat << EOF > python_cppad.hpp
 # include <cassert>
 
 typedef CppAD::AD<double>      AD_double;
+
+# define PYTHON_CPPAD_ASSERT(expression, message) \
+{	if( ! ( expression ) )                    \
+	CppAD::ErrorHandler::Call(                \
+		(message[0] != '\0') ,            \
+		__LINE__             ,            \
+		__FILE__             ,            \
+		#expression          ,            \
+		message              );           \
+}
 
 namespace {
 	using std::cout;
@@ -137,7 +149,7 @@ namespace {
 	// -------------------------------------------------------------
 	array vector2array(const double_vec& vec);
 	// -------------------------------------------------------------
-	void independent(array& x_array);
+	void Independent(array& x_array);
 	// -------------------------------------------------------------
 	class ADFun_double {
 	private:
@@ -152,8 +164,14 @@ namespace {
 }
 EOF
 # -------------------------------------------------------------------
-echo "# Create the file python_cppad.cpp"
-cat << EOF > python_cppad.cpp
+if [ $use_existing_cpp_hpp_py == "true" ]
+then
+	file="python_cppad.tmp"
+else
+	file="python_cppad.cpp"
+	echo "# Create the file python_cppad.cpp"
+fi
+cat << EOF > $file
 # include "python_cppad.hpp"
 
 #define PY_ARRAY_UNIQUE_SYMBOL PyArrayHandle
@@ -188,9 +206,8 @@ namespace {
 		int length    = dims_ptr[0];
 
 		// check array info
-		assert( ndim == 1 );
-		assert( length >= 0 );
-
+		PYTHON_CPPAD_ASSERT( ndim == 1 , "Argument is not a vector.");
+		PYTHON_CPPAD_ASSERT( length >= 0 , "");
 		// pointer to object
 		object *obj_ptr = static_cast<object*>( 
 			PyArray_DATA(py_array.ptr()) 
@@ -248,7 +265,7 @@ namespace {
 	// assignment operator
 	void AD_double_vec::operator=(const AD_double_vec& vec)
 	{
-		assert( length_ == vec.length_ ); 
+		PYTHON_CPPAD_ASSERT( length_ == vec.length_ , ""); 
 		for(size_t i = 0; i < length_; i++)
 			*handle_[i] = *(vec.handle_[i]);
 		return;
@@ -386,7 +403,7 @@ namespace {
 		return  static_cast<array>( obj );
 	}
 	// -------------------------------------------------------------
-	void independent(array& x_array)
+	void Independent(array& x_array)
 	{	AD_double_vec x_vec(x_array);
 		CppAD::Independent(x_vec);
 		return;
@@ -426,9 +443,12 @@ BOOST_PYTHON_MODULE(python_cppad)
 	
 	class_<AD_double>("AD_double", init<double>())
 		.def(str(self))
+		.def(self + self)
+		.def(self - self)
 		.def(self * self)
+		.def(self / self)
 	;
-	def("independent", &independent);
+	def("Independent", &Independent);
 
 	class_<ADFun_double>("ADFun_double", init< array& , array& >())
 		.def("Forward", &ADFun_double::Forward)
@@ -436,12 +456,18 @@ BOOST_PYTHON_MODULE(python_cppad)
 }
 EOF
 # -------------------------------------------------------------------
-echo "# Create the file python_cppad.py"
-cat << EOF > python_cppad.py
+if [ $use_existing_cpp_hpp_py == "true" ]
+then
+	file="python_cppad.tmp"
+else
+	file="python_cppad.py"
+	echo "# Create the file python_cppad.py"
+fi
+cat << EOF > $file
 from python_cppad import *
 from numpy import array
 x = array( [ AD_double(2) , AD_double(3) ] )
-independent(x);
+Independent(x);
 y = array( [ x[0] * x[1] ] );
 f = ADFun_double(x, y)
 print 'f(x0, x1) = x0 * x1'
