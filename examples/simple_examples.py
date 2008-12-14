@@ -52,7 +52,7 @@ from numpy import *
 N = 10
 x = array([AD_double(pi+0.2*i) for i in range(N)])
 Independent(x)
-y = array(sum(x))
+y = array([sum(x)])
 print x
 print y
 f = ADFun_double(x, y)
