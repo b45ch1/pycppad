@@ -3,11 +3,11 @@ It wraps the functionality of the library CPPAD (C++).
 
 Authors: Sebastian F. Walter and Brad Bell
 
-Licence: TBA
-probably BSD or LGPL???
 
+Licence: BSD
 
 INSTALLATION:
+=============
 Requirements:
 
 * Python and Numpy, both with header files
@@ -24,11 +24,25 @@ g++ -o _cppad.so -Wl,-rpath=/data/walter/opt_software/boost_1_34_1/bin.v2/libs/p
 Install file: "_cppad.so" as "release/cppad/_cppad.so"
 scons: done building targets.
 
-
-
-
 Remark:
 In the future, it is likely that the dependency on scons is removed to ease the installation.
+
+
+
+USAGE:
+======
+
+Examples:
+To run the examples, change directory to the root directory where py_cppad.hpp is located and type
+$python examples/simple_examples.py
+
+Unit Test:
+To run the unit test you need py.test from 
+http://codespeak.net/py/dist/
+Run it with
+$py.test unit_tests/general_test.py
+
+
 
 
 
