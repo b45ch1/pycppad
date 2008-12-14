@@ -190,7 +190,7 @@ void ADFun<Base>::Dependent(ADTape<Base> *tape, const ADvector &y)
 	size_t   y_taddr;
 
 	// check ADvector is Simple Vector class with AD<Base> elements
-	// CheckSimpleVector< AD<Base>, ADvector>();
+	CheckSimpleVector< AD<Base>, ADvector>();
 
 	CPPAD_ASSERT_KNOWN(
 		y.size() > 0,
