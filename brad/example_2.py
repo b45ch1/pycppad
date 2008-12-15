@@ -1,5 +1,4 @@
-from python_cppad import *
-from numpy import array
+from cppad import *
 print 'Example using ad_ad_double'
 # declare level one independent variable vector and start level one recording
 level = 1

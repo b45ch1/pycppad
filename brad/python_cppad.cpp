@@ -4,7 +4,6 @@
 # define PY_ARRAY_UNIQUE_SYMBOL PyArrayHandle
 
 # define PYTHON_CPPAD_OPERATOR_LIST    \
-		.def(str(self))        \
                                        \
 		.def(self + self)      \
 		.def(self - self)      \
@@ -19,7 +18,17 @@
 		.def(double() + self)  \
 		.def(double() - self)  \
 		.def(double() * self)  \
-		.def(double() / self)
+		.def(double() / self)  \
+                                       \
+		.def(self += self)     \
+		.def(self -= self)     \
+		.def(self *= self)     \
+		.def(self /= self)     \
+                                       \
+		.def(self += double()) \
+		.def(self -= double()) \
+		.def(self *= double()) \
+		.def(self /= double()) 
 
 namespace python_cppad {
 	// Replacement for the CppAD error handler
@@ -164,6 +173,7 @@ BOOST_PYTHON_MODULE(python_cppad)
 	def("independent", &Independent);
 	// --------------------------------------------------------------------
 	class_<AD_double>("ad_double", init<double>())
+		.def(str(self))
 		PYTHON_CPPAD_OPERATOR_LIST
 	;
 
@@ -172,6 +182,7 @@ BOOST_PYTHON_MODULE(python_cppad)
 	;
 	// --------------------------------------------------------------------
 	class_<AD_AD_double>("ad_ad_double", init<AD_double>())
+		.def(str(self))
 		PYTHON_CPPAD_OPERATOR_LIST
 	;
 	class_<ADFun_AD_double>("adfun_ad_double", init< array& , array& >())

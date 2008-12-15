@@ -55,13 +55,13 @@ then
 	echo "command failed"
 	exit 1
 fi
-if [ -e python_cppad.so ]
+if [ -e cppad/python_cppad.so ]
 then
-	cmd="rm python_cppad.so"
+	cmd="rm cppad/python_cppad.so"
 	echo $cmd
 	$cmd
 fi
-cmd="ln libpython_cppad.so.1.0 python_cppad.so"
+cmd="ln libpython_cppad.so.1.0 cppad/python_cppad.so"
 echo $cmd
 if ! $cmd
 then
@@ -69,8 +69,16 @@ then
 	exit 1
 fi
 # -------------------------------------------------------------------
-echo "# Run python_cppad.py -----------------------------------------------"
-cmd="python python_cppad.py"
+echo "-------------------------------------------------------------------"
+cmd="python example_1.py"
+echo $cmd
+if ! $cmd
+then
+	echo "command failed"
+	exit 1
+fi
+echo "-------------------------------------------------------------------"
+cmd="python example_2.py"
 echo $cmd
 if ! $cmd
 then

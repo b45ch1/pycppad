@@ -11,6 +11,7 @@ from python_cppad import ad_ad_double
 
 
 
+# Kludge: should be independent(x) and use type of x to determine level
 def independent(x, level):
 	"""
 	Mark a vector of AD_doubles as independent variables.
