@@ -14,8 +14,8 @@ namespace{
 		bp::throw_error_already_set();
 	}
 
-	// This ojbect lasts forever, so forever replacement of 
-	// the default CppAD erorr handler 
+	// This ojbect lasts forever, so forever replacement of
+	// the default CppAD erorr handler
 	CppAD::ErrorHandler myhandler(python_cppad_error_handler);
 
 
@@ -52,8 +52,8 @@ namespace{
 		assert( length >= 0 );
 
 		// pointer to object
-		bp::object *obj_ptr = static_cast<bp::object*>( 
-			PyArray_DATA(py_array.ptr()) 
+		bp::object *obj_ptr = static_cast<bp::object*>(
+			PyArray_DATA(py_array.ptr())
 		);
 
 		// set private data
@@ -61,8 +61,8 @@ namespace{
 		length_  = static_cast<size_t>(length);
 		pointer_ = 0;
 		handle_  = CPPAD_TRACK_NEW_VEC(length_, handle_);
-		for(size_t i = 0; i < length_; i++) handle_[i] = 
-			& extract<AD_double&>(obj_ptr[i])(); 
+		for(size_t i = 0; i < length_; i++) handle_[i] =
+			& extract<AD_double&>(obj_ptr[i])();
 		return;
 	}
 	// constructor from size
@@ -100,15 +100,15 @@ namespace{
 	AD_double_vec::~AD_double_vec(void)
 	{
 		if( handle_ != 0 )
-			CPPAD_TRACK_DEL_VEC(handle_); 
+			CPPAD_TRACK_DEL_VEC(handle_);
 		if( pointer_ != 0 )
-			CPPAD_TRACK_DEL_VEC(pointer_);	
+			CPPAD_TRACK_DEL_VEC(pointer_);
 	}
 
 	// assignment operator
 	void AD_double_vec::operator=(const AD_double_vec& vec)
 	{
-		assert( length_ == vec.length_ ); 
+		assert( length_ == vec.length_ );
 		for(size_t i = 0; i < length_; i++)
 			*handle_[i] = *(vec.handle_[i]);
 		return;
@@ -118,7 +118,7 @@ namespace{
 	size_t AD_double_vec::size(void) const
 	{	return length_; }
 
-	// resize 
+	// resize
 	void AD_double_vec::resize(size_t length)
 	{
 		if( handle_ != 0 )
@@ -159,8 +159,8 @@ namespace{
 
 		// set private data
 		length_    = static_cast<size_t>( length );
-		pointer_   = static_cast<double*>( 
-			PyArray_DATA(py_array.ptr()) 
+		pointer_   = static_cast<double*>(
+			PyArray_DATA(py_array.ptr())
 		);
 		allocated_ = false;
 		return;
@@ -194,12 +194,12 @@ namespace{
 	// destructor
 	double_vec::~double_vec(void)
 	{	if( allocated_ )
-			CPPAD_TRACK_DEL_VEC(pointer_);	
+			CPPAD_TRACK_DEL_VEC(pointer_);
 	}
 
 	// assignment operator
 	void double_vec::operator=(const double_vec& vec)
-	{	assert( length_ == vec.length_ ); 
+	{	assert( length_ == vec.length_ );
 		for(size_t i = 0; i < length_; i++)
 			pointer_[i] = vec.pointer_[i];
 		return;
@@ -209,7 +209,7 @@ namespace{
 	size_t double_vec::size(void) const
 	{	return length_; }
 
-	// resize 
+	// resize
 	void double_vec::resize(size_t length)
 	{	if( allocated_ )
 			CPPAD_TRACK_DEL_VEC(pointer_);
