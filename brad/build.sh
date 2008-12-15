@@ -74,7 +74,7 @@ cmd="python example_1.py"
 echo $cmd
 if ! $cmd
 then
-	echo "command failed"
+	echo "example_1 failed"
 	exit 1
 fi
 echo "-------------------------------------------------------------------"
@@ -82,6 +82,14 @@ cmd="python example_2.py"
 echo $cmd
 if ! $cmd
 then
-	echo "command failed"
+	echo "example_2 failed"
+	exit 1
+fi
+echo "-------------------------------------------------------------------"
+cmd="python example_3.py"
+echo $cmd
+if ! $cmd
+then
+	echo "example_3 failed"
 	exit 1
 fi

@@ -3,32 +3,35 @@
 
 # define PY_ARRAY_UNIQUE_SYMBOL PyArrayHandle
 
+# define PYTHON_CPPAD_BINARY(op)       \
+	.def(self     op self)         \
+	.def(double() op self)         \
+	.def(self     op double())
+	
+
 # define PYTHON_CPPAD_OPERATOR_LIST    \
                                        \
-		.def(self + self)      \
-		.def(self - self)      \
-		.def(self * self)      \
-		.def(self / self)      \
+	PYTHON_CPPAD_BINARY(+)         \
+	PYTHON_CPPAD_BINARY(-)         \
+	PYTHON_CPPAD_BINARY(*)         \
+	PYTHON_CPPAD_BINARY(/)         \
                                        \
-		.def(self + double())  \
-		.def(self - double())  \
-		.def(self * double())  \
-		.def(self / double())  \
+	PYTHON_CPPAD_BINARY(<)         \
+	PYTHON_CPPAD_BINARY(>)         \
+	PYTHON_CPPAD_BINARY(<=)        \
+	PYTHON_CPPAD_BINARY(>=)        \
+	PYTHON_CPPAD_BINARY(==)        \
+	PYTHON_CPPAD_BINARY(!=)        \
                                        \
-		.def(double() + self)  \
-		.def(double() - self)  \
-		.def(double() * self)  \
-		.def(double() / self)  \
+	.def(self += self)             \
+	.def(self -= self)             \
+	.def(self *= self)             \
+	.def(self /= self)             \
                                        \
-		.def(self += self)     \
-		.def(self -= self)     \
-		.def(self *= self)     \
-		.def(self /= self)     \
-                                       \
-		.def(self += double()) \
-		.def(self -= double()) \
-		.def(self *= double()) \
-		.def(self /= double()) 
+	.def(self += double())         \
+	.def(self -= double())         \
+	.def(self *= double())         \
+	.def(self /= double()) 
 
 namespace python_cppad {
 	// Replacement for the CppAD error handler
