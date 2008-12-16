@@ -24,18 +24,10 @@ def independent(x):
 	elif x[0].__class__ == _cppad.AD_AD_double:
 		print 'level = 2'
 		return _cppad.Independent(x,2)
+	elif isinstance(x[0], ad):
+		return _cppad.Independent(x,x[0].level)
 	else:
 		raise NotImplementedError('Only multilevel taping up to 2 is currently implemented!')
-
-
-
-#class ad(_cppad.AD_double,_cppad.AD_AD_double):
-	#def __init__(self,x):
-		#if numpy.isscalar(x):
-			#_cppad.AD_double.__init__(self,x)
-		#elif isinstance(x, _cppad.AD_double):
-			#_cppad.AD_AD_double.__init__(self,x)
-			
 	
 
 class adfun_double(_cppad.ADFun_double):

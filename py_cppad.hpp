@@ -3,8 +3,11 @@
 
 #define PY_ARRAY_UNIQUE_SYMBOL PyArrayHandle
 
+#include <string>
+
 #include "num_util.h"
 #include "cppad/cppad.hpp"
+
 
 using namespace std;
 namespace b = boost;
@@ -18,9 +21,18 @@ namespace{
 
 	class ad: public CppAD::AD<double>, public CppAD::AD< CppAD::AD<double> > {
 		public:
-		ad(double rhs): CppAD::AD<double>(rhs){}
-// 		ad(const CppAD::AD<double> &rhs): CppAD::AD<double>(rhs){}
+		int level;
+		ad(double rhs): CppAD::AD<double>(rhs){ level = 1;}
+		ad(const CppAD::AD<double> &rhs): CppAD::AD< CppAD::AD<double> >(rhs){ level = 2;}
 	};
+	
+	std::string ad__str__(ad const &self) {
+		stringstream mystream;
+		mystream << "lala";
+		return mystream.str();
+	}
+
+
 
 	template<class Tdouble>
 	class vec {
@@ -271,8 +283,6 @@ namespace{
 	}
 
 
-	
-
 	template<class Tdouble>
 	class ADFun {
 		private:
@@ -376,10 +386,13 @@ BOOST_PYTHON_MODULE(_cppad)
 	;
 		
 	class_<ad, bases<AD_double, AD_AD_double> >("ad", init<double>())
-// 			.def(init<const CppAD::AD<double>& >())
+		.def(init<const CppAD::AD<double>& >())
+		.add_property("level", &ad::level)
+		.add_property("value", &AD_double::value_)
+		.add_property("id", &AD_double::id_)
+		.add_property("taddr", &AD_double::taddr_)
+		.def("__str__", ad__str__)
 	;
-
-	
 
 	class_<ADFun_double>("ADFun_double", init< bpn::array& , bpn::array& >())
 		.def("Forward", &ADFun_double::Forward)
