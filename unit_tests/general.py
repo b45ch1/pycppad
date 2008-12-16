@@ -40,31 +40,58 @@ def test_elementary_ad_operations():
 	x -= y
 	assert x == ad_double(2.)
 	
-def test_variable_info():
+def test_ad_double_variable_info():
 	x = ad(2.)
 	print x
 	print x.value
 	print x.id
 	print x.taddr
 	
-	assert x.__str__() == '2.'
-	assert x.value == 2.
+	assert x.__str__() == str(2.)
+	assert x.value     == 2.
+	assert x.id        == 1
+	assert x.taddr     == 0
+	
+def test_ad_ad_double_variable_info():
+	x = ad(ad(13.0))
+	print x
+	print x.value
+	print x.id
+	print x.taddr
+	
+	assert x.__str__() ==  '13'
+	assert x.value == 13.
 	assert x.id == 1
-	assert x.taddr == 0
+	assert x.taddr == 0	
+	
 
-def test_ad():
+def test_ad_double():
 	x = ad(3.)
-	y = ad_double(3.)
+	y = ad(3.)
 	z = ad(4.)
 	
 	assert x == y
 	assert not x == z
 
-	u = ad(x)
-	v = ad_ad_double(y)
-	w = ad(z)
-	assert u == v
-	assert not u == w
+def test_ad_ad_double():
+	# problem: multiplication screws up!
+	
+	x = ad(ad(3.))
+	y = ad(ad(3.))
+	z = ad(ad(4.))
+	
+	x2 = ad_ad_double(ad(3.))
+	y2 = ad_ad_double(ad(3.))
+	z2 = ad_ad_double(ad(4.))
+	
+	print x * y
+	print x2 * y2
+	
+	assert x == y
+	assert not x == z
+	
+	assert x2 == y2
+	assert not x2 == z2
 	
 	
 	#assert False
@@ -89,7 +116,6 @@ def test_ad():
 	## declare level two independent variable vector and start level two recording
 	#level = 2
 	#ad_ad_x = numpy.array( [ ad_ad_double(ad_x[0]) , ad_ad_double(ad_x[1]) ] )
-	#print ad_ad_x
 	#independent(ad_ad_x)
 	## declare level 2 dependent variable vector and stop level 2 recording
 	#ad_ad_y = numpy.array( [ 2. * ad_ad_x[0] * ad_ad_x[1] ] )
@@ -122,17 +148,18 @@ def test_ad():
 	#gp = g.Forward(p, xp)
 	#ok = ok and (gp == 4.)
 	
-	#assert False
 	#assert ok
 
 #def test_multi_level_taping_and_higher_order_derivatives():
 	#ok = True
 	#level = 1
 	#ad_x = numpy.array( [ ad(2) , ad(3) ] )
+	#print ad_x
 	#independent(ad_x)
 	## declare level two independent variable vector and start level two recording
 	#level = 2
 	#ad_ad_x = numpy.array( [ ad(ad_x[0]) , ad(ad_x[1]) ] )
+	#print ad_ad_x
 	#independent(ad_ad_x)
 	## declare level 2 dependent variable vector and stop level 2 recording
 	#ad_ad_y = numpy.array( [ 2. * ad_ad_x[0] * ad_ad_x[1] ] )

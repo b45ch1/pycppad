@@ -375,6 +375,9 @@ BOOST_PYTHON_MODULE(_cppad)
 
 	class_<AD_double>("AD_double", init<double>())
 		.def(boost::python::self_ns::str(self))
+		.add_property("value", &AD_double::value_)
+		.add_property("id", &AD_double::id_)
+		.add_property("taddr", &AD_double::taddr_)
 		PYTHON_CPPAD_OPERATOR_LIST
 		.def("cos", cos_AD_double  )
 		.def("sin", sin_AD_double  )
@@ -382,15 +385,21 @@ BOOST_PYTHON_MODULE(_cppad)
 
 	class_<AD_AD_double>("AD_AD_double", init<AD_double>())
 		.def(boost::python::self_ns::str(self))
+		.add_property("value", &AD_AD_double::value_)
+		.add_property("id", &AD_AD_double::id_)
+		.add_property("taddr", &AD_AD_double::taddr_)
 		PYTHON_CPPAD_OPERATOR_LIST
 	;
 		
 	class_<ad, bases<AD_double, AD_AD_double> >("ad", init<double>())
 		.def(init<const CppAD::AD<double>& >())
-		.add_property("level", &ad::level)
-		.add_property("value", &AD_double::value_)
-		.add_property("id", &AD_double::id_)
-		.add_property("taddr", &AD_double::taddr_)
+		.add_property("level",       &ad::level)
+		.add_property("ad_value",    &AD_double::value_)
+		.add_property("ad_id",       &AD_double::id_)
+		.add_property("ad_taddr",    &AD_double::taddr_)
+		.add_property("add_value",   &AD_AD_double::value_)
+		.add_property("add_id",      &AD_AD_double::id_)
+		.add_property("add_taddr",   &AD_AD_double::taddr_)
 		.def("__str__", ad__str__)
 	;
 
