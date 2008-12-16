@@ -16,14 +16,6 @@ namespace nu = num_util;
 
 namespace{
 
-	class ADFun_double {
-		private:
-			CppAD::ADFun<double> f_;
-		public:
-			ADFun_double(bpn::array& x_array, bpn::array& y_array);
-			bpn::array Forward(int p, bpn::array& xp);
-	};
-
 	template<class Tdouble>
 	class vec {
 			size_t       length_;
@@ -155,8 +147,9 @@ namespace{
 		length_  = static_cast<size_t>(length);
 		pointer_ = 0;
 		handle_  = CPPAD_TRACK_NEW_VEC(length_, handle_);
-		for(size_t i = 0; i < length_; i++) handle_[i] =
-			& bp::extract<CppAD::AD<double>&>(obj_ptr[i])();
+		for(size_t i = 0; i < length_; i++){
+			handle_[i] = & bp::extract<Tdouble&>(obj_ptr[i])();
+		}
 		return;
 	}
 
@@ -235,11 +228,76 @@ namespace{
 		return *handle_[i];
 	}
 
-	/* functions that make the wrapping a little more convenient */
-	bpn::array vector2array(const vec<double>& in_vec);
+
+
+
+	/* =================================== */
+	/* HELPER FUNCTIONOS                   */
+	/* =================================== */
+	template<class Tdouble>
+	bpn::array vector2array(const vec<Tdouble> &in_vec);
+
+	template<>
+	bpn::array vector2array<double>(const vec<double>& in_vec){
+		int n = static_cast<int>( in_vec.size() );
+		assert( n >= 0 );
+
+		bp::object obj(bp::handle<>( PyArray_FromDims(1, &n, PyArray_DOUBLE) ));
+		double *ptr = static_cast<double*> ( PyArray_DATA (
+			reinterpret_cast<PyArrayObject*> ( obj.ptr() )
+		));
+		for(size_t i = 0; i < in_vec.size(); i++){
+			ptr[i] = in_vec[i];
+		}
+		return  static_cast<bpn::array>( obj );
+	}
+
+	template<class Tdouble>
+	bpn::array vector2array(const vec<Tdouble>& in_vec){
+		int n = static_cast<int>( in_vec.size() );
+		assert( n >= 0 );
+		boost::python::object retval(boost::python::handle<>( PyArray_FromDims(1, &n, PyArray_OBJECT) ));
+
+		for(size_t i = 0; i < in_vec.size(); i++){
+			retval[i] = in_vec[i];
+		}
+		return  static_cast<bpn::array>( retval );
+	}
+
+
+	
+
+	template<class Tdouble>
+	class ADFun {
+		private:
+			CppAD::ADFun<Tdouble> f_;
+		public:
+			ADFun(bpn::array& x_array, bpn::array& y_array);
+			bpn::array Forward(int p, bpn::array& xp);
+	};
+
+	/* =================================== */
+	/* CLASS SPECIALIZATION OF  ADFun      */
+	/* =================================== */
+
+	template<class Tdouble>
+	ADFun<Tdouble>::ADFun(bpn::array& x_array, bpn::array& y_array){
+		vec<CppAD::AD<Tdouble> > x_vec(x_array);
+		vec<CppAD::AD<Tdouble> > y_vec(y_array);
+		f_.Dependent(x_vec, y_vec);
+	}
+
+	template<class Tdouble>
+	bpn::array ADFun<Tdouble>::Forward(int p, bpn::array& xp){
+	 	size_t     p_sz(p);
+		vec<Tdouble> xp_vec(xp);
+		vec<Tdouble> result = f_.Forward(p_sz, xp_vec);
+		return vector2array(result);
+	}
+
 
 	/* general functions */
-	void Independent(bpn::array& x_array);
+	void Independent(bpn::array& x_array, int level);
 
 	/* atomic (aka elementary) operations */
 	CppAD::AD<double>	(*cos_AD_double) 		( const CppAD::AD<double> & ) = &CppAD::cos;
@@ -249,7 +307,10 @@ namespace{
 	typedef CppAD::AD<CppAD::AD<double> > AD_AD_double;
 	typedef vec<double> double_vec;
 	typedef vec<AD_double> AD_double_vec;
-	typedef vec<AD_AD_double> AD_Ad_double_vec;
+	typedef vec<AD_AD_double> AD_AD_double_vec;
+	typedef ADFun<double> ADFun_double;
+	typedef ADFun<AD_double> ADFun_AD_double;
+
 
 	
 }
@@ -266,32 +327,54 @@ BOOST_PYTHON_MODULE(_cppad)
 	def("Independent", &Independent);
 
 
+	# define PYTHON_CPPAD_BINARY(op)       \
+	.def(self     op self)         \
+	.def(double() op self)         \
+	.def(self     op double())
+	
+	# define PYTHON_CPPAD_OPERATOR_LIST    \
+                                       \
+	PYTHON_CPPAD_BINARY(+)         \
+	PYTHON_CPPAD_BINARY(-)         \
+	PYTHON_CPPAD_BINARY(*)         \
+	PYTHON_CPPAD_BINARY(/)         \
+                                       \
+	PYTHON_CPPAD_BINARY(<)         \
+	PYTHON_CPPAD_BINARY(>)         \
+	PYTHON_CPPAD_BINARY(<=)        \
+	PYTHON_CPPAD_BINARY(>=)        \
+	PYTHON_CPPAD_BINARY(==)        \
+	PYTHON_CPPAD_BINARY(!=)        \
+                                       \
+	.def(self += self)             \
+	.def(self -= self)             \
+	.def(self *= self)             \
+	.def(self /= self)             \
+                                       \
+	.def(self += double())         \
+	.def(self -= double())         \
+	.def(self *= double())         \
+	.def(self /= double()) 
+
+
 	class_<AD_double>("AD_double", init<double>())
 		.def(boost::python::self_ns::str(self))
-		
-		.def(self+self)
-		.def(self-self)
-		.def(self*self)
-		.def(self/self)
-
-		.def(-self)
-		.def(+self)
-		.def(self += double() )
-		.def(self -= double() )
-		.def(self *= double() )
-		.def(self /= double() )
-
-		.def(self += self )
-		.def(self -= self )
-		.def(self *= self )
-		.def(self /= self )
-
+		PYTHON_CPPAD_OPERATOR_LIST
 		.def("cos", cos_AD_double  )
 		.def("sin", sin_AD_double  )
 	;
 
+	class_<AD_AD_double>("AD_AD_double", init<AD_double>())
+		.def(boost::python::self_ns::str(self))
+		PYTHON_CPPAD_OPERATOR_LIST
+	;
+
 	class_<ADFun_double>("ADFun_double", init< bpn::array& , bpn::array& >())
 		.def("Forward", &ADFun_double::Forward)
+	;
+
+	class_<ADFun_AD_double>("ADFun_AD_double", init< bpn::array& , bpn::array& >())
+		.def("Forward", &ADFun_AD_double::Forward)
 	;
 }
 

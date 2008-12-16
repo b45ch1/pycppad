@@ -37,8 +37,12 @@ namespace {
 			(*this)._x *= rhs._x;
 			return *this;
 		}
-		
+		ad_double& operator+=(const ad_double& rhs){
+			(*this)._x += rhs._x;
+			return *this;
+		}
 	};
+
 
 	ostream& operator << (ostream& os, const ad_double& s){
 		os<<"adouble("<<s._x<<")";
@@ -90,6 +94,27 @@ namespace {
 
 		return tmp;
 	}
+
+	boost::python::numeric::array square_python_ad_double_elements(boost::python::numeric::array &bpn_x){
+		int* dims_ptr = PyArray_DIMS(bpn_x.ptr());
+		int ndim = PyArray_NDIM(bpn_x.ptr());
+		int N = dims_ptr[0];
+
+		/* array of Python objects */
+		boost::python::object* obj_x = (boost::python::object*) PyArray_DATA(bpn_x.ptr());
+		boost::python::object obj_y(boost::python::handle<>( PyArray_FromDims(1, &N, PyArray_OBJECT) ));
+
+		/* you can compute with the Python objects similarly as if you were using Python */
+		for(int n = 0; n != N; ++n){
+			obj_y[n] = ad_double(1.);
+			obj_y[n] *= obj_x[n];
+			obj_y[n] *= obj_x[n];
+		}
+		return  static_cast<boost::python::numeric::array>( obj_y );
+	}
+
+
+	
 }
 
 BOOST_PYTHON_MODULE(error_example)
@@ -102,11 +127,15 @@ BOOST_PYTHON_MODULE(error_example)
 	boost::python::numeric::array::set_module_and_type("numpy", "ndarray");
 
 	class_<ad_double>("ad_double", init<double>())
+		.def(self += self)
+		.def(self *= self)
 		.def(str(self))
 	;
 
 	def("my_factorial", &my_factorial);
 	def("square_elements", &square_elements);
+	def("square_python_ad_double_elements",&square_python_ad_double_elements);
+
 }
 EOF
 # -------------------------------------------------------------------
@@ -124,6 +153,13 @@ print 'z=',z
 print 'testing ad_double arrays'
 ax = array([ad_double(3.5), ad_double(4.)])
 ay = my_factorial(ax)
+print 'ay=',ay
+
+print 'testing creating new ad_double arrays and return by value'
+print 'use python object elements'
+ax = array([ad_double(3.5), ad_double(4.)])
+ay = square_python_ad_double_elements(ax)
+print 'ax=',ax
 print 'ay=',ay
 
 print 'testing error handling'

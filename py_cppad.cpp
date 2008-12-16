@@ -17,43 +17,19 @@ namespace{
 	/* =================================== */
 	/* FUNCTIONS                           */
 	/* =================================== */
-	
-	void Independent(bpn::array& x_array){
-		AD_double_vec x_vec(x_array);
-		CppAD::Independent(x_vec);
-	}
 
-	/* =================================== */
-	/* CLASS: ADFun                        */
-	/* =================================== */
-
-	ADFun_double::ADFun_double(bpn::array& x_array, bpn::array& y_array){
-		AD_double_vec x_vec(x_array);
-		AD_double_vec y_vec(y_array);
-		f_.Dependent(x_vec, y_vec);
-	}
-
-	bpn::array ADFun_double::Forward(int p, bpn::array& xp){
-	 	size_t     p_sz(p);
-		double_vec xp_vec(xp);
-		double_vec result = f_.Forward(p_sz, xp_vec);
-		return vector2array(result);
-	}
-
-	bpn::array vector2array(const vec<double>& in_vec){
-		int n = static_cast<int>( in_vec.size() );
-		assert( n >= 0 );
-
-		bp::object obj(bp::handle<>( PyArray_FromDims(1, &n, PyArray_DOUBLE) ));
-		// for some unknown reason,
-		// static_cast<PyArrayObject*> ( obj.ptr() ) does not work ?
-		double *ptr = static_cast<double*> ( PyArray_DATA (
-			(PyArrayObject*) ( obj.ptr() )
-		));
-		for(size_t i = 0; i < in_vec.size(); i++){
-			ptr[i] = in_vec[i];
+	void Independent(bpn::array& x_array, int level){
+		if( level == 1){
+			AD_double_vec x_vec(x_array);
+			CppAD::Independent(x_vec);
 		}
-		return  static_cast<bpn::array>( obj );
+		else if(level == 2){
+			AD_AD_double_vec x_vec(x_array);
+			CppAD::Independent(x_vec);
+		}
+		else{
+			CppAD::ErrorHandler::Call(1, __LINE__, __FILE__, "Independent(array& x_array, int level)\n", "This level is not supported!\n" );
+		}
 	}
-
+	
 }
