@@ -2,7 +2,7 @@ import distutils.sysconfig
 import os
 import numpy
 
-cppad_include_path = os.getcwd() + '/include'
+cppad_include_path = os.getcwd() + '/cppad-20081128'
 
 LIBS		= [	'boost_python-gcc42-1_34_1'
 			  ]
