@@ -16,6 +16,12 @@ namespace nu = num_util;
 
 namespace{
 
+	class ad: public CppAD::AD<double>, public CppAD::AD< CppAD::AD<double> > {
+		public:
+		ad(double rhs): CppAD::AD<double>(rhs){}
+// 		ad(const CppAD::AD<double> &rhs): CppAD::AD<double>(rhs){}
+	};
+
 	template<class Tdouble>
 	class vec {
 			size_t       length_;
@@ -368,6 +374,12 @@ BOOST_PYTHON_MODULE(_cppad)
 		.def(boost::python::self_ns::str(self))
 		PYTHON_CPPAD_OPERATOR_LIST
 	;
+		
+	class_<ad, bases<AD_double, AD_AD_double> >("ad", init<double>())
+// 			.def(init<const CppAD::AD<double>& >())
+	;
+
+	
 
 	class_<ADFun_double>("ADFun_double", init< bpn::array& , bpn::array& >())
 		.def("Forward", &ADFun_double::Forward)

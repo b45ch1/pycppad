@@ -8,6 +8,7 @@ import numpy
 import _cppad
 from _cppad import AD_double as ad_double
 from _cppad import AD_AD_double as ad_ad_double
+from _cppad import ad
 
 def independent(x):
 	"""
@@ -25,6 +26,17 @@ def independent(x):
 		return _cppad.Independent(x,2)
 	else:
 		raise NotImplementedError('Only multilevel taping up to 2 is currently implemented!')
+
+
+
+#class ad(_cppad.AD_double,_cppad.AD_AD_double):
+	#def __init__(self,x):
+		#if numpy.isscalar(x):
+			#_cppad.AD_double.__init__(self,x)
+		#elif isinstance(x, _cppad.AD_double):
+			#_cppad.AD_AD_double.__init__(self,x)
+			
+	
 
 class adfun_double(_cppad.ADFun_double):
 	"""
