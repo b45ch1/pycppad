@@ -6,8 +6,8 @@ PyCppAD is a wrapper to CppAD (C++).
 import numpy
 
 import _cppad
-from _cppad import AD_double as ad_double
-from _cppad import AD_AD_double as ad_ad_double
+from _cppad import AD_double as adouble
+from _cppad import AD_AD_double as addouble
 
 def independent(x):
 	"""
@@ -28,41 +28,59 @@ def independent(x):
 	else:
 		raise NotImplementedError('Only multilevel taping up to 2 is currently implemented!')
 
-class ad(_cppad.ad):
-	def __str__(self):
-		if self.level == 1:
-			return str(self.ad_value)
-		elif self.level == 2:
-			return str(self.add_value)
+
+class ad:
+	def __init__(self,x):
+		if type(x) == float:
+			self.level = 1
+			self.x  = adouble(x)
+
+		elif isinstance(x,ad):
+			if x.level == 1:
+				self.x = addouble(x)
+				self.level = x.level + 1
+
 		else:
-			return 'Higher orders are not implemented'
+			raise ValueError("This type is not recognized!")
+
+	def __str__(self):
+		return str(self.x.value)
+
+#class ad(_cppad.ad):
+	#def __str__(self):
+		#if self.level == 1:
+			#return str(self.ad_value)
+		#elif self.level == 2:
+			#return str(self.add_value)
+		#else:
+			#return 'Higher orders are not implemented'
 	
-	def get_value(self):
-		if self.level == 1:
-			return self.ad_value
-		elif self.level == 2:
-			return self.add_value
-	def set_value(self,x):
-		raise NotImplementedError('Do not do that!')
-	value = property(get_value,set_value)
+	#def get_value(self):
+		#if self.level == 1:
+			#return self.ad_value
+		#elif self.level == 2:
+			#return self.add_value
+	#def set_value(self,x):
+		#raise NotImplementedError('Do not do that!')
+	#value = property(get_value,set_value)
 	
-	def get_id(self):
-		if self.level == 1:
-			return self.ad_id
-		elif self.level == 2:
-			return self.add_id
-	def set_id(self,x):
-		raise NotImplementedError('Do not do that!')	
-	id = property(get_id, set_id)
+	#def get_id(self):
+		#if self.level == 1:
+			#return self.ad_id
+		#elif self.level == 2:
+			#return self.add_id
+	#def set_id(self,x):
+		#raise NotImplementedError('Do not do that!')	
+	#id = property(get_id, set_id)
 	
-	def get_taddr(self):
-		if self.level == 1:
-			return self.ad_taddr
-		elif self.level == 2:
-			return self.add_taddr
-	def set_taddr(self,x):
-		raise NotImplementedError('Do not do that!')	
-	taddr = property(get_taddr, set_taddr)
+	#def get_taddr(self):
+		#if self.level == 1:
+			#return self.ad_taddr
+		#elif self.level == 2:
+			#return self.add_taddr
+	#def set_taddr(self,x):
+		#raise NotImplementedError('Do not do that!')	
+	#taddr = property(get_taddr, set_taddr)
 
 
 		

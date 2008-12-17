@@ -5,9 +5,9 @@ from cppad import *
 
 
 def test_conditionals():
-	x = ad_double(2.)
-	y = ad_double(3.)
-	z = ad_double(2.)
+	x = adouble(2.)
+	y = adouble(3.)
+	z = adouble(2.)
 	
 	# assert that the conditionals work
 	assert x == x
@@ -26,87 +26,70 @@ def test_conditionals():
 	assert not x >  y
 	
 	
-def test_elementary_ad_operations():
-	x = ad_double(2.)
-	y = ad_double(3.)
+def test_ad_adouble():
+	x2 = addouble(ad(3.))
+	y2 = addouble(ad(3.))
+	z2 = addouble(ad(4.))
+
+	assert False
 	
-	assert x + y == ad_double(5.)
-	assert x - y == ad_double(-1.)
-	assert x * y == ad_double(6.)
-	assert x / y == ad_double(2./3.)
+def test_elementary_ad_operations():
+	x = adouble(2.)
+	y = adouble(3.)
+	
+	assert x + y == adouble(5.)
+	assert x - y == adouble(-1.)
+	assert x * y == adouble(6.)
+	assert x / y == adouble(2./3.)
 	
 	x += y
-	assert x == ad_double(5.)
+	assert x == adouble(5.)
 	x -= y
-	assert x == ad_double(2.)
-	
-def test_ad_double_variable_info():
-	x = ad(2.)
-	print x
-	print x.value
-	print x.id
-	print x.taddr
-	
-	assert x.__str__() == str(2.)
-	assert x.value     == 2.
-	assert x.id        == 1
-	assert x.taddr     == 0
-	
-def test_ad_ad_double_variable_info():
-	x = ad(ad(13.0))
-	print x
-	print x.value
-	print x.id
-	print x.taddr
-	
-	assert x.__str__() ==  '13'
-	assert x.value == 13.
-	assert x.id == 1
-	assert x.taddr == 0	
-	
-
-def test_ad_double():
-	x = ad(3.)
-	y = ad(3.)
-	z = ad(4.)
-	
-	assert x == y
-	assert not x == z
-
-def test_ad_ad_double():
-	# problem: multiplication screws up!
-	
-	x = ad(ad(3.))
-	y = ad(ad(3.))
-	z = ad(ad(4.))
-	
-	x2 = ad_ad_double(ad(3.))
-	y2 = ad_ad_double(ad(3.))
-	z2 = ad_ad_double(ad(4.))
-	
-	print x * y
-	print x2 * y2
-	
-	assert x == y
-	assert not x == z
-	
-	assert x2 == y2
-	assert not x2 == z2
+	assert x == adouble(2.)
 	
 	
-	#assert False
 	
 	
-	#y = ad(5.)
-	#u = ad(ad(2.))
-	#v = ad(ad(4.))
 	
-	#z = x * y
-
+	
+#def test_adouble_variable_info():
+	#x = ad(2.)
+	#y = addouble(x)
 	#print x
 	#print y
+	#assert False
+	#print x
+	#print x.value
+	#print x.id
+	#print x.taddr
 	
-	assert True
+	#assert x.__str__() == str(2.)
+	#assert x.value     == 2.
+	#assert x.id        == 1
+	#assert x.taddr     == 0
+	
+#def test_ad_adouble_variable_info():
+	#x = ad(ad(13.0))
+	#print x
+	#print x.value
+	#print x.id
+	#print x.taddr
+	
+	#assert x.__str__() ==  '13'
+	#assert x.value == 13.
+	#assert x.id == 1
+	#assert x.taddr == 0	
+	
+
+#def test_adouble():
+	#x = ad(3.)
+	#y = ad(3.)
+	#z = ad(4.)
+	
+	#assert x == y
+	#assert not x == z
+
+
 	
 #def test_deprecated_multi_level_taping_and_higher_order_derivatives():
 	#ok = True

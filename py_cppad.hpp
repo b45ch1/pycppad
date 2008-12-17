@@ -19,18 +19,18 @@ namespace nu = num_util;
 
 namespace{
 
-	class ad: public CppAD::AD<double>, public CppAD::AD< CppAD::AD<double> > {
-		public:
-		int level;
-		ad(double rhs): CppAD::AD<double>(rhs){ level = 1;}
-		ad(const CppAD::AD<double> &rhs): CppAD::AD< CppAD::AD<double> >(rhs){ level = 2;}
-	};
-	
-	std::string ad__str__(ad const &self) {
-		stringstream mystream;
-		mystream << "lala";
-		return mystream.str();
-	}
+// 	class ad: public CppAD::AD<double>, public CppAD::AD< CppAD::AD<double> > {
+// 		public:
+// 		int level;
+// 		ad(double rhs): CppAD::AD<double>(rhs){ level = 1;}
+// 		ad(const CppAD::AD<double> &rhs): CppAD::AD< CppAD::AD<double> >(rhs){ level = 2;}
+// 	};
+// 	
+// 	std::string ad__str__(ad const &self) {
+// 		stringstream mystream;
+// 		mystream << "lala";
+// 		return mystream.str();
+// 	}
 
 
 
@@ -391,17 +391,6 @@ BOOST_PYTHON_MODULE(_cppad)
 		PYTHON_CPPAD_OPERATOR_LIST
 	;
 		
-	class_<ad, bases<AD_double, AD_AD_double> >("ad", init<double>())
-		.def(init<const CppAD::AD<double>& >())
-		.add_property("level",       &ad::level)
-		.add_property("ad_value",    &AD_double::value_)
-		.add_property("ad_id",       &AD_double::id_)
-		.add_property("ad_taddr",    &AD_double::taddr_)
-		.add_property("add_value",   &AD_AD_double::value_)
-		.add_property("add_id",      &AD_AD_double::id_)
-		.add_property("add_taddr",   &AD_AD_double::taddr_)
-		.def("__str__", ad__str__)
-	;
 
 	class_<ADFun_double>("ADFun_double", init< bpn::array& , bpn::array& >())
 		.def("Forward", &ADFun_double::Forward)
