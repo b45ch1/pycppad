@@ -4,7 +4,8 @@ sys.path = ['.'] + sys.path #adding current working directory to the $PYTHONPATH
 from cppad import *
 
 
-def test_conditionals():
+
+def test_adouble_and_conditionals():
 	x = adouble(2.)
 	y = adouble(3.)
 	z = adouble(2.)
@@ -26,14 +27,75 @@ def test_conditionals():
 	assert not x >  y
 	
 	
-def test_ad_adouble():
-	x2 = addouble(ad(3.))
-	y2 = addouble(ad(3.))
-	z2 = addouble(ad(4.))
-
-	assert False
+def test_addouble():
+	x = adouble(2.)
+	y = adouble(3.)
+	z = adouble(2.)
 	
-def test_elementary_ad_operations():
+	x = addouble(x)
+	y = addouble(y)
+	z = addouble(z)
+	
+	# assert that the conditionals work
+	assert x == x
+	assert x == z
+	assert x != y
+	assert x <= x
+	assert x <= z
+	assert x <= y
+	assert x <  y
+	
+	# assert that conditionals can fail to be true
+	assert not x == y
+	assert not x != z
+	assert not x != x
+	assert not x >= y
+	assert not x >  y	
+	
+def test_ad():
+	x = ad(2.)
+	y = ad(3.)
+	z = ad(2.)
+	
+	# assert that the conditionals work
+	assert x == x
+	assert x == z
+	assert x != y
+	assert x <= x
+	assert x <= z
+	assert x <= y
+	assert x <  y
+	
+	# assert that conditionals can fail to be true
+	assert not x == y
+	assert not x != z
+	assert not x != x
+	assert not x >= y
+	assert not x >  y		
+	
+	x = ad(x)
+	y = ad(y)
+	z = ad(z)
+	
+	# assert that the conditionals work
+	assert x == x
+	assert x == z
+	assert x != y
+	assert x <= x
+	assert x <= z
+	assert x <= y
+	assert x <  y
+	
+	# assert that conditionals can fail to be true
+	assert not x == y
+	assert not x != z
+	assert not x != x
+	assert not x >= y
+	assert not x >  y		
+	
+	
+	
+def test_elementary_adouble_operations():
 	x = adouble(2.)
 	y = adouble(3.)
 	
@@ -43,11 +105,23 @@ def test_elementary_ad_operations():
 	assert x / y == adouble(2./3.)
 	
 	x += y
-	assert x == adouble(5.)
+	assert x == ad(5.)
 	x -= y
-	assert x == adouble(2.)
+	assert x == ad(2.)
 	
+def test_elementary_ad_operations():
+	x = ad(2.)
+	y = ad(3.)
 	
+	assert x + y == ad(5.)
+	assert x - y == ad(-1.)
+	assert x * y == ad(6.)
+	assert x / y == ad(2./3.)
+	
+	x += y
+	assert x == ad(5.)
+	x -= y
+	assert x == ad(2.)	
 	
 	
 	

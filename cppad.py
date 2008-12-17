@@ -9,6 +9,8 @@ import _cppad
 from _cppad import AD_double as adouble
 from _cppad import AD_AD_double as addouble
 
+
+
 def independent(x):
 	"""
 	Mark a vector of AD_doubles as independent variables.
@@ -27,7 +29,7 @@ def independent(x):
 		return _cppad.Independent(x,x[0].level)
 	else:
 		raise NotImplementedError('Only multilevel taping up to 2 is currently implemented!')
-
+	
 
 class ad:
 	def __init__(self,x):
@@ -37,7 +39,7 @@ class ad:
 
 		elif isinstance(x,ad):
 			if x.level == 1:
-				self.x = addouble(x)
+				self.x = addouble(x.x)
 				self.level = x.level + 1
 
 		else:
@@ -46,44 +48,66 @@ class ad:
 	def __str__(self):
 		return str(self.x.value)
 
-#class ad(_cppad.ad):
-	#def __str__(self):
-		#if self.level == 1:
-			#return str(self.ad_value)
-		#elif self.level == 2:
-			#return str(self.add_value)
-		#else:
-			#return 'Higher orders are not implemented'
-	
-	#def get_value(self):
-		#if self.level == 1:
-			#return self.ad_value
-		#elif self.level == 2:
-			#return self.add_value
-	#def set_value(self,x):
-		#raise NotImplementedError('Do not do that!')
-	#value = property(get_value,set_value)
-	
-	#def get_id(self):
-		#if self.level == 1:
-			#return self.ad_id
-		#elif self.level == 2:
-			#return self.add_id
-	#def set_id(self,x):
-		#raise NotImplementedError('Do not do that!')	
-	#id = property(get_id, set_id)
-	
-	#def get_taddr(self):
-		#if self.level == 1:
-			#return self.ad_taddr
-		#elif self.level == 2:
-			#return self.add_taddr
-	#def set_taddr(self,x):
-		#raise NotImplementedError('Do not do that!')	
-	#taddr = property(get_taddr, set_taddr)
+	# CONDITIONALS
+	def __lt__(self,rhs):
+		return self.x < rhs.x
+
+	def __le__(self,rhs):
+		return self.x <= rhs.x
+
+	def __eq__(self,rhs):
+		return self.x == rhs.x
+
+	def __ne__(self,rhs):
+		return self.x != rhs.x
+
+	def __ge__(self,rhs):
+		return self.x >= rhs.x
+
+	def __gt__(self,rhs):
+		return self.x > rhs.x
+
+	# ELEMENTARY OPERATIONS
+	def __iadd__(self,rhs):
+		self.x += rhs.x
+		return self
+
+	def __isub__(self,rhs):
+		self.x -= rhs.x
+		return self
 
 
-		
+	def __imul__(self,rhs):
+		self.x *= rhs.x
+		return self
+
+	def __idiv__(self,rhs):
+		self.x /= rhs.x
+		return self
+	
+	def __add__(self,rhs):
+		return ad(self.x + rhs.x)
+
+	def __sub__(self,rhs):
+		return ad(self.x - rhs.x)
+
+	def __mul__(self,rhs):
+		return ad(self.x * rhs.x)
+
+	def __div__(self,rhs):
+		return (self.x / rhs.x)
+
+	def __radd__(self,lhs):
+		return self + lhs
+
+	def __rsub__(self,lhs):
+		return -self + lhs
+	
+	def __rmul__(self,lhs):
+		return self * lhs
+
+	def __rdiv__(self, lhs):
+		return lhs/self
 
 class adfun_double(_cppad.ADFun_double):
 	"""

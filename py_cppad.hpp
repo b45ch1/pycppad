@@ -19,18 +19,18 @@ namespace nu = num_util;
 
 namespace{
 
-// 	class ad: public CppAD::AD<double>, public CppAD::AD< CppAD::AD<double> > {
-// 		public:
-// 		int level;
-// 		ad(double rhs): CppAD::AD<double>(rhs){ level = 1;}
-// 		ad(const CppAD::AD<double> &rhs): CppAD::AD< CppAD::AD<double> >(rhs){ level = 2;}
-// 	};
-// 	
-// 	std::string ad__str__(ad const &self) {
-// 		stringstream mystream;
-// 		mystream << "lala";
-// 		return mystream.str();
-// 	}
+	class ad: public CppAD::AD<double>, public CppAD::AD< CppAD::AD<double> > {
+		public:
+		int level;
+		ad(double rhs): CppAD::AD<double>(rhs){ level = 1;}
+		ad(const CppAD::AD<double> &rhs): CppAD::AD< CppAD::AD<double> >(rhs){ level = 2;}
+	};
+	
+	std::string ad__str__(ad const &self) {
+		stringstream mystream;
+		mystream << "lala";
+		return mystream.str();
+	}
 
 
 
@@ -375,9 +375,6 @@ BOOST_PYTHON_MODULE(_cppad)
 
 	class_<AD_double>("AD_double", init<double>())
 		.def(boost::python::self_ns::str(self))
-		.add_property("value", &AD_double::value_)
-		.add_property("id", &AD_double::id_)
-		.add_property("taddr", &AD_double::taddr_)
 		PYTHON_CPPAD_OPERATOR_LIST
 		.def("cos", cos_AD_double  )
 		.def("sin", sin_AD_double  )
@@ -385,12 +382,17 @@ BOOST_PYTHON_MODULE(_cppad)
 
 	class_<AD_AD_double>("AD_AD_double", init<AD_double>())
 		.def(boost::python::self_ns::str(self))
-		.add_property("value", &AD_AD_double::value_)
-		.add_property("id", &AD_AD_double::id_)
-		.add_property("taddr", &AD_AD_double::taddr_)
 		PYTHON_CPPAD_OPERATOR_LIST
 	;
 		
+	class_<ad, bases<AD_double, AD_AD_double> >("ad", init<double>())
+		.def(init<const CppAD::AD<double>& >())
+		.add_property("level", &ad::level)
+		.add_property("value", &AD_double::value_)
+		.add_property("id", &AD_double::id_)
+		.add_property("taddr", &AD_double::taddr_)
+		.def("__str__", ad__str__)
+	;
 
 	class_<ADFun_double>("ADFun_double", init< bpn::array& , bpn::array& >())
 		.def("Forward", &ADFun_double::Forward)
