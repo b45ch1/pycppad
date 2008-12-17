@@ -9,6 +9,7 @@
 #include "cppad/cppad.hpp"
 
 
+
 using namespace std;
 namespace b = boost;
 namespace bp = boost::python;
@@ -358,7 +359,7 @@ BOOST_PYTHON_MODULE(_cppad)
 	.def(self /= double()) 
 
 
-	class_<AD_double>("AD_double", init<double>())
+	class_<AD_double>("adouble", init<double>())
 		.def(boost::python::self_ns::str(self))
 		.add_property("value", &AD_double::value_)
 		.add_property("id", &AD_double::id_)
@@ -368,7 +369,7 @@ BOOST_PYTHON_MODULE(_cppad)
 		.def("sin", sin_AD_double  )
 	;
 
-	class_<AD_AD_double>("AD_AD_double", init<AD_double>())
+	class_<AD_AD_double>("addouble", init<AD_double>())
 		.def(boost::python::self_ns::str(self))
 		.add_property("value", &AD_AD_double::value_)
 		.add_property("id", &AD_AD_double::id_)
@@ -377,11 +378,11 @@ BOOST_PYTHON_MODULE(_cppad)
 	;
 		
 	class_<ADFun_double>("ADFun_double", init< bpn::array& , bpn::array& >())
-		.def("Forward", &ADFun_double::Forward)
+		.def("forward", &ADFun_double::Forward)
 	;
 
 	class_<ADFun_AD_double>("ADFun_AD_double", init< bpn::array& , bpn::array& >())
-		.def("Forward", &ADFun_AD_double::Forward)
+		.def("forward", &ADFun_AD_double::Forward)
 	;
 }
 

@@ -165,12 +165,12 @@ def test_deprecated_multi_level_taping_and_higher_order_derivatives():
 	ad_f = adfun_ad_double(ad_ad_x, ad_ad_y) # f(x0, x1) = 2. * x0 * x1
 	# evaluate the function f(x) using level one independent variable vector
 	p  = 0
-	ad_fp = ad_f.Forward(p, ad_x)
+	ad_fp = ad_f.forward(p, ad_x)
 	ok = ok and (ad_fp == 2. * ad_x[0] * ad_x[1])
 	# evaluate the partial of f with respect to the first component
 	p  = 1
 	ad_xp = numpy.array( [ adouble(1.) , adouble(0.) ] )
-	ad_fp = ad_f.Forward(p, ad_xp)
+	ad_fp = ad_f.forward(p, ad_xp)
 	ok = ok and (ad_fp == 2. * ad_x[1])
 	# declare level 1 dependent variable vector and stop level 1 recording 
 	ad_y = 2. * ad_fp
@@ -178,17 +178,17 @@ def test_deprecated_multi_level_taping_and_higher_order_derivatives():
 	# evaluate the function g(x) at x = (4,5)
 	p  = 0
 	x  = numpy.array( [ 4. , 5. ] )
-	gp = g.Forward(p, x)
+	gp = g.forward(p, x)
 	ok = ok and (gp == 4. * x[1])
 	# evaluate the partial of g with respect to x0
 	p  = 1
 	xp = numpy.array( [ 1. , 0. ] )
-	gp = g.Forward(p, xp)
+	gp = g.forward(p, xp)
 	ok = ok and (gp == 0.)
 	# evaluate the partial of g with respect to x1
 	p  = 1
 	xp = numpy.array( [ 0. , 1. ] )
-	gp = g.Forward(p, xp)
+	gp = g.forward(p, xp)
 	ok = ok and (gp == 4.)
 	
 	assert ok
@@ -207,12 +207,12 @@ def test_multi_level_taping_and_higher_order_derivatives():
 	ad_f = adfun(ad_ad_x, ad_ad_y) # f(x0, x1) = 2. * x0 * x1
 	# evaluate the function f(x) using level one independent variable vector
 	p  = 0
-	ad_fp = ad_f.Forward(p, ad_x)
+	ad_fp = ad_f.forward(p, ad_x)
 	ok = ok and (ad_fp == 2. * ad_x[0] * ad_x[1])
 	# evaluate the partial of f with respect to the first component
 	p  = 1
 	ad_xp = numpy.array( [ ad(1.) , ad(0.) ] )
-	ad_fp = ad_f.Forward(p, ad_xp)
+	ad_fp = ad_f.forward(p, ad_xp)
 	ok = ok and (ad_fp == 2. * ad_x[1])
 	# declare level 1 dependent variable vector and stop level 1 recording 
 	ad_y = 2. * ad_fp
@@ -220,17 +220,17 @@ def test_multi_level_taping_and_higher_order_derivatives():
 	# evaluate the function g(x) at x = (4,5)
 	p  = 0
 	x  = numpy.array( [ 4. , 5. ] )
-	gp = g.Forward(p, x)
+	gp = g.forward(p, x)
 	ok = ok and (gp == 4. * x[1])
 	# evaluate the partial of g with respect to x0
 	p  = 1
 	xp = numpy.array( [ 1. , 0. ] )
-	gp = g.Forward(p, xp)
+	gp = g.forward(p, xp)
 	ok = ok and (gp == 0.)
 	# evaluate the partial of g with respect to x1
 	p  = 1
 	xp = numpy.array( [ 0. , 1. ] )
-	gp = g.Forward(p, xp)
+	gp = g.forward(p, xp)
 	ok = ok and (gp == 4.)
 	
 	assert ok
