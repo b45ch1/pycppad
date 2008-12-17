@@ -20,6 +20,27 @@ namespace nu = num_util;
 
 namespace{
 
+	/* =================================== */
+	/* ERROR HANDLER                       */
+	/* =================================== */
+
+	void python_cppad_error_handler(bool known,	int  line, const char *file, const char *exp, const char *msg){
+		if( ! known ) msg =
+			"Bug detected in python_cppad, Please report this.";
+		PyErr_SetString(PyExc_ValueError, msg);
+		bp::throw_error_already_set();
+	}
+
+	// This ojbect lasts forever, so forever replacement of
+	// the default CppAD erorr handler
+	CppAD::ErrorHandler myhandler(python_cppad_error_handler);
+
+
+
+	/* =================================== */
+	/* CLASS VEC<DOUBLE>                   */
+	/* =================================== */
+
 	template<class Tdouble>
 	class vec {
 			size_t       length_;
@@ -39,10 +60,6 @@ namespace{
 			Tdouble& operator[](size_t i);
 			const Tdouble& operator[](size_t i) const;
 	};
-
-	/* =================================== */
-	/* CLASS SPECIALIZATION OF vec<double> */
-	/* =================================== */
 
 	template<>
 	const double& vec<double>::operator[](size_t i) const{
@@ -269,18 +286,21 @@ namespace{
 	}
 
 
+
+
+	/* =================================== */
+	/* CLASS  ADFUN                        */
+	/* =================================== */
+
 	template<class Tdouble>
 	class ADFun {
 		private:
 			CppAD::ADFun<Tdouble> f_;
 		public:
 			ADFun(bpn::array& x_array, bpn::array& y_array);
-			bpn::array Forward(int p, bpn::array& xp);
+			bpn::array Forward(int N, bpn::array& xd);
+			bpn::array Reverse(int M, bpn::array& wd);
 	};
-
-	/* =================================== */
-	/* CLASS SPECIALIZATION OF  ADFun      */
-	/* =================================== */
 
 	template<class Tdouble>
 	ADFun<Tdouble>::ADFun(bpn::array& x_array, bpn::array& y_array){
@@ -297,13 +317,17 @@ namespace{
 		return vector2array(result);
 	}
 
+	template<class Tdouble>
+	bpn::array ADFun<Tdouble>::Reverse(int M, bpn::array& wd){
+	 	size_t     M_sz(M);
+		vec<Tdouble> wd_vec(wd);
+		vec<Tdouble> result = f_.Reverse(M_sz, wd_vec);
+		return vector2array(result);
+	}
 
-	/* general functions */
-	void Independent(bpn::array& x_array, int level);
-
-	/* atomic (aka elementary) operations */
-	CppAD::AD<double>	(*cos_AD_double) 		( const CppAD::AD<double> & ) = &CppAD::cos;
-	CppAD::AD<double>	(*sin_AD_double) 		( const CppAD::AD<double> & ) = &CppAD::sin;
+	/* =================================== */
+	/* GENERAL FUNCTIONS                   */
+	/* =================================== */
 
 	typedef CppAD::AD<double> AD_double;
 	typedef CppAD::AD<CppAD::AD<double> > AD_AD_double;
@@ -313,8 +337,27 @@ namespace{
 	typedef ADFun<double> ADFun_double;
 	typedef ADFun<AD_double> ADFun_AD_double;
 
+	void Independent(bpn::array& x_array, int level){
+		if( level == 1){
+			AD_double_vec x_vec(x_array);
+			CppAD::Independent(x_vec);
+		}
+		else if(level == 2){
+			AD_AD_double_vec x_vec(x_array);
+			CppAD::Independent(x_vec);
+		}
+		else{
+			CppAD::ErrorHandler::Call(1, __LINE__, __FILE__, "Independent(array& x_array, int level)\n", "This level is not supported!\n" );
+		}
+	}
 
 	
+	/* atomic (aka elementary) operations */
+	CppAD::AD<double>	(*cos_AD_double) 		( const CppAD::AD<double> & ) = &CppAD::cos;
+	CppAD::AD<double>	(*sin_AD_double) 		( const CppAD::AD<double> & ) = &CppAD::sin;
+
+
+
 }
 
 BOOST_PYTHON_MODULE(_cppad)
@@ -379,10 +422,12 @@ BOOST_PYTHON_MODULE(_cppad)
 		
 	class_<ADFun_double>("ADFun_double", init< bpn::array& , bpn::array& >())
 		.def("forward", &ADFun_double::Forward)
+		.def("reverse", &ADFun_double::Reverse)
 	;
 
 	class_<ADFun_AD_double>("ADFun_AD_double", init< bpn::array& , bpn::array& >())
 		.def("forward", &ADFun_AD_double::Forward)
+		.def("reverse", &ADFun_AD_double::Reverse)
 	;
 }
 
