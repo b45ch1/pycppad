@@ -151,7 +151,7 @@ def test_ad_adouble_variable_info():
 	assert x.taddr == 0	
 
 	
-def test_deprecated_multi_level_taping_and_higher_order_derivatives():
+def test_deprecated_multi_level_taping_and_higher_order_forward_derivatives():
 	ok = True
 	level = 1
 	ad_x = numpy.array( [ adouble(2) , adouble(3) ] )
@@ -193,7 +193,7 @@ def test_deprecated_multi_level_taping_and_higher_order_derivatives():
 	
 	assert ok
 
-def test_multi_level_taping_and_higher_order_derivatives():
+def test_multi_level_taping_and_higher_order_forward_derivatives():
 	ok = True
 	level = 1
 	ad_x = numpy.array( [ ad(2) , ad(3) ] )
@@ -235,7 +235,43 @@ def test_multi_level_taping_and_higher_order_derivatives():
 	
 	assert ok
 
+def test_multi_level_taping_and_higher_order_reverse_derivatives():
 
+	# domain space vector
+	ax = numpy.array([ad(0.), ad(1.)])
+
+	# declare independent variables and start recording
+	independent(ax);
+
+	ay = numpy.array([ax[0] * ax[0] * ax[1]])
+
+	# create f : X -> Y and stop recording
+	af = adfun (ax, ay);
+
+	# use first order reverse mode to evaluate derivative of y[0]
+	# and use the values in X for the independent variables.
+	w = numpy.zeros(1)
+	w[0] = 1.
+
+	y = af.forward(0, numpy.array([0.,1.]))
+	dw = af.reverse(1, w);
+	assert dw[0] == 2.*ax[0]*ax[1]
+	assert dw[1] == ax[0]*ax[0]
+
+	# use zero order forward mode to evaluate y at x = (3, 4)
+	# and use the template parameter Vector for the vector type
+
+	x =  numpy.array([3.,4.])
+	y = af.forward(0,x)
+	assert y[0] == x[0]*x[0]*x[1]
+
+	# use first order reverse mode to evaluate derivative of y[0]
+	# and using the values in x for the independent variables.
+	w[0] = 1.;
+	dw   = af.reverse(1, w);
+	
+	assert dw[0] ==  2.*x[0]*x[1]
+	assert dw[1] ==   x[0]*x[0]
 
 
 
