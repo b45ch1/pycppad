@@ -424,24 +424,24 @@ BOOST_PYTHON_MODULE(_cppad)
 	def("Independent", &Independent);
 
 
-	# define PYTHON_CPPAD_BINARY(op)       \
+	# define PYCPPAD_BINARY(op)       \
 	.def(self     op self)         \
 	.def(double() op self)         \
 	.def(self     op double())
 	
-	# define PYTHON_CPPAD_OPERATOR_LIST    \
+	# define PYCPPAD_OPERATOR_LIST    \
                                        \
-	PYTHON_CPPAD_BINARY(+)         \
-	PYTHON_CPPAD_BINARY(-)         \
-	PYTHON_CPPAD_BINARY(*)         \
-	PYTHON_CPPAD_BINARY(/)         \
+	PYCPPAD_BINARY(+)         \
+	PYCPPAD_BINARY(-)         \
+	PYCPPAD_BINARY(*)         \
+	PYCPPAD_BINARY(/)         \
                                        \
-	PYTHON_CPPAD_BINARY(<)         \
-	PYTHON_CPPAD_BINARY(>)         \
-	PYTHON_CPPAD_BINARY(<=)        \
-	PYTHON_CPPAD_BINARY(>=)        \
-	PYTHON_CPPAD_BINARY(==)        \
-	PYTHON_CPPAD_BINARY(!=)        \
+	PYCPPAD_BINARY(<)         \
+	PYCPPAD_BINARY(>)         \
+	PYCPPAD_BINARY(<=)        \
+	PYCPPAD_BINARY(>=)        \
+	PYCPPAD_BINARY(==)        \
+	PYCPPAD_BINARY(!=)        \
                                        \
 	.def(self += self)             \
 	.def(self -= self)             \
@@ -459,7 +459,7 @@ BOOST_PYTHON_MODULE(_cppad)
 		.add_property("value", &AD_double::value_)
 		.add_property("id", &AD_double::id_)
 		.add_property("taddr", &AD_double::taddr_)
-		PYTHON_CPPAD_OPERATOR_LIST
+		PYCPPAD_OPERATOR_LIST
 		.def("cos", cos_AD_double  )
 		.def("sin", sin_AD_double  )
 	;
@@ -469,7 +469,7 @@ BOOST_PYTHON_MODULE(_cppad)
 		.add_property("value", &AD_AD_double::value_)
 		.add_property("id", &AD_AD_double::id_)
 		.add_property("taddr", &AD_AD_double::taddr_)
-		PYTHON_CPPAD_OPERATOR_LIST
+		PYCPPAD_OPERATOR_LIST
 	;
 		
 	class_<ADFun_double>("ADFun_double", init< bpn::array& , bpn::array& >())
