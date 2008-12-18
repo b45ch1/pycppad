@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 # build with: $ python setup.py build_ext --inplace
+# clean with: # python setup.py clean --all
+# see:
+# http://www.scipy.org/Documentation/numpy_distutils
+# http://docs.cython.org/docs/tutorial.html
 
-from distutils.core import setup
-from distutils.extension import Extension
-from Cython.Distutils import build_ext
 from numpy.distutils.misc_util import get_numpy_include_dirs
 from numpy.distutils.misc_util import Configuration
-
+from numpy.distutils.core import setup
 
 include_dirs = [get_numpy_include_dirs(),'./cppad-20081128']
 extra_compile_args = ['-ftemplate-depth-100 -DBOOST_PYTHON_DYNAMIC_LIB']
@@ -16,7 +17,7 @@ libraries = ['boost_python-gcc42-1_34_1']
 config = Configuration('',parent_package='',top_path='')
 config.add_extension(
 	name = '_cppad',
-	sources = ['py_cppad.cpp', 'num_util.cpp'],
+	sources = ['py_cppad.cpp'],
 	include_dirs = include_dirs,
 	extra_compile_args = extra_compile_args,
 	library_dirs = library_dirs,

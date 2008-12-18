@@ -4,17 +4,16 @@
 #define PY_ARRAY_UNIQUE_SYMBOL PyArrayHandle
 
 #include <string>
+#include <boost/python.hpp>
+#include <numpy/noprefix.h>
 
-#include "num_util.h"
+
 #include "cppad/cppad.hpp"
-
-
 
 using namespace std;
 namespace b = boost;
 namespace bp = boost::python;
 namespace bpn = boost::python::numeric;
-namespace nu = num_util;
 
 
 
@@ -71,7 +70,7 @@ namespace{
 	vec<double>::vec(bpn::array& py_array)
 	{	// get array info
 		int* dims_ptr = PyArray_DIMS(py_array.ptr());
-		int ndim      = PyArray_NDIM(py_array.ptr());
+// 		int ndim      = PyArray_NDIM(py_array.ptr());
 		int length    = dims_ptr[0];
 
 		// check array info
@@ -152,7 +151,7 @@ namespace{
 	vec<Tdouble>::vec(bpn::array& py_array){
 		// get array info
 		int* dims_ptr = PyArray_DIMS(py_array.ptr());
-		int ndim      = PyArray_NDIM(py_array.ptr());
+// 		int ndim      = PyArray_NDIM(py_array.ptr());
 		int length    = dims_ptr[0];
 
 		// check array info
