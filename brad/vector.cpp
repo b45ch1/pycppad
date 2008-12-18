@@ -88,10 +88,10 @@ const double& double_vec::operator[](size_t i) const
 	return pointer_[i];
 }
 // ---------------------------------------------------------------------------
-// class AD_double_vec
+// class vec<Scalar>
 //
-// constructor from a python array
-AD_double_vec::AD_double_vec(array& py_array)
+template <class Scalar>
+vec<Scalar>::vec(array& py_array)
 {
 	// get array info
 	int* dims_ptr = PyArray_DIMS(py_array.ptr());
@@ -111,11 +111,12 @@ AD_double_vec::AD_double_vec(array& py_array)
 	pointer_ = 0;
 	handle_  = CPPAD_TRACK_NEW_VEC(length_, handle_);
 	for(size_t i = 0; i < length_; i++) handle_[i] = 
-		& extract<AD_double&>(obj_ptr[i])(); 
+		& extract<Scalar&>(obj_ptr[i])(); 
 	return;
 }
 // constructor from size
-AD_double_vec::AD_double_vec(size_t length)
+template <class Scalar>
+vec<Scalar>::vec(size_t length)
 {
 	length_  = length;
 	pointer_ = CPPAD_TRACK_NEW_VEC(length, pointer_);
@@ -126,7 +127,8 @@ AD_double_vec::AD_double_vec(size_t length)
 }
 
 // copy constructor
-AD_double_vec::AD_double_vec(const AD_double_vec& vec)
+template <class Scalar>
+vec<Scalar>::vec(const vec& vec)
 {
 	length_   = vec.length_;
 	pointer_  = CPPAD_TRACK_NEW_VEC(length_, pointer_);
@@ -138,7 +140,8 @@ AD_double_vec::AD_double_vec(const AD_double_vec& vec)
 }
 
 // default constructor
-AD_double_vec::AD_double_vec(void)
+template <class Scalar>
+vec<Scalar>::vec(void)
 {
 	length_  = 0;
 	pointer_ = 0;
@@ -146,7 +149,8 @@ AD_double_vec::AD_double_vec(void)
 }
 
 // destructor
-AD_double_vec::~AD_double_vec(void)
+template <class Scalar>
+vec<Scalar>::~vec(void)
 {
 	if( handle_ != 0 )
 		CPPAD_TRACK_DEL_VEC(handle_); 
@@ -155,7 +159,8 @@ AD_double_vec::~AD_double_vec(void)
 }
 
 // assignment operator
-void AD_double_vec::operator=(const AD_double_vec& vec)
+template <class Scalar>
+void vec<Scalar>::operator=(const vec& vec)
 {
 	PYTHON_CPPAD_ASSERT( length_ == vec.length_ , ""); 
 	for(size_t i = 0; i < length_; i++)
@@ -164,11 +169,13 @@ void AD_double_vec::operator=(const AD_double_vec& vec)
 }
 
 // size member function
-size_t AD_double_vec::size(void) const
+template <class Scalar>
+size_t vec<Scalar>::size(void) const
 {	return length_; }
 
 // resize 
-void AD_double_vec::resize(size_t length)
+template <class Scalar>
+void vec<Scalar>::resize(size_t length)
 {
 	if( handle_ != 0 )
 		CPPAD_TRACK_DEL_VEC(handle_);
@@ -182,121 +189,21 @@ void AD_double_vec::resize(size_t length)
 }
 
 // non constant element access
-AD_double& AD_double_vec::operator[](size_t i)
+template <class Scalar>
+Scalar& vec<Scalar>::operator[](size_t i)
 {	assert( i < length_ );
 	return *handle_[i];
 }
 
 // constant element access
-const AD_double& AD_double_vec::operator[](size_t i) const
-{	assert( i < length_ );
-	return *handle_[i];
-}
-// ---------------------------------------------------------------------------
-// class AD_AD_double_vec
-//
-// constructor from a python array
-AD_AD_double_vec::AD_AD_double_vec(array& py_array)
-{
-	// get array info
-	int* dims_ptr = PyArray_DIMS(py_array.ptr());
-	int ndim      = PyArray_NDIM(py_array.ptr());
-	int length    = dims_ptr[0];
-
-	// check array info
-	PYTHON_CPPAD_ASSERT( ndim == 1 , "Argument is not a vector.");
-	PYTHON_CPPAD_ASSERT( length >= 0 , "");
-	// pointer to object
-	object *obj_ptr = static_cast<object*>( 
-		PyArray_DATA(py_array.ptr()) 
-	);
-
-	// set private data
-	using boost::python::extract;
-	length_  = static_cast<size_t>(length);
-	pointer_ = 0;
-	handle_  = CPPAD_TRACK_NEW_VEC(length_, handle_);
-	for(size_t i = 0; i < length_; i++) handle_[i] = 
-		& extract<AD_AD_double&>(obj_ptr[i])(); 
-	return;
-}
-// constructor from size
-AD_AD_double_vec::AD_AD_double_vec(size_t length)
-{
-	length_  = length;
-	pointer_ = CPPAD_TRACK_NEW_VEC(length, pointer_);
-	handle_  = CPPAD_TRACK_NEW_VEC(length, handle_);
-	for(size_t i = 0; i < length_; i++)
-		handle_[i] = pointer_ + i;
-	return;
-}
-
-// copy constructor
-AD_AD_double_vec::AD_AD_double_vec(const AD_AD_double_vec& vec)
-{
-	length_   = vec.length_;
-	pointer_  = CPPAD_TRACK_NEW_VEC(length_, pointer_);
-	handle_   = CPPAD_TRACK_NEW_VEC(length_, handle_);
-	for(size_t i = 0; i < length_; i++)
-	{	handle_[i]  = pointer_ + i;
-		pointer_[i] = vec[i];
-	}
-}
-
-// default constructor
-AD_AD_double_vec::AD_AD_double_vec(void)
-{
-	length_  = 0;
-	pointer_ = 0;
-	handle_  = 0;
-}
-
-// destructor
-AD_AD_double_vec::~AD_AD_double_vec(void)
-{
-	if( handle_ != 0 )
-		CPPAD_TRACK_DEL_VEC(handle_); 
-	if( pointer_ != 0 )
-		CPPAD_TRACK_DEL_VEC(pointer_);	
-}
-
-// assignment operator
-void AD_AD_double_vec::operator=(const AD_AD_double_vec& vec)
-{
-	PYTHON_CPPAD_ASSERT( length_ == vec.length_ , ""); 
-	for(size_t i = 0; i < length_; i++)
-		*handle_[i] = *(vec.handle_[i]);
-	return;
-}
-
-// size member function
-size_t AD_AD_double_vec::size(void) const
-{	return length_; }
-
-// resize 
-void AD_AD_double_vec::resize(size_t length)
-{
-	if( handle_ != 0 )
-		CPPAD_TRACK_DEL_VEC(handle_);
-	if( pointer_ != 0 )
-		CPPAD_TRACK_DEL_VEC(pointer_);
-	pointer_   = CPPAD_TRACK_NEW_VEC(length, pointer_);
-	handle_    = CPPAD_TRACK_NEW_VEC(length, handle_);
-	length_    = length;
-	for(size_t i = 0; i < length_; i++)
-		handle_[i]  = pointer_ + i;
-}
-
-// non constant element access
-AD_AD_double& AD_AD_double_vec::operator[](size_t i)
+template <class Scalar>
+const Scalar& vec<Scalar>::operator[](size_t i) const
 {	assert( i < length_ );
 	return *handle_[i];
 }
 
-// constant element access
-const AD_AD_double& AD_AD_double_vec::operator[](size_t i) const
-{	assert( i < length_ );
-	return *handle_[i];
-}
+// instantiate instances of template class
+template class vec<AD_double>;
+template class vec<AD_AD_double>;
 // ========================================================================
 } // end namespace python_cppad
