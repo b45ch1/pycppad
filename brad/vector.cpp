@@ -2,10 +2,10 @@
 
 namespace python_cppad {
 // ========================================================================
-// class double_vec
+// class vec<double>
 //
 // constructor from a python array
-double_vec::double_vec(array& py_array)
+vec<double>::vec(array& py_array)
 {	// get array info
 	int* dims_ptr = PyArray_DIMS(py_array.ptr());
 	int ndim      = PyArray_NDIM(py_array.ptr());
@@ -25,7 +25,7 @@ double_vec::double_vec(array& py_array)
 }
 
 // constructor from size
-double_vec::double_vec(size_t length)
+vec<double>::vec(size_t length)
 {	// set private data
 	length_    = length;
 	pointer_   = CPPAD_TRACK_NEW_VEC(length, pointer_);
@@ -34,41 +34,41 @@ double_vec::double_vec(size_t length)
 }
 
 // copy constructor
-double_vec::double_vec(const double_vec& vec)
-{	length_    = vec.length_;
+vec<double>::vec(const vec& v)
+{	length_    = v.length_;
 	pointer_   = CPPAD_TRACK_NEW_VEC(length_, pointer_);
 	allocated_ = true;
 	for(size_t i = 0; i < length_; i++)
-		pointer_[i] = vec[i];
+		pointer_[i] = v[i];
 }
 
 // default constructor
-double_vec::double_vec(void)
+vec<double>::vec(void)
 {	length_    = 0;
 	pointer_   = 0;
 	allocated_ = false;
 }
 
 // destructor
-double_vec::~double_vec(void)
+vec<double>::~vec(void)
 {	if( allocated_ )
 		CPPAD_TRACK_DEL_VEC(pointer_);	
 }
 
 // assignment operator
-void double_vec::operator=(const double_vec& vec)
-{	assert( length_ == vec.length_ ); 
+void vec<double>::operator=(const vec& v)
+{	assert( length_ == v.length_ ); 
 	for(size_t i = 0; i < length_; i++)
-		pointer_[i] = vec.pointer_[i];
+		pointer_[i] = v.pointer_[i];
 	return;
 }
 
 // size member function
-size_t double_vec::size(void) const
+size_t vec<double>::size(void) const
 {	return length_; }
 
 // resize 
-void double_vec::resize(size_t length)
+void vec<double>::resize(size_t length)
 {	if( allocated_ )
 		CPPAD_TRACK_DEL_VEC(pointer_);
 	pointer_   = CPPAD_TRACK_NEW_VEC(length, pointer_);
@@ -77,13 +77,13 @@ void double_vec::resize(size_t length)
 }
 
 // non constant element access
-double& double_vec::operator[](size_t i)
+double& vec<double>::operator[](size_t i)
 {	assert( i < length_ );
 	return pointer_[i];
 }
 
 // constant element access
-const double& double_vec::operator[](size_t i) const
+const double& vec<double>::operator[](size_t i) const
 {	assert( i < length_ );
 	return pointer_[i];
 }
@@ -128,14 +128,14 @@ vec<Scalar>::vec(size_t length)
 
 // copy constructor
 template <class Scalar>
-vec<Scalar>::vec(const vec& vec)
+vec<Scalar>::vec(const vec& v)
 {
-	length_   = vec.length_;
+	length_   = v.length_;
 	pointer_  = CPPAD_TRACK_NEW_VEC(length_, pointer_);
 	handle_   = CPPAD_TRACK_NEW_VEC(length_, handle_);
 	for(size_t i = 0; i < length_; i++)
 	{	handle_[i]  = pointer_ + i;
-		pointer_[i] = vec[i];
+		pointer_[i] = v[i];
 	}
 }
 
@@ -160,11 +160,11 @@ vec<Scalar>::~vec(void)
 
 // assignment operator
 template <class Scalar>
-void vec<Scalar>::operator=(const vec& vec)
+void vec<Scalar>::operator=(const vec& v)
 {
-	PYTHON_CPPAD_ASSERT( length_ == vec.length_ , ""); 
+	PYTHON_CPPAD_ASSERT( length_ == v.length_ , ""); 
 	for(size_t i = 0; i < length_; i++)
-		*handle_[i] = *(vec.handle_[i]);
+		*handle_[i] = *(v.handle_[i]);
 	return;
 }
 
@@ -203,6 +203,7 @@ const Scalar& vec<Scalar>::operator[](size_t i) const
 }
 
 // instantiate instances of template class
+template class vec<double>;
 template class vec<AD_double>;
 template class vec<AD_AD_double>;
 // ========================================================================
