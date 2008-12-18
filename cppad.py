@@ -51,7 +51,17 @@ class adfun_double(_cppad.ADFun_double):
 	"""
 	Create a function object.
 	"""
-	pass
+	def hessian(self, x, w = None):
+		if w == None:
+			w = numpy.array([1.],dtype=float)
+
+		if not isinstance(x,numpy.ndarray):
+			raise NotImplementedError('Input has to be of type numpy.array!')
+
+		if not isinstance(w,numpy.ndarray):
+			raise NotImplementedError('Input has to be of type numpy.array!')
+
+		return self.lagrange_hessian(x,w)
 
 
 class adfun_ad_double(_cppad.ADFun_AD_double):

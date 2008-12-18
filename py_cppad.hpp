@@ -476,7 +476,7 @@ BOOST_PYTHON_MODULE(_cppad)
 		.def("forward", &ADFun_double::Forward)
 		.def("reverse", &ADFun_double::Reverse)
 		.def("jacobian",  &ADFun_double::Jacobian)
-		.def("hessian",  &ADFun_double::Hessian)
+		.def("lagrange_hessian",  &ADFun_double::Hessian)
 	;
 
 	class_<ADFun_AD_double>("ADFun_AD_double", init< bpn::array& , bpn::array& >())

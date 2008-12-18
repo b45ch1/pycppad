@@ -258,11 +258,7 @@ def test_hessian():
 	ay = f(ax)
 	af = adfun (ax, ay);
 	x = numpy.array([1. for n in range(N)])
-	
-	w = numpy.ones(1)
-	
-	H = af.hessian(x,w)
-	
+	H = af.hessian(x)
 
 	assert numpy.prod( A == H )
 
