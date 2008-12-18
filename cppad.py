@@ -16,10 +16,8 @@ Example:
 import numpy
 
 import _cppad
-from _cppad import adouble
-from _cppad import addouble
-
-
+from _cppad import a_double
+from _cppad import a2double
 
 def independent(x):
 	"""
@@ -33,28 +31,37 @@ def independent(x):
 	if not isinstance(x,numpy.ndarray):
 		raise NotImplementedError('Input has to be of type numpy.array!')
 	
-	if isinstance(x[0],adouble):
+	if isinstance(x[0],a_double):
 		return _cppad.Independent(x,1)
-	elif isinstance(x[0], addouble):
+	elif isinstance(x[0], a2double):
 		return _cppad.Independent(x,2)
 	else:
 		raise NotImplementedError('Only multilevel taping up to 2 is currently implemented!')
 	
 def ad(x):
 	if numpy.isscalar(x):
-		return adouble(x)
-	elif isinstance(x,adouble):
-		return  addouble(x)
+		return a_double(x)
+	elif isinstance(x,a_double):
+		return  a2double(x)
 	else:
 		raise NotImplementedError('Only multilevel taping up to 2 is currently implemented!')
-
 
 
 class adfun_double(_cppad.ADFun_double):
 	"""
 	Create a function object.
 	"""
-	pass
+	def hessian(self, x, w = None):
+		if w == None:
+			w = numpy.array([1.],dtype=float)
+
+		if not isinstance(x,numpy.ndarray):
+			raise NotImplementedError('Input has to be of type numpy.array!')
+
+		if not isinstance(w,numpy.ndarray):
+			raise NotImplementedError('Input has to be of type numpy.array!')
+
+		return self.lagrange_hessian(x,w)
 
 
 class adfun_ad_double(_cppad.ADFun_AD_double):
@@ -71,10 +78,10 @@ def adfun(x,y):
 	y is a numpy.array of the   dependent variables
 
 	"""
-	if isinstance(x[0], adouble):
+	if isinstance(x[0], a_double):
 		return adfun_double(x,y)
 	
-	elif isinstance(x[0], addouble):
+	elif isinstance(x[0], a2double):
 		return adfun_ad_double(x,y)
 
 	else:

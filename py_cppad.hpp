@@ -4,17 +4,16 @@
 #define PY_ARRAY_UNIQUE_SYMBOL PyArrayHandle
 
 #include <string>
+#include <boost/python.hpp>
+#include <numpy/noprefix.h>
 
-#include "num_util.h"
+
 #include "cppad/cppad.hpp"
-
-
 
 using namespace std;
 namespace b = boost;
 namespace bp = boost::python;
 namespace bpn = boost::python::numeric;
-namespace nu = num_util;
 
 
 
@@ -71,7 +70,7 @@ namespace{
 	vec<double>::vec(bpn::array& py_array)
 	{	// get array info
 		int* dims_ptr = PyArray_DIMS(py_array.ptr());
-		int ndim      = PyArray_NDIM(py_array.ptr());
+// 		int ndim      = PyArray_NDIM(py_array.ptr());
 		int length    = dims_ptr[0];
 
 		// check array info
@@ -152,7 +151,7 @@ namespace{
 	vec<Tdouble>::vec(bpn::array& py_array){
 		// get array info
 		int* dims_ptr = PyArray_DIMS(py_array.ptr());
-		int ndim      = PyArray_NDIM(py_array.ptr());
+// 		int ndim      = PyArray_NDIM(py_array.ptr());
 		int length    = dims_ptr[0];
 
 		// check array info
@@ -300,6 +299,8 @@ namespace{
 			ADFun(bpn::array& x_array, bpn::array& y_array);
 			bpn::array Forward(int N, bpn::array& xd);
 			bpn::array Reverse(int M, bpn::array& wd);
+			bpn::array Jacobian(bpn::array& x_array);
+			bpn::array Hessian(bpn::array& x_array, bpn::array& w_array);
 	};
 
 	template<class Tdouble>
@@ -324,6 +325,57 @@ namespace{
 		vec<Tdouble> result = f_.Reverse(M_sz, wd_vec);
 		return vector2array(result);
 	}
+
+	template<class Tdouble>
+	bpn::array ADFun<Tdouble>::Jacobian(bpn::array& x_array){
+		vec<Tdouble> x_vec(x_array);
+		vec<Tdouble> result = f_.Jacobian(x_vec);
+
+		int N = f_.Domain();
+		int M = f_.Range();
+
+		int dimens[2];
+		dimens[0] = M;
+		dimens[1] = N;
+		bp::object obj(bp::handle<>( PyArray_FromDims(2, dimens, PyArray_DOUBLE)));
+		double *ptr = static_cast<double*> ( PyArray_DATA (
+			reinterpret_cast<PyArrayObject*> ( obj.ptr() )
+		));
+		for(int m = 0; m < M; ++m){
+			for(int n = 0; n < N; ++n){
+				ptr[m*N + n] = result[m*N + n];
+			}
+		}
+		return  static_cast<bpn::array>( obj );
+	}
+
+	template<class Tdouble>
+	bpn::array ADFun<Tdouble>::Hessian(bpn::array& x_array, bpn::array& w_array){
+		vec<Tdouble> x_vec(x_array);
+		vec<Tdouble> w_vec(w_array);
+
+		vec<Tdouble> result = f_.Hessian(x_vec, w_vec);
+
+		int N = f_.Domain();
+		int M = N;
+
+		int dimens[2];
+		dimens[0] = M;
+		dimens[1] = N;
+		bp::object obj(bp::handle<>( PyArray_FromDims(2, dimens, PyArray_DOUBLE)));
+		double *ptr = static_cast<double*> ( PyArray_DATA (
+			reinterpret_cast<PyArrayObject*> ( obj.ptr() )
+		));
+		for(int m = 0; m < M; ++m){
+			for(int n = 0; n < N; ++n){
+				ptr[m*N + n] = result[m*N + n];
+			}
+		}
+		return  static_cast<bpn::array>( obj );
+	}
+	
+
+
 
 	/* =================================== */
 	/* GENERAL FUNCTIONS                   */
@@ -402,7 +454,7 @@ BOOST_PYTHON_MODULE(_cppad)
 	.def(self /= double()) 
 
 
-	class_<AD_double>("adouble", init<double>())
+	class_<AD_double>("a_double", init<double>())
 		.def(boost::python::self_ns::str(self))
 		.add_property("value", &AD_double::value_)
 		.add_property("id", &AD_double::id_)
@@ -412,7 +464,7 @@ BOOST_PYTHON_MODULE(_cppad)
 		.def("sin", sin_AD_double  )
 	;
 
-	class_<AD_AD_double>("addouble", init<AD_double>())
+	class_<AD_AD_double>("a2double", init<AD_double>())
 		.def(boost::python::self_ns::str(self))
 		.add_property("value", &AD_AD_double::value_)
 		.add_property("id", &AD_AD_double::id_)
@@ -423,6 +475,8 @@ BOOST_PYTHON_MODULE(_cppad)
 	class_<ADFun_double>("ADFun_double", init< bpn::array& , bpn::array& >())
 		.def("forward", &ADFun_double::Forward)
 		.def("reverse", &ADFun_double::Reverse)
+		.def("jacobian",  &ADFun_double::Jacobian)
+		.def("lagrange_hessian",  &ADFun_double::Hessian)
 	;
 
 	class_<ADFun_AD_double>("ADFun_AD_double", init< bpn::array& , bpn::array& >())

@@ -23,6 +23,7 @@ include/*
 *~
 release
 SConstruct
+setup.py
 
 # exceptions
 !.gitignore
