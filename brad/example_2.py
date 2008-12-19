@@ -1,10 +1,10 @@
 from cppad import *
 ok = True
 # declare level one independent variable vector and start level one recording
-ad_x = array( [ a_double(2) , a_double(3) ] )
+ad_x = array( [ ad(2) , ad(3) ] )
 independent(ad_x)
 # declare level two independent variable vector and start level two recording
-ad_ad_x = array( [ a2double(ad_x[0]) , a2double(ad_x[1]) ] )
+ad_ad_x = array( [ ad(ad_x[0]) , ad(ad_x[1]) ] )
 independent(ad_ad_x)
 # declare level 2 dependent variable vector and stop level 2 recording
 ad_ad_y = array( [ 2. * ad_ad_x[0] * ad_ad_x[1] ] )
@@ -15,7 +15,7 @@ ad_fp = ad_f.forward(p, ad_x)
 ok = ok and (ad_fp == 2. * ad_x[0] * ad_x[1])
 # evaluate the partial of f with respect to the first component
 p  = 1
-ad_xp = array( [ a_double(1.) , a_double(0.) ] )
+ad_xp = array( [ ad(1.) , ad(0.) ] )
 ad_fp = ad_f.forward(p, ad_xp)
 ok = ok and (ad_fp == 2. * ad_x[1])
 # declare level 1 dependent variable vector and stop level 1 recording 

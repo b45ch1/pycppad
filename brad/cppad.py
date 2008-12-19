@@ -9,6 +9,20 @@ from numpy import array
 from pycppad import a_double
 from pycppad import a2double
 
+def ad(x):
+  """
+  ad(x): returns an object with one higher level of automatic differentiation.
+  x: is an int, double (level zero AD), or a_double (level one AD).
+  """
+  if numpy.isscalar(x):
+    return a_double(x)
+  elif isinstance(x, a_double):
+    return a2double(x)
+  else:
+    raise NotImplementedError(
+      'ad(x): only implemented where x int, double, or a_double'
+    )
+
 def independent(x):
   """
   independent(x): mark x as the independent variable vector and start recording
