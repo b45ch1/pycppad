@@ -5,7 +5,7 @@ ad_x = array( [ a_double(2) , a_double(3) ] )
 independent(ad_x)
 # declare dependent variable vector and stop recording
 ad_y = array( [ 2. * ad_x[0] * ad_x[1] ] )
-f = adfun_double(ad_x, ad_y) # f(x0, x1) = 2. * x0 * x1
+f = adfun(ad_x, ad_y) # f(x0, x1) = 2. * x0 * x1
 # evaluate the function at a different argument value
 p  = 0
 x  = array( [ 3. , 4. ] )

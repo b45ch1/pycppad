@@ -8,7 +8,7 @@ ad_ad_x = array( [ a2double(ad_x[0]) , a2double(ad_x[1]) ] )
 independent(ad_ad_x)
 # declare level 2 dependent variable vector and stop level 2 recording
 ad_ad_y = array( [ 2. * ad_ad_x[0] * ad_ad_x[1] ] )
-ad_f = adfun_a_double(ad_ad_x, ad_ad_y) # f(x0, x1) = 2. * x0 * x1
+ad_f = adfun(ad_ad_x, ad_ad_y) # f(x0, x1) = 2. * x0 * x1
 # evaluate the function f(x) using level one independent variable vector
 p  = 0
 ad_fp = ad_f.forward(p, ad_x)
@@ -20,7 +20,7 @@ ad_fp = ad_f.forward(p, ad_xp)
 ok = ok and (ad_fp == 2. * ad_x[1])
 # declare level 1 dependent variable vector and stop level 1 recording 
 ad_y = 2. * ad_fp
-g = adfun_double(ad_x, ad_y) # g(x0, x1) = 2. * partial_x0 f(x0, x1) = 4 * x1
+g = adfun(ad_x, ad_y) # g(x0, x1) = 2. * partial_x0 f(x0, x1) = 4 * x1
 # evaluate the function g(x) at x = (4,5)
 p  = 0
 x  = array( [ 4. , 5. ] )

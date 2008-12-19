@@ -22,18 +22,31 @@ def independent(x):
     python_cppad.independent(x, 2)     # level = 2
   else:
     raise NotImplementedError(
-      'independent(x): x[j] is not of type a_double or a2double'
+      'independent(x): only implemented where x[j] is a_double or a2double'
     )
 class adfun_double(python_cppad.adfun_double):
-	"""
-	Create a function object that evaluates using double.
-	"""
-	pass
+  """
+  Create a function object that evaluates using double.
+  """
+  pass
 
 class adfun_a_double(python_cppad.adfun_a_double):
-	"""
-	Create a function object that evaluates using a_double.
-	"""
-	pass
+  """
+  Create a function object that evaluates using a_double.
+  """
+  pass
 
-
+def adfun(x,y):
+  """
+  f = adfun(x,y): Stop recording and place it in the function object f.
+  x: a numpy one dimnesional array containing the independent variable vector.
+  y: a vector with same type as x and containing the dependent variable vector.
+  """
+  if isinstance(x[0], a_double):
+    return adfun_double(x, y)
+  elif isinstance(x[0], a2double):
+    return adfun_a_double(x, y)
+  else:
+    raise NotImplementedError(
+      'adfun(x,y): only implemented where x[j] is a_double or a2double'
+    )
