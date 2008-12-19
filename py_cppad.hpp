@@ -34,8 +34,6 @@ namespace{
 	// the default CppAD erorr handler
 	CppAD::ErrorHandler myhandler(python_cppad_error_handler);
 
-
-
 	/* =================================== */
 	/* CLASS VEC<DOUBLE>                   */
 	/* =================================== */
@@ -373,9 +371,6 @@ namespace{
 		}
 		return  static_cast<bpn::array>( obj );
 	}
-	
-
-
 
 	/* =================================== */
 	/* GENERAL FUNCTIONS                   */
@@ -403,12 +398,38 @@ namespace{
 		}
 	}
 
+
+	/* TRIGONOMETRIC FUNCTIONS */
+	#define PYCPPAD_STD_MATH(Name, Base)                             \
+	CppAD::AD<Base>	(* Name##_AD_##Base)( const CppAD::AD<Base>& ) = &CppAD::Name
+
+	PYCPPAD_STD_MATH(asin , double);
+	PYCPPAD_STD_MATH(acos , double);
+	PYCPPAD_STD_MATH(atan , double);
+	PYCPPAD_STD_MATH(cos  , double);
+	PYCPPAD_STD_MATH(cosh , double);
+	PYCPPAD_STD_MATH(exp  , double);
+	PYCPPAD_STD_MATH(log  , double);
+	PYCPPAD_STD_MATH(log10, double);
+	PYCPPAD_STD_MATH(sin  , double);
+	PYCPPAD_STD_MATH(sinh , double);
+	PYCPPAD_STD_MATH(sqrt , double);
+	PYCPPAD_STD_MATH(tan  , double);
+	PYCPPAD_STD_MATH(tanh , double);
 	
-	/* atomic (aka elementary) operations */
-	CppAD::AD<double>	(*cos_AD_double) 		( const CppAD::AD<double> & ) = &CppAD::cos;
-	CppAD::AD<double>	(*sin_AD_double) 		( const CppAD::AD<double> & ) = &CppAD::sin;
-
-
+	PYCPPAD_STD_MATH(asin , AD_double);
+	PYCPPAD_STD_MATH(acos , AD_double);
+	PYCPPAD_STD_MATH(atan , AD_double);
+	PYCPPAD_STD_MATH(cos  , AD_double);
+	PYCPPAD_STD_MATH(cosh , AD_double);
+	PYCPPAD_STD_MATH(exp  , AD_double);
+	PYCPPAD_STD_MATH(log  , AD_double);
+	PYCPPAD_STD_MATH(log10, AD_double);
+	PYCPPAD_STD_MATH(sin  , AD_double);
+	PYCPPAD_STD_MATH(sinh , AD_double);
+	PYCPPAD_STD_MATH(sqrt , AD_double);
+	PYCPPAD_STD_MATH(tan  , AD_double);
+	PYCPPAD_STD_MATH(tanh , AD_double);
 
 }
 
@@ -423,35 +444,48 @@ BOOST_PYTHON_MODULE(_cppad)
 
 	def("Independent", &Independent);
 
-
 	# define PYCPPAD_BINARY(op)       \
 	.def(self     op self)         \
 	.def(double() op self)         \
 	.def(self     op double())
+
+	# define PYCPPAD_UNARY(op,Base)       \
+	.def(#op,     op##_AD_##Base)
+
 	
-	# define PYCPPAD_OPERATOR_LIST    \
-                                       \
+	# define PYCPPAD_OPERATOR_LIST(Base)    \
 	PYCPPAD_BINARY(+)         \
 	PYCPPAD_BINARY(-)         \
 	PYCPPAD_BINARY(*)         \
 	PYCPPAD_BINARY(/)         \
-                                       \
 	PYCPPAD_BINARY(<)         \
 	PYCPPAD_BINARY(>)         \
 	PYCPPAD_BINARY(<=)        \
 	PYCPPAD_BINARY(>=)        \
 	PYCPPAD_BINARY(==)        \
 	PYCPPAD_BINARY(!=)        \
-                                       \
 	.def(self += self)             \
 	.def(self -= self)             \
 	.def(self *= self)             \
 	.def(self /= self)             \
-                                       \
 	.def(self += double())         \
 	.def(self -= double())         \
 	.def(self *= double())         \
-	.def(self /= double()) 
+	.def(self /= double())        \
+                                  \
+	PYCPPAD_UNARY(asin,Base)      \
+	PYCPPAD_UNARY(acos,Base)      \
+	PYCPPAD_UNARY(atan,Base)      \
+	PYCPPAD_UNARY(cos,Base)      \
+	PYCPPAD_UNARY(cosh,Base)      \
+	PYCPPAD_UNARY(exp,Base)      \
+	PYCPPAD_UNARY(log,Base)      \
+	PYCPPAD_UNARY(log10,Base)      \
+	PYCPPAD_UNARY(sin,Base)      \
+	PYCPPAD_UNARY(sinh,Base)      \
+	PYCPPAD_UNARY(sqrt,Base)      \
+	PYCPPAD_UNARY(tan,Base)      \
+	PYCPPAD_UNARY(tanh,Base)
 
 
 	class_<AD_double>("a_double", init<double>())
@@ -459,9 +493,7 @@ BOOST_PYTHON_MODULE(_cppad)
 		.add_property("value", &AD_double::value_)
 		.add_property("id", &AD_double::id_)
 		.add_property("taddr", &AD_double::taddr_)
-		PYCPPAD_OPERATOR_LIST
-		.def("cos", cos_AD_double  )
-		.def("sin", sin_AD_double  )
+		PYCPPAD_OPERATOR_LIST(double)
 	;
 
 	class_<AD_AD_double>("a2double", init<AD_double>())
@@ -469,7 +501,7 @@ BOOST_PYTHON_MODULE(_cppad)
 		.add_property("value", &AD_AD_double::value_)
 		.add_property("id", &AD_AD_double::id_)
 		.add_property("taddr", &AD_AD_double::taddr_)
-		PYCPPAD_OPERATOR_LIST
+		PYCPPAD_OPERATOR_LIST(AD_double)
 	;
 		
 	class_<ADFun_double>("ADFun_double", init< bpn::array& , bpn::array& >())

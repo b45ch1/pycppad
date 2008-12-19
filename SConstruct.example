@@ -25,5 +25,5 @@ env = Environment(
 )
 Default('.')
 cppad = env.SharedLibrary(target='_cppad', source=['py_cppad.cpp', 'num_util.cpp'])
-env.Install("./release/cppad", cppad)
+#env.Install("./release/cppad", cppad)
 

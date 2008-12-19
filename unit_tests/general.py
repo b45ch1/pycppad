@@ -149,6 +149,29 @@ def test_ad_a_double_variable_info():
 	assert x.value == 13.
 	assert x.id == 1
 	assert x.taddr == 0	
+	
+	
+def test_trigonometic_functions():
+	N = 5
+	ax = numpy.array( [ ad(2.*n*numpy.pi/N) for n in range(N) ] )
+	x  = numpy.array( [ 2.*n*numpy.pi/N     for n in range(N) ] )
+	
+	# cos
+	independent(ax)
+	ay = numpy.cos(ax)
+	af = adfun(ax, ay)
+	J = af.jacobian(x)
+	
+	assert numpy.sum( abs( numpy.diag( numpy.sin(x)) + J)) == 0
+	
+	# sin
+	independent(ax)
+	ay = numpy.sin(ax)
+	af = adfun(ax, ay)
+	J = af.jacobian(x)
+	assert numpy.prod( numpy.diag( numpy.cos(x)) == J)
+	
+	
 
 
 def test_multi_level_taping_and_higher_order_forward_derivatives():
