@@ -3,7 +3,6 @@ It wraps the functionality of the library CPPAD (C++).
 
 Authors: Sebastian F. Walter and Brad Bell
 
-
 Licence: BSD
 
 INSTALLATION:
@@ -12,35 +11,28 @@ Requirements:
 
 * Python and Numpy, both with header files
 * boost::python
-* scons
 
-Rename the SConstruct.example to SConstruct and adapt it to your needs.
+On Debian/Ubuntu this should work:
+sudo apt-get install python python-dev python-numpy libboost-python-dev
+
+Rename the setup.py.example to setup.py and adapt it to your needs,
+i.e. set the paths to CppAD, Boost and Python if you have installed it in a non-standard place. 
+
 Build the extension. Below is a sample what it should look like:
 
-walter@wronski$ scons
-scons: Building targets ...
-g++ -o py_cppad.os -c -ftemplate-depth-100 -DBOOST_PYTHON_DYNAMIC_LIB -O2 -fPIC -I/usr/include/python2.5 -I/usr/lib/python2.5/site-packages/numpy/core/include -Iinclude -I/data/walter/opt_software/boost_1_34_1 -I/usr/include/python2.5 py_cppad.cpp
-g++ -o _cppad.so -Wl,-rpath=/data/walter/opt_software/boost_1_34_1/bin.v2/libs/python/build/gcc-4.2.1/release -shared py_cppad.os num_util.os -L/usr/lib/python2.5/config -L/data/walter/opt_software/boost_1_34_1/bin.v2/libs/python/build/gcc-4.2.1/release -lboost_python-gcc42-1_34_1
-Install file: "_cppad.so" as "release/cppad/_cppad.so"
-scons: done building targets.
+RUN EXAMPLES:
+=============
+python examples/simple_examples.py
 
-Remark:
-In the future, it is likely that the dependency on scons is removed to ease the installation.
+UNIT TESTS:
+===========
+For that you need py.test
 
+Download from http://codespeak.net/py/dist/
+or  sudo apt-get install python-codespeak-lib
 
-
-USAGE:
-======
-
-Examples:
-To run the examples, change directory to the root directory where py_cppad.hpp is located and type
-$python examples/simple_examples.py
-
-Unit Test:
-To run the unit test you need py.test from 
-http://codespeak.net/py/dist/
-Run it with
-$py.test unit_tests/general_test.py
+run with the following command
+py.test unit_tests/general_test.py
 
 
 
