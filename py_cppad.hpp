@@ -371,9 +371,6 @@ namespace{
 		}
 		return  static_cast<bpn::array>( obj );
 	}
-	
-
-
 
 	/* =================================== */
 	/* GENERAL FUNCTIONS                   */
