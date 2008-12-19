@@ -5,11 +5,12 @@
 # http://www.scipy.org/Documentation/numpy_distutils
 # http://docs.cython.org/docs/tutorial.html
 
+
+
 from numpy.distutils.misc_util import get_numpy_include_dirs
 from numpy.distutils.misc_util import Configuration
 from numpy.distutils.core import setup
 from numpy.distutils.core import Command
-
 
 # ADAPT THIS TO FIT YOUR SYSTEM
 include_dirs = [get_numpy_include_dirs(),'./cppad-20081128']
@@ -19,6 +20,25 @@ libraries = ['boost_python-gcc42-1_34_1']
 
 
 # IT IS USUALLY NOT NECESSARY TO CHANGE ANTHING BELOW THIS POINT
+# override default setup.py help output
+import sys
+if len(sys.argv) == 1:
+	print """
+
+	You didn't enter what to do!
+
+	Options:
+	1: build the extension with
+	   python setup.py build_ext --inplace
+
+	2: remove generated files with
+	   python setup.py clean --all
+
+
+	Remark: This is an override of the default behaviour of the distutils setup.
+	"""
+	exit()
+
 class clean(Command):
 	"""
 	This class is used in numpy.distutils.core.setup.

@@ -24,6 +24,6 @@ env = Environment(
 	SHLIBPREFIX="", #gets rid of lib prefix
 )
 Default('.')
-cppad = env.SharedLibrary(target='_cppad', source=['py_cppad.cpp', 'num_util.cpp'])
+cppad = env.SharedLibrary(target='_cppad', source=['py_cppad.cpp'])
 #env.Install("./release/cppad", cppad)
 
