@@ -5,29 +5,19 @@
 
 namespace python_cppad {
 	// -------------------------------------------------------------
-	// class ADFun_double
-	//
-	class ADFun_double {
+	// class ADFun<Base>
+	template <class Base>
+	class ADFun{
 	private:
-		CppAD::ADFun<double> f_;
+		CppAD::ADFun<Base> f_;
 	public:
 		// constructor
-		ADFun_double(array& x_array, array& y_array);
+		ADFun(array& x_array, array& y_array);
 		// member function Forward
 		array Forward(int p, array& xp);
 	};
-	// -------------------------------------------------------------
-	// class ADFun_AD_double
-	//
-	class ADFun_AD_double {
-	private:
-		CppAD::ADFun<AD_double> f_;
-	public:
-		// constructor
-		ADFun_AD_double(array& x_array, array& y_array);
-		// member function Forward
-		array Forward(int p, array& xp);
-	};
+	typedef ADFun<double>    ADFun_double;
+	typedef ADFun<AD_double> ADFun_AD_double;
 }
 
 # endif

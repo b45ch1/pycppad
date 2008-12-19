@@ -3,38 +3,27 @@
 
 namespace python_cppad {
 	// -------------------------------------------------------------
-	// class ADFun_double
-	//
-	ADFun_double::ADFun_double(array& x_array, array& y_array)
-	{	AD_double_vec x_vec(x_array);
-		AD_double_vec y_vec(y_array);
+	// class ADFun<Base>
+	template <class Base>
+	ADFun<Base>::ADFun(array& x_array, array& y_array)
+	{	vec< CppAD::AD<Base> > x_vec(x_array);
+		vec< CppAD::AD<Base> > y_vec(y_array);
 
 		f_.Dependent(x_vec, y_vec);
 	}
 	// member function Forward
-	array ADFun_double::Forward(int p, array& xp)
-	{	size_t     p_sz(p);
-		double_vec xp_vec(xp);
-		double_vec result = f_.Forward(p_sz, xp_vec);
+	template <class Base>
+	array ADFun<Base>::Forward(int p, array& xp)
+	{	size_t    p_sz(p);
+		vec<Base> xp_vec(xp);
+		vec<Base> result = f_.Forward(p_sz, xp_vec);
 		return vector2array(result);
 	}
 	// -------------------------------------------------------------
-	// class ADFun_AD_double
-	//
-	ADFun_AD_double::ADFun_AD_double(array& x_array, array& y_array)
-	{	AD_AD_double_vec x_vec(x_array);
-		AD_AD_double_vec y_vec(y_array);
-
-		f_.Dependent(x_vec, y_vec);
-	}
-	array ADFun_AD_double::Forward(int p, array& xp)
-	{	size_t        p_sz(p);
-		AD_double_vec xp_vec(xp);
-		AD_double_vec result = f_.Forward(p_sz, xp_vec);
-
-		array retvalue = vector2array(result);
-		return retvalue;
-	}
+	// instantiate instances of ADFun<Base>
+	template class ADFun<double>;
+	template class ADFun<AD_double>;
+	// -------------------------------------------------------------
 	void adfun_avoid_warning_that_import_array_not_used(void)
 	{	import_array(); }
 }
