@@ -1,6 +1,6 @@
 # include "vector.hpp"
 
-namespace python_cppad {
+namespace pycppad {
 // ========================================================================
 // class vec<double>
 //
@@ -99,8 +99,8 @@ vec<Scalar>::vec(array& py_array)
 	int length    = dims_ptr[0];
 
 	// check array info
-	PYTHON_CPPAD_ASSERT( ndim == 1 , "Argument is not a vector.");
-	PYTHON_CPPAD_ASSERT( length >= 0 , "");
+	PYCPPAD_ASSERT( ndim == 1 , "Argument is not a vector.");
+	PYCPPAD_ASSERT( length >= 0 , "");
 	// pointer to object
 	object *obj_ptr = static_cast<object*>( 
 		PyArray_DATA(py_array.ptr()) 
@@ -162,7 +162,7 @@ vec<Scalar>::~vec(void)
 template <class Scalar>
 void vec<Scalar>::operator=(const vec& v)
 {
-	PYTHON_CPPAD_ASSERT( length_ == v.length_ , ""); 
+	PYCPPAD_ASSERT( length_ == v.length_ , ""); 
 	for(size_t i = 0; i < length_; i++)
 		*handle_[i] = *(v.handle_[i]);
 	return;
@@ -209,4 +209,4 @@ template class vec<AD_AD_double>;
 // ========================================================================
 void vector_avoid_warning_that_import_array_not_used(void)
 {	import_array(); }
-} // end namespace python_cppad
+} // end namespace pycppad

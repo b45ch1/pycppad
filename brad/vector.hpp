@@ -1,9 +1,9 @@
-# ifndef PYTHON_CPPAD_VECTOR_INCLUDED
-# define PYTHON_CPPAD_VECTOR_INCLUDED
+# ifndef PYCPPAD_VECTOR_INCLUDED
+# define PYCPPAD_VECTOR_INCLUDED
 
 # include "setup.hpp"
 
-namespace python_cppad {
+namespace pycppad {
 // ------------------------------------------------------------------------
 template <class Scalar>
 class vec {
@@ -92,6 +92,6 @@ typedef vec<AD_AD_double> AD_AD_double_vec;
 array vector2array(const double_vec& vec);
 array vector2array(const AD_double_vec& vec);
 // ========================================================================
-} // end of python_cppad namespace
+} // end of pycppad namespace
 
 # endif

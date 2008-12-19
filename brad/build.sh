@@ -22,24 +22,24 @@ fi
 # -------------------------------------------------------------------
 if [ ! -e "$python_config_dir/pyconfig.h" ]
 then
-echo "Must change python_config_dir or python_version in python_cppad.sh"
+echo "Must change python_config_dir or python_version in pycppad.sh"
 	exit 1
 fi
-python --version >& python_cppad.tmp
-py_version=`cat python_cppad.tmp`
-if ! grep "Python $python_version" python_cppad.tmp > /dev/null
+python --version >& pycppad.tmp
+py_version=`cat pycppad.tmp`
+if ! grep "Python $python_version" pycppad.tmp > /dev/null
 then
-	echo "Must change python_version in python_cppad.sh"
+	echo "Must change python_version in pycppad.sh"
 	exit 1
 fi
 # -------------------------------------------------------------------
-echo "# Compile python_cppad.cpp -------------------------------------------" 
+echo "# Compile pycppad.cpp -------------------------------------------" 
 #
 object_list=""
 list="
 	vector
 	adfun
-	python_cppad
+	pycppad
 "
 cmd="g++ -fpic -g -c -Wall -I $python_config_dir -I $numpy_dir -I $cppad_dir"
 for name in $list
@@ -53,24 +53,24 @@ do
 	object_list="$object_list $name.o"
 done
 # -------------------------------------------------------------------
-echo "# Create python_cppad.so dynamic link library -----------------------"
+echo "# Create pycppad.so dynamic link library -----------------------"
 # needed to link boost python
 library_flags="-lboost_python"
-cmd="g++ -shared -Wl,-soname,libpython_cppad.so.1 $library_flags"
-cmd="$cmd -o libpython_cppad.so.1.0 $object_list -lc"
+cmd="g++ -shared -Wl,-soname,libpycppad.so.1 $library_flags"
+cmd="$cmd -o libpycppad.so.1.0 $object_list -lc"
 echo $cmd
 if ! $cmd
 then
 	echo "command failed"
 	exit 1
 fi
-if [ -e python_cppad.so ]
+if [ -e pycppad.so ]
 then
-	cmd="rm python_cppad.so"
+	cmd="rm pycppad.so"
 	echo $cmd
 	$cmd
 fi
-cmd="ln libpython_cppad.so.1.0 python_cppad.so"
+cmd="ln libpycppad.so.1.0 pycppad.so"
 echo $cmd
 if ! $cmd
 then

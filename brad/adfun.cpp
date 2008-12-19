@@ -1,7 +1,7 @@
 # include "adfun.hpp"
 # include "vector.hpp"
 
-namespace python_cppad {
+namespace pycppad {
 	// -------------------------------------------------------------
 	// class ADFun<Base>
 	template <class Base>

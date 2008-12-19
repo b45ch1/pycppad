@@ -1,5 +1,5 @@
-# ifndef PYTHON_CPPAD_SETUP_INCLUDED
-# define PYTHON_CPPAD_SETUP_INCLUDED
+# ifndef PYCPPAD_SETUP_INCLUDED
+# define PYCPPAD_SETUP_INCLUDED
 
 # include <cppad/cppad.hpp>
 # include <boost/python.hpp>
@@ -9,7 +9,7 @@
 # include <string>
 # include <cassert>
 
-# define PYTHON_CPPAD_ASSERT(expression, message) \
+# define PYCPPAD_ASSERT(expression, message) \
 { 	if( ! ( expression ) )                    \
         CppAD::ErrorHandler::Call(                \
  		(message[0] != '\0') ,            \
@@ -19,7 +19,7 @@
 		message              );           }
 
 
-namespace python_cppad {
+namespace pycppad {
 	typedef CppAD::AD<double>      AD_double;
 	typedef CppAD::AD<AD_double>   AD_AD_double;
 

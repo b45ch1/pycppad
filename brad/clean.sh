@@ -1,11 +1,11 @@
 #! /bin/bash
 list="
-	libpython_cppad.so.1.0
-	python_cppad.o
-	python_cppad.tmp
+	libpycppad.so.1.0
+	pycppad.o
+	pycppad.tmp
 	vector.o
 	cppad/__init__.pyc
-	cppad/python_cppad.so
+	cppad/pycppad.so
 "
 for file in $list
 do

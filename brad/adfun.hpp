@@ -1,9 +1,9 @@
-# ifndef PYTHON_CPPAD_ADFUN_INCLUDED
-# define PYTHON_CPPAD_ADFUN_INCLUDED
+# ifndef PYCPPAD_ADFUN_INCLUDED
+# define PYCPPAD_ADFUN_INCLUDED
 
 # include "setup.hpp"
 
-namespace python_cppad {
+namespace pycppad {
 	// -------------------------------------------------------------
 	// class ADFun<Base>
 	template <class Base>
