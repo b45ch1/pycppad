@@ -464,7 +464,7 @@ BOOST_PYTHON_MODULE(_cppad)
 	.def(self     op double())
 
 	# define PYCPPAD_UNARY(op,Base)       \
-	.def("op",     op##_AD_##Base)
+	.def(#op,     op##_AD_##Base)
 
 	
 	# define PYCPPAD_OPERATOR_LIST(Base)    \

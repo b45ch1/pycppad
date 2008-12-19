@@ -152,21 +152,24 @@ def test_ad_a_double_variable_info():
 	
 	
 def test_trigonometic_functions():
-	N = 2
-	ax = numpy.array( [ ad(n*numpy.pi) for n in range(N) ] )
-	x  = numpy.array( [ n*numpy.pi     for n in range(N) ] )
+	N = 5
+	ax = numpy.array( [ ad(2.*n*numpy.pi/N) for n in range(N) ] )
+	x  = numpy.array( [ 2.*n*numpy.pi/N     for n in range(N) ] )
 	
+	# cos
 	independent(ax)
 	ay = numpy.cos(ax)
 	af = adfun(ax, ay)
+	J = af.jacobian(x)
 	
+	assert numpy.sum( abs( numpy.diag( numpy.sin(x)) + J)) == 0
 	
-	af.jacobian(x)
-	
-	assert False
-	
-	
-	
+	# sin
+	independent(ax)
+	ay = numpy.sin(ax)
+	af = adfun(ax, ay)
+	J = af.jacobian(x)
+	assert numpy.prod( numpy.diag( numpy.cos(x)) == J)
 	
 	
 
