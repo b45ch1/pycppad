@@ -207,4 +207,6 @@ template class vec<double>;
 template class vec<AD_double>;
 template class vec<AD_AD_double>;
 // ========================================================================
+void vector_avoid_warning_that_import_array_not_used(void)
+{	import_array(); }
 } // end namespace python_cppad

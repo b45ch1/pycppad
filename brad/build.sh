@@ -35,20 +35,29 @@ fi
 # -------------------------------------------------------------------
 echo "# Compile python_cppad.cpp -------------------------------------------" 
 #
+object_list=""
+list="
+	vector
+	adfun
+	python_cppad
+"
 cmd="g++ -fpic -g -c -Wall -I $python_config_dir -I $numpy_dir -I $cppad_dir"
-cmd="$cmd python_cppad.cpp vector.cpp"
-echo $cmd
-if ! $cmd
-then
-	echo "command failed"
-	exit 1
-fi
+for name in $list
+do
+	echo "$cmd $name.cpp"
+	if ! $cmd $name.cpp
+	then
+		echo "command failed"
+		exit 1
+	fi
+	object_list="$object_list $name.o"
+done
 # -------------------------------------------------------------------
 echo "# Create python_cppad.so dynamic link library -----------------------"
 # needed to link boost python
 library_flags="-lboost_python"
 cmd="g++ -shared -Wl,-soname,libpython_cppad.so.1 $library_flags"
-cmd="$cmd -o libpython_cppad.so.1.0 python_cppad.o vector.o -lc"
+cmd="$cmd -o libpython_cppad.so.1.0 $object_list -lc"
 echo $cmd
 if ! $cmd
 then
