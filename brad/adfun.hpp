@@ -25,11 +25,8 @@ namespace python_cppad {
 	public:
 		// constructor
 		ADFun_AD_double(array& x_array, array& y_array);
-		// Kludge: Version of Forward member function until we figure
-		// out how to retrun an array with AD_double elements.
-		// (This should look like forward for ADFun_double with
-		// double replaced by AD_double.)
-		void Forward(int p, array& xp, array& fp);
+		// member function Forward
+		array Forward(int p, array& xp);
 	};
 }
 

@@ -13,13 +13,12 @@ ad_ad_y = array( [ 2. * ad_ad_x[0] * ad_ad_x[1] ] )
 ad_f = adfun_ad_double(ad_ad_x, ad_ad_y) # f(x0, x1) = 2. * x0 * x1
 # evaluate the function f(x) using level one independent variable vector
 p  = 0
-ad_fp = array( [ ad_double(0.) ] )  # kludge to pass back fp
-ad_f.forward(p, ad_x, ad_fp)
+ad_fp = ad_f.forward(p, ad_x)
 ok = ok and (ad_fp == 2. * ad_x[0] * ad_x[1])
 # evaluate the partial of f with respect to the first component
 p  = 1
 ad_xp = array( [ ad_double(1.) , ad_double(0.) ] )
-ad_f.forward(p, ad_xp, ad_fp)
+ad_fp = ad_f.forward(p, ad_xp)
 ok = ok and (ad_fp == 2. * ad_x[1])
 # declare level 1 dependent variable vector and stop level 1 recording 
 ad_y = 2. * ad_fp

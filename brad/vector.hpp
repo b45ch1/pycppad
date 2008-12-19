@@ -90,6 +90,7 @@ typedef vec<AD_double>    AD_double_vec;
 typedef vec<AD_AD_double> AD_AD_double_vec;
 
 array vector2array(const double_vec& vec);
+array vector2array(const AD_double_vec& vec);
 // ========================================================================
 } // end of python_cppad namespace
 

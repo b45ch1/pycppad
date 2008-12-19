@@ -67,6 +67,17 @@ namespace python_cppad {
 		return  static_cast<array>( obj );
 	}
 	// -------------------------------------------------------------
+	array vector2array(const AD_double_vec& vec)
+	{	int n = static_cast<int>( vec.size() );
+		assert( n >= 0 );
+
+		object obj(handle<>( PyArray_FromDims(1, &n, PyArray_OBJECT) ));
+		for(size_t i = 0; i < vec.size(); i++){
+			obj[i] = vec[i];
+		}
+		return  static_cast<array>( obj );
+	}
+	// -------------------------------------------------------------
 	// Kludge: Pass level to Independent until we know how to determine if 
 	// the elements are x_array are AD_double or AD_AD_double.
 	void Independent(array& x_array, int level)
