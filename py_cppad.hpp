@@ -399,7 +399,7 @@ namespace{
 	}
 
 
-	/* TRIGONOMETRIC FUNCTIONS */
+	/* UNARY FUNCTIONS */
 	#define PYCPPAD_STD_MATH(Name, Base)                             \
 	CppAD::AD<Base>	(* Name##_AD_##Base)( const CppAD::AD<Base>& ) = &CppAD::Name
 
@@ -431,6 +431,22 @@ namespace{
 	PYCPPAD_STD_MATH(tan  , AD_double);
 	PYCPPAD_STD_MATH(tanh , AD_double);
 
+	/* BINARY FUNCTIONS */
+// CppAD::AD<AD_double> (*sin_AD_AD_double) ( const CppAD::AD<AD_double> & ) = &CppAD::sin;
+
+	AD_double (*pow_AD_double_AD_double)(const AD_double &x, const AD_double &y) = &CppAD::pow;
+	AD_double (*pow_double_AD_double)(const double &x, const AD_double &y) = &CppAD::pow;
+	AD_double (*pow_AD_double_double)(const AD_double &x, const double &y) = &CppAD::pow;
+	AD_double (*pow_int_AD_double)(int x, const AD_double &y) = &CppAD::pow;
+	AD_double (*pow_AD_double_int)(const AD_double &x, const int &y) = &CppAD::pow;
+
+	AD_AD_double (*pow_AD_AD_double_AD_AD_double)(const AD_AD_double &x, const AD_AD_double &y) = &CppAD::pow;
+	AD_AD_double (*pow_double_AD_AD_double)(const double &x, const AD_AD_double &y) = &CppAD::pow;
+	AD_AD_double (*pow_AD_AD_double_double)(const AD_AD_double &x, const double &y) = &CppAD::pow;
+	AD_AD_double (*pow_int_AD_AD_double)(int x, const AD_AD_double &y) = &CppAD::pow;
+	AD_AD_double (*pow_AD_AD_double_int)(const AD_AD_double &x, const int &y) = &CppAD::pow;
+	
+	
 }
 
 BOOST_PYTHON_MODULE(_cppad)
@@ -494,6 +510,11 @@ BOOST_PYTHON_MODULE(_cppad)
 		.add_property("id", &AD_double::id_)
 		.add_property("taddr", &AD_double::taddr_)
 		PYCPPAD_OPERATOR_LIST(double)
+		.def("__pow__", pow_AD_double_AD_double)
+		.def("__pow__", pow_double_AD_double)
+		.def("__pow__", pow_AD_double_double)
+		.def("__pow__", pow_int_AD_double)
+		.def("__pow__", pow_AD_double_int)
 	;
 
 	class_<AD_AD_double>("a2double", init<AD_double>())
@@ -502,6 +523,11 @@ BOOST_PYTHON_MODULE(_cppad)
 		.add_property("id", &AD_AD_double::id_)
 		.add_property("taddr", &AD_AD_double::taddr_)
 		PYCPPAD_OPERATOR_LIST(AD_double)
+		.def("__pow__", pow_AD_AD_double_AD_AD_double)
+		.def("__pow__", pow_double_AD_AD_double)
+		.def("__pow__", pow_AD_AD_double_double)
+		.def("__pow__", pow_int_AD_AD_double)
+		.def("__pow__", pow_AD_AD_double_int)
 	;
 		
 	class_<ADFun_double>("ADFun_double", init< bpn::array& , bpn::array& >())

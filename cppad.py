@@ -17,6 +17,7 @@ import numpy
 
 import _cppad
 from _cppad import a_double
+from _cppad import a_double as a1double
 from _cppad import a2double
 
 def independent(x):
