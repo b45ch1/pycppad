@@ -1,7 +1,7 @@
 from cppad import *
 ok = True
-one  = ad_double(1)
-two  = ad_double(2)
+one  = a_double(1)
+two  = a_double(2)
 ok = ok and (one < two * 1.)
 ok = ok and (two > 1. * one)
 ok = ok and (one <= two * two)

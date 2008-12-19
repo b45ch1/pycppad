@@ -119,7 +119,7 @@ BOOST_PYTHON_MODULE(python_cppad)
 	// --------------------------------------------------------------------
 	def("independent", &Independent);
 	// --------------------------------------------------------------------
-	class_<AD_double>("ad_double", init<double>())
+	class_<AD_double>("a_double", init<double>())
 		.def(str(self))
 		PYTHON_CPPAD_OPERATOR_LIST
 	;
@@ -128,11 +128,11 @@ BOOST_PYTHON_MODULE(python_cppad)
 		.def("forward", &ADFun_double::Forward)
 	;
 	// --------------------------------------------------------------------
-	class_<AD_AD_double>("ad_ad_double", init<AD_double>())
+	class_<AD_AD_double>("a2double", init<AD_double>())
 		.def(str(self))
 		PYTHON_CPPAD_OPERATOR_LIST
 	;
-	class_<ADFun_AD_double>("adfun_ad_double", init< array& , array& >())
+	class_<ADFun_AD_double>("adfun_a_double", init< array& , array& >())
 		.def("forward", &ADFun_AD_double::Forward)
 	;
 }

@@ -64,9 +64,9 @@ then
 	echo "command failed"
 	exit 1
 fi
-if [ -e cppad/python_cppad.so ]
+if [ -e python_cppad.so ]
 then
-	cmd="rm cppad/python_cppad.so"
+	cmd="rm python_cppad.so"
 	echo $cmd
 	$cmd
 fi

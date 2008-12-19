@@ -1,7 +1,7 @@
 from cppad import *
 ok      = True
 # declare independent variable vector and start recording
-ad_x = array( [ ad_double(2) , ad_double(3) ] )
+ad_x = array( [ a_double(2) , a_double(3) ] )
 independent(ad_x)
 # declare dependent variable vector and stop recording
 ad_y = array( [ 2. * ad_x[0] * ad_x[1] ] )

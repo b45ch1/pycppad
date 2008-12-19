@@ -6,8 +6,8 @@ CppAD to evaluate derivatives of arbitrary order.
 import numpy
 import python_cppad
 from numpy import array
-from python_cppad import ad_double
-from python_cppad import ad_ad_double
+from python_cppad import a_double
+from python_cppad import a2double
 
 def independent(x):
   """
@@ -16,13 +16,13 @@ def independent(x):
   """
   if not isinstance(x, numpy.ndarray):
     raise NotImplementedError('independent(x): x is not of type numpy.array')
-  if isinstance(x[0], ad_double):
+  if isinstance(x[0], a_double):
     python_cppad.independent(x, 1)     # level = 1
-  elif isinstance(x[0], ad_ad_double):
+  elif isinstance(x[0], a2double):
     python_cppad.independent(x, 2)     # level = 2
   else:
     raise NotImplementedError(
-      'independent(x): x[j] is not of type ad_double or ad_ad_double'
+      'independent(x): x[j] is not of type a_double or a2double'
     )
 class adfun_double(python_cppad.adfun_double):
 	"""
@@ -30,9 +30,9 @@ class adfun_double(python_cppad.adfun_double):
 	"""
 	pass
 
-class adfun_ad_double(python_cppad.adfun_ad_double):
+class adfun_a_double(python_cppad.adfun_a_double):
 	"""
-	Create a function object that evaluates using ad_double.
+	Create a function object that evaluates using a_double.
 	"""
 	pass
 
