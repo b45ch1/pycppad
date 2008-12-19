@@ -72,7 +72,7 @@ namespace{
 		int length    = dims_ptr[0];
 
 		// check array info
-		assert( ndim == 1 );
+// 		assert( ndim == 1 );
 		assert( length >= 0 );
 
 		// set private data
@@ -153,7 +153,7 @@ namespace{
 		int length    = dims_ptr[0];
 
 		// check array info
-		assert( ndim == 1 );
+// 		assert( ndim == 1 );
 		assert( length >= 0 );
 
 		// pointer to object
