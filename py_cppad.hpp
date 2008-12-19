@@ -402,9 +402,9 @@ namespace{
 	}
 
 
+	/* TRIGONOMETRIC FUNCTIONS */
 	#define PYCPPAD_STD_MATH(Name, Base)                             \
 	CppAD::AD<Base>	(* Name##_AD_##Base)( const CppAD::AD<Base>& ) = &CppAD::Name
-
 
 	PYCPPAD_STD_MATH(asin , double);
 	PYCPPAD_STD_MATH(acos , double);
@@ -434,16 +434,6 @@ namespace{
 	PYCPPAD_STD_MATH(tan  , AD_double);
 	PYCPPAD_STD_MATH(tanh , AD_double);
 
-	
-// 	/* atomic (aka elementary) operations */
-// 	CppAD::AD<double>	(*cos_AD_double) 		( const CppAD::AD<double> & ) = &CppAD::cos;
-// 	CppAD::AD<double>	(*sin_AD_double) 		( const CppAD::AD<double> & ) = &CppAD::sin;
-// 
-// 	CppAD::AD<AD_double>	(*sin_AD_AD_double) ( const CppAD::AD<AD_double> & ) = &CppAD::sin;
-// 	CppAD::AD<AD_double>	(*cos_AD_AD_double) ( const CppAD::AD<AD_double> & ) = &CppAD::cos;
-
-
-
 }
 
 BOOST_PYTHON_MODULE(_cppad)
@@ -456,7 +446,6 @@ BOOST_PYTHON_MODULE(_cppad)
 							   next line";
 
 	def("Independent", &Independent);
-
 
 	# define PYCPPAD_BINARY(op)       \
 	.def(self     op self)         \
@@ -508,8 +497,6 @@ BOOST_PYTHON_MODULE(_cppad)
 		.add_property("id", &AD_double::id_)
 		.add_property("taddr", &AD_double::taddr_)
 		PYCPPAD_OPERATOR_LIST(double)
-// 		.def("cos", cos_AD_double  )
-// 		.def("sin", sin_AD_double  )
 	;
 
 	class_<AD_AD_double>("a2double", init<AD_double>())
@@ -518,8 +505,6 @@ BOOST_PYTHON_MODULE(_cppad)
 		.add_property("id", &AD_AD_double::id_)
 		.add_property("taddr", &AD_AD_double::taddr_)
 		PYCPPAD_OPERATOR_LIST(AD_double)
-// 		.def("cos", cos_AD_AD_double  )
-// 		.def("sin", sin_AD_AD_double  )
 	;
 		
 	class_<ADFun_double>("ADFun_double", init< bpn::array& , bpn::array& >())
