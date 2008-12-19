@@ -170,6 +170,16 @@ def test_trigonometic_functions():
 	af = adfun(ax, ay)
 	J = af.jacobian(x)
 	assert numpy.prod( numpy.diag( numpy.cos(x)) == J)
+
+
+def test_pow():
+	ax = numpy.array( [ ad(3), ad(2.)] )
+	x  = numpy.array( [ 3., 2.] )
+	independent(ax)
+	ay = numpy.array([ ax[0]**2, ax[1]**2, ax[0]**2., ax[1]**2., ax[0]**0.5, ax[1]**0.5, ax[0]**ad(2), ax[1]**ad(2)])
+	y = numpy.array([ x[0]**2, x[1]**2, x[0]**2., x[1]**2., x[0]**0.5, x[1]**0.5, x[0]**2, x[1]**2])
+	
+	assert numpy.prod(ay == y)
 	
 	
 
