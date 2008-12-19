@@ -70,7 +70,7 @@ then
 	echo $cmd
 	$cmd
 fi
-cmd="ln libpython_cppad.so.1.0 cppad/python_cppad.so"
+cmd="ln libpython_cppad.so.1.0 python_cppad.so"
 echo $cmd
 if ! $cmd
 then

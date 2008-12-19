@@ -1,13 +1,11 @@
 from cppad import *
 ok = True
 # declare level one independent variable vector and start level one recording
-level = 1
 ad_x = array( [ ad_double(2) , ad_double(3) ] )
-independent(ad_x, level)
+independent(ad_x)
 # declare level two independent variable vector and start level two recording
-level = 2
 ad_ad_x = array( [ ad_ad_double(ad_x[0]) , ad_ad_double(ad_x[1]) ] )
-independent(ad_ad_x, level)
+independent(ad_ad_x)
 # declare level 2 dependent variable vector and stop level 2 recording
 ad_ad_y = array( [ 2. * ad_ad_x[0] * ad_ad_x[1] ] )
 ad_f = adfun_ad_double(ad_ad_x, ad_ad_y) # f(x0, x1) = 2. * x0 * x1
