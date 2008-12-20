@@ -1,9 +1,9 @@
-# Comparison operators with type a_double
+# Comparision operators with type a2double
 
-def test_compare_op():
-	x = ad(2.)
-	y = ad(3.)
-	z = ad(2.)
+def test_compare2op():
+	x = ad(ad(2.))
+	y = ad(ad(3.))
+	z = ad(ad(2.))
 	
 	# assert comparisions that should be true
 	assert x == x
