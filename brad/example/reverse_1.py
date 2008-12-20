@@ -14,7 +14,7 @@ def test_reverse_1():
   p  = 0                                 # order zero for function values
   x  = array( [ 3. , 4. ] )              # argument value
   fp = f.forward(p, x)                   # function value
-  assert fp == 2. * x[0] * x[1]          # f(x0, x1) = 2 * x0 * x1
+  assert fp[0] == 2. * x[0] * x[1]       # f(x0, x1) = 2 * x0 * x1
 
   # evalute derivative of f(x0, x1) 
   p  = 1                                 # order one for first derivatives

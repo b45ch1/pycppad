@@ -1,6 +1,6 @@
-# First order forward mode with two levels of taping
+# First order reverse mode with two levels of taping
 
-def test_forward_1_a2():
+def test_reverse_1_a2():
   # start recording a_double operations
   a_x = array( [ ad(2) , ad(3) ] )
   independent(a_x)
@@ -19,30 +19,27 @@ def test_forward_1_a2():
   fp  = f.forward(p, u)
   assert fp[0] == 2. * u[0] * u[1]
 
-  # evaluate partial of f with respect to the second component (using a_double)
-  p  = 1
-  up = array( [ ad(0) , ad(1) ] )
-  fp = f.forward(p, up)
-  assert fp[0] == 2. * u[0]         # f_u1(u0, u1) = 2. * u0
+  # derivative of f with respect to u (using a_double)
+  p  = 1                         # order of derivative
+  w  = array( [ ad(1) ] )        # vector of weights
+  fp = f.reverse(p, w)           # derivative of f w.r.t u
+  assert fp[0] == 2. * u[1]      # f_u0(u0, u1) = 2. * u1
+  assert fp[1] == 2. * u[0]      # f_u1(u0, u1) = 2. * u0
 
   # stop a_double recording and store operations if g
-  a_y = 2. * fp
-  g   = adfun(a_x, a_y)          # g(x0, x1) = 2. * f_u1(x0, 2 * x1) = 4 * x0
+  a_y = 2. * fp                  # g(x0, x1) = 2 * f_u (x0, 2 * x1)
+  g   = adfun(a_x, a_y)          #           = [ 8 * x1 , 4 * x0  ]  
 
   # evaluate the function g(x) at x = (4, 5) using double operations
   p  = 0
   x  = array( [ 4. , 5. ] )
   gp = g.forward(p, x)
-  assert gp[0] == 4. * x[0]
+  assert gp[0] == 8. * x[1]
+  assert gp[1] == 4. * x[0]
 
-  # evaluate the partial of g with respect to x0 (using double)
+  # derivative of the first component of g with respect to x (using double)
   p  = 1
-  xp = array( [ 1. , 0. ] )
-  gp = g.forward(p, xp)
-  assert gp[0] == 4.
-
-  # evaluate the partial of g with respect to x1 (using double)
-  p  = 1
-  xp = array( [ 0. , 1. ] )
-  gp = g.forward(p, xp)
+  w = array( [ 1. , 0. ] )
+  gp = g.reverse(p, w)
   assert gp[0] == 0.
+  assert gp[1] == 8.

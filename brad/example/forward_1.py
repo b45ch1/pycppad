@@ -14,16 +14,16 @@ def test_forward_1():
   p  = 0                                 # order zero for function values
   x  = array( [ 3. , 4. ] )              # argument value
   fp = f.forward(p, x)                   # function value
-  assert fp == 2. * x[0] * x[1]          # f(x0, x1) = 2 * x0 * x1
+  assert fp[0] == 2. * x[0] * x[1]       # f(x0, x1) = 2 * x0 * x1
 
   # evalute partial derivative of f(x0, x1) with respect to x0
   p  = 1                                 # order one for first derivatives
   xp = array( [ 1. , 0. ] )              # direction for differentiation
   fp = f.forward(p, xp)                  # value of directional derivative
-  assert fp == 2. * x[1]                 # f_x0 (x0, x1) = 2 * x1
+  assert fp[0] == 2. * x[1]              # f_x0 (x0, x1) = 2 * x1
 
   # evalute partial derivative of f(x0, x1) with respect to x
   p  = 1
   xp = array( [ 0. , 1. ] )              # the x1 direction
   fp = f.forward(p, xp)
-  assert fp == 2. * x[0]                 # f_x1 (x0, x1) = 2 * x0
+  assert fp[0] == 2. * x[0]              # f_x1 (x0, x1) = 2 * x0
