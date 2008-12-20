@@ -78,12 +78,7 @@ then
 	exit 1
 fi
 # ----------------------------------------------------------------------------
-list="
-	example/forward_1.py
-	example/forward_2.py
-	example/compare_op.py
-"
-cat $list  > test_all_$$.py
+cat example/*.py  > test_all_$$.py
 if py.test test_all_$$.py
 then
 	rm test_all_$$.py

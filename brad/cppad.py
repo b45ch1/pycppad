@@ -12,7 +12,9 @@ from pycppad import a2double
 def ad(x):
   """
   ad(x): returns an object with one higher level of automatic differentiation.
-  x: is an int, double (level zero AD), or a_double (level one AD).
+  If x is an int or double (AD level 0), ad(x) is an a_double (AD level 1).
+  If x is an a_double (AD level 1), ad(x) is an a2double (AD level 2).
+  Higher AD levels for the argument x are not yet supported.
   """
   if numpy.isscalar(x):
     return a_double(x)
