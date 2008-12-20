@@ -78,8 +78,8 @@ then
 	exit 1
 fi
 echo "----------------------------------------------------------------------"
+py.test forward_1.py
 list="
-	forward_1
 	forward_2
 	compare_op
 "
