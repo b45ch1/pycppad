@@ -79,8 +79,8 @@ then
 fi
 echo "----------------------------------------------------------------------"
 py.test forward_1.py
+py.test forward_2.py
 list="
-	forward_2
 	compare_op
 "
 ok="true"
