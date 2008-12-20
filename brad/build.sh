@@ -77,25 +77,21 @@ then
 	echo "command failed"
 	exit 1
 fi
-echo "----------------------------------------------------------------------"
-py.test forward_1.py
-py.test forward_2.py
+# ----------------------------------------------------------------------------
 list="
-	compare_op
+	forward_1.py
+	forward_2.py
+	compare_op.py
 "
-ok="true"
-for name in $list
-do
-	cmd="python $name.py"
-	if ! $cmd
-	then
-		ok="false"
-	fi
-done
-if [ "ok" = "false" ]
+cat $list  > test_all_$$.py
+if py.test test_all_$$.py
 then
-	echo "At least one test failed."
-	exit 1
+	rm test_all_$$.py
+	rm test_all_$$.pyc
+	echo "All tests passed."
+	exit 0
 fi
-echo "All the tests passed."
-exit 0
+rm test_all_$$.py
+rm test_all_$$.pyc
+echo "At least one test failed."
+exit 1
