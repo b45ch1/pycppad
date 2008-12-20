@@ -79,9 +79,9 @@ then
 fi
 # ----------------------------------------------------------------------------
 list="
-	forward_1.py
-	forward_2.py
-	compare_op.py
+	example/forward_1.py
+	example/forward_2.py
+	example/compare_op.py
 "
 cat $list  > test_all_$$.py
 if py.test test_all_$$.py
