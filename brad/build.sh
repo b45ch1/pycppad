@@ -33,7 +33,7 @@ then
 	exit 1
 fi
 # -------------------------------------------------------------------
-echo "# Compile pycppad.cpp -------------------------------------------" 
+echo "# Compile pycppad.cpp --------------------------------------------------" 
 #
 object_list=""
 list="
@@ -53,7 +53,7 @@ do
 	object_list="$object_list $name.o"
 done
 # -------------------------------------------------------------------
-echo "# Create pycppad.so dynamic link library -----------------------"
+echo "# Create pycppad.so dynamic link library ------------------------------"
 # needed to link boost python
 library_flags="-lboost_python"
 cmd="g++ -shared -Wl,-soname,libpycppad.so.1 $library_flags"
@@ -77,28 +77,25 @@ then
 	echo "command failed"
 	exit 1
 fi
-# -------------------------------------------------------------------
-echo "-------------------------------------------------------------------"
-cmd="python example_1.py"
-echo $cmd
-if ! $cmd
+echo "----------------------------------------------------------------------"
+list="
+	forward_1
+	forward_2
+	compare_op
+"
+ok="true"
+for name in $list
+do
+	cmd="python $name.py"
+	if ! $cmd
+	then
+		ok="false"
+	fi
+done
+if [ "ok" = "false" ]
 then
-	echo "example_1 failed"
+	echo "At least one test failed."
 	exit 1
 fi
-echo "-------------------------------------------------------------------"
-cmd="python example_2.py"
-echo $cmd
-if ! $cmd
-then
-	echo "example_2 failed"
-	exit 1
-fi
-echo "-------------------------------------------------------------------"
-cmd="python example_3.py"
-echo $cmd
-if ! $cmd
-then
-	echo "example_3 failed"
-	exit 1
-fi
+echo "All the tests passed."
+exit 0
