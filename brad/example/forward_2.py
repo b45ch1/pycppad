@@ -1,5 +1,3 @@
-from cppad import *
-
 def test_forward_2():
   # start recording a_double operations
   a_x = array( [ ad(2) , ad(3) ] )

@@ -1,5 +1,3 @@
-from cppad import *
-
 def test_compare2op():
 	x = ad(ad(2.))
 	y = ad(ad(3.))
@@ -20,4 +18,3 @@ def test_compare2op():
 	assert not x != x
 	assert not x >= y
 	assert not x >  y
-	

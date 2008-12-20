@@ -78,15 +78,12 @@ then
 	exit 1
 fi
 # ----------------------------------------------------------------------------
-cat example/*.py  > test_all_$$.py
-if py.test test_all_$$.py
+echo 'from cppad import *' > test_all.py
+cat example/*.py           >> test_all.py
+if py.test test_all.py
 then
-	rm test_all_$$.py
-	rm test_all_$$.pyc
 	echo "All tests passed."
 	exit 0
 fi
-rm test_all_$$.py
-rm test_all_$$.pyc
 echo "At least one test failed."
 exit 1

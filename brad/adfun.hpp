@@ -13,8 +13,9 @@ namespace pycppad {
 	public:
 		// constructor
 		ADFun(array& x_array, array& y_array);
-		// member function Forward
+		// member functions
 		array Forward(int p, array& xp);
+		array Reverse(int p, array& w);
 	};
 	typedef ADFun<double>    ADFun_double;
 	typedef ADFun<AD_double> ADFun_AD_double;

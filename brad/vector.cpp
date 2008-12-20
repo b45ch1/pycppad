@@ -8,12 +8,21 @@ namespace pycppad {
 vec<double>::vec(array& py_array)
 {	// get array info
 	int* dims_ptr = PyArray_DIMS(py_array.ptr());
-	int ndim      = PyArray_NDIM(py_array.ptr());
 	int length    = dims_ptr[0];
 
 	// check array info
-	assert( ndim == 1 );
-	assert( length >= 0 );
+	PYCPPAD_ASSERT(
+		PyArray_NDIM(py_array.ptr()) == 1 , 
+		"array is not a vector"
+	);
+	PYCPPAD_ASSERT( 
+		PyArray_TYPE(py_array.ptr()) == PyArray_DOUBLE ,
+		"expected array elements of type double"
+	);
+	PYCPPAD_ASSERT( 
+		length >= 0 , 
+		"array length is <= zero"
+	);
 
 	// set private data
 	length_    = static_cast<size_t>( length );
@@ -95,12 +104,22 @@ vec<Scalar>::vec(array& py_array)
 {
 	// get array info
 	int* dims_ptr = PyArray_DIMS(py_array.ptr());
-	int ndim      = PyArray_NDIM(py_array.ptr());
 	int length    = dims_ptr[0];
 
 	// check array info
-	PYCPPAD_ASSERT( ndim == 1 , "Argument is not a vector.");
-	PYCPPAD_ASSERT( length >= 0 , "");
+	PYCPPAD_ASSERT(
+		PyArray_NDIM(py_array.ptr()) == 1 , 
+		"array is not a vector"
+	);
+	PYCPPAD_ASSERT( 
+		PyArray_TYPE(py_array.ptr()) == PyArray_OBJECT ,
+		"expected array elements of type object"
+	);
+	PYCPPAD_ASSERT( 
+		length >= 0 , 
+		"array length is <= zero"
+	);
+
 	// pointer to object
 	object *obj_ptr = static_cast<object*>( 
 		PyArray_DATA(py_array.ptr()) 

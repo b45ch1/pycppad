@@ -19,6 +19,14 @@ namespace pycppad {
 		vec<Base> result = f_.Forward(p_sz, xp_vec);
 		return vector2array(result);
 	}
+	// member function Reverse
+	template <class Base>
+	array ADFun<Base>::Reverse(int p, array& w)
+	{	size_t    p_sz(p);
+		vec<Base> w_vec(w);
+		vec<Base> result = f_.Reverse(p_sz, w_vec);
+		return vector2array(result);
+	}
 	// -------------------------------------------------------------
 	// instantiate instances of ADFun<Base>
 	template class ADFun<double>;

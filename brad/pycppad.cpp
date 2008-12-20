@@ -126,6 +126,7 @@ BOOST_PYTHON_MODULE(pycppad)
 
 	class_<ADFun_double>("adfun_double", init< array& , array& >())
 		.def("forward", &ADFun_double::Forward)
+		.def("reverse", &ADFun_double::Reverse)
 	;
 	// --------------------------------------------------------------------
 	class_<AD_AD_double>("a2double", init<AD_double>())
@@ -134,5 +135,6 @@ BOOST_PYTHON_MODULE(pycppad)
 	;
 	class_<ADFun_AD_double>("adfun_a_double", init< array& , array& >())
 		.def("forward", &ADFun_AD_double::Forward)
+		.def("reverse", &ADFun_AD_double::Reverse)
 	;
 }
