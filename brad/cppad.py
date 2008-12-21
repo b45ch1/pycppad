@@ -37,6 +37,7 @@ def independent(x):
   elif isinstance(x[0], a2double):
     pycppad.independent(x, 2)     # level = 2
   else:
+    print "type(x[j]) = ", type(x[0])
     raise NotImplementedError(
       'independent(x): only implemented where x[j] is a_double or a2double'
     )

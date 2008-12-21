@@ -5,34 +5,34 @@
 # define PY_ARRAY_UNIQUE_SYMBOL PyArrayHandle
 
 # define PYCPPAD_BINARY(op)       \
-	.def(self     op self)         \
-	.def(double() op self)         \
-	.def(self     op double())
-	
+     .def(self     op self)       \
+     .def(double() op self)       \
+     .def(self     op double())
 
-# define PYCPPAD_OPERATOR_LIST    \
-                                       \
-	PYCPPAD_BINARY(+)         \
-	PYCPPAD_BINARY(-)         \
-	PYCPPAD_BINARY(*)         \
-	PYCPPAD_BINARY(/)         \
-                                       \
-	PYCPPAD_BINARY(<)         \
-	PYCPPAD_BINARY(>)         \
-	PYCPPAD_BINARY(<=)        \
-	PYCPPAD_BINARY(>=)        \
-	PYCPPAD_BINARY(==)        \
-	PYCPPAD_BINARY(!=)        \
-                                       \
-	.def(self += self)             \
-	.def(self -= self)             \
-	.def(self *= self)             \
-	.def(self /= self)             \
-                                       \
-	.def(self += double())         \
-	.def(self -= double())         \
-	.def(self *= double())         \
-	.def(self /= double()) 
+
+# define PYCPPAD_OPERATOR_LIST \
+                               \
+     PYCPPAD_BINARY(+)         \
+     PYCPPAD_BINARY(-)         \
+     PYCPPAD_BINARY(*)         \
+     PYCPPAD_BINARY(/)         \
+                               \
+     PYCPPAD_BINARY(<)         \
+     PYCPPAD_BINARY(>)         \
+     PYCPPAD_BINARY(<=)        \
+     PYCPPAD_BINARY(>=)        \
+     PYCPPAD_BINARY(==)        \
+     PYCPPAD_BINARY(!=)        \
+                               \
+     .def(self += self)        \
+     .def(self -= self)        \
+     .def(self *= self)        \
+     .def(self /= self)        \
+                               \
+     .def(self += double())    \
+     .def(self -= double())    \
+     .def(self *= double())    \
+     .def(self /= double()) 
 
 namespace pycppad {
 	// Replacement for the CppAD error handler
@@ -53,9 +53,13 @@ namespace pycppad {
 	// the default CppAD erorr handler 
 	CppAD::ErrorHandler myhandler(error_handler);
 	// -------------------------------------------------------------
+	// Kludge: The vector2array functions should be in vector.cpp 
+	// and vector.hpp, but it seems they also have to me in the same 
+	// file as # define PY_ARRAY_UNIQUE_SYMBOL PyArrayHandle
+	//  
 	array vector2array(const double_vec& vec)
 	{	int n = static_cast<int>( vec.size() );
-		assert( n >= 0 );
+		PYCPPAD_ASSERT( n >= 0 , "");
 
 		object obj(handle<>( PyArray_FromDims(1, &n, PyArray_DOUBLE) ));
 		double *ptr = static_cast<double*> ( PyArray_DATA (
@@ -66,15 +70,51 @@ namespace pycppad {
 		}
 		return  static_cast<array>( obj );
 	}
-	// -------------------------------------------------------------
 	array vector2array(const AD_double_vec& vec)
 	{	int n = static_cast<int>( vec.size() );
-		assert( n >= 0 );
+		PYCPPAD_ASSERT( n >= 0 , "");
 
 		object obj(handle<>( PyArray_FromDims(1, &n, PyArray_OBJECT) ));
 		for(size_t i = 0; i < vec.size(); i++){
 			obj[i] = vec[i];
 		}
+		return  static_cast<array>( obj );
+	}
+	array vector2array(size_t m, size_t n, const double_vec& vec)
+	{
+		PYCPPAD_ASSERT(m * n == vec.size(), "");
+
+		int dims[2];
+		dims[0] = static_cast<int>(m);
+		dims[1] = static_cast<int>(n);
+		PYCPPAD_ASSERT( dims[0] >= 0, "");
+		PYCPPAD_ASSERT( dims[1] >= 0, "");
+		object obj(handle<>( 
+			PyArray_FromDims(2, dims, PyArray_DOUBLE) 
+		));
+		double *ptr = static_cast<double*> ( PyArray_DATA (
+			reinterpret_cast<PyArrayObject*> ( obj.ptr() )
+		));
+		size_t i = vec.size();
+		while(i--)
+			ptr[i] = vec[i];
+		return  static_cast<array>( obj );
+	}
+	array vector2array(size_t m, size_t n, const AD_double_vec& vec)
+	{
+		PYCPPAD_ASSERT(m * n == vec.size(), "");
+
+		int dims[2];
+		dims[0] = static_cast<int>(m);
+		dims[1] = static_cast<int>(n);
+		PYCPPAD_ASSERT( dims[0] >= 0, "");
+		PYCPPAD_ASSERT( dims[1] >= 0, "");
+		object obj(handle<>( 
+			PyArray_FromDims(2, dims, PyArray_OBJECT) 
+		));
+		size_t i = vec.size();
+		while(i--)
+			obj[i] = vec[i];
 		return  static_cast<array>( obj );
 	}
 	// -------------------------------------------------------------
@@ -127,6 +167,7 @@ BOOST_PYTHON_MODULE(pycppad)
 	class_<ADFun_double>("adfun_double", init< array& , array& >())
 		.def("forward", &ADFun_double::Forward)
 		.def("reverse", &ADFun_double::Reverse)
+		.def("jacobian", &ADFun_double::Jacobian)
 	;
 	// --------------------------------------------------------------------
 	class_<AD_AD_double>("a2double", init<AD_double>())
@@ -136,5 +177,6 @@ BOOST_PYTHON_MODULE(pycppad)
 	class_<ADFun_AD_double>("adfun_a_double", init< array& , array& >())
 		.def("forward", &ADFun_AD_double::Forward)
 		.def("reverse", &ADFun_AD_double::Reverse)
+		.def("jacobian", &ADFun_AD_double::Jacobian)
 	;
 }

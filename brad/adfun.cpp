@@ -27,6 +27,15 @@ namespace pycppad {
 		vec<Base> result = f_.Reverse(p_sz, w_vec);
 		return vector2array(result);
 	}
+	// member function Jacobian
+	template <class Base>
+	array ADFun<Base>::Jacobian(array& x)
+	{	vec<Base> x_vec(x);
+		vec<Base> result = f_.Jacobian(x_vec);
+		size_t m = f_.Range();
+		size_t n = f_.Domain();
+		return vector2array(m, n, result);
+	}
 	// -------------------------------------------------------------
 	// instantiate instances of ADFun<Base>
 	template class ADFun<double>;

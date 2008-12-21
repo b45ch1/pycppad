@@ -16,6 +16,7 @@ namespace pycppad {
 		// member functions
 		array Forward(int p, array& xp);
 		array Reverse(int p, array& w);
+		array Jacobian(array& x);
 	};
 	typedef ADFun<double>    ADFun_double;
 	typedef ADFun<AD_double> ADFun_AD_double;
