@@ -47,7 +47,7 @@ def ad(x):
 	Higher AD levels for the argument x are not yet supported.
 	"""	
 	if numpy.isscalar(x):
-		return a_double(x)
+		return a_double(float(x))
 	elif isinstance(x,a_double):
 		return  a2double(x)
 	else:
@@ -57,7 +57,19 @@ def ad(x):
 class adfun_double(_cppad.ADFun_double):
 	"""
 	Create a function object.
-	"""
+	"""	
+	def forward(self, level, x):
+		x = numpy.asarray(x,dtype=float)
+		return self._forward(level, x)
+	
+	def reverse(self, level, x):
+		x = numpy.asarray(x,dtype=float)
+		return self._reverse(level, x)
+	
+	def jacobian(self,x):
+		x = numpy.asarray(x,dtype=float)
+		return self._jacobian(x)
+	
 	def hessian(self, x, w = None):
 		if w == None:
 			w = numpy.array([1.],dtype=float)
@@ -68,15 +80,18 @@ class adfun_double(_cppad.ADFun_double):
 		if not isinstance(w,numpy.ndarray):
 			raise NotImplementedError('Input has to be of type numpy.array!')
 
-		return self.lagrange_hessian(x,w)
-
+		return self._lagrange_hessian(x,w)	
+	
 
 class adfun_ad_double(_cppad.ADFun_AD_double):
 	"""
 	Create a function object.
 	"""
-	pass
-
+	def forward(self, level, x):
+		return self._forward(level, x)
+	
+	def reverse(self, level, x):
+		return self._reverse(level, x)
 
 def adfun(x,y):
 	"""

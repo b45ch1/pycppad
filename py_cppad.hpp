@@ -531,15 +531,15 @@ BOOST_PYTHON_MODULE(_cppad)
 	;
 		
 	class_<ADFun_double>("ADFun_double", init< bpn::array& , bpn::array& >())
-		.def("forward", &ADFun_double::Forward)
-		.def("reverse", &ADFun_double::Reverse)
-		.def("jacobian",  &ADFun_double::Jacobian)
-		.def("lagrange_hessian",  &ADFun_double::Hessian)
+		.def("_forward", &ADFun_double::Forward)
+		.def("_reverse", &ADFun_double::Reverse)
+		.def("_jacobian",  &ADFun_double::Jacobian)
+		.def("_lagrange_hessian",  &ADFun_double::Hessian)
 	;
 
 	class_<ADFun_AD_double>("ADFun_AD_double", init< bpn::array& , bpn::array& >())
-		.def("forward", &ADFun_AD_double::Forward)
-		.def("reverse", &ADFun_AD_double::Reverse)
+		.def("_forward", &ADFun_AD_double::Forward)
+		.def("_reverse", &ADFun_AD_double::Reverse)
 	;
 }
 
