@@ -8,8 +8,13 @@ Example:
 	independent(x)
 	adf = adfun(x,y)
 
+	# univariate Taylor propagation
 	f = adf.forward(0, numpy.array([7.,13.]))
-	g = adf.forward(1, numpy.array([1., 0.]))
+	g1 = adf.forward(1, numpy.array([1., 0.]))
+	g2 = adf.forward(1, numpy.array([0., 1.]))
+	
+	# high level functions
+	H = adf.hessian(numpy.array([7.,13.]))
 
 """
 
@@ -22,12 +27,7 @@ from _cppad import a2double
 
 def independent(x):
 	"""
-	Mark a numpy.array of AD_doubles as independent variables.
-	Example:
-	import numpy
-	import cppad
-	x = numpy.array([ad(2.),ad(3.)])
-	independent(x)
+	Mark an 1D numpy.array of a_doubles or a2doubles as independent variables and start recording.
 	"""
 	if not isinstance(x,numpy.ndarray):
 		raise NotImplementedError('Input has to be of type numpy.array!')
@@ -40,6 +40,12 @@ def independent(x):
 		raise NotImplementedError('Only multilevel taping up to 2 is currently implemented!')
 	
 def ad(x):
+	"""
+	ad(x): returns an object with one higher level of automatic differentiation.
+	If x is an int or double (AD level 0), ad(x) is an a_double (AD level 1).
+	If x is an a_double (AD level 1), ad(x) is an a2double (AD level 2).
+	Higher AD levels for the argument x are not yet supported.
+	"""	
 	if numpy.isscalar(x):
 		return a_double(x)
 	elif isinstance(x,a_double):
@@ -74,10 +80,11 @@ class adfun_ad_double(_cppad.ADFun_AD_double):
 
 def adfun(x,y):
 	"""
-	Creates a function instance from
-	x is a numpy.array of the independent variables
-	y is a numpy.array of the   dependent variables
-
+	f = adfun(x,y)
+	adfun: Stops recording creates a function object f
+	f: function object
+	x: a 1D numpy.array with elements of type float or a_double, a2double,...
+	y: a 1D numpy.array with elements of the same type as x
 	"""
 	if isinstance(x[0], a_double):
 		return adfun_double(x,y)
