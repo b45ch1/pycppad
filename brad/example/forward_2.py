@@ -1,11 +1,11 @@
 def test_forward_2():
   # start recording a_double operations
-  a_x = array( [ ad(2) , ad(3) ] )
-  independent(a_x)
+  x   = array( [ 2. , 3. ] )
+  a_x = independent(x)
 
   # start recording a2double operations
-  a_u = array( [ ad(a_x[0]) , ad(ad(4)) ] )
-  independent(a_u)
+  u   = array( [ a_x[0] , ad(4) ] )
+  a_u = independent(u)
 
   # stop a2double recording and store operations if f
   a_v = array( [ 2. * a_u[0] * a_u[1] ] )

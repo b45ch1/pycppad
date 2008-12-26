@@ -27,19 +27,19 @@ def ad(x):
 
 def independent(x):
   """
-  independent(x): mark x as the independent variable vector and start recording
-  operations that use the class corresponding to the elements of x.
+  a_x = independent(x): create independent variable vector a_x, equal to x,
+  and start recording operations that use the class corresponding to ad( x[0] ).
   """
   if not isinstance(x, numpy.ndarray):
     raise NotImplementedError('independent(x): x is not of type numpy.array')
-  if isinstance(x[0], a_double):
-    pycppad.independent(x, 1)     # level = 1
-  elif isinstance(x[0], a2double):
-    pycppad.independent(x, 2)     # level = 2
+  if isinstance(x[0], float):
+    return pycppad.independent(x, 1)     # level = 1
+  elif isinstance(x[0], a_double):
+    return pycppad.independent(x, 2)     # level = 2
   else:
     print "type(x[j]) = ", type(x[0])
     raise NotImplementedError(
-      'independent(x): only implemented where x[j] is a_double or a2double'
+      'independent(x): only implemented where x[j] is double or a_double'
     )
 class adfun_double(pycppad.adfun_double):
   """

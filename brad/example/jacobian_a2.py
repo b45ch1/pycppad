@@ -7,8 +7,8 @@ def test_jacobian():
     [ 1., 2., 3. ],
     [ 4., 5., 6. ]
   ])
-  a_x = numpy.array( [ ad(ad(0.)), ad(ad(0.)), ad(ad(0.)) ] )
-  independent(a_x)
+  x   = numpy.array( [ ad(0.), ad(0.), ad(0.) ] )
+  a_x = independent(x)
   a_y = numpy.dot(A, a_x)
   f   = adfun(a_x, a_y)
   x   = numpy.array( [ ad(1.), ad(2.), ad(3.) ] )

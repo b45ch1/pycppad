@@ -3,12 +3,12 @@
 def test_reverse_1():
 
   # start record a_double operations
-  ad_x = array( [ ad(2) , ad(3) ] )  # value of independent variables
-  independent(ad_x)                  # declare independent variables
+  x   = array( [ 2. , 3. ] )  # value of independent variables
+  a_x = independent(x)        # declare independent variables
 
   # stop recording and store operations in the function object f
-  ad_y = array( [ 2. * ad_x[0] * ad_x[1] ] ) # dependent variables
-  f = adfun(ad_x, ad_y)                      # f(x0, x1) = 2 * x0 * x1
+  a_y = array( [ 2. * a_x[0] * a_x[1] ] ) # dependent variables
+  f   = adfun(a_x, a_y)                   # f(x0, x1) = 2 * x0 * x1
 
   # evaluate the function at a different argument value
   p  = 0                                 # order zero for function values

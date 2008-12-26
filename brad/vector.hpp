@@ -91,6 +91,7 @@ typedef vec<AD_AD_double> AD_AD_double_vec;
 
 array vector2array(const double_vec& vec);
 array vector2array(const AD_double_vec& vec);
+array vector2array(const AD_AD_double_vec& vec);
 
 array vector2array(size_t m, size_t n, const double_vec& vec);
 array vector2array(size_t m, size_t n, const AD_double_vec& vec);
