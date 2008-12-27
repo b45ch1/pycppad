@@ -37,6 +37,7 @@ echo "# Compile pycppad.cpp --------------------------------------------------"
 #
 object_list=""
 list="
+	vec2array
 	vector
 	adfun
 	pycppad
