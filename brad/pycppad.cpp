@@ -62,11 +62,11 @@ namespace pycppad {
 	// the default CppAD erorr handler 
 	CppAD::ErrorHandler myhandler(error_handler);
 	// -------------------------------------------------------------
-	// Kludge: The vector2array functions should be in vector.cpp 
+	// Kludge: The vec2array functions should be in vector.cpp 
 	// and vector.hpp, but it seems they also have to me in the same 
 	// file as # define PY_ARRAY_UNIQUE_SYMBOL PyArrayHandle
 	//  
-	array vector2array(const double_vec& vec)
+	array vec2array(const double_vec& vec)
 	{	int n = static_cast<int>( vec.size() );
 		PYCPPAD_ASSERT( n >= 0 , "");
 
@@ -79,7 +79,7 @@ namespace pycppad {
 		}
 		return  static_cast<array>( obj );
 	}
-	array vector2array(const AD_double_vec& vec)
+	array vec2array(const AD_double_vec& vec)
 	{
 		int n = static_cast<int>( vec.size() );
 		PYCPPAD_ASSERT( n >= 0 , "");
@@ -90,7 +90,7 @@ namespace pycppad {
 		}
 		return  static_cast<array>( obj );
 	}
-	array vector2array(const AD_AD_double_vec& vec)
+	array vec2array(const AD_AD_double_vec& vec)
 	{	int n = static_cast<int>( vec.size() );
 		PYCPPAD_ASSERT( n >= 0 , "");
 
@@ -100,7 +100,7 @@ namespace pycppad {
 		}
 		return  static_cast<array>( obj );
 	}
-	array vector2array(size_t m, size_t n, const double_vec& vec)
+	array vec2array(size_t m, size_t n, const double_vec& vec)
 	{
 		PYCPPAD_ASSERT(m * n == vec.size(), "");
 
@@ -120,7 +120,7 @@ namespace pycppad {
 			ptr[i] = vec[i];
 		return  static_cast<array>( obj );
 	}
-	array vector2array(size_t m, size_t n, const AD_double_vec& vec)
+	array vec2array(size_t m, size_t n, const AD_double_vec& vec)
 	{
 		PYCPPAD_ASSERT(m * n == vec.size(), "");
 
@@ -152,14 +152,14 @@ namespace pycppad {
 			for(size_t j = 0; j < x.size(); j++)
 				a_x[j] = x[j];
 			CppAD::Independent(a_x);
-			return vector2array(a_x);
+			return vec2array(a_x);
 		}
 		AD_double_vec      x(x_array);
 		AD_AD_double_vec a_x(x.size() );
 		for(size_t j = 0; j < x.size(); j++)
 			a_x[j] = x[j];
 		CppAD::Independent(a_x);
-		return vector2array(a_x);
+		return vec2array(a_x);
 	}
 }
 

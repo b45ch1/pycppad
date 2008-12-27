@@ -17,7 +17,7 @@ namespace pycppad {
 	{	size_t    p_sz(p);
 		vec<Base> xp_vec(xp);
 		vec<Base> result = f_.Forward(p_sz, xp_vec);
-		return vector2array(result);
+		return vec2array(result);
 	}
 	// member function Reverse
 	template <class Base>
@@ -25,7 +25,7 @@ namespace pycppad {
 	{	size_t    p_sz(p);
 		vec<Base> w_vec(w);
 		vec<Base> result = f_.Reverse(p_sz, w_vec);
-		return vector2array(result);
+		return vec2array(result);
 	}
 	// member function Jacobian
 	template <class Base>
@@ -34,7 +34,7 @@ namespace pycppad {
 		vec<Base> result = f_.Jacobian(x_vec);
 		size_t m = f_.Range();
 		size_t n = f_.Domain();
-		return vector2array(m, n, result);
+		return vec2array(m, n, result);
 	}
 	// -------------------------------------------------------------
 	// instantiate instances of ADFun<Base>
