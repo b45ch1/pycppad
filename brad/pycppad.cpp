@@ -35,14 +35,48 @@
      .def(self *= double())    \
      .def(self /= double()) 
 
-// Kludge: STD_MATH is only working as a member function (so far)
-// (so have only implemented on function for testing new ideas)
-# define PYCPPAD_STD_MATH_LINK(Base)                                \
-     CppAD::AD<Base> (* sin_AD_##Base) (const CppAD::AD<Base> &x) = \
-          &CppAD::sin<Base>;
+# define PYCPPAD_STD_MATH_LINK(Base)                                   \
+     CppAD::AD<Base> (* acos_AD_##Base) (const CppAD::AD<Base> &x) =   \
+          CppAD::acos<Base>;                                           \
+     CppAD::AD<Base> (* asin_AD_##Base) (const CppAD::AD<Base> &x) =   \
+          CppAD::asin<Base>;                                           \
+     CppAD::AD<Base> (* atan_AD_##Base) (const CppAD::AD<Base> &x) =   \
+          CppAD::atan<Base>;                                           \
+     CppAD::AD<Base> (* cos_AD_##Base) (const CppAD::AD<Base> &x) =    \
+          CppAD::cos<Base>;                                            \
+     CppAD::AD<Base> (* cosh_AD_##Base) (const CppAD::AD<Base> &x) =   \
+          CppAD::cosh<Base>;                                           \
+     CppAD::AD<Base> (* exp_AD_##Base) (const CppAD::AD<Base> &x) =    \
+          CppAD::exp<Base>;                                            \
+     CppAD::AD<Base> (* log_AD_##Base) (const CppAD::AD<Base> &x) =    \
+          CppAD::log<Base>;                                            \
+     CppAD::AD<Base> (* log10_AD_##Base) (const CppAD::AD<Base> &x) =  \
+          CppAD::log10<Base>;                                          \
+     CppAD::AD<Base> (* sin_AD_##Base) (const CppAD::AD<Base> &x) =    \
+          CppAD::sin<Base>;                                            \
+     CppAD::AD<Base> (* sinh_AD_##Base) (const CppAD::AD<Base> &x) =   \
+          CppAD::sinh<Base>;                                           \
+     CppAD::AD<Base> (* sqrt_AD_##Base) (const CppAD::AD<Base> &x) =   \
+          CppAD::sqrt<Base>;                                           \
+     CppAD::AD<Base> (* tan_AD_##Base) (const CppAD::AD<Base> &x) =    \
+          CppAD::tan<Base>;                                            \
+     CppAD::AD<Base> (* tanh_AD_##Base) (const CppAD::AD<Base> &x) =   \
+          CppAD::tanh<Base>; 
 
-# define PYCPPAD_STD_MATH_LIST(Base)   \
-     .def("sin",  sin_AD_##Base)
+# define PYCPPAD_STD_MATH_LIST(Base)     \
+     .def("arccos",  acos_AD_##Base)     \
+     .def("arcsin",  asin_AD_##Base)     \
+     .def("arctan",  atan_AD_##Base)     \
+     .def("cos",     cos_AD_##Base)      \
+     .def("cosh",    cosh_AD_##Base)     \
+     .def("exp",     exp_AD_##Base)      \
+     .def("log",     log_AD_##Base)      \
+     .def("log10",   log10_AD_##Base)    \
+     .def("sin",     sin_AD_##Base)      \
+     .def("sinh",    sinh_AD_##Base)     \
+     .def("sqrt",    sqrt_AD_##Base)     \
+     .def("tan",     tan_AD_##Base)      \
+     .def("tanh",    tanh_AD_##Base)
 
 namespace pycppad {
 	// Replacement for the CppAD error handler

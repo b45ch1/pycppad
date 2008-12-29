@@ -4,8 +4,22 @@ CppAD to evaluate derivatives of arbitrary order.
 """
 
 import numpy
-import pycppad
 from numpy import array
+from numpy import arccos
+from numpy import arcsin
+from numpy import arctan
+from numpy import cos
+from numpy import cosh
+from numpy import exp
+from numpy import log
+from numpy import log10
+from numpy import sin
+from numpy import sinh
+from numpy import sqrt
+from numpy import tan
+from numpy import tanh
+
+import pycppad
 from pycppad import a_double
 from pycppad import a2double
 
