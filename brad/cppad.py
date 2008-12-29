@@ -4,6 +4,8 @@ CppAD to evaluate derivatives of arbitrary order.
 """
 
 import numpy
+from numpy import double
+
 from numpy import array
 from numpy import arccos
 from numpy import arcsin
@@ -46,7 +48,7 @@ def independent(x):
   """
   if not isinstance(x, numpy.ndarray):
     raise NotImplementedError('independent(x): x is not of type numpy.array')
-  if isinstance(x[0], float):
+  if isinstance(x[0], double):
     return pycppad.independent(x, 1)     # level = 1
   elif isinstance(x[0], a_double):
     return pycppad.independent(x, 2)     # level = 2
