@@ -1,5 +1,6 @@
 # include "adfun.hpp"
 # include "vector.hpp"
+# include "vec2array.hpp"
 
 namespace pycppad {
 	// -------------------------------------------------------------

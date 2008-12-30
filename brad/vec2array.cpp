@@ -2,8 +2,10 @@
 
 # define PY_ARRAY_UNIQUE_SYMBOL PyArray_Pycppad
 
+# define PYCPPAD_DEBUG_ISSUES
+
 namespace pycppad {
-array vec2array(const double_vec& vec)
+array vec2array(double_vec& vec)
 {	int n = static_cast<int>( vec.size() );
 	PYCPPAD_ASSERT( n >= 0 , "");
 
@@ -16,7 +18,7 @@ array vec2array(const double_vec& vec)
 	}
 	return  static_cast<array>( obj );
 }
-array vec2array(const AD_double_vec& vec)
+array vec2array(AD_double_vec& vec)
 {
 	int n = static_cast<int>( vec.size() );
 	PYCPPAD_ASSERT( n >= 0 , "");
@@ -27,7 +29,7 @@ array vec2array(const AD_double_vec& vec)
 	}
 	return  static_cast<array>( obj );
 }
-array vec2array(const AD_AD_double_vec& vec)
+array vec2array(AD_AD_double_vec& vec)
 {	int n = static_cast<int>( vec.size() );
 	PYCPPAD_ASSERT( n >= 0 , "");
 
@@ -37,7 +39,7 @@ array vec2array(const AD_AD_double_vec& vec)
 	}
 	return  static_cast<array>( obj );
 }
-array vec2array(size_t m, size_t n, const double_vec& vec)
+array vec2array(size_t m, size_t n, double_vec& vec)
 {
 	PYCPPAD_ASSERT(m * n == vec.size(), "");
 
@@ -57,7 +59,7 @@ array vec2array(size_t m, size_t n, const double_vec& vec)
 		ptr[i] = vec[i];
 	return  static_cast<array>( obj );
 }
-array vec2array(size_t m, size_t n, const AD_double_vec& vec)
+array vec2array(size_t m, size_t n, AD_double_vec& vec)
 {
 	PYCPPAD_ASSERT(m * n == vec.size(), "");
 
@@ -70,8 +72,13 @@ array vec2array(size_t m, size_t n, const AD_double_vec& vec)
 		PyArray_FromDims(2, dims, PyArray_OBJECT) 
 	));
 	size_t i = vec.size();
-	while(i--)
+	for(i = 0; i < vec.size(); i++)
+	{
+# ifdef PYCPPAD_DEBUG_ISSUES
+std::cout << "vec2array: i = " << i << std::endl;
+# endif
 		obj[i] = vec[i];
+	}
 	return  static_cast<array>( obj );
 }
 // ========================================================================
