@@ -43,7 +43,10 @@ def ad(x):
 
 def array(x) :
   """
-  array(x): converts a list or tuple to an array of doubles
+  array(x): converts a list or tuple to an array.
+  If the elements of x are int, float, or double, the elements of the 
+  array are doubles.
+  Otherwise the elements of the array are the same type as the elements of x.
   """
   type_x0 = type(x[0])
   if type_x0 == int or type_x0 == float or type_x0 == double :
