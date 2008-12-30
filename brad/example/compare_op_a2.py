@@ -1,6 +1,6 @@
 # Comparision operators with type a2double
 
-def test_compare2op():
+def test_compare_op_a2():
 	x = ad(ad(2.))
 	y = ad(ad(3.))
 	z = ad(ad(2.))

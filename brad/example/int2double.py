@@ -1,8 +1,6 @@
 # converting integer to double arrays
 
 def test_int2double():
-  # A = [ 0 1 2 ]  f(x) = A * x
-  #     [ 3 4 5 ]
   A   = array([ 
     [ 1, 2, 3 ],
     [ 4, 5, 6 ]
