@@ -1,8 +1,5 @@
 # jacobian result with type a_double
 
-
-from cppad import *
-
 def test_jacobian_a2():
   print "This test fails and hence has been moved from example/jacobian_a2.py"
   print "to issues.py. The indexing error seems to occur in vec2array.cpp"
@@ -18,5 +15,3 @@ def test_jacobian_a2():
   x   = array( [ ad(1.), ad(2.), ad(3.) ] )
   J   = f.jacobian(x)
   assert numpy.all( A == J )
-
-test_jacobian_a2()

@@ -12,6 +12,13 @@ namespace pycppad {
 
 		f_.Dependent(x_vec, y_vec);
 	}
+	// member functions Domain and Range
+	template <class Base>
+	int ADFun<Base>::Domain(void)
+	{	return static_cast<int>( f_.Domain() ); }
+	template <class Base>
+	int ADFun<Base>::Range(void)
+	{	return static_cast<int>( f_.Range() ); }
 	// member function Forward
 	template <class Base>
 	array ADFun<Base>::Forward(int p, array& xp)
@@ -33,9 +40,7 @@ namespace pycppad {
 	array ADFun<Base>::Jacobian(array& x)
 	{	vec<Base> x_vec(x);
 		vec<Base> result = f_.Jacobian(x_vec);
-		size_t m = f_.Range();
-		size_t n = f_.Domain();
-		return vec2array(m, n, result);
+		return vec2array(result);
 	}
 	// -------------------------------------------------------------
 	// instantiate instances of ADFun<Base>

@@ -14,6 +14,8 @@ namespace pycppad {
 		// constructor
 		ADFun(array& x_array, array& y_array);
 		// member functions
+		int   Domain(void);
+		int   Range(void);
 		array Forward(int p, array& xp);
 		array Reverse(int p, array& w);
 		array Jacobian(array& x);

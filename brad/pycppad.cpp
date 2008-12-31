@@ -156,9 +156,11 @@ BOOST_PYTHON_MODULE(pycppad)
 	;
 
 	class_<ADFun_double>("adfun_double", init< array& , array& >())
-		.def("forward", &ADFun_double::Forward)
-		.def("reverse", &ADFun_double::Reverse)
-		.def("jacobian", &ADFun_double::Jacobian)
+		.def("domain",    &ADFun_double::Domain)
+		.def("range",     &ADFun_double::Range)
+		.def("forward",   &ADFun_double::Forward)
+		.def("reverse",   &ADFun_double::Reverse)
+		.def("jacobian_", &ADFun_double::Jacobian)
 	;
 	// --------------------------------------------------------------------
 	class_<AD_AD_double>("a2double", init<AD_double>())
@@ -167,8 +169,10 @@ BOOST_PYTHON_MODULE(pycppad)
 		PYCPPAD_STD_MATH_LIST(AD_double)
 	;
 	class_<ADFun_AD_double>("adfun_a_double", init< array& , array& >())
-		.def("forward", &ADFun_AD_double::Forward)
-		.def("reverse", &ADFun_AD_double::Reverse)
-		.def("jacobian", &ADFun_AD_double::Jacobian)
+		.def("domain",    &ADFun_AD_double::Domain)
+		.def("range",     &ADFun_AD_double::Range)
+		.def("forward",   &ADFun_AD_double::Forward)
+		.def("reverse",   &ADFun_AD_double::Reverse)
+		.def("jacobian_", &ADFun_AD_double::Jacobian)
 	;
 }

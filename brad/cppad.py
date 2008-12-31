@@ -71,16 +71,20 @@ def independent(x):
       'independent(x): only implemented where x[j] is double or a_double'
     )
 
-class adfun_double(pycppad.adfun_double):
+class adfun_double(pycppad.adfun_double) :
   """
   Create a function object that evaluates using double.
   """
+  def jacobian(self, x) :
+    return self.jacobian_(x).reshape(self.range(), self.domain())
   pass
 
-class adfun_a_double(pycppad.adfun_a_double):
+class adfun_a_double(pycppad.adfun_a_double) :
   """
   Create a function object that evaluates using a_double.
   """
+  def jacobian(self, x) :
+    return self.jacobian_(x).reshape(self.range(), self.domain())
   pass
 
 def adfun(x,y):
