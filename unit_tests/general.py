@@ -177,7 +177,18 @@ def test_trigonometic_functions():
 	af = adfun(ax, ay)
 	J = af.jacobian(x)
 	assert numpy.prod( numpy.diag( numpy.cos(x)) == J)
-
+	
+	# arccos
+	az = numpy.array( [ad(i) for i in numpy.linspace(-0.9,0.9,N)])
+	z  = numpy.array( [   i  for i in numpy.linspace(-0.9,0.9,N)])
+	independent(az)
+	ay = numpy.arccos(az)
+	af = adfun(az, ay)
+	J = af.jacobian(z)
+	
+	# v = d/dx arcos(x)
+	v = -1./numpy.sqrt(1.-z**2)	
+	assert numpy.prod( numpy.diag(v) == J)
 
 def test_pow():
 	ax = numpy.array( [ ad(3), ad(2.)] )

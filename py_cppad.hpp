@@ -464,10 +464,6 @@ BOOST_PYTHON_MODULE(_cppad)
 	.def(self     op self)         \
 	.def(double() op self)         \
 	.def(self     op double())
-
-	# define PYCPPAD_UNARY(op,Base)       \
-	.def(#op,     op##_AD_##Base)
-
 	
 	# define PYCPPAD_OPERATOR_LIST(Base)    \
 	PYCPPAD_BINARY(+)         \
@@ -489,19 +485,19 @@ BOOST_PYTHON_MODULE(_cppad)
 	.def(self *= double())         \
 	.def(self /= double())        \
                                   \
-	PYCPPAD_UNARY(asin,Base)      \
-	PYCPPAD_UNARY(acos,Base)      \
-	PYCPPAD_UNARY(atan,Base)      \
-	PYCPPAD_UNARY(cos,Base)      \
-	PYCPPAD_UNARY(cosh,Base)      \
-	PYCPPAD_UNARY(exp,Base)      \
-	PYCPPAD_UNARY(log,Base)      \
-	PYCPPAD_UNARY(log10,Base)      \
-	PYCPPAD_UNARY(sin,Base)      \
-	PYCPPAD_UNARY(sinh,Base)      \
-	PYCPPAD_UNARY(sqrt,Base)      \
-	PYCPPAD_UNARY(tan,Base)      \
-	PYCPPAD_UNARY(tanh,Base)
+	.def("arccos",  acos_AD_##Base)     \
+	.def("arcsin",  asin_AD_##Base)     \
+	.def("arctan",  atan_AD_##Base)     \
+	.def("cos",     cos_AD_##Base)      \
+	.def("cosh",    cosh_AD_##Base)     \
+	.def("exp",     exp_AD_##Base)      \
+	.def("log",     log_AD_##Base)      \
+	.def("log10",   log10_AD_##Base)    \
+	.def("sin",     sin_AD_##Base)      \
+	.def("sinh",    sinh_AD_##Base)     \
+	.def("sqrt",    sqrt_AD_##Base)     \
+	.def("tan",     tan_AD_##Base)      \
+	.def("tanh",    tanh_AD_##Base)
 
 
 	class_<AD_double>("a_double", init<double>())
