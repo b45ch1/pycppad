@@ -27,14 +27,14 @@ from _cppad import a2double
 
 def independent(x):
 	"""
-	Mark an 1D numpy.array of a_doubles or a2doubles as independent variables and start recording.
+	a_x = independent(x): create independent variable vector a_x, equal to x, and start recording operations that use the class corresponding to ad( x[0] ).
 	"""
 	if not isinstance(x,numpy.ndarray):
 		raise NotImplementedError('Input has to be of type numpy.array!')
 	
-	if isinstance(x[0],a_double):
+	if isinstance(x[0],float):
 		return _cppad.Independent(x,1)
-	elif isinstance(x[0], a2double):
+	elif isinstance(x[0], a_double):
 		return _cppad.Independent(x,2)
 	else:
 		raise NotImplementedError('Only multilevel taping up to 2 is currently implemented!')

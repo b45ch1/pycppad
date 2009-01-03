@@ -94,11 +94,10 @@ def test_ad():
 	assert not x >  y
 	
 def test_array_element_type_is_int():
-	a_x = numpy.array( [ ad(1) ] )
-	independent(a_x)
-	a_y = a_x
-	f = adfun(a_x, a_y) 
-	x = numpy.array( [ 1 ] )
+	x = numpy.array([1.])
+	ax = independent(x)
+	a_y = ax
+	f = adfun(ax, a_y) 
 	y = f.forward(0, x) 
 	assert y[0] == 1
 	
@@ -156,15 +155,19 @@ def test_ad_a_double_variable_info():
 	assert x.value == 13.
 	assert x.id == 1
 	assert x.taddr == 0	
+
+
+	
 	
 	
 def test_trigonometic_functions():
 	N = 5
-	ax = numpy.array( [ ad(2.*n*numpy.pi/N) for n in range(N) ] )
+	#ax = numpy.array( [ ad(2.*n*numpy.pi/N) for n in range(N) ] )
 	x  = numpy.array( [ 2.*n*numpy.pi/N     for n in range(N) ] )
+	ax = independent(x)
 	
 	# cos
-	independent(ax)
+	ax = independent(x)
 	ay = numpy.cos(ax)
 	af = adfun(ax, ay)
 	J = af.jacobian(x)
@@ -172,16 +175,15 @@ def test_trigonometic_functions():
 	assert numpy.sum( abs( numpy.diag( numpy.sin(x)) + J)) == 0
 	
 	# sin
-	independent(ax)
+	ax = independent(x)
 	ay = numpy.sin(ax)
 	af = adfun(ax, ay)
 	J = af.jacobian(x)
 	assert numpy.prod( numpy.diag( numpy.cos(x)) == J)
 	
 	# arccos
-	az = numpy.array( [ad(i) for i in numpy.linspace(-0.9,0.9,N)])
 	z  = numpy.array( [   i  for i in numpy.linspace(-0.9,0.9,N)])
-	independent(az)
+	az = independent(z)
 	ay = numpy.arccos(az)
 	af = adfun(az, ay)
 	J = af.jacobian(z)
@@ -191,26 +193,21 @@ def test_trigonometic_functions():
 	assert numpy.prod( numpy.diag(v) == J)
 
 def test_pow():
-	ax = numpy.array( [ ad(3), ad(2.)] )
 	x  = numpy.array( [ 3., 2.] )
-	independent(ax)
+	ax = independent(x)
 	ay = numpy.array([ ax[0]**2, ax[1]**2, ax[0]**2., ax[1]**2., ax[0]**0.5, ax[1]**0.5, ax[0]**ad(2), ax[1]**ad(2)])
 	y = numpy.array([ x[0]**2, x[1]**2, x[0]**2., x[1]**2., x[0]**0.5, x[1]**0.5, x[0]**2, x[1]**2])
 	
 	assert numpy.prod(ay == y)
-	
-	
-
 
 def test_multi_level_taping_and_higher_order_forward_derivatives():
 	ok = True
 	level = 1
-	ad_x = numpy.array( [ ad(2) , ad(3) ] )
-	independent(ad_x)
+	x = numpy.array( [ 2. , 3. ] )
+	ad_x = independent(x)
 	# declare level two independent variable vector and start level two recording
 	level = 2
-	ad_ad_x = numpy.array( [ ad(ad_x[0]) , ad(ad_x[1]) ] )
-	independent(ad_ad_x)
+	ad_ad_x = independent(ad_x)
 	# declare level 2 dependent variable vector and stop level 2 recording
 	ad_ad_y = numpy.array( [ 2. * ad_ad_x[0] * ad_ad_x[1] ] )
 	ad_f = adfun(ad_ad_x, ad_ad_y) # f(x0, x1) = 2. * x0 * x1
@@ -247,10 +244,10 @@ def test_multi_level_taping_and_higher_order_forward_derivatives():
 def test_multi_level_taping_and_higher_order_reverse_derivatives():
 
 	# domain space vector
-	ax = numpy.array([ad(0.), ad(1.)])
+	x = numpy.array([0.,1.])
 
 	# declare independent variables and start recording
-	independent(ax);
+	ax = independent(x)
 
 	ay = numpy.array([ax[0] * ax[0] * ax[1]])
 
@@ -288,8 +285,8 @@ def test_jacobian():
 	def f(x):
 		return numpy.dot(A,x)
 	
-	ax = numpy.array([ad(0.) for n in range(N) ])
-	independent(ax)
+	x = numpy.array([0. for n in range(N) ])
+	ax = independent(x)
 	ay = f(ax)
 	af = adfun (ax, ay);
 	x = numpy.array([1. for n in range(N)])
@@ -304,8 +301,8 @@ def test_hessian():
 	def f(x):
 		return numpy.array([0.5* numpy.dot(x,numpy.dot(A,x))])
 	
-	ax = numpy.array([ad(0.) for n in range(N) ])
-	independent(ax)
+	x = numpy.array([0. for n in range(N) ])
+	ax = independent(x)
 	ay = f(ax)
 	af = adfun (ax, ay);
 	x = numpy.array([1. for n in range(N)])

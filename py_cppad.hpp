@@ -384,14 +384,23 @@ namespace{
 	typedef ADFun<double> ADFun_double;
 	typedef ADFun<AD_double> ADFun_AD_double;
 
-	void Independent(bpn::array& x_array, int level){
-		if( level == 1){
-			AD_double_vec x_vec(x_array);
-			CppAD::Independent(x_vec);
+	bpn::array Independent(bpn::array& x_array, int level){
+		if( level == 1 ){
+			double_vec      x(x_array);
+			AD_double_vec a_x(x.size() );
+			for(size_t j = 0; j < x.size(); j++){
+				a_x[j] = x[j];
+			}
+			CppAD::Independent(a_x);
+			return vector2array(a_x);
 		}
-		else if(level == 2){
-			AD_AD_double_vec x_vec(x_array);
-			CppAD::Independent(x_vec);
+		else if( level > 1){
+			AD_double_vec      x(x_array);
+			AD_AD_double_vec a_x(x.size() );
+			for(size_t j = 0; j < x.size(); j++)
+				a_x[j] = x[j];
+			CppAD::Independent(a_x);
+			return vector2array(a_x);
 		}
 		else{
 			CppAD::ErrorHandler::Call(1, __LINE__, __FILE__, "Independent(array& x_array, int level)\n", "This level is not supported!\n" );
