@@ -7,8 +7,9 @@ import numpy
 
 def test_numpy_array_data_type() :
 	my_list  = [1 , 2 ]
-	my_array = numpy.asarray(my_list, dtype=float)
-	assert type( my_array[0] ) == float
+	my_array = numpy.asarray(my_list, dtype=numpy.float64)
+	
+	assert type( my_array[0] ) == numpy.float64
 	
 	
 def test_independent_exception_handling():
