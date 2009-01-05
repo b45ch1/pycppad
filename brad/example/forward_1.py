@@ -2,7 +2,7 @@
 
 def test_forward_1():
 
-  # start record a_double operations
+  # start record a_float operations
   x   = array( [ 2., 3. ] )  # value of independent variables
   a_x = independent(x)       # declare independent variables
 

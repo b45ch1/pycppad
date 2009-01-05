@@ -1,9 +1,6 @@
-# jacobian result with type a_double
+# jacobian result with type a_float
 
 def test_jacobian_a2():
-  print "This test fails and hence has been moved from example/jacobian_a2.py"
-  print "to issues.py. The indexing error seems to occur in vec2array.cpp"
-  print "where some output statements have been added to help with debugging."
   A   = array([ 
     [ 1., 2., 3. ],
     [ 4., 5., 6. ]

@@ -35,35 +35,38 @@
      .def(self *= double())    \
      .def(self /= double()) 
 
-# define PYCPPAD_STD_MATH_LINK(Base)                                   \
-     CppAD::AD<Base> (* acos_AD_##Base) (const CppAD::AD<Base> &x) =   \
-          CppAD::acos<Base>;                                           \
-     CppAD::AD<Base> (* asin_AD_##Base) (const CppAD::AD<Base> &x) =   \
-          CppAD::asin<Base>;                                           \
-     CppAD::AD<Base> (* atan_AD_##Base) (const CppAD::AD<Base> &x) =   \
-          CppAD::atan<Base>;                                           \
-     CppAD::AD<Base> (* cos_AD_##Base) (const CppAD::AD<Base> &x) =    \
-          CppAD::cos<Base>;                                            \
-     CppAD::AD<Base> (* cosh_AD_##Base) (const CppAD::AD<Base> &x) =   \
-          CppAD::cosh<Base>;                                           \
-     CppAD::AD<Base> (* exp_AD_##Base) (const CppAD::AD<Base> &x) =    \
-          CppAD::exp<Base>;                                            \
-     CppAD::AD<Base> (* log_AD_##Base) (const CppAD::AD<Base> &x) =    \
-          CppAD::log<Base>;                                            \
-     CppAD::AD<Base> (* log10_AD_##Base) (const CppAD::AD<Base> &x) =  \
-          CppAD::log10<Base>;                                          \
-     CppAD::AD<Base> (* sin_AD_##Base) (const CppAD::AD<Base> &x) =    \
-          CppAD::sin<Base>;                                            \
-     CppAD::AD<Base> (* sinh_AD_##Base) (const CppAD::AD<Base> &x) =   \
-          CppAD::sinh<Base>;                                           \
-     CppAD::AD<Base> (* sqrt_AD_##Base) (const CppAD::AD<Base> &x) =   \
-          CppAD::sqrt<Base>;                                           \
-     CppAD::AD<Base> (* tan_AD_##Base) (const CppAD::AD<Base> &x) =    \
-          CppAD::tan<Base>;                                            \
-     CppAD::AD<Base> (* tanh_AD_##Base) (const CppAD::AD<Base> &x) =   \
-          CppAD::tanh<Base>; 
+# define PYCPPAD_UNARY_FUNCTION(Name, Base)                              \
+     CppAD::AD<Base> (* Name##_AD_##Base ) (const CppAD::AD<Base> &x ) = \
+          CppAD::Name<Base>; 
 
-# define PYCPPAD_STD_MATH_LIST(Base)     \
+# define PYCPPAD_STD_MATH_LINK_CPP(Base)   \
+     PYCPPAD_UNARY_FUNCTION(acos,  Base)   \
+     PYCPPAD_UNARY_FUNCTION(asin,  Base)   \
+     PYCPPAD_UNARY_FUNCTION(atan,  Base)   \
+     PYCPPAD_UNARY_FUNCTION(cos,   Base)   \
+     PYCPPAD_UNARY_FUNCTION(cosh,  Base)   \
+     PYCPPAD_UNARY_FUNCTION(exp,   Base)   \
+     PYCPPAD_UNARY_FUNCTION(log,   Base)   \
+     PYCPPAD_UNARY_FUNCTION(log10, Base)   \
+     PYCPPAD_UNARY_FUNCTION(sin,   Base)   \
+     PYCPPAD_UNARY_FUNCTION(sinh,  Base)   \
+     PYCPPAD_UNARY_FUNCTION(sqrt,  Base)   \
+     PYCPPAD_UNARY_FUNCTION(tan,   Base)   \
+     PYCPPAD_UNARY_FUNCTION(tanh,  Base) 
+
+# define PYCPPAD_POW_LINK_CPP(Base)                                         \
+     CppAD::AD<Base> (* pow_AD_##Base##_AD_##Base)                          \
+     (const CppAD::AD<Base> &x, const CppAD::AD<Base> & y ) = &CppAD::pow;  \
+     CppAD::AD<Base> (* pow_double_AD_##Base)                               \
+     (const double &x, const CppAD::AD<Base> &y ) = &CppAD::pow;            \
+     CppAD::AD<Base> (* pow_AD_##Base##_double)                             \
+     (const CppAD::AD<Base> &x, const double &y ) = &CppAD::pow;            \
+     CppAD::AD<Base> (* pow_int_AD_##Base)                                  \
+     (const int &x, const CppAD::AD<Base> &y ) = &CppAD::pow;               \
+     CppAD::AD<Base> (* pow_AD_##Base##_int)                                \
+     (const CppAD::AD<Base> &x, const int &y ) = &CppAD::pow;
+
+# define PYCPPAD_STD_MATH_LINK_PY(Base)  \
      .def("arccos",  acos_AD_##Base)     \
      .def("arcsin",  asin_AD_##Base)     \
      .def("arctan",  atan_AD_##Base)     \
@@ -77,6 +80,13 @@
      .def("sqrt",    sqrt_AD_##Base)     \
      .def("tan",     tan_AD_##Base)      \
      .def("tanh",    tanh_AD_##Base)
+
+# define PYCPPAD_POW_LINK_PY(Base)              \
+     .def("__pow__", pow_AD_##Base##_AD_##Base) \
+     .def("__pow__", pow_double_AD_##Base)      \
+     .def("__pow__", pow_AD_##Base##_double)    \
+     .def("__pow__", pow_int_AD_##Base)         \
+     .def("__pow__", pow_AD_##Base##_int)
 
 namespace pycppad {
 	// Replacement for the CppAD error handler
@@ -120,6 +130,11 @@ namespace pycppad {
 		CppAD::Independent(a_x);
 		return vec2array(a_x);
 	}
+	// -------------------------------------------------------------
+	double double_(const AD_double& x)
+	{	return Value(x); }
+	AD_double AD_double_(const AD_AD_double& x)
+	{	return Value(x); }
 }
 
 BOOST_PYTHON_MODULE(pycppad)
@@ -128,8 +143,13 @@ BOOST_PYTHON_MODULE(pycppad)
 	typedef CppAD::AD<double>    AD_double;
 	typedef CppAD::AD<AD_double> AD_AD_double;
 
-	PYCPPAD_STD_MATH_LINK(double);
-	PYCPPAD_STD_MATH_LINK(AD_double);
+	PYCPPAD_STD_MATH_LINK_CPP(double);
+	PYCPPAD_POW_LINK_CPP(double);
+	PYCPPAD_UNARY_FUNCTION(abs, double);
+
+	PYCPPAD_STD_MATH_LINK_CPP(AD_double);
+	PYCPPAD_POW_LINK_CPP(AD_double);
+	PYCPPAD_UNARY_FUNCTION(abs, AD_double);
 
 	// here are the things we are using from boost::python
 	using boost::python::numeric::array;
@@ -137,8 +157,8 @@ BOOST_PYTHON_MODULE(pycppad)
 	using boost::python::init;
 	using boost::python::self;
 	using boost::python::self_ns::str;
+	using boost::python::def;
 
-	using pycppad::Independent;
 	using pycppad::ADFun_double;
 	using pycppad::ADFun_AD_double;
 
@@ -147,15 +167,19 @@ BOOST_PYTHON_MODULE(pycppad)
 	pycppad::vec2array_import_array();
 	array::set_module_and_type("numpy", "ndarray");
 	// --------------------------------------------------------------------
-	def("independent", &Independent);
+	def("independent", pycppad::Independent);
+	def("float_",     pycppad::double_);
+	def("a_float_",   pycppad::AD_double_);
 	// --------------------------------------------------------------------
-	class_<AD_double>("a_double", init<double>())
+	class_<AD_double>("a_float", init<double>())
 		.def(str(self))
 		PYCPPAD_OPERATOR_LIST
-		PYCPPAD_STD_MATH_LIST(double)
+		PYCPPAD_STD_MATH_LINK_PY(double)
+		PYCPPAD_POW_LINK_PY(double)
+		.def("abs",  abs_AD_double)
 	;
 
-	class_<ADFun_double>("adfun_double", init< array& , array& >())
+	class_<ADFun_double>("adfun_float", init< array& , array& >())
 		.def("domain",    &ADFun_double::Domain)
 		.def("range",     &ADFun_double::Range)
 		.def("forward",   &ADFun_double::Forward)
@@ -163,12 +187,14 @@ BOOST_PYTHON_MODULE(pycppad)
 		.def("jacobian_", &ADFun_double::Jacobian)
 	;
 	// --------------------------------------------------------------------
-	class_<AD_AD_double>("a2double", init<AD_double>())
+	class_<AD_AD_double>("a2float", init<AD_double>())
 		.def(str(self))
 		PYCPPAD_OPERATOR_LIST
-		PYCPPAD_STD_MATH_LIST(AD_double)
+		PYCPPAD_STD_MATH_LINK_PY(AD_double)
+		PYCPPAD_POW_LINK_PY(AD_double)
+		.def("abs",  abs_AD_AD_double)
 	;
-	class_<ADFun_AD_double>("adfun_a_double", init< array& , array& >())
+	class_<ADFun_AD_double>("adfun_a_float", init< array& , array& >())
 		.def("domain",    &ADFun_AD_double::Domain)
 		.def("range",     &ADFun_AD_double::Range)
 		.def("forward",   &ADFun_AD_double::Forward)

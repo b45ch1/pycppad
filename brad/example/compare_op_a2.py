@@ -1,4 +1,4 @@
-# Comparision operators with type a2double
+# Comparision operators with type a2float
 
 def test_compare_op_a2():
 	x = ad(ad(2.))

@@ -1,0 +1,58 @@
+$begin pycppad$$
+$spell
+	pycppad
+	cppad
+$$
+
+$section pycppad-20090104: A Python Algorithm Derivative Package$$
+
+$index AD, python$$
+$index python, AD$$
+$index algorithmic differentiation, python$$
+$index automatic differentiation, python$$
+$index pycppad$$
+
+$table
+$cnext
+	Manual split into sections $pre  $$ $cnext
+	Manual as one web page
+$rnext
+Math displayed using Latex $pre  $$ $cnext
+	$href/pycppad.htm/$$ $pre  $$ $cnext
+	$href/_printable.htm/$$
+$rnext
+Math displayed using MathML $pre  $$ $cnext
+	$href/pycppad.xml/$$ $pre  $$ $cnext
+	$href/_printable.xml/$$
+$tend
+
+$head Syntax$$
+$codei%from cppad import *%$$
+
+$head Purpose$$
+The command above imports a 
+$href%http://www.boost.org%boost python%$$
+interface to the C++ 
+$href%
+	http://en.wikipedia.org/wiki/Automatic_differentiation%
+	Algorithmic Differentiation (AD)
+%$$
+package
+$href%http://www.coin-or.org/CppAD/CppAD/%CppAD%$$. 
+
+$head Features$$
+Operator overloading is used to store the operation sequence
+corresponding to a python algorithm.
+The operation sequence can be evaluated 
+to obtain new function values or derivatives of arbitrary order.
+In addition, multiple levels of AD are supported.
+This means that AD derivatives can be used in the definition of a function
+which in true can be differentiated using AD.
+See $cref/whats_new_09/$$ for a list of recent extensions and bug fixes.
+
+$childtable%
+	cppad.py%
+	omh/whats_new_09.omh
+%$$
+
+$end

@@ -32,7 +32,43 @@ then
 	echo "Must change python_version in pycppad.sh"
 	exit 1
 fi
+rm pycppad.tmp
 # -------------------------------------------------------------------
+echo "# Build documentation --------------------------------------------------"
+yyyymmdd=`date +%G%m%d`
+sed -i doc.omh -e "s/pycppad-[0-9]{8}/pycppad-$yyyymmdd/"
+if [ -e doc ]
+then
+	echo "rm -r doc"
+	if ! rm -r doc
+	then
+		echo "Cannot remove old documentation directory"
+		exit 1
+	fi
+fi
+mkdir doc
+cd doc
+if ! omhelp ../doc.omh -xml -noframe -debug | tee omhelp.log
+then
+	echo "Error while building xml documentatioin"
+	exit 1
+fi
+if ! omhelp ../doc.omh -xml -noframe -debug -printable
+then
+	echo "Error while building _printable.xml documentatioin"
+	exit 1
+fi
+if ! omhelp ../doc.omh -noframe -debug 
+then
+	echo "Error while building html documentatioin"
+	exit 1
+fi
+if ! omhelp ../doc.omh -noframe -debug -printable
+then
+	echo "Error while building _printable.html documentatioin"
+	exit 1
+fi
+cd ..
 echo "# Compile pycppad.cpp --------------------------------------------------" 
 #
 object_list=""
@@ -79,12 +115,17 @@ then
 	exit 1
 fi
 # ----------------------------------------------------------------------------
-echo 'from cppad import *' > test_all.py
-cat example/*.py           >> test_all.py
-if py.test test_all.py
+echo 'from cppad import *' > test_example.py
+cat example/*.py           >> test_example.py
+if ! py.test test_example.py
 then
-	echo "All tests passed."
-	exit 0
+	echo "test_example failed."
+	exit 1
 fi
-echo "At least one test failed."
-exit 1
+if ! py.test test_more.py
+then
+	echo "test_more.py failed."
+	exit 1
+fi
+echo "All tests passed."
+exit 0
