@@ -25,9 +25,9 @@ from _cppad import a_double
 from _cppad import a_double as a1double
 from _cppad import a2double
 
-a_float = a_double
-a1float = a1double
-a2float = a2double
+#a_float = a_double
+#a1float = a1double
+#a2float = a2double
 
 def independent(x):
 	"""

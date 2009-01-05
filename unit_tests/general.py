@@ -319,10 +319,10 @@ def test_array():
 	assert isinstance(x[0], float) and len(x) == 3 and x[1] == 2.
 	x   = numpy.array( [ ad(3), ad(2) , ad(1) ] )
 	assert type(x) == numpy.ndarray
-	assert isinstance(x[0], a_float) and len(x) == 3 and x[2] == 1.
+	assert isinstance(x[0], a_double) and len(x) == 3 and x[2] == 1.
 	x   = numpy.array( [ ad(ad(3)), ad(ad(2)) , ad(ad(1)) ] )
 	assert type(x) == numpy.ndarray
-	assert isinstance(x[0], a2float) and len(x) == 3 and x[0] == 3.
+	assert isinstance(x[0], a2double) and len(x) == 3 and x[0] == 3.
 	
 def test_abs():
 	x = ad(-2.)
