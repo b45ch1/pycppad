@@ -22,6 +22,7 @@ import numpy
 	
 def test_independent_exception_handling():
 	""" this results in a segmentation fault"""
-	ax = numpy.array([ad(1.)])
-	independent(ax)
-	f = adfun(ax, ax)
+	a_x = numpy.array( [ad(1.)] )
+	independent(a_x)
+	a_y = a_x
+	f = adfun(a_x, a_y)
