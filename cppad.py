@@ -25,6 +25,10 @@ from _cppad import a_double
 from _cppad import a_double as a1double
 from _cppad import a2double
 
+a_float = a_double
+a1float = a1double
+a2float = a2double
+
 def independent(x):
 	"""
 	a_x = independent(x): create independent variable vector a_x, equal to x, and start recording operations that use the class corresponding to ad( x[0] ).

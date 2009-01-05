@@ -310,5 +310,17 @@ def test_hessian():
 
 	assert numpy.prod( A == H )
 
-
+def test_array() :
+  x   = numpy.array( [ 3 , 2 , 1 ],dtype = float )
+  assert type(x) == numpy.ndarray
+  assert isinstance(x[0], float) and len(x) == 3 and x[0] == 3.
+  x   = numpy.array( [ 3. , 2. , 1. ] )
+  assert type(x) == numpy.ndarray
+  assert isinstance(x[0], float) and len(x) == 3 and x[1] == 2.
+  x   = numpy.array( [ ad(3), ad(2) , ad(1) ] )
+  assert type(x) == numpy.ndarray
+  assert isinstance(x[0], a_float) and len(x) == 3 and x[2] == 1.
+  x   = numpy.array( [ ad(ad(3)), ad(ad(2)) , ad(ad(1)) ] )
+  assert type(x) == numpy.ndarray
+  assert isinstance(x[0], a2float) and len(x) == 3 and x[0] == 3.
 
