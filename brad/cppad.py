@@ -7,22 +7,26 @@
 # $index level, increase AD$$
 #
 # $head Syntax$$
-# $codei%ad(%x%)%$$
+# $icode%a_x% = %ad(%x%)%$$
 #
 # $head Purpose$$
-# Creates an object with an AD type that records floating point operations.
+# Creates an AD object $icode a_x$$ that records floating point operations.
 # An $cref/adfun/$$ object can later use this recording to evaluate 
 # function values and derivatives. These later evaluations are done
 # using the same type as $icode x$$ 
-# (except when $icode x$$ is an $code int$$ the later evaluations are done
-# using $code float$$ operations).
+# (except when $icode x$$ is an instance of $code int$$,
+# the later evaluations are done using $code float$$ operations).
 #
 # $head x$$ 
-# If $icode x$$ is an $code int$$ or $code float$$ (an AD level 0 value),
-# $codei%ad(%x%)%$$ is an $code a_float$$  (an AD level 1 value).
-# If $icode x$$ is an $code a_float$$ (an AD level 1 value),
-# $codei%ad(%x%)%$$ is an $code a2float$$  (an AD level 2 value).
+# The argument $icode x$$ must be an instance of an $code int$$ (AD level 0),
+# or an instance of $code float$$ (AD level 0),
+# or an $code a_float$$ (AD level 1).
 #
+# $head a_x$$ 
+# If $icode x$$ is an instance of $code int$$ or $code float$$,
+# $codei a_x$$ is an $code a_float$$ (AD level 1).
+# If $icode x$$ is an $code a_float$$,
+# $icode a_x$$ is an $code a2float$$ (AD level 2).
 # 
 # $children%
 #	example/ad.py
@@ -41,16 +45,21 @@
 # $section Create an object with one lower level of AD$$
 #
 # $head Syntax$$
-# $codei%value(%x%)%$$
+# $icode%x% = value(%a_x%)%$$
 #
 # $head Purpose$$
-# Creates an object with one lower level of AD recording.
+# Returns an object with one lower level of AD recording.
+#
+# $head a_x$$ 
+# The argument $icode a_x$$ must be an $code a_float$$ (AD level 1),
+# or an $code a2float$$ (AD level 2).
+#
 #
 # $head x$$ 
-# If $icode x$$ is an $code a_float$$ (an AD level 1 value),
-# $codei%value(%x%)%$$ is an $code float$$  (an AD level 0 value).
-# If $icode x$$ is an $code a2float$$ (an AD level 2 value),
-# $codei%value(%x%)%$$ is an $code a_float$$  (an AD level 1 value).
+# If $icode a_x$$ is an $code a_float$$,
+# $icode x$$ is an $code float$$ (AD level 0).
+# If $icode a_x$$ is an $code a2float$$,
+# $icode x$$ is an $code a_float$$ (AD level 1).
 #
 # 
 # $children%
@@ -71,19 +80,22 @@
 # $section Create a Numpy N-Dimensional Array object$$
 #
 # $head Syntax$$
-# $codei%array(%x%)%$$
+# $icode%y% = array(%x%)%$$
 #
 # $head Purpose$$
 # Creates a 
-# $href%http://numpy.scipy.org/%numpy%$$ n-dimensional array object.
+# $href%http://numpy.scipy.org/%numpy%$$ n-dimensional array object $icode y$$.
 #
 # $head x$$ 
-# The argument $icode x$$ must be either a python list or a tuple.
-# If $icode%x%[0]%$$ is an $code int$$ or $code float$$,
-# $codei%array(%x%)%$$ is corresponding $code numpy.ndarray$$ object
+# The argument $icode x$$ must be either a python list or a tuple
+# with all its elements of the same type.
+#
+# $head y$$ 
+# If $icode%x%[0]%$$ is an instance of $code int$$ or $icode float$$,
+# $icode y$$ is corresponding $code numpy.ndarray$$ object
 # with elements that are instances of $code float$$.
 # Otherwise, it is the corresponding Numpy array with elements
-# that are instances of $codei%type(%x%[0])%$$.
+# that are of type $codei%type(%x%[0])%$$.
 # 
 # $children%
 #	example/array.py
