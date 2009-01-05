@@ -310,5 +310,49 @@ def test_hessian():
 
 	assert numpy.prod( A == H )
 
+def test_array():
+	x   = numpy.array( [ 3 , 2 , 1 ],dtype = float )
+	assert type(x) == numpy.ndarray
+	assert isinstance(x[0], float) and len(x) == 3 and x[0] == 3.
+	x   = numpy.array( [ 3. , 2. , 1. ] )
+	assert type(x) == numpy.ndarray
+	assert isinstance(x[0], float) and len(x) == 3 and x[1] == 2.
+	x   = numpy.array( [ ad(3), ad(2) , ad(1) ] )
+	assert type(x) == numpy.ndarray
+	assert isinstance(x[0], a_double) and len(x) == 3 and x[2] == 1.
+	x   = numpy.array( [ ad(ad(3)), ad(ad(2)) , ad(ad(1)) ] )
+	assert type(x) == numpy.ndarray
+	assert isinstance(x[0], a2double) and len(x) == 3 and x[0] == 3.
+	
+def test_abs():
+	x = ad(-2.)
+	y = x.abs()
+	y = numpy.abs(x)
+	
+	assert y.value == 2.
+	
 
+def test_abs2():
+	x   = numpy.array( [ -1.,  0.,  1.] )
+	n   = len(x)
+	a_x = independent(x)
+	a_y = numpy.array([a.abs() for a in a_x])
+	a_y = numpy.abs( a_x )
+	f   = adfun(a_x, a_y)
+	f.forward(0, x)
+	dx  = numpy.zeros(n, dtype=float)
+	for i in range( n ) :
+		dx[i] = 1.
+		df    = f.forward(1, dx)
+		if x[i] >= 0 :
+			assert df[i] == +1.
+		else :
+			assert df[i] == -1.
+		dx[i] = -1.
+		df    = f.forward(1, dx)
+		if x[i] > 0 :
+			assert df[i] == -1.
+		else :
+			assert df[i] == +1.
+		dx[i] = 0.
 
