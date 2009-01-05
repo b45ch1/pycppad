@@ -412,6 +412,7 @@ namespace{
 	#define PYCPPAD_STD_MATH(Name, Base)                             \
 	CppAD::AD<Base>	(* Name##_AD_##Base)( const CppAD::AD<Base>& ) = &CppAD::Name
 
+	PYCPPAD_STD_MATH(abs  , double);
 	PYCPPAD_STD_MATH(asin , double);
 	PYCPPAD_STD_MATH(acos , double);
 	PYCPPAD_STD_MATH(atan , double);
@@ -425,7 +426,8 @@ namespace{
 	PYCPPAD_STD_MATH(sqrt , double);
 	PYCPPAD_STD_MATH(tan  , double);
 	PYCPPAD_STD_MATH(tanh , double);
-	
+
+	PYCPPAD_STD_MATH(abs  , AD_double);
 	PYCPPAD_STD_MATH(asin , AD_double);
 	PYCPPAD_STD_MATH(acos , AD_double);
 	PYCPPAD_STD_MATH(atan , AD_double);
@@ -494,6 +496,8 @@ BOOST_PYTHON_MODULE(_cppad)
 	.def(self *= double())         \
 	.def(self /= double())        \
                                   \
+	.def("abs",     abs_AD_##Base)	  \
+	.def("__abs__",     abs_AD_##Base)	  \
 	.def("arccos",  acos_AD_##Base)     \
 	.def("arcsin",  asin_AD_##Base)     \
 	.def("arctan",  atan_AD_##Base)     \
@@ -507,6 +511,14 @@ BOOST_PYTHON_MODULE(_cppad)
 	.def("sqrt",    sqrt_AD_##Base)     \
 	.def("tan",     tan_AD_##Base)      \
 	.def("tanh",    tanh_AD_##Base)
+
+
+	# define PYCPPAD_POW_LINK_PY(Base)              \
+	.def("__pow__", pow_AD_##Base##_AD_##Base) \
+	.def("__pow__", pow_double_AD_##Base)      \
+	.def("__pow__", pow_AD_##Base##_double)    \
+	.def("__pow__", pow_int_AD_##Base)         \
+	.def("__pow__", pow_AD_##Base##_int)
 
 
 	class_<AD_double>("a_double", init<double>())
