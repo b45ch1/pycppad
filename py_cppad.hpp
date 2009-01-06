@@ -34,9 +34,18 @@ namespace{
 	// the default CppAD erorr handler
 	CppAD::ErrorHandler myhandler(python_cppad_error_handler);
 
-	/* =================================== */
-	/* CLASS VEC<DOUBLE>                   */
-	/* =================================== */
+
+
+
+
+
+
+
+
+
+	/* ============================================= */
+	/* TEMPLATE CLASS VEC<Tdouble>                   */
+	/* ============================================= */
 
 	template<class Tdouble>
 	class vec {
@@ -58,12 +67,19 @@ namespace{
 			const Tdouble& operator[](size_t i) const;
 	};
 
+	/* ============================================= */
+	/* TEMPLATE SPECIALIZATION OF VEC<double>        */
+	/* double is a special case since Tdouble are    */
+	/* meant to be Python objects                    */
+	/* ============================================= */
+	
 	template<>
 	const double& vec<double>::operator[](size_t i) const{
 		assert( i < length_ );
 		return pointer_[i];
 	}
-	
+
+	/// \brief Constructs a vec with a reference of the data in a numpy.array 
 	template<>
 	vec<double>::vec(bpn::array& py_array)
 	{	// get array info
@@ -141,9 +157,9 @@ namespace{
 		return pointer_[i];
 	}
 
-	/* =================================== */
-	/* CLASS vec<Tdouble>                  */
-	/* =================================== */
+	/* ==================================================== */
+	/* GENERIC DEFINITION OF THE METHODS OF VEC<Tdouble>    */
+	/* ==================================================== */
 
 	template<class Tdouble>
 	vec<Tdouble>::vec(bpn::array& py_array){
@@ -249,12 +265,22 @@ namespace{
 
 
 
-	/* =================================== */
-	/* HELPER FUNCTIONOS                   */
-	/* =================================== */
+
+
+
+
+
+
+
+	/* ====================================================== */
+	/* CONVERSION FUNCTIONS: NUMPY.ARRAY <----> VEC           */
+	/* ====================================================== */
+
+	// VEC ---> NUMPY.ARRAY
 	template<class Tdouble>
 	bpn::array vector2array(const vec<Tdouble> &in_vec);
 
+	/// \brief Saves a copy of a vec<double> in a numpy.array
 	template<>
 	bpn::array vector2array<double>(const vec<double>& in_vec){
 		int n = static_cast<int>( in_vec.size() );
@@ -270,6 +296,7 @@ namespace{
 		return  static_cast<bpn::array>( obj );
 	}
 
+	/// \brief Saves a copy of a vec<Tdouble> in a numpy.array
 	template<class Tdouble>
 	bpn::array vector2array(const vec<Tdouble>& in_vec){
 		int n = static_cast<int>( in_vec.size() );
@@ -281,6 +308,16 @@ namespace{
 		}
 		return  static_cast<bpn::array>( retval );
 	}
+
+	//  NUMPY.ARRAY ---> VEC
+	/* this is done by a method of the class vec<Tdouble> */
+
+
+
+
+
+
+
 
 
 
@@ -408,10 +445,19 @@ namespace{
 	}
 
 
+
+	/* ====================================================================================== */
+	/*                              TEMPLATE SPECIALIZATION                                   */
+	/* Since Python is written in C and therefore doesn't know about templates                */
+	/* we have to specialize all templated functions!                                         */
+	/* To facilitate this process we use simple macros                                        */
+	/* ====================================================================================== */
+	
 	/* UNARY FUNCTIONS */
+	// macro below results in code like:
+	// CppAD::AD<AD_double> (*sin_AD_AD_double) ( const CppAD::AD<AD_double> & ) = &CppAD::sin;
 	#define PYCPPAD_STD_MATH(Name, Base)                             \
 	CppAD::AD<Base>	(* Name##_AD_##Base)( const CppAD::AD<Base>& ) = &CppAD::Name
-
 	PYCPPAD_STD_MATH(abs  , double);
 	PYCPPAD_STD_MATH(asin , double);
 	PYCPPAD_STD_MATH(acos , double);
@@ -426,7 +472,6 @@ namespace{
 	PYCPPAD_STD_MATH(sqrt , double);
 	PYCPPAD_STD_MATH(tan  , double);
 	PYCPPAD_STD_MATH(tanh , double);
-
 	PYCPPAD_STD_MATH(abs  , AD_double);
 	PYCPPAD_STD_MATH(asin , AD_double);
 	PYCPPAD_STD_MATH(acos , AD_double);
@@ -442,8 +487,6 @@ namespace{
 	PYCPPAD_STD_MATH(tan  , AD_double);
 	PYCPPAD_STD_MATH(tanh , AD_double);
 
-	/* BINARY FUNCTIONS */
-// CppAD::AD<AD_double> (*sin_AD_AD_double) ( const CppAD::AD<AD_double> & ) = &CppAD::sin;
 
 	AD_double (*pow_AD_double_AD_double)(const AD_double &x, const AD_double &y) = &CppAD::pow;
 	AD_double (*pow_double_AD_double)(const double &x, const AD_double &y) = &CppAD::pow;
@@ -456,8 +499,12 @@ namespace{
 	AD_AD_double (*pow_AD_AD_double_double)(const AD_AD_double &x, const double &y) = &CppAD::pow;
 	AD_AD_double (*pow_int_AD_AD_double)(int x, const AD_AD_double &y) = &CppAD::pow;
 	AD_AD_double (*pow_AD_AD_double_int)(const AD_AD_double &x, const int &y) = &CppAD::pow;
-	
-	
+
+	/* BINARY FUNCTIONS */
+	// the binary functions are automatically done by boost::python in expressions like
+	// .def(self += self)
+	// etc...
+
 }
 
 BOOST_PYTHON_MODULE(_cppad)
@@ -471,6 +518,9 @@ BOOST_PYTHON_MODULE(_cppad)
 
 	def("Independent", &Independent);
 
+
+	/* FOR EACH BASE TYPE (E.G. DOUBLE, AD<DOUBLE>, ... ) ONE WOULD HAVE TO DO A LOT OF BOILER PLATE CODE
+	THE FOLLOWING MACROS FACILITATE THAT */
 	# define PYCPPAD_BINARY(op)       \
 	.def(self     op self)         \
 	.def(double() op self)         \
