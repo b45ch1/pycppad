@@ -61,7 +61,7 @@ def ad(x):
 class adfun_double(_cppad.ADFun_double):
 	"""
 	Create a function object.
-	"""	
+	"""
 	def forward(self, level, x):
 		x = numpy.asarray(x,dtype=float)
 		return self._forward(level, x)
