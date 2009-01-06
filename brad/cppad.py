@@ -79,6 +79,8 @@
 # $$
 #
 # $section Create a Numpy N-Dimensional Array Object$$
+# 
+# $index array$$
 #
 # $head Syntax$$
 # $icode%y% = array(%x%)%$$
@@ -99,6 +101,7 @@
 # that are of type $codei%type(%x%[0])%$$.
 #
 # $head Vector$$
+# $index vector$$
 # If the result $icode y$$ has only one dimension; i.e.
 # $icode len( numpy.shape(%y%) )$$ is equal to one,
 # the array $icode y$$ is referred to as a vector.
@@ -121,6 +124,11 @@
 #
 # $head Syntax$$
 # $icode%a_x% = independent(%x%)%$$
+#
+# $index independent, variables$$
+# $index variables, independent$$
+# $index recording, start$$
+# $index start, recording$$
 #
 # $head Purpose$$
 # Creates an independent variable vector and starts recording operations
@@ -158,13 +166,18 @@
 #
 # $section Create a Function Object With One Lower Level of AD$$
 #
+# $index dependent, variables$$
+# $index variables, dependent$$
+# $index recording, stop$$
+# $index stop, recording$$
+#
 # $head Syntax$$
 # $icode%f% = %adfun%(%a_x%, %a_y%)%$$
 #
 # $head Purpose$$
 # The function object $icode f$$ will store the $codei type( a_x[0] )$$
-# operation sequence that mapped the vector 
-# $icode a_x$$ to the vector $icode a_y$$.
+# operation sequence that mapped the independent variable vector 
+# $icode a_x$$ to the dependent variable vector $icode a_y$$.
 #
 # $head a_x$$
 # The argument $icode a_x$$ is the $cref/vector/array/Vector/$$ 
@@ -182,10 +195,10 @@
 # $latex n$$ for the function $latex y = F(x)$$ below.
 #
 # $head a_y$$
-# The argument $icode a_y$$ is a $cref/vector/array/Vector/$$.
-# It specifies the operation sequence stored in $icode f$$ as the 
-# $codei type( a_x[0] )$$ operations that mapped the vector $icode a_x$$
-# to the vector $icode a_y$$.
+# The argument $icode a_y$$ is a $cref/vector/array/Vector/$$
+# that specifies the dependent variables.
+# The object $icode f$$ stores the $codei type( a_x[0] )$$ operations 
+# that mapped the vector $icode a_x$$ to the vector $icode a_y$$.
 # The length of the vector $icode a_y$$ determines the range size
 # $latex m$$ for the function $latex y = F(x)$$ below.
 #
@@ -203,6 +216,80 @@
 # $head Example$$
 # The file $cref/adfun.py/$$ 
 # contains an example and test of this function.
+#
+# $end
+# ---------------------------------------------------------------------------
+# $begin std_math$$ $newlinech #$$
+# $spell
+#	arccos
+#	arcsin
+#	arctan
+#	cos
+#	exp
+#	tanh
+#	sqrt
+# $$
+#
+# $section Standard Math Unary Functions$$
+#
+# $index arccos$$
+# $index arcsin$$
+# $index arctan$$
+# $index cos$$
+# $index cosh$$
+# $index exp$$
+# $index log$$
+# $index log10$$
+# $index sin$$
+# $index sinh$$
+# $index sqrt$$
+# $index tan$$ 
+# $index tanh$$
+#
+# $head Syntax$$
+# $icode%y% = %fun%(%x%)%$$
+#
+# $head Purpose$$
+# Evaluate the standard math function $icode fun$$ where $icode fun$$
+# has one argument.
+#
+# $head x$$
+# The argument $icode x$$ can be an instance of $code float$$,
+# an $code a_float$$, an $code a2float$$, or an $cref/array/$$ of such objects.
+#
+# $head y$$
+# If $icode x$$ is an instance of $code float$$,
+# $icode y$$ will also be an instance of $icode float$$.
+# Otherwise $icode y$$ will have the same type as $icode x$$.
+# $pre
+#
+# $$
+# In the case where $icode x$$ is an array, $icode y$$ will 
+# the same shape as $icode x$$ and the elements of $icode y$$
+# will have the  same type as the elements of $icode x$$.
+#
+# $head fun$$
+# The function $icode fun$$ can be any of the following:
+# $code arccos$$,
+# $code arcsin$$,
+# $code arctan$$,
+# $code cos$$,
+# $code cosh$$,
+# $code exp$$,
+# $code log$$,
+# $code log10$$,
+# $code sin$$,
+# $code sinh$$,
+# $code sqrt$$,
+# $code tan$$, or
+# $code tanh$$.
+#
+# $children%
+#	example/std_math.py
+# %$$
+# $head Example$$
+# The file $cref/std_math.py/$$ 
+# contains an example and test of these functions.
 #
 # $end
 # ---------------------------------------------------------------------------
@@ -318,7 +405,6 @@ def adfun(x,y):
   else :
       raise NotImplementedError(
         'adfun(x, y): elements of x and y are not a_float or a2dobule')
-
 
 from numpy import arccos
 from numpy import arcsin
