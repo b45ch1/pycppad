@@ -340,6 +340,10 @@ namespace{
 
 	template<class Tdouble>
 	ADFun<Tdouble>::ADFun(bpn::array& x_array, bpn::array& y_array){
+		/* check the element types of x_array and y_array */
+		bp::object *obj = static_cast<bp::object*>(	PyArray_DATA(x_array.ptr()));
+		string element_type = bp::extract<string>(obj[0].attr("__class__").attr("__name__"));
+// 		cerr << element_type <<endl;
 		vec<CppAD::AD<Tdouble> > x_vec(x_array);
 		vec<CppAD::AD<Tdouble> > y_vec(y_array);
 		f_.Dependent(x_vec, y_vec);

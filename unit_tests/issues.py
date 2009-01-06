@@ -26,3 +26,4 @@ def test_independent_exception_handling():
 	independent(a_x)
 	a_y = a_x
 	f = adfun(a_x, a_y)
+	assert False
