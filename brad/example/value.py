@@ -12,10 +12,9 @@
 # BEGIN CODE
 from cppad import *
 def test_value() :
-  x   = float(2)
-  a_x = ad(x)
+  a_x = ad(2)
   a2x = ad(a_x)
   #
-  assert type(x)   == type(value(a_x)) and x   == value(a_x)
-  assert type(a_x) == type(value(a2x)) and a_x == value(a2x)
+  assert type(value(a_x)) == float   and 2. == value(a_x)
+  assert type(value(a2x)) == a_float and 2. == value(a2x)
 # END CODE

@@ -1,28 +1,32 @@
 # $begin ad$$ $newlinech #$$
 #
-# $section Create an object with one higher level of AD$$
+# $section Create an Object With One Higher Level of AD$$
 #
 # $index ad$$
 # $index AD, increase level$$
 # $index level, increase AD$$
 #
 # $head Syntax$$
-# $codei%ad(%x%)%$$
+# $icode%a_x% = %ad(%x%)%$$
 #
 # $head Purpose$$
-# Creates an object with an AD type that records floating point operations.
+# Creates an AD object $icode a_x$$ that records floating point operations.
 # An $cref/adfun/$$ object can later use this recording to evaluate 
 # function values and derivatives. These later evaluations are done
 # using the same type as $icode x$$ 
-# (except when $icode x$$ is an $code int$$ the later evaluations are done
-# using $code float$$ operations).
+# (except when $icode x$$ is an instance of $code int$$,
+# the later evaluations are done using $code float$$ operations).
 #
 # $head x$$ 
-# If $icode x$$ is an $code int$$ or $code float$$ (an AD level 0 value),
-# $codei%ad(%x%)%$$ is an $code a_float$$  (an AD level 1 value).
-# If $icode x$$ is an $code a_float$$ (an AD level 1 value),
-# $codei%ad(%x%)%$$ is an $code a2float$$  (an AD level 2 value).
+# The argument $icode x$$ must be an instance of an $code int$$ (AD level 0),
+# or an instance of $code float$$ (AD level 0),
+# or an $code a_float$$ (AD level 1).
 #
+# $head a_x$$ 
+# If $icode x$$ is an instance of $code int$$ or $code float$$,
+# $codei a_x$$ is an $code a_float$$ (AD level 1).
+# If $icode x$$ is an $code a_float$$,
+# $icode a_x$$ is an $code a2float$$ (AD level 2).
 # 
 # $children%
 #	example/ad.py
@@ -38,19 +42,24 @@
 # $index AD, decrease level$$
 # $index level, decrease AD$$
 #
-# $section Create an object with one lower level of AD$$
+# $section Create an Object With One Lower Level of AD$$
 #
 # $head Syntax$$
-# $codei%value(%x%)%$$
+# $icode%x% = value(%a_x%)%$$
 #
 # $head Purpose$$
-# Creates an object with one lower level of AD recording.
+# Returns an object with one lower level of AD recording.
+#
+# $head a_x$$ 
+# The argument $icode a_x$$ must be an $code a_float$$ (AD level 1),
+# or an $code a2float$$ (AD level 2).
+#
 #
 # $head x$$ 
-# If $icode x$$ is an $code a_float$$ (an AD level 1 value),
-# $codei%value(%x%)%$$ is an $code float$$  (an AD level 0 value).
-# If $icode x$$ is an $code a2float$$ (an AD level 2 value),
-# $codei%value(%x%)%$$ is an $code a_float$$  (an AD level 1 value).
+# If $icode a_x$$ is an $code a_float$$,
+# $icode x$$ is a $code float$$ (AD level 0).
+# If $icode a_x$$ is an $code a2float$$,
+# $icode x$$ is an $code a_float$$ (AD level 1).
 #
 # 
 # $children%
@@ -66,24 +75,33 @@
 #	Numpy
 #	tuple
 #	ndarray
+#	len
 # $$
 #
-# $section Create a Numpy N-Dimensional Array object$$
+# $section Create a Numpy N-Dimensional Array Object$$
 #
 # $head Syntax$$
-# $codei%array(%x%)%$$
+# $icode%y% = array(%x%)%$$
 #
 # $head Purpose$$
 # Creates a 
-# $href%http://numpy.scipy.org/%numpy%$$ n-dimensional array object.
+# $href%http://numpy.scipy.org/%numpy%$$ n-dimensional array object $icode y$$.
 #
 # $head x$$ 
-# The argument $icode x$$ must be either a python list or a tuple.
-# If $icode%x%[0]%$$ is an $code int$$ or $code float$$,
-# $codei%array(%x%)%$$ is corresponding $code numpy.ndarray$$ object
+# The argument $icode x$$ must be either a python list or a tuple
+# with all its elements of the same type.
+#
+# $head y$$ 
+# If $icode%x%[0]%$$ is an instance of $code int$$ or $icode float$$,
+# $icode y$$ is corresponding $code numpy.ndarray$$ object
 # with elements that are instances of $code float$$.
 # Otherwise, it is the corresponding Numpy array with elements
-# that are instances of $codei%type(%x%[0])%$$.
+# that are of type $codei%type(%x%[0])%$$.
+#
+# $head Vector$$
+# If the result $icode y$$ has only one dimension; i.e.
+# $icode len( numpy.shape(%y%) )$$ is equal to one,
+# the array $icode y$$ is referred to as a vector.
 # 
 # $children%
 #	example/array.py
@@ -110,14 +128,14 @@
 # You must create an $cref/adfun/$$ object and stop the recording
 #
 # $head x$$ 
-# The argument $icode x$$ must be a Numpy $cref/array/$$.
+# The argument $icode x$$ must be a $cref/vector/array/Vector/$$.
 # The elements of $icode x$$ must all be of the same type and
 # instances of either $code float$$ or $code  a_float$$.
-# There can only be one dimension to the array; i.e., it must be a vector.
 #
 # $head a_x$$ 
-# The return value $icode a_x$$ is a Numpy $cref/array/$$ with the same shape 
-# as $icode x$$. If the elements of $icode x$$ are instances of $code float$$
+# The return value $icode a_x$$ is a $cref/vector/array/Vector/$$ 
+# with the same shape as $icode x$$. 
+# If the elements of $icode x$$ are instances of $code float$$
 # ($code a_float$$) the elements of $icode a_x$$ are instances of 
 # $code a_float$$ ($code a2float$$).
 # The $cref/value/$$ of the elements of $icode a_x$$ 
@@ -128,6 +146,62 @@
 # %$$
 # $head Example$$
 # The file $cref/independent.py/$$ 
+# contains an example and test of this function.
+#
+# $end
+# ---------------------------------------------------------------------------
+# $begin adfun$$ $newlinech #$$
+# $spell
+#	len
+#	adfun
+# $$
+#
+# $section Create a Function Object With One Lower Level of AD$$
+#
+# $head Syntax$$
+# $icode%f% = %adfun%(%a_x%, %a_y%)%$$
+#
+# $head Purpose$$
+# The function object $icode f$$ will store the $codei type( a_x[0] )$$
+# operation sequence that mapped the vector 
+# $icode a_x$$ to the vector $icode a_y$$.
+#
+# $head a_x$$
+# The argument $icode a_x$$ is the $cref/vector/array/Vector/$$ 
+# returned by the previous call to $cref/independent/$$.
+# Neither the size of $icode a_x$$, or the value it its elements,
+# may change between calling
+# $codei%
+#	%a_x% = independent(%x%)
+# %$$
+# and
+# $icode%
+#	%f% = adfun(%a_x%, %a_y%)
+# %$$
+# The length of the vector $icode a_x$$ determines the domain size
+# $latex n$$ for the function $latex y = F(x)$$ below.
+#
+# $head a_y$$
+# The argument $icode a_y$$ is a $cref/vector/array/Vector/$$.
+# It specifies the operation sequence stored in $icode f$$ as the 
+# $codei type( a_x[0] )$$ operations that mapped the vector $icode a_x$$
+# to the vector $icode a_y$$.
+# The length of the vector $icode a_y$$ determines the range size
+# $latex m$$ for the function $latex y = F(x)$$ below.
+#
+# $head f$$
+# The return value $icode f$$ can be used to evaluate the function
+# $latex \[
+#	F : \B{R}^n \rightarrow \B{R}^m
+# \] $$
+# and its derivatives, where $latex y = F(x)$$ corresponds to the 
+# operation sequence mentioned above.
+#
+# $children%
+#	example/adfun.py
+# %$$
+# $head Example$$
+# The file $cref/adfun.py/$$ 
 # contains an example and test of this function.
 #
 # $end

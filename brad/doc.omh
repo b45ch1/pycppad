@@ -3,6 +3,8 @@ $spell
 	pycppad
 	cppad
 $$
+$latex \newcommand{\B}[1]{{\bf #1}}$$
+$latex \newcommand{\R}[1]{{\rm #1}}$$
 
 $section pycppad-20090104: A Python Algorithm Derivative Package$$
 
