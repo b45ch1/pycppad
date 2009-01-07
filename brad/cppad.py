@@ -420,24 +420,3 @@ from numpy import sqrt
 from numpy import tan
 from numpy import tanh
 
-# Kludge: for some reason numpy.sin(x) will work for an array of a_float
-# but numpy.abs(x) will not work for an array of a_float.
-def abs(x) :
-  if isinstance(x, a_float) or isinstance(x, a2float) :
-    return x.abs()
-  if isinstance(x, numpy.ndarray) :
-    n  = len(x)
-    x0 = x[0]
-    if isinstance(x0, a_float) :
-      a_zero = ad(0)
-      y = array( list( a_zero for i in range(n) ) )
-      for i in range(n) :
-         y[i] = x[i].abs()
-      return y
-    if isinstance(x0, a2float) :
-      a2zero = ad(0)
-      y = array( list( a2zero for i in range(n) ) )
-      for i in range(n) :
-         y[i] = x[i].abs()
-      return y
-  return numpy.abs(x)
