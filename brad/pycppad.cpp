@@ -36,6 +36,52 @@ contains an example and test of these functions.
 
 $end
 ---------------------------------------------------------------------------
+$begin pow$$ $newlinech #$$
+$spell
+$$
+
+$section Exponentiation Operator$$
+
+$head Syntax$$
+$icode%z% = %x% ** %y%$$
+
+$head Purpose$$
+Sets $latex z = x^y$$
+
+$head Types$$
+The following table lists the possible types for $icode x$$ and $icode y$$
+and the corresponding result type for $icode z$$.
+$codei%
+                      %y%
+ %x%     %|%  float    a_float  a2float
+         %------------------------------%
+float    %|%  float    a_float  a2float
+a_float  %|%  a_float  a_float
+a2float  %|%  a2float           a2float
+%$$
+The type $code float$$ does not need to be matched exactly
+but rather as an instance of $code float$$.
+
+$head Arrays$$
+Either $icode x$$ or $icode y$$ or both may be
+an $cref/array/$$ with elements
+that match one of possible type choices above.
+If both $icode x$$ and $icode y$$ are arrays, they must have the same shape.
+When either $icode x$$ or $icode y$$ is an array,
+the result $icode z$$ is an array with the same shape.
+The type of the elements of $icode z$$ correspond to the table above
+(when the result type is a $code float$$,
+this only refers to the element types matching as instances).
+
+$children%
+	example/pow.py
+%$$
+$head Example$$
+The file $cref/pow.py/$$ 
+contains an example and test of this operation functions.
+
+$end
+---------------------------------------------------------------------------
 */
 # include "setup.hpp"
 # include "vector.hpp"
@@ -93,18 +139,6 @@ $end
      PYCPPAD_UNARY_FUNCTION(tan,   Base)   \
      PYCPPAD_UNARY_FUNCTION(tanh,  Base) 
 
-# define PYCPPAD_POW_LINK_CPP(Base)                                         \
-     CppAD::AD<Base> (* pow_AD_##Base##_AD_##Base)                          \
-     (const CppAD::AD<Base> &x, const CppAD::AD<Base> & y ) = &CppAD::pow;  \
-     CppAD::AD<Base> (* pow_double_AD_##Base)                               \
-     (const double &x, const CppAD::AD<Base> &y ) = &CppAD::pow;            \
-     CppAD::AD<Base> (* pow_AD_##Base##_double)                             \
-     (const CppAD::AD<Base> &x, const double &y ) = &CppAD::pow;            \
-     CppAD::AD<Base> (* pow_int_AD_##Base)                                  \
-     (const int &x, const CppAD::AD<Base> &y ) = &CppAD::pow;               \
-     CppAD::AD<Base> (* pow_AD_##Base##_int)                                \
-     (const CppAD::AD<Base> &x, const int &y ) = &CppAD::pow;
-
 # define PYCPPAD_STD_MATH_LINK_PY(Base)  \
      .def("arccos",  acos_AD_##Base)     \
      .def("arcsin",  asin_AD_##Base)     \
@@ -119,13 +153,6 @@ $end
      .def("sqrt",    sqrt_AD_##Base)     \
      .def("tan",     tan_AD_##Base)      \
      .def("tanh",    tanh_AD_##Base)
-
-# define PYCPPAD_POW_LINK_PY(Base)              \
-     .def("__pow__", pow_AD_##Base##_AD_##Base) \
-     .def("__pow__", pow_double_AD_##Base)      \
-     .def("__pow__", pow_AD_##Base##_double)    \
-     .def("__pow__", pow_int_AD_##Base)         \
-     .def("__pow__", pow_AD_##Base##_int)
 
 namespace pycppad {
 	// Replacement for the CppAD error handler
@@ -183,11 +210,9 @@ BOOST_PYTHON_MODULE(pycppad)
 	typedef CppAD::AD<AD_double> AD_AD_double;
 
 	PYCPPAD_STD_MATH_LINK_CPP(double);
-	PYCPPAD_POW_LINK_CPP(double);
 	PYCPPAD_UNARY_FUNCTION(abs, double);
 
 	PYCPPAD_STD_MATH_LINK_CPP(AD_double);
-	PYCPPAD_POW_LINK_CPP(AD_double);
 	PYCPPAD_UNARY_FUNCTION(abs, AD_double);
 
 	// here are the things we are using from boost::python
@@ -214,7 +239,9 @@ BOOST_PYTHON_MODULE(pycppad)
 		.def(str(self))
 		PYCPPAD_OPERATOR_LIST
 		PYCPPAD_STD_MATH_LINK_PY(double)
-		PYCPPAD_POW_LINK_PY(double)
+     		.def( pow(self, self) ) 
+     		.def( pow(self, double()) )
+     		.def( pow(double(), self) )
 		.def("__abs__",  abs_AD_double)
 	;
 
@@ -230,7 +257,9 @@ BOOST_PYTHON_MODULE(pycppad)
 		.def(str(self))
 		PYCPPAD_OPERATOR_LIST
 		PYCPPAD_STD_MATH_LINK_PY(AD_double)
-		PYCPPAD_POW_LINK_PY(AD_double)
+     		.def( pow(self, self) ) 
+     		.def( pow(self, double()) )
+     		.def( pow(double(), self) )
 		.def("__abs__",  abs_AD_AD_double)
 	;
 	class_<ADFun_AD_double>("adfun_a_float", init< array& , array& >())
