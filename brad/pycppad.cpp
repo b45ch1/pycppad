@@ -61,17 +61,40 @@ contains an example and test of these functions.
 
 $end
 ---------------------------------------------------------------------------
-$begin pow$$ $newlinech #$$
+$begin numeric_binary$$ $newlinech #$$
 $spell
+	op
 $$
 
-$section Exponentiation Operator$$
+$section Numeric Binary Operators$$
+
+$index numeric, binary operator$$
+$index binary, numeric operator$$
+$index operator, numeric binary$$
+
+$index +$$
+$index -$$
+$index *$$
+$index /$$
+$index **$$
 
 $head Syntax$$
-$icode%z% = %x% ** %y%$$
+$icode%z% = %x% %op% %y%$$
 
 $head Purpose$$
-Sets $latex z = x^y$$
+Sets $icode z$$ to the result of the binary operation defined by $icode op$$
+and with $icode x$$ as the left operand and $icode y$$ as the right operand.
+
+$head op$$
+The possible values for $icode op$$ are
+$table
+$icode op$$ $pre  $$ $cnext Meaning $rnext
+$code +$$  $cnext addition  $rnext
+$code -$$  $cnext subtraction  $rnext
+$code *$$  $cnext multiplication  $rnext
+$code /$$  $cnext division  $rnext
+$code **$$ $cnext exponentiation
+$tend
 
 $head Types$$
 The following table lists the possible types for $icode x$$ and $icode y$$
@@ -99,11 +122,11 @@ The type of the elements of $icode z$$ correspond to the table above
 this only refers to the element types matching as instances).
 
 $children%
-	example/pow.py%
-	example/pow_a2.py
+	example/numeric_binary.py%
+	example/numeric_binary_a2.py
 %$$
 $head Example$$
-The file $cref/pow.py/$$  ($cref/pow_a2.py/$$)
+The file $cref/numeric_binary.py/$$  ($cref/numeric_binary_a2.py/$$)
 contains an example and test of this operation using 
 $code a_float$$ ($code a2float$$).
 
