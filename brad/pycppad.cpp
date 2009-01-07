@@ -27,6 +27,32 @@ In the case where $icode x$$ is an array, $icode y$$ will
 the same shape as $icode x$$ and the elements of $icode y$$
 will have the  same type as the elements of $icode x$$.
 
+$head Derivative$$
+Define $latex F(x) = \R{abs}(x)$$. It follows that
+$latex \[
+	F^{(1)} (x) = \left\{ \begin{array}{ll} 
+		1 & \R{if} \; x > 0
+		\\
+		-1 & \R{if} \; x < 0
+	\end{array} \right.
+\] $$
+and the derivative $latex F^{(1)} (0)$$ does not exist.
+
+$head Directional Derivative$$
+On the other hand, $cref/forward/$$ mode computes directional derivatives
+which are defined by
+$latex \[
+	F^\circ ( x , d ) = \lim_{\lambda \downarrow 0 } 
+		\frac{F(x + \lambda d) - F(x) }{ \lambda }
+\] $$ 
+For the definition of $latex F(x)$$ above,
+directional derivatives exist for all $latex x$$ and all $latex d$$. 
+For $latex x \neq 0$$,
+$latex \[
+	F^\circ ( x , d ) = F^{(1)} ( x ) * d
+\] $$
+and $latex F^\circ (0 , d) = |d|$$.
+
 $children%
 	example/abs.py
 %$$
@@ -53,11 +79,11 @@ The following table lists the possible types for $icode x$$ and $icode y$$
 and the corresponding result type for $icode z$$.
 $codei%
                       %y%
- %x%     %|%  float    a_float  a2float
-         %------------------------------%
-float    %|%  float    a_float  a2float
-a_float  %|%  a_float  a_float
-a2float  %|%  a2float           a2float
+ %x%           float    a_float   a2float
+         %-------------------------------%
+ float   %-%   float    a_float   a2float
+a_float  %-%  a_float   a_float
+a2float  %-%  a2float             a2float
 %$$
 The type $code float$$ does not need to be matched exactly
 but rather as an instance of $code float$$.
@@ -74,11 +100,14 @@ The type of the elements of $icode z$$ correspond to the table above
 this only refers to the element types matching as instances).
 
 $children%
-	example/pow.py
+	example/pow.py%
+	example/pow_a2.py
 %$$
 $head Example$$
-The file $cref/pow.py/$$ 
-contains an example and test of this operation functions.
+The file $cref/pow.py/$$  ($cref/pow_a2.py/$$)
+contains an example and test of this operation using 
+$code a_float$$ ($code a2float$$).
+con
 
 $end
 ---------------------------------------------------------------------------

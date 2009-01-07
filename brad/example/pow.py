@@ -27,9 +27,10 @@ def test_pow() :
   #
   x   = array( [ -2 ] )
   a_x = independent(x)
-  n   = 3
+  n   = array( [-3 , +3] )
   a_y = a_x ** n
   f   = adfun(a_x, a_y)
   J   = f.jacobian(x)
-  assert abs( J[0] - n * x[0] ** (n-1) ) < delta
+  for i in range( len(n) ) :
+    assert abs( J[i][0] - n[i] * x[0] ** (n[i]-1) ) < delta
 # END CODE
