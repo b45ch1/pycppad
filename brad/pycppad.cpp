@@ -1,3 +1,42 @@
+/*
+---------------------------------------------------------------------------
+$begin abs$$ $newlinech #$$
+$spell
+$$
+
+$section Absolute Value Functions$$
+
+$head Syntax$$
+$icode%y% = abs(%x%)%$$
+
+$head Purpose$$
+Sets $icode y$$ equal to the absolute value of $latex x$$.
+
+$head x$$
+The argument $icode x$$ can be an instance of $code float$$,
+an $code a_float$$, an $code a2float$$, or an $cref/array/$$ of such objects.
+
+$head y$$
+If $icode x$$ is an instance of $code float$$,
+$icode y$$ will also be an instance of $icode float$$.
+Otherwise $icode y$$ will have the same type as $icode x$$.
+$pre
+
+$$
+In the case where $icode x$$ is an array, $icode y$$ will 
+the same shape as $icode x$$ and the elements of $icode y$$
+will have the  same type as the elements of $icode x$$.
+
+$children%
+	example/abs.py
+%$$
+$head Example$$
+The file $cref/abs.py/$$ 
+contains an example and test of these functions.
+
+$end
+---------------------------------------------------------------------------
+*/
 # include "setup.hpp"
 # include "vector.hpp"
 # include "vec2array.hpp"

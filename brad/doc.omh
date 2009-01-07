@@ -54,6 +54,7 @@ See $cref/whats_new_09/$$ for a list of recent extensions and bug fixes.
 
 $childtable%
 	cppad.py%
+	pycppad.cpp%
 	omh/whats_new_09.omh
 %$$
 
