@@ -39,14 +39,13 @@ $latex \[
 and the derivative $latex F^{(1)} (0)$$ does not exist.
 
 $head Directional Derivative$$
-On the other hand, $cref/forward/$$ mode computes directional derivatives
+On the other hand, for the absolute value function,
+$cref/forward/$$ mode computes directional derivatives
 which are defined by
 $latex \[
 	F^\circ ( x , d ) = \lim_{\lambda \downarrow 0 } 
 		\frac{F(x + \lambda d) - F(x) }{ \lambda }
 \] $$ 
-For the definition of $latex F(x)$$ above,
-directional derivatives exist for all $latex x$$ and all $latex d$$. 
 For $latex x \neq 0$$,
 $latex \[
 	F^\circ ( x , d ) = F^{(1)} ( x ) * d
@@ -107,7 +106,6 @@ $head Example$$
 The file $cref/pow.py/$$  ($cref/pow_a2.py/$$)
 contains an example and test of this operation using 
 $code a_float$$ ($code a2float$$).
-con
 
 $end
 ---------------------------------------------------------------------------
@@ -239,10 +237,8 @@ BOOST_PYTHON_MODULE(pycppad)
 	typedef CppAD::AD<AD_double> AD_AD_double;
 
 	PYCPPAD_STD_MATH_LINK_CPP(double);
-	PYCPPAD_UNARY_FUNCTION(abs, double);
 
 	PYCPPAD_STD_MATH_LINK_CPP(AD_double);
-	PYCPPAD_UNARY_FUNCTION(abs, AD_double);
 
 	// here are the things we are using from boost::python
 	using boost::python::numeric::array;
@@ -271,7 +267,7 @@ BOOST_PYTHON_MODULE(pycppad)
      		.def( pow(self, self) ) 
      		.def( pow(self, double()) )
      		.def( pow(double(), self) )
-		.def("__abs__",  abs_AD_double)
+		.def( abs(self) )
 	;
 
 	class_<ADFun_double>("adfun_float", init< array& , array& >())
@@ -289,7 +285,7 @@ BOOST_PYTHON_MODULE(pycppad)
      		.def( pow(self, self) ) 
      		.def( pow(self, double()) )
      		.def( pow(double(), self) )
-		.def("__abs__",  abs_AD_AD_double)
+		.def( abs(self) )
 	;
 	class_<ADFun_AD_double>("adfun_a_float", init< array& , array& >())
 		.def("domain",    &ADFun_AD_double::Domain)
