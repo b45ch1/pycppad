@@ -132,6 +132,82 @@ $code a_float$$ ($code a2float$$).
 
 $end
 ---------------------------------------------------------------------------
+$begin bool_binary$$ $newlinech #$$
+$spell
+	yes yes
+	bool
+	op
+$$
+
+$section Binary Operators With a Boolean Result$$
+
+$index bool, binary operator$$
+$index binary, bool operator$$
+$index operator, bool binary$$
+
+$index >$$
+$index <$$
+$index >=$$
+$index <=$$
+$index ==$$
+$index !=$$
+
+$head Syntax$$
+$icode%z% = %x% %op% %y%$$
+
+$head Purpose$$
+Sets $icode z$$ to the result of the binary operation defined by $icode op$$
+and with $icode x$$ as the left operand and $icode y$$ as the right operand.
+
+$head op$$
+The possible values for $icode op$$ are
+$table
+$icode op$$ $pre  $$ $cnext Meaning $rnext
+$code >$$  $cnext greater than  $rnext
+$code >$$  $cnext less than  $rnext
+$code >=$$  $cnext greater than or equal  $rnext
+$code <=$$  $cnext less than or equal  $rnext
+$code ==$$ $cnext equal
+$code !=$$ $cnext not equal
+$tend
+
+$head Types$$
+The following table lists the possible (yes) and impossible (no)
+types for $icode x$$ and $icode y$$.
+The corresponding result type for $icode z$$ is always $code bool$$.
+$codei%
+                      %y%
+ %x%           float    a_float   a2float
+         %-------------------------------%
+ float   %-%    yes      yes       yes   
+a_float  %-%    yes      yes       no
+a2float  %-%    yes      no        yes 
+%$$
+The type $code float$$ does not need to be matched exactly
+but rather as an instance of $code float$$.
+
+$head Arrays$$
+Either $icode x$$ or $icode y$$ or both may be
+an $cref/array/$$ with elements
+that match one of possible type choices above.
+If both $icode x$$ and $icode y$$ are arrays, they must have the same shape.
+When either $icode x$$ or $icode y$$ is an array,
+the result $icode z$$ is an array with the same shape.
+The type of the elements of $icode z$$ correspond to the table above
+(when the result type is a $code float$$,
+this only refers to the element types matching as instances).
+
+$children%
+	example/bool_binary.py%
+	example/bool_binary_a2.py
+%$$
+$head Example$$
+The file $cref/bool_binary.py/$$  ($cref/bool_binary_a2.py/$$)
+contains an example and test of this operation using 
+$code a_float$$ ($code a2float$$).
+
+$end
+---------------------------------------------------------------------------
 */
 # include "setup.hpp"
 # include "vector.hpp"

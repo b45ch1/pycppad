@@ -60,7 +60,6 @@ def test_ad_binary() :
   a_y = a_x ** n
   f   = adfun(a_x, a_y)
   J   = f.jacobian(x)
-  print J
   for j in range( len(a_x) ) :
     for i in range( len(a_y) ) :
       if i == j : assert abs( J[i][j] - n * x[j] ** (n-1) ) < delta
