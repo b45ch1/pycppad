@@ -61,16 +61,16 @@ contains an example and test of these functions.
 
 $end
 ---------------------------------------------------------------------------
-$begin numeric_binary$$ $newlinech #$$
+$begin ad_binary$$ $newlinech #$$
 $spell
 	op
 $$
 
-$section Numeric Binary Operators$$
+$section Binary Operators With an AD Result$$
 
-$index numeric, binary operator$$
-$index binary, numeric operator$$
-$index operator, numeric binary$$
+$index AD, binary operator$$
+$index binary, AD operator$$
+$index operator, AD binary$$
 
 $index +$$
 $index -$$
@@ -122,11 +122,11 @@ The type of the elements of $icode z$$ correspond to the table above
 this only refers to the element types matching as instances).
 
 $children%
-	example/numeric_binary.py%
-	example/numeric_binary_a2.py
+	example/ad_binary.py%
+	example/ad_binary_a2.py
 %$$
 $head Example$$
-The file $cref/numeric_binary.py/$$  ($cref/numeric_binary_a2.py/$$)
+The file $cref/ad_binary.py/$$  ($cref/ad_binary_a2.py/$$)
 contains an example and test of this operation using 
 $code a_float$$ ($code a2float$$).
 

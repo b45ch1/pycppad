@@ -1,6 +1,6 @@
-# $begin numeric_binary.py$$ $newlinech #$$
+# $begin ad_binary.py$$ $newlinech #$$
 #
-# $section a_float Numeric Binary Operators: Example and Test$$
+# $section Binary Operators With an a_float Result: Example and Test$$
 #
 # $index +, example$$
 # $index -, example$$
@@ -14,17 +14,17 @@
 # $index example, /$$
 # $index example, **$$
 #
-# $index numeric, binary operator example$$
-# $index binary, numeric operator example$$
-# $index operator, numeric binary example$$
-# $index example, numeric binary operator$$
+# $index a_float, binary operator example$$
+# $index binary, a_float operator example$$
+# $index operator, a_float binary example$$
+# $index example, a_float binary operator$$
 #
 # $code
-# $verbatim%example/numeric_binary.py%0%# BEGIN CODE%# END CODE%1%$$
+# $verbatim%example/ad_binary.py%0%# BEGIN CODE%# END CODE%1%$$
 # $$
 # $end
 # BEGIN CODE
-def test_numeric_binary() :
+def test_ad_binary() :
   delta = 10. * numpy.finfo(float).eps
   x_list = [ -2., -2., 0.,  4.,   4. ]
   y_list = [ -2,   2,  2., .5,   -.5 ]  
