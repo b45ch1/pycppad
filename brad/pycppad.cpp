@@ -155,7 +155,7 @@ $head Purpose$$
 We use $icode y$$ ($icode z$$) to refer to the value of 
 $icode u$$ before (after) the operation.
 This operation sets $icode z$$ equal to 
-$icode%
+$codei%
 	%y% %op% %x%
 %$$.
 
