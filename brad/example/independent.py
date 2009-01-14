@@ -12,7 +12,7 @@
 # BEGIN CODE
 from cppad import *
 def test_independent() :
-  x   = array( [ 0., 0., 0. ] )
+  x   = numpy.array( [ 0., 0., 0. ] )
   a_x = independent(x)    # level 1 independent variables and start recording
   a2x = independent(a_x)  # level 2 independent variables and start recording
   assert type(a_x) == numpy.ndarray

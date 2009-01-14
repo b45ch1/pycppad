@@ -50,7 +50,7 @@ def test_assign_op() :
     assert abs( tmp - x / y ) < delta
     #
   #
-  x   = array( [ -2 , +2 ] )
+  x   = numpy.array( [ -2 , +2 ] )
   a_x = independent(x)
   a_y = a_x + 2. 
   a_y *= 5.

@@ -33,7 +33,7 @@
 from cppad import *
 def test_bool_binary_a2() :
   delta = 10. * numpy.finfo(float).eps
-  x_array = array( range(5) )
+  x_array = numpy.array( range(5) )
   y_array = 6. - x_array
   for i in range( len(x_array) ) :
     x   = x_array[i]
@@ -49,8 +49,8 @@ def test_bool_binary_a2() :
     assert (a2x != a2y) == ( x != y)
   #
   n        = 3.
-  x        = array( [ -2 , +2 ] )
-  a_x      = array( [ ad(x[0]) , ad(x[1]) ] )
+  x        = numpy.array( [ -2 , +2 ] )
+  a_x      = numpy.array( [ ad(x[0]) , ad(x[1]) ] )
   a2x      = independent(x)
   positive = a2x >= 0 
   # At some level, each element of positive is being converted to a float 

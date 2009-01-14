@@ -291,17 +291,6 @@ def value(x) :
       'value(x): only implemented where x a_float or a2float'
     )
  
-def array(x) :
-  """
-  array(x): converts a list or tuple to an array.
-  If the elements of x are int or float, the elements of the array are floats.
-  Otherwise the elements of the array are the same type as the elements of x.
-  """
-  x0 = x[0]
-  if isinstance(x0, int) or isinstance(x0, float) :
-    return numpy.asarray(x)
-  return numpy.asarray(x, type(x0))
-
 def independent(x):
   """
   a_x = independent(x): create independent variable vector a_x, equal to x,

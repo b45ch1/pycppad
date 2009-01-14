@@ -57,7 +57,7 @@ def test_std_math():
 
   # example array and derivative calculation
   n = 5
-  x = array( [2 * pi * j / n for j in range(n) ] )
+  x = numpy.array( [2 * pi * j / n for j in range(n) ] )
   a_x = independent(x)
   a_y = sin(a_x)
   f   = adfun(a_x, a_y)

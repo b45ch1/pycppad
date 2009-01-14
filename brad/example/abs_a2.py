@@ -12,13 +12,13 @@
 # BEGIN CODE
 from cppad import *
 def test_abs_a2() :
-  x   = array( [ ad(-1),  ad(0),  ad(1)] )
+  x   = numpy.array( [ ad(-1),  ad(0),  ad(1)] )
   n   = len(x)
   a_x = independent(x)
   a_y = abs( a_x )
   f   = adfun(a_x, a_y)
   f.forward(0, x)
-  dx  = array( list( ad(0) for i in range(n) ) )
+  dx  = numpy.array( list( ad(0) for i in range(n) ) )
   for i in range( n ) :
     dx[i] = ad(0)
   for i in range( n ) :
