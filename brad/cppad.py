@@ -92,16 +92,18 @@
 # You must create an $cref/adfun/$$ object and stop the recording
 #
 # $head x$$ 
-# The argument $icode x$$ must be a $cref/vector/array/Vector/$$.
-# The elements of $icode x$$ must all be of the same type and
-# instances of either $code float$$ or $code  a_float$$.
+# The argument $icode x$$ must be a $code numpy.array$$ with one dimension
+# (i.e., a vector).
+# All the elements of $icode x$$ must all be of the same type and
+# instances of either $code int$$, $code float$$ or $code  a_float$$.
 #
 # $head a_x$$ 
-# The return value $icode a_x$$ is a $cref/vector/array/Vector/$$ 
+# The return value $icode a_x$$ is a $code numpy.array$$ 
 # with the same shape as $icode x$$. 
-# If the elements of $icode x$$ are instances of $code float$$
-# ($code a_float$$) the elements of $icode a_x$$ are instances of 
-# $code a_float$$ ($code a2float$$).
+# If the elements of $icode x$$ are instances of $code int$$ or $code float$$
+# the elements of $icode a_x$$ are instances of # $code a_float$$.
+# If the elements of $icode x$$ are instances of $code a_float$$
+# the elements of $icode a_x$$ are instances of $code a2float$$.
 # The $cref/value/$$ of the elements of $icode a_x$$ 
 # are equal to the corresponding elements of $icode x$$.
 # 
@@ -116,6 +118,7 @@
 # ---------------------------------------------------------------------------
 # $begin adfun$$ $newlinech #$$
 # $spell
+#	numpy
 #	len
 #	adfun
 # $$
@@ -136,7 +139,7 @@
 # $icode a_x$$ to the dependent variable vector $icode a_y$$.
 #
 # $head a_x$$
-# The argument $icode a_x$$ is the $cref/vector/array/Vector/$$ 
+# The argument $icode a_x$$ is the $code numpy.array$$ 
 # returned by the previous call to $cref/independent/$$.
 # Neither the size of $icode a_x$$, or the value it its elements,
 # may change between calling
@@ -151,8 +154,9 @@
 # $latex n$$ for the function $latex y = F(x)$$ below.
 #
 # $head a_y$$
-# The argument $icode a_y$$ is a $cref/vector/array/Vector/$$
-# that specifies the dependent variables.
+# The argument $icode a_y$$ specifies the dependent variables.
+# It must be a $code numpy.array$$ with one dimension
+# (i.e., a vector) and with the same type of elements as $icode a_x$$.
 # The object $icode f$$ stores the $codei type( a_x[0] )$$ operations 
 # that mapped the vector $icode a_x$$ to the vector $icode a_y$$.
 # The length of the vector $icode a_y$$ determines the range size
@@ -177,6 +181,7 @@
 # ---------------------------------------------------------------------------
 # $begin std_math$$ $newlinech #$$
 # $spell
+#	numpy
 #	arccos
 #	arcsin
 #	arctan
@@ -211,7 +216,8 @@
 #
 # $head x$$
 # The argument $icode x$$ can be an instance of $code float$$,
-# an $code a_float$$, an $code a2float$$, or an $cref/array/$$ of such objects.
+# an $code a_float$$, an $code a2float$$, or a $code numpy.array$$
+# of such objects.
 #
 # $head y$$
 # If $icode x$$ is an instance of $code float$$,
@@ -255,7 +261,6 @@ CppAD to evaluate derivatives of arbitrary order.
 """
 
 import numpy
-
 import pycppad
 from pycppad import a_float
 from pycppad import a2float

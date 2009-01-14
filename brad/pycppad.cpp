@@ -2,6 +2,7 @@
 ---------------------------------------------------------------------------
 $begin abs$$ $newlinech #$$
 $spell
+	numpy
 $$
 
 $section Absolute Value Functions$$
@@ -14,7 +15,8 @@ Sets $icode y$$ equal to the absolute value of $latex x$$.
 
 $head x$$
 The argument $icode x$$ can be an instance of $code float$$,
-an $code a_float$$, an $code a2float$$, or an $cref/array/$$ of such objects.
+an $code a_float$$, an $code a2float$$, or an $code numpy.array$$ 
+of such objects.
 
 $head y$$
 If $icode x$$ is an instance of $code float$$,
@@ -63,6 +65,7 @@ $end
 ---------------------------------------------------------------------------
 $begin ad_binary$$ $newlinech #$$
 $spell
+	numpy
 	op
 $$
 
@@ -112,7 +115,7 @@ but rather as an instance of $code float$$.
 
 $head Arrays$$
 Either $icode x$$ or $icode y$$ or both may be
-an $cref/array/$$ with elements
+a $code numpy.array$$ with elements
 that match one of possible type choices above.
 If both $icode x$$ and $icode y$$ are arrays, they must have the same shape.
 When either $icode x$$ or $icode y$$ is an array,
@@ -134,6 +137,7 @@ $end
 ---------------------------------------------------------------------------
 $begin assign_op$$ $newlinech #$$
 $spell
+	numpy
 	op
 $$
 
@@ -187,7 +191,7 @@ but rather as an instance of $code float$$.
 
 $head Arrays$$
 Either $icode x$$ or $icode y$$ or both may be
-an $cref/array/$$ with elements
+a $code numpy.array$$ with elements
 that match one of possible type choices above.
 If both $icode x$$ and $icode y$$ are arrays, they must have the same shape.
 When either $icode x$$ or $icode y$$ is an array,
@@ -209,6 +213,7 @@ $end
 ---------------------------------------------------------------------------
 $begin bool_binary$$ $newlinech #$$
 $spell
+	numpy
 	yes yes
 	bool
 	op
@@ -242,7 +247,7 @@ $code >$$  $cnext greater than  $rnext
 $code >$$  $cnext less than  $rnext
 $code >=$$  $cnext greater than or equal  $rnext
 $code <=$$  $cnext less than or equal  $rnext
-$code ==$$ $cnext equal
+$code ==$$ $cnext equal $rnext
 $code !=$$ $cnext not equal
 $tend
 
@@ -263,7 +268,7 @@ but rather as an instance of $code float$$.
 
 $head Arrays$$
 Either $icode x$$ or $icode y$$ or both may be
-an $cref/array/$$ with elements
+a $code numpy.array$$ with elements
 that match one of possible type choices above.
 If both $icode x$$ and $icode y$$ are arrays, they must have the same shape.
 When either $icode x$$ or $icode y$$ is an array,
