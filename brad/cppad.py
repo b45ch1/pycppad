@@ -58,14 +58,17 @@
 # $head a_x$$ 
 # The argument $icode a_x$$ must be an $code a_float$$ (AD level 1),
 # or an $code a2float$$ (AD level 2).
-#
+# The argument $icode a_x$$ may also be a $code numpy.array$$ with one of the
+# element types listed in the previous sentence.
 #
 # $head x$$ 
 # If $icode a_x$$ is an $code a_float$$,
 # $icode x$$ is a $code float$$ (AD level 0).
 # If $icode a_x$$ is an $code a2float$$,
 # $icode x$$ is an $code a_float$$ (AD level 1).
-#
+# If $icode a_x$$ is an $code numpy.array$$,
+# $icode x$$ is also an $code numpy.array$$ with the 
+# same shape as $icode a_x$$.
 # 
 # $children%
 #	example/value.py
@@ -292,19 +295,24 @@ def ad(x) :
       'an array of such values.'
     )
 
-def value(x) :
+def value(a_x) :
   """
-  value(x): returns an object with one lower level of automatic differentation.
-  If x is an a_float, value(x) is a float (AD level 0). 
-  If x is an a2float, value(x) is an a_float (AD level 1). 
+  value(a_x): returns object with one lower level of automatic differentation.
+  If a_x is an a_float, value(a_x) is a float (AD level 0). 
+  If a_x is an a2float, value(a_x) is an a_float (AD level 1). 
   """
-  if isinstance(x, a_float) :
-    return pycppad.float_(x);
-  elif isinstance(x, a2float) :
-    return pycppad.a_float_(x);
+  if isinstance(a_x, a_float) :
+    return pycppad.float_(a_x);
+  elif isinstance(a_x, a2float) :
+    return pycppad.a_float_(a_x);
+  elif isinstance(a_x, numpy.ndarray) :
+    s      = a_x.shape
+    length = numpy.prod(s)
+    x      = numpy.array( list(value(a_xi) for a_xi in a_x.flat) )
+    return x.reshape(s)
   else :
     raise NotImplementedError(
-      'value(x): only implemented where x a_float or a2float'
+      'value(a_x): only implemented where a_x a_float or a2float'
     )
  
 def independent(x) :
