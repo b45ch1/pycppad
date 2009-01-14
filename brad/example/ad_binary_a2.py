@@ -55,7 +55,7 @@ def test_ad_binary_a2() :
     assert abs( a2x ** y   - x ** y ) < delta
     assert abs( x   ** a2y - x ** y ) < delta
   #
-  a_x = numpy.array( [ ad(-2) , ad(+2) ] )
+  a_x = ad( numpy.array( [ -2 , +2 ] ) )
   a2x = independent(a_x)
   n   = 3.
   a2y = a2x ** n

@@ -12,7 +12,7 @@
 # BEGIN CODE
 from cppad import *
 def test_abs_a2() :
-  x   = numpy.array( [ ad(-1),  ad(0),  ad(1)] )
+  x   = ad( numpy.array( [-1,  0,  1] ) )
   n   = len(x)
   a_x = independent(x)
   a_y = abs( a_x )

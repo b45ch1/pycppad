@@ -6,7 +6,7 @@ def test_jacobian_a2():
     [ 1., 2., 3. ],
     [ 4., 5., 6. ]
   ])
-  x   = numpy.array( [ ad(0.), ad(0.), ad(0.) ] )
+  x   = ad( numpy.array( [ 0, 0, 0 ] ) )
   a_x = independent(x)
   a_y = numpy.dot(A, a_x)
   f   = adfun(a_x, a_y)

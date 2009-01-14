@@ -50,7 +50,7 @@ def test_assign_op_a2() :
     assert abs( tmp - x / y ) < delta
     #
   #
-  a_x   = numpy.array( [ -1 * ad(2) , ad(2) ] )
+  a_x   = ad( numpy.array( [ 2 , 2 ] ) )
   a2x = independent(a_x)
   a2y = a2x + 2. 
   a2y *= 5.

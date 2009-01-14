@@ -18,15 +18,20 @@
 # the later evaluations are done using $code float$$ operations).
 #
 # $head x$$ 
-# The argument $icode x$$ must be an instance of an $code int$$ (AD level 0),
+# The argument $icode x$$ can be an instance of an $code int$$ (AD level 0),
 # or an instance of $code float$$ (AD level 0),
 # or an $code a_float$$ (AD level 1).
+# The argument $icode x$$ may also be a $code numpy.array$$ with one of the
+# element types listed in the previous sentence.
 #
 # $head a_x$$ 
 # If $icode x$$ is an instance of $code int$$ or $code float$$,
 # $codei a_x$$ is an $code a_float$$ (AD level 1).
 # If $icode x$$ is an $code a_float$$,
 # $icode a_x$$ is an $code a2float$$ (AD level 2).
+# If $icode x$$ is an $code numpy.array$$,
+# $icode a_x$$ is also an $code numpy.array$$ with the 
+# same shape as $icode x$$.
 # 
 # $children%
 #	example/ad.py
@@ -276,9 +281,15 @@ def ad(x) :
     return a_float(x)
   elif isinstance(x, a_float) :
     return a2float(x)
-  else:
+  elif isinstance(x, numpy.ndarray) :
+    s      = x.shape
+    length = numpy.prod(s)
+    a_x    = numpy.array( list(ad(xi) for xi in x.flat) )
+    return a_x.reshape(s)
+  else :
     raise NotImplementedError(
-      'ad(x): only implemented where x int, float, or a_float'
+      'ad(x): only implemented where x an int, float, a_float or '
+      'an array of such values.'
     )
 
 def value(x) :
@@ -296,15 +307,15 @@ def value(x) :
       'value(x): only implemented where x a_float or a2float'
     )
  
-def independent(x):
+def independent(x) :
   """
   a_x = independent(x): create independent variable vector a_x, equal to x,
   and start recording operations that use the class corresponding to ad( x[0] ).
   """
-  if not isinstance(x, numpy.ndarray):
+  if not isinstance(x, numpy.ndarray) :
     raise NotImplementedError('independent(x): x is not of type numpy.array')
   x0 = x[0]
-  if isinstance(x0, int) or isinstance(x0, float):
+  if isinstance(x0, int) or isinstance(x0, float) :
     return pycppad.independent(x, 1)     # level = 1
   elif isinstance(x0, a_float) :
     return pycppad.independent(x, 2)     # level = 2
@@ -330,7 +341,7 @@ class adfun_a_float(pycppad.adfun_a_float) :
     return self.jacobian_(x).reshape(self.range(), self.domain())
   pass
 
-def adfun(x,y):
+def adfun(x,y) :
   """
   f = adfun(x,y): Stop recording and place it in the function object f.
   x: a numpy one dimnesional array containing the independent variable vector.
