@@ -1,52 +1,73 @@
 from cppad import *
 
 def test_a_float_and_conditionals():
-	x = a_float(2.)
-	y = a_float(3.)
-	z = a_float(2.)
+  delta = 10. * numpy.finfo(float).eps
+  x_array = numpy.array( range(5) )
+  y_array = 6. - x_array
+  for i in range( len(x_array) ) :
+    x   = x_array[i]
+    y   = y_array[i]
+    a_x = ad(x)
+    a_y = ad(y)
+    #
+    assert (a_x < a_y)  == ( x < y )
+    assert (a_x > a_y)  == ( x > y )
+    assert (a_x <= a_y) == ( x <= y )
+    assert (a_x >= a_y) == ( x >= y )
+    assert (a_x == a_y) == ( x == y )
+    assert (a_x != a_y) == ( x != y )
+  #
+  n        = 3.
+  x        = numpy.array( [ -2 , +2 ] )
+  a_x      = independent(x)
+  positive = a_x >= 0 
+  # At some level, each element of positive is being converted to a float 
+  # before interfacing to pycppad * operator.
+  a_y      = ( a_x ** n ) * positive
+  f        = adfun(a_x, a_y)
+  J        = f.jacobian(x)
+  for j in range( len(a_x) ) :
+    for i in range( len(a_y) ) :
+      if i == j  and x[i] >= 0 :
+        assert abs( J[i][j] - n * x[j] ** (n-1) ) < delta
+      else :
+        assert J[i][j] == 0.
 	
-	# assert that the conditionals work
-	assert x == x
-	assert x == z
-	assert x != y
-	assert x <= x
-	assert x <= z
-	assert x <= y
-	assert x <  y
 	
-	# assert that conditionals can fail to be true
-	assert not x == y
-	assert not x != z
-	assert not x != x
-	assert not x >= y
-	assert not x >  y
-	
-	
-def test_a2float():
-	x = a_float(2.)
-	y = a_float(3.)
-	z = a_float(2.)
-	
-	x = a2float(x)
-	y = a2float(y)
-	z = a2float(z)
-	
-	# assert that the conditionals work
-	assert x == x
-	assert x == z
-	assert x != y
-	assert x <= x
-	assert x <= z
-	assert x <= y
-	assert x <  y
-	
-	# assert that conditionals can fail to be true
-	assert not x == y
-	assert not x != z
-	assert not x != x
-	assert not x >= y
-	assert not x >  y	
-	
+def test_a2float_and_conditionals():
+  delta = 10. * numpy.finfo(float).eps
+  x_array = numpy.array( range(5) )
+  y_array = 6. - x_array
+  for i in range( len(x_array) ) :
+    x   = x_array[i]
+    y   = y_array[i]
+    a2x = ad(ad(x))
+    a2y = ad(ad(y))
+    #
+    assert (a2x < a2y)  == ( x < y)
+    assert (a2x > a2y)  == ( x > y)
+    assert (a2x <= a2y) == ( x <= y)
+    assert (a2x >= a2y) == ( x >= y)
+    assert (a2x == a2y) == ( x == y)
+    assert (a2x != a2y) == ( x != y)
+  #
+  n        = 3.
+  x        = numpy.array( [ -2 , +2 ] )
+  a_x      = numpy.array( [ ad(x[0]) , ad(x[1]) ] )
+  a2x      = independent(x)
+  positive = a2x >= 0 
+  # At some level, each element of positive is being converted to a float 
+  # before interfacing to pycppad * operator.
+  a2y      = ( a2x ** n ) * positive
+  f        = adfun(a2x, a2y)
+  J        = f.jacobian(x)
+  for j in range( len(a2x) ) :
+    for i in range( len(a2y) ) :
+      if i == j  and x[i] >= 0 :
+        assert abs( J[i][j] - n * x[j] ** (n-1) ) < delta
+      else :
+        assert J[i][j] == 0.
+
 def test_ad():
 	x = ad(2.)
 	y = ad(3.)

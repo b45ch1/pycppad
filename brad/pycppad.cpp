@@ -211,7 +211,7 @@ $code a_float$$ ($code a2float$$).
 
 $end
 ---------------------------------------------------------------------------
-$begin bool_binary$$ $newlinech #$$
+$begin compare_op$$ $newlinech #$$
 $spell
 	numpy
 	yes yes
@@ -278,11 +278,11 @@ The type of the elements of $icode z$$ correspond to the table above
 this only refers to the element types matching as instances).
 
 $children%
-	example/bool_binary.py%
-	example/bool_binary_a2.py
+	example/compare_op.py%
+	example/compare_op_a2.py
 %$$
 $head Example$$
-The file $cref/bool_binary.py/$$  ($cref/bool_binary_a2.py/$$)
+The file $cref/compare_op.py/$$  ($cref/compare_op_a2.py/$$)
 contains an example and test of these operations using 
 $code a_float$$ ($code a2float$$).
 
