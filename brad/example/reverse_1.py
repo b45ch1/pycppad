@@ -1,5 +1,6 @@
 # First order reverse mode.
 
+from cppad import *
 def test_reverse_1():
 
   # start record a_float operations

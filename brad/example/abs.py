@@ -11,7 +11,6 @@
 # $end
 # BEGIN CODE
 from cppad import *
-#
 def test_abs() :
   x   = array( [ -1.,  0.,  1.] )
   n   = len(x)

@@ -1,3 +1,4 @@
+from cppad import *
 def test_forward_2():
   # start recording a_float operations
   x   = array( [ 2. , 3. ] )

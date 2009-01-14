@@ -1,5 +1,6 @@
 # converting integer to double arrays
 
+from cppad import *
 def test_int2double():
   A   = array([ 
     [ 1, 2, 3 ],

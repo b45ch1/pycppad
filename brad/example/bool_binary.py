@@ -30,6 +30,7 @@
 # $$
 # $end
 # BEGIN CODE
+from cppad import *
 def test_bool_binary() :
   delta = 10. * numpy.finfo(float).eps
   x_array = array( range(5) )

@@ -127,7 +127,82 @@ $children%
 %$$
 $head Example$$
 The file $cref/ad_binary.py/$$  ($cref/ad_binary_a2.py/$$)
-contains an example and test of this operation using 
+contains an example and test of these operations using 
+$code a_float$$ ($code a2float$$).
+
+$end
+---------------------------------------------------------------------------
+$begin assign_op$$ $newlinech #$$
+$spell
+	op
+$$
+
+$section Computed Assignment Operators$$
+
+$index computed, assignment operator$$
+$index assignment, computed operator$$
+$index operator, computed assignment$$
+
+$index +=$$
+$index -=$$
+$index *=$$
+$index /=$$
+
+$head Syntax$$
+$icode%u% %op%= %x%$$
+
+$head Purpose$$
+We use $icode y$$ ($icode z$$) to refer to the value of 
+$icode u$$ before (after) the operation.
+This operation sets $icode z$$ equal to 
+$icode%
+	%y% %op% %x%
+%$$.
+
+$head op$$
+The possible values for $icode op$$ are
+$table
+$icode op$$ $pre  $$ $cnext Meaning $rnext
+$code +$$  $cnext addition  $rnext
+$code -$$  $cnext subtraction  $rnext
+$code *$$  $cnext multiplication  $rnext
+$code /$$  $cnext division 
+$tend
+
+$head Types$$
+The following table lists the possible types for $icode x$$ and $icode y$$
+(the value of $icode u$$ before the operation)
+and the corresponding $icode z$$
+(the value of $icode u$$ after the operation).
+$codei%
+                      %y%
+ %x%           float    a_float   a2float
+         %-------------------------------%
+ float   %-%   float    a_float   a2float
+a_float  %-%  a_float   a_float
+a2float  %-%  a2float             a2float
+%$$
+The type $code float$$ does not need to be matched exactly
+but rather as an instance of $code float$$.
+
+$head Arrays$$
+Either $icode x$$ or $icode y$$ or both may be
+an $cref/array/$$ with elements
+that match one of possible type choices above.
+If both $icode x$$ and $icode y$$ are arrays, they must have the same shape.
+When either $icode x$$ or $icode y$$ is an array,
+the result $icode z$$ is an array with the same shape.
+The type of the elements of $icode z$$ correspond to the table above
+(when the result type is a $code float$$,
+this only refers to the element types matching as instances).
+
+$children%
+	example/assign_op.py%
+	example/assign_op_a2.py
+%$$
+$head Example$$
+The file $cref/assign_op.py/$$  ($cref/assign_op_a2.py/$$)
+contains an example and test of these operations using 
 $code a_float$$ ($code a2float$$).
 
 $end
@@ -203,7 +278,7 @@ $children%
 %$$
 $head Example$$
 The file $cref/bool_binary.py/$$  ($cref/bool_binary_a2.py/$$)
-contains an example and test of this operation using 
+contains an example and test of these operations using 
 $code a_float$$ ($code a2float$$).
 
 $end

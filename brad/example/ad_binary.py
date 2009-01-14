@@ -24,6 +24,7 @@
 # $$
 # $end
 # BEGIN CODE
+from cppad import *
 def test_ad_binary() :
   delta = 10. * numpy.finfo(float).eps
   x_list = [ -2., -2., 0.,  4.,   4. ]

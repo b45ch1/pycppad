@@ -1,5 +1,5 @@
 # First order forward mode with two levels of taping
-
+from cppad import *
 def test_forward_1_a2():
   # start recording a_float operations
   x   = array( [ 2. , 3. ] )

@@ -1,5 +1,5 @@
 # Comparison operators with type a_float
-
+from cppad import *
 def test_compare_op():
 	x = ad(2.)
 	y = ad(3.)

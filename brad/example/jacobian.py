@@ -1,5 +1,6 @@
 # jacobian result with type double
 
+from cppad import *
 def test_jacobian():
   # A = [ 0 1 2 ]  f(x) = A * x
   #     [ 3 4 5 ]

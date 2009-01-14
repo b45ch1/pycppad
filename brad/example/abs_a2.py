@@ -1,5 +1,16 @@
-# Note that derivatives of the abs function at zero depend on the direction
+# $begin abs_a2.py$$ $newlinech #$$
 #
+# $section abs: Example and Test$$
+#
+# $index abs, example$$
+# $index example, abs$$
+#
+# $code
+# $verbatim%example/abs_a2.py%0%# BEGIN CODE%# END CODE%1%$$
+# $$
+# $end
+# BEGIN CODE
+from cppad import *
 def test_abs_a2() :
   x   = array( [ ad(-1),  ad(0),  ad(1)] )
   n   = len(x)
@@ -24,3 +35,4 @@ def test_abs_a2() :
     else :
       assert df[i] == +1.
     dx[i] = ad(0)
+# END CODE

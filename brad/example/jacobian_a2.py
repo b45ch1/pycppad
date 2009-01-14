@@ -1,5 +1,6 @@
 # jacobian result with type a_float
 
+from cppad import *
 def test_jacobian_a2():
   A   = array([ 
     [ 1., 2., 3. ],

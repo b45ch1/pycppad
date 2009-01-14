@@ -1,5 +1,5 @@
 # First order forward mode.
-
+from cppad import *
 def test_forward_1():
 
   # start record a_float operations
