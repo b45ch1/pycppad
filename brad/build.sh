@@ -22,14 +22,14 @@ fi
 # -------------------------------------------------------------------
 if [ ! -e "$python_config_dir/pyconfig.h" ]
 then
-echo "Must change python_config_dir or python_version in pycppad.sh"
+echo "Must change python_config_dir or python_version in brad.sh"
 	exit 1
 fi
 python --version >& pycppad.tmp
 py_version=`cat pycppad.tmp`
 if ! grep "Python $python_version" pycppad.tmp > /dev/null
 then
-	echo "Must change python_version in pycppad.sh"
+	echo "Must change python_version in brad.sh"
 	exit 1
 fi
 rm pycppad.tmp

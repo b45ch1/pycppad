@@ -70,50 +70,6 @@
 #
 # $end
 # ---------------------------------------------------------------------------
-# $begin array$$ $newlinech #$$
-# $spell
-#	Numpy
-#	tuple
-#	ndarray
-#	len
-# $$
-#
-# $section Create a Numpy N-Dimensional Array Object$$
-# 
-# $index array$$
-#
-# $head Syntax$$
-# $icode%y% = array(%x%)%$$
-#
-# $head Purpose$$
-# Creates a 
-# $href%http://numpy.scipy.org/%numpy%$$ n-dimensional array object $icode y$$.
-#
-# $head x$$ 
-# The argument $icode x$$ must be either a python list or a tuple
-# with all its elements of the same type.
-#
-# $head y$$ 
-# If $icode%x%[0]%$$ is an instance of $code int$$ or $icode float$$,
-# $icode y$$ is corresponding $code numpy.ndarray$$ object
-# with elements that are instances of $code float$$.
-# Otherwise, it is the corresponding Numpy array with elements
-# that are of type $codei%type(%x%[0])%$$.
-#
-# $head Vector$$
-# $index vector$$
-# If the result $icode y$$ has only one dimension; i.e.
-# $icode len( numpy.shape(%y%) )$$ is equal to one,
-# the array $icode y$$ is referred to as a vector.
-# 
-# $children%
-#	example/array.py
-# %$$
-# $head Example$$
-# The file $cref/array.py/$$ contains an example and test of this function.
-#
-# $end
-# ---------------------------------------------------------------------------
 # $begin independent$$ $newlinech #$$
 # $spell
 #	Numpy
@@ -343,7 +299,7 @@ def array(x) :
   """
   x0 = x[0]
   if isinstance(x0, int) or isinstance(x0, float) :
-    return numpy.asarray(x, dtype=float)
+    return numpy.asarray(x)
   return numpy.asarray(x, type(x0))
 
 def independent(x):
@@ -354,7 +310,7 @@ def independent(x):
   if not isinstance(x, numpy.ndarray):
     raise NotImplementedError('independent(x): x is not of type numpy.array')
   x0 = x[0]
-  if isinstance(x0, float) :
+  if isinstance(x0, int) or isinstance(x0, float):
     return pycppad.independent(x, 1)     # level = 1
   elif isinstance(x0, a_float) :
     return pycppad.independent(x, 2)     # level = 2
