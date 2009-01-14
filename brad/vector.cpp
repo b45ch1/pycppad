@@ -22,33 +22,34 @@ vec<double>::vec(array& py_array)
 
 	// set private data
 	length_    = static_cast<size_t>( length );
-	pointer_   = CPPAD_TRACK_NEW_VEC(length, pointer_);
 	if( PyArray_TYPE(py_array.ptr()) == PyArray_DOUBLE )
-	{	double* data = 	static_cast<double*>( 
+	{	pointer_ = static_cast<double*>( 
 			PyArray_DATA(py_array.ptr()) 
 		);
-		for(size_t i = 0; i < length_; i++)
-			pointer_[i] = data[i];
+		allocated_ = false;
 	}
 	else if( PyArray_TYPE(py_array.ptr()) == PyArray_INT )
-	{	int* data = 	static_cast<int*>( 
+	{	pointer_   = CPPAD_TRACK_NEW_VEC(length, pointer_);
+		int* data = 	static_cast<int*>( 
 			PyArray_DATA(py_array.ptr()) 
 		);
 		for(size_t i = 0; i < length_; i++)
 			pointer_[i] = static_cast<double>( data[i] );
+		allocated_ = true;
 	}
 	else if( PyArray_TYPE(py_array.ptr()) == PyArray_LONG )
-	{	long* data = 	static_cast<long*>( 
+	{	pointer_   = CPPAD_TRACK_NEW_VEC(length, pointer_);
+		long* data = 	static_cast<long*>( 
 			PyArray_DATA(py_array.ptr()) 
 		);
 		for(size_t i = 0; i < length_; i++)
 			pointer_[i] = static_cast<double>( data[i] );
+		allocated_ = true;
 	}
 	else	PYCPPAD_ASSERT(
 		0,
 		"expected an array with int or float elements"
 	);
-	allocated_ = true;
 	return;
 }
 
