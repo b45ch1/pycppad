@@ -1,6 +1,6 @@
 from cppad import *
 
-def test_a_float_and_conditionals():
+def test_compare_op():
   delta = 10. * numpy.finfo(float).eps
   x_array = numpy.array( range(5) )
   y_array = 6. - x_array
@@ -34,7 +34,7 @@ def test_a_float_and_conditionals():
         assert J[i][j] == 0.
 	
 	
-def test_a2float_and_conditionals():
+def test_compare_op_a2():
   delta = 10. * numpy.finfo(float).eps
   x_array = numpy.array( range(5) )
   y_array = 6. - x_array
@@ -110,12 +110,17 @@ def test_ad():
 	assert not x >  y
 	
 def test_array_element_type_is_int():
-	x = numpy.array( [ 1 ] )
-	a_x = independent(x)
-	a_y = a_x
-	f = adfun(a_x, a_y) 
-	y = f.forward(0, x) 
-	assert y[0] == 1
+  A   = numpy.array([ 
+    [ 1, 2, 3 ],
+    [ 4, 5, 6 ]
+  ])
+  x   = numpy.array( [ 0, 0, 0 ] )
+  a_x = independent(x)
+  a_y = numpy.dot(A, a_x)
+  f   = adfun(a_x, a_y)
+  x   = numpy.array( [ 1, 2, 3 ] )
+  J   = f.jacobian(x)
+  assert numpy.all( A == J )
 	
 def test_assign_op():
   delta = 10. * numpy.finfo(float).eps

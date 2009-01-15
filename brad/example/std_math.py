@@ -16,14 +16,13 @@
 from cppad import *
 import numpy
 import math
-
+# Example using a_float ----------------------------------------------------
 def test_std_math(): 
   n     = 10
   delta = 10. * numpy.finfo(float).eps
   pi    = numpy.pi
   x     = pi / 6
   a_x   = ad(x)
-  a2x   = ad(a_x)
 
   # all the a_float unary standard math functions
   assert abs( arccos(a_x) - math.acos(x) )  < delta
@@ -40,6 +39,26 @@ def test_std_math():
   assert abs( tan(a_x)    - math.tan(x) )   < delta
   assert abs( tanh(a_x)   - math.tanh(x) )  < delta
 
+  # example array and derivative calculation
+  n = 5
+  x = numpy.array( [2 * pi * j / n for j in range(n) ] )
+  a_x = independent(x)
+  a_y = sin(a_x)
+  f   = adfun(a_x, a_y)
+  J   = f.jacobian(x)
+  for j in range(n) :
+    for k in range(n) :
+      if j == k : assert abs( J[j][k] - cos( x[j] ) ) < delta
+      else :      assert J[j][k] == 0.
+
+# Example using a2float ----------------------------------------------------
+def test_std_math_a2(): 
+  n     = 10
+  delta = 10. * numpy.finfo(float).eps
+  pi    = numpy.pi
+  x     = pi / 6
+  a2x   = ad(ad(x))
+
   # all the a2float unary standard math functions
   assert abs( arccos(a2x) - math.acos(x) )  < delta
   assert abs( arcsin(a2x) - math.asin(x) )  < delta
@@ -53,17 +72,18 @@ def test_std_math():
   assert abs( sinh(a2x)   - math.sinh(x) )  < delta
   assert abs( sqrt(a2x)   - math.sqrt(x) )  < delta
   assert abs( tan(a2x)    - math.tan(x) )   < delta
-  assert abs( tanh(a_x)   - math.tanh(x) )  < delta
+  assert abs( tanh(a2x)   - math.tanh(x) )  < delta
 
   # example array and derivative calculation
   n = 5
-  x = numpy.array( [2 * pi * j / n for j in range(n) ] )
-  a_x = independent(x)
-  a_y = sin(a_x)
-  f   = adfun(a_x, a_y)
-  J   = f.jacobian(x)
+  x   = numpy.array( [2 * pi * j / n for j in range(n) ] )
+  a_x = ad(x)
+  a2x = independent(a_x)
+  a2y = sin(a2x)
+  a_f = adfun(a2x, a2y)
+  a_J = a_f.jacobian(a_x)
   for j in range(n) :
     for k in range(n) :
-      if j == k : assert abs( J[j][k] - cos( x[j] ) ) < delta
-      else :      assert abs( J[j][k] - 0. )          < delta
+      if j == k : assert abs( a_J[j][k] - cos( x[j] ) ) < delta
+      else :      assert a_J[j][k] == 0.
 # END CODE
