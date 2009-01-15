@@ -200,13 +200,11 @@ The type of the elements of $icode z$$ correspond to the table above
 this only refers to the element types matching as instances).
 
 $children%
-	example/assign_op.py%
-	example/assign_op_a2.py
+	example/assign_op.py
 %$$
 $head Example$$
-The file $cref/assign_op.py/$$  ($cref/assign_op_a2.py/$$)
-contains an example and test of these operations using 
-$code a_float$$ ($code a2float$$).
+The file $cref/assign_op.py/$$  
+contains an example and test of these operations.
 
 $end
 ---------------------------------------------------------------------------

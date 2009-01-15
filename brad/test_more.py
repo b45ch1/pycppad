@@ -117,21 +117,81 @@ def test_array_element_type_is_int():
 	y = f.forward(0, x) 
 	assert y[0] == 1
 	
-def test_elementary_a_float_operations():
-	x = a_float(2.)
-	y = a_float(3.)
+def test_assign_op():
+  delta = 10. * numpy.finfo(float).eps
+  x_list = [ -2., -2., 0.,  4.,   4. ]
+  y_list = [ -2,   2,  2., .5,   -.5 ]  
+  for i in range( len(x_list) ) :
+    x   = x_list[i]
+    y   = y_list[i]
+    a_y = ad(y)
+    #
+    tmp = ad(x)
+    tmp += a_y
+    assert abs( tmp - (x + y) ) < delta
+    #
+    tmp = ad(x)
+    tmp -= y
+    assert abs( tmp  - (x - y) ) < delta
+    #
+    tmp = x
+    tmp *= a_y
+    assert abs( tmp - x * y ) < delta
+    #
+    tmp = ad(x)
+    tmp /= a_y
+    assert abs( tmp - x / y ) < delta
+    #
+  #
+  x   = numpy.array( [ -2 , +2 ] )
+  a_x = independent(x)
+  a_y = a_x + 2. 
+  a_y *= 5.
+  f   = adfun(a_x, a_y)
+  J   = f.jacobian(x)
+  for j in range( len(a_x) ) :
+    for i in range( len(a_y) ) :
+      if i == j : assert abs( J[i][j] - 5. ) < delta
+      else :      assert J[i][j] == 0.
+
+def test_assign_op_a2() :
+  delta = 10. * numpy.finfo(float).eps
+  x_list = [ -2., -2., 0.,  4.,   4. ]
+  y_list = [ -2,   2,  2., .5,   -.5 ]  
+  for i in range( len(x_list) ) :
+    x   = x_list[i]
+    y   = y_list[i]
+    a2y = ad(ad(y))
+    #
+    tmp = ad(ad(x))
+    tmp += a2y
+    assert abs( tmp - (x + y) ) < delta
+    #
+    tmp = ad(ad(x))
+    tmp -= y
+    assert abs( tmp  - (x - y) ) < delta
+    #
+    tmp = x
+    tmp *= a2y
+    assert abs( tmp - x * y ) < delta
+    #
+    tmp = ad(ad(x))
+    tmp /= a2y
+    assert abs( tmp - x / y ) < delta
+    #
+  #
+  a_x   = ad( numpy.array( [ 2 , 2 ] ) )
+  a2x = independent(a_x)
+  a2y = a2x + 2. 
+  a2y *= 5.
+  f   = adfun(a2x, a2y)
+  J   = f.jacobian(a_x)
+  for j in range( len(a2x) ) :
+    for i in range( len(a2y) ) :
+      if i == j : assert abs( J[i][j] - 5. ) < delta
+      else :      assert J[i][j] == 0.
 	
-	assert x + y == a_float(5.)
-	assert x - y == a_float(-1.)
-	assert x * y == a_float(6.)
-	assert x / y == a_float(2./3.)
-	
-	x += y
-	assert x == ad(5.)
-	x -= y
-	assert x == ad(2.)
-	
-def test_numeric_a_float_operations():
+def test_numeric_op():
   delta = 10. * numpy.finfo(float).eps
   x_list = [ -2., -2., 0.,  4.,   4. ]
   y_list = [ -2,   2,  2., .5,   -.5 ]  
@@ -172,7 +232,7 @@ def test_numeric_a_float_operations():
       if i == j : assert abs( J[i][j] - n * x[j] ** (n-1) ) < delta
       else :      assert J[i][j] == 0.
 
-def test_numeric_a2float_operations():
+def test_numeric_op_a2():
   delta = 10. * numpy.finfo(float).eps
   x_list = [ -2., -2., 0.,  4.,   4. ]
   y_list = [ -2,   2,  2., .5,   -.5 ]  
