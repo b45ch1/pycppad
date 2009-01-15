@@ -1,4 +1,7 @@
 # $begin ad$$ $newlinech #$$
+# $spell
+#	numpy
+# $$
 #
 # $section Create an Object With One Higher Level of AD$$
 #
@@ -42,6 +45,9 @@
 # $end
 # ---------------------------------------------------------------------------
 # $begin value$$ $newlinech #$$
+# $spell
+#	numpy
+# $$
 #
 # $index value$$
 # $index AD, decrease level$$
@@ -131,7 +137,7 @@
 #	adfun
 # $$
 #
-# $section Create a Function Object With One Lower Level of AD$$
+# $section Create an AD Function Object$$
 #
 # $index dependent, variables$$
 # $index variables, dependent$$
@@ -142,7 +148,7 @@
 # $icode%f% = %adfun%(%a_x%, %a_y%)%$$
 #
 # $head Purpose$$
-# The function object $icode f$$ will store the $codei type( a_x[0] )$$
+# The function object $icode f$$ will store the $codei%type( %a_x%[0] )%$$
 # operation sequence that mapped the independent variable vector 
 # $icode a_x$$ to the dependent variable vector $icode a_y$$.
 #
@@ -155,7 +161,7 @@
 #	%a_x% = independent(%x%)
 # %$$
 # and
-# $icode%
+# $codei%
 #	%f% = adfun(%a_x%, %a_y%)
 # %$$
 # The length of the vector $icode a_x$$ determines the domain size
@@ -177,6 +183,18 @@
 # \] $$
 # and its derivatives, where $latex y = F(x)$$ corresponds to the 
 # operation sequence mentioned above.
+#
+# $subhead m$$
+# The range size $latex m$$ is equal to the length of the vector $icode a_y$$.
+#
+# $subhead n$$
+# The domain size $latex n$$ is equal to the length of the vector $icode a_x$$.
+#
+# $subhead level$$
+# The $cref/ad/$$ level for the object $icode f$$ is one less than
+# the AD level for the arguments $icode a_x$$ and $icode a_y$$;
+# i.e., if $codei%type( %a_x%[0] )%$$ is $code a_float$$ ($code a2float$$)
+# the corresponding AD level for $icode f$$ is zero (one).
 #
 # $children%
 #	example/adfun.py

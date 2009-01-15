@@ -288,6 +288,97 @@ $code a_float$$ ($code a2float$$).
 
 $end
 ---------------------------------------------------------------------------
+$begin forward$$
+$spell
+	numpy
+	adfun
+	Taylor
+$$
+
+$section  Forward Mode$$
+
+$head Syntax$$
+$icode%y_p% = %f%.forward(%p%, %x_p%)%$$
+
+$head Purpose$$
+We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the 
+function corresponding to the $code adfun$$ object $cref/f/adfun/f/$$.
+Given the $th p$$ order Taylor expansion for a function
+$latex X : \B{R} \rightarrow \B{R}^n$$, this function can be used
+to compute the $th p$$ order Taylor expansion for the function
+$latex Y : \B{R} \rightarrow \B{R}^m$$ defined by
+$latex \[
+	Y(t) = F [ X(t) ]
+\] $$
+
+$head x_k$$
+For $latex k = 0 , \ldots , p$$,
+we use $latex x^{(k)}$$ to denote the value of $icode x_k$$ in the
+most recent call to
+$codei%
+	%f%.forward(%k%, %x_k%)
+%$$
+including $latex x^{(p)}$$ as the value $icode x_p$$ in this call.
+We define the function $latex X(t)$$ by
+$latex \[
+	X(t) =  x^{(0)} + x^{(1)} * t + \cdots + x^{(p)} * t^p 
+\] $$
+
+$head y_k$$
+For $latex k = 0 , \ldots , p$$,
+we use $latex y^{(k)}$$ to denote the Taylor coefficients
+for $latex Y(t) = F[ X(t) ]$$ expanded about zero; i.e.,
+$latex \[
+\begin{array}{rcl}
+y^{(k)} & = & Y^{(k)} (0) / k !
+\\
+Y(t)    & = & y^{(0)} + y^{(1)} * t + \cdots + y^{(p)} * t^p + o( t^p )
+\end{array}
+\] $$
+where $latex o( t^p ) / t^p \rightarrow 0$$ as $latex t \rightarrow 0$$.
+The coefficient $latex y^{(p)}$$ is equal to 
+the value $icode y_p$$ returned by this call.
+
+$head f$$
+The object $icode f$$ must be an $cref/adfun/$$ object.
+We use $cref/level/adfun/f/level/$$ for the AD $cref/ad/$$ level of 
+this object.
+
+$head p$$
+The argument $icode p$$ is a non-negative $code int$$.
+It specifies the order of the Taylor coefficient for $latex Y(t)$$
+that is computed.
+
+$head x_p$$
+The argument $icode x_p$$ is a $code numpy.array$$ with one dimension
+(i.e., a vector) with length equal to the domain size $cref/n/adfun/f/n/$$
+for the function $icode f$$.
+It specifies the $th p$$ order Taylor coefficient for $latex X(t)$$.
+If the AD $cref/level/adfun/f/level/$$ for $icode f$$ is zero,
+all the elements of $icode x_p$$ must be either $code int$$ or instances
+of $code float$$.
+If the AD $cref/level/adfun/f/level/$$ for $icode f$$ is one,
+all the elements of $icode x_p$$ must be $code a_float$$ objects.
+
+
+$head y_p$$
+The return value $icode y_p$$ is a $code numpy.array$$ with one dimension
+(i.e., a vector) with length equal to the range size $cref/m/adfun/f/m/$$
+for the function $icode f$$.
+It is set to the $th p$$ order Taylor coefficient for $latex Y(t)$$.
+If the AD $cref/level/adfun/f/level/$$ for $icode f$$ is zero,
+all the elements of $icode y_p$$ will be instances of $code float$$.
+If the AD $cref/level/adfun/f/level/$$ for $icode f$$ is one,
+all the elements of $icode y_p$$ will be $code a_float$$ objects.
+
+$head Example$$
+$childtable%
+	example/forward_0.py%
+	example/forward_1.py
+%$$
+
+$end
+---------------------------------------------------------------------------
 */
 # include "setup.hpp"
 # include "vector.hpp"

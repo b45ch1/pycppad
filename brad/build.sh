@@ -128,4 +128,8 @@ then
 	exit 1
 fi
 echo "All tests passed."
+echo "Check on number of tests in test_example.py"
+grep '^def' test_example.py | wc -l
+echo "Check on number of tests in test_more.py"
+grep '^def' test_more.py | wc -l
 exit 0
