@@ -216,12 +216,13 @@ $spell
 	op
 $$
 
-$section Binary Operators With a Boolean Result$$
+$section Binary Comparison Operators$$
 
 $index bool, binary operator$$
 $index binary, bool operator$$
 $index operator, bool binary$$
 $index comparison, binary operator$$
+$index binary, comparison operator$$
 
 $index >$$
 $index <$$
@@ -276,13 +277,11 @@ The type of the elements of $icode z$$ correspond to the table above
 this only refers to the element types matching as instances).
 
 $children%
-	example/compare_op.py%
-	example/compare_op_a2.py
+	example/compare_op.py
 %$$
 $head Example$$
-The file $cref/compare_op.py/$$  ($cref/compare_op_a2.py/$$)
-contains an example and test of these operations using 
-$code a_float$$ ($code a2float$$).
+The file $cref/compare_op.py/$$  
+contains an example and test of these operations.
 
 $end
 ---------------------------------------------------------------------------
