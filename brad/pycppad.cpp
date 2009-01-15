@@ -125,13 +125,11 @@ The type of the elements of $icode z$$ correspond to the table above
 this only refers to the element types matching as instances).
 
 $children%
-	example/ad_binary.py%
-	example/ad_binary_a2.py
+	example/ad_binary.py
 %$$
 $head Example$$
-The file $cref/ad_binary.py/$$  ($cref/ad_binary_a2.py/$$)
-contains an example and test of these operations using 
-$code a_float$$ ($code a2float$$).
+The file $cref/ad_binary.py/$$ 
+contains an example and test of $code abs$$.
 
 $end
 ---------------------------------------------------------------------------
