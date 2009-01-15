@@ -379,6 +379,131 @@ $childtable%
 
 $end
 ---------------------------------------------------------------------------
+$begin reverse$$
+$spell
+	dw
+	numpy
+	adfun
+	Taylor
+$$
+
+$section  Reverse Mode$$
+
+$head Syntax$$
+$icode%dw% = %f%.forward(%p%, %w%)%$$
+
+$head Purpose$$
+Reverse mode computes the derivative of the $cref/forward/$$ more 
+Taylor coefficients with respect to the domain variable $latex x$$.
+
+$head x_k$$
+For $latex k = 0 , \ldots , p$$,
+we use $latex x^{(k)}$$ to denote the value of $icode x_k$$ in the
+most recent call to
+$codei%
+	%f%.forward(%k%, %x_k%)
+%$$
+We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the 
+function corresponding to the $code adfun$$ object $cref/f/adfun/f/$$.
+
+$head X(t, u)$$
+We define the function $latex X : \B{R} \times \B{R}^n \rightarrow \B{R}^n$$ by
+$latex \[
+	X(t, u) =  u + x^{(0)} + x^{(1)} * t + \cdots + x^{(p-1)} * t^{p-1} 
+\] $$
+Note that for $latex k = 0 , \ldots , p - 1$$,
+$latex \[
+	x^{(k)} = \frac{1}{k !} \frac{\partial^k}{\partial t^k} X(0, 0)
+\] $$
+
+$head W(t, u)$$
+The function $latex W : \B{R} \times \B{R}^n \rightarrow \B{R}$$
+is defined by
+$latex \[
+W(t, u) = w_0 * F_0 [ X(t, u) ] + \cdots + w_{m-1} * F_{m-1} [ X(t, u) ]
+\] $$
+We define the function $latex W_k : \B{R}^n \rightarrow \B{R}$$ by
+$latex \[
+	W_k ( u ) = \frac{1}{k !} \frac{\partial^k}{\partial t^k} W(0, u)
+\] $$
+It follows that
+$latex \[
+W(t, u ) = W_0 ( u ) + W_1 ( u ) * t + \cdots + W_{p-1} (u) * t^{p-1}
+         + o( t^{p-1} )
+\] $$
+where $latex o( t^{p-1} ) / t^{p-1} \rightarrow 0$$
+as $latex t \rightarrow 0$$.
+
+$head f$$
+The object $icode f$$ must be an $cref/adfun/$$ object.
+We use $cref/level/adfun/f/level/$$ for the AD $cref/ad/$$ level of 
+this object.
+
+$head p$$
+The argument $icode p$$ is a non-negative $code int$$.
+It specifies the order of the Taylor coefficient $latex W_{p-1} ( u )$$
+that is differentiated.
+Note that $latex W_{p-1} (u)$$ corresponds a derivative of order 
+$latex p-1$$ of $latex F(x)$$,
+so the derivative of $latex W_{p-1} (u)$$ corresponds to a derivative
+of order $latex p$$ of $latex F(x)$$.
+
+$head w$$
+The argument $icode w$$ is a $code numpy.array$$ with one dimension
+(i.e., a vector) with length equal to the range size $cref/m/adfun/f/m/$$
+for the function $icode f$$.
+It specifies the weighting vector $latex w$$ used in the definition of
+$latex W(t, u)$$.
+If the AD $cref/level/adfun/f/level/$$ for $icode f$$ is zero,
+all the elements of $icode w$$ must be either $code int$$ or instances
+of $code float$$.
+If the AD $cref/level/adfun/f/level/$$ for $icode f$$ is one,
+all the elements of $icode w$$ must be $code a_float$$ objects.
+
+$head dw$$
+The return value $icode v$$ is a $code numpy.array$$ with one dimension
+(i.e., a vector) with length equal to the domain size $cref/n/adfun/f/n/$$
+for the function $icode f$$.
+It is set to the derivative 
+$latex \[
+\begin{array}{rcl}
+dw & = & W_{p-1}^{(1)} ( 0 ) \\
+& = &
+\partial_u \frac{1}{(p-1) !} \frac{\partial^{p-1}}{\partial t^{p-1}} W(0, 0)
+\end{array}
+\] $$
+If the AD $cref/level/adfun/f/level/$$ for $icode f$$ is zero,
+all the elements of $icode dw$$ will be instances of $code float$$.
+If the AD $cref/level/adfun/f/level/$$ for $icode f$$ is one,
+all the elements of $icode dw$$ will be $code a_float$$ objects.
+
+$head First Order$$
+In the case where $latex p = 1$$, we have
+$latex \[
+\begin{array}{rcl}
+dw 
+& = & \partial_u \frac{1}{0 !} \frac{\partial^0}{\partial t^0} W(0, 0)
+\\
+& = & \partial_u W(0, 0)
+\\
+& = & 
+\partial_u w_0 * F_0 [ X(0, u) ] + \cdots + 
+\partial_u w_{m-1} F_{m-1} [ X(0, u) ]
+\\
+& = & 
+w_0 * F_0^{(1)} ( x^{(0)} ) + \cdots + w_{m-1} * F_{m-1}^{(1)} ( x^{(0)} )
+\end{array}
+\] $$
+
+$childtable%
+	example/reverse_1.py
+%$$
+$head Example$$
+The file $cref/reverse_1.py/$$ contains an example and test of
+this operation.
+
+$end
+---------------------------------------------------------------------------
 */
 # include "setup.hpp"
 # include "vector.hpp"
