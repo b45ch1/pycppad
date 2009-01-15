@@ -63,17 +63,18 @@ contains an example and test of these functions.
 
 $end
 ---------------------------------------------------------------------------
-$begin ad_binary$$ $newlinech #$$
+$begin ad_numeric$$ $newlinech #$$
 $spell
 	numpy
 	op
 $$
 
-$section Binary Operators With an AD Result$$
+$section Binary Numeric Operators With an AD Result$$
 
-$index AD, binary operator$$
-$index binary, AD operator$$
-$index operator, AD binary$$
+$index AD, binary numeric operator$$
+$index binary, AD numeric operator$$
+$index operator, AD numeric binary$$
+$index numeric, AD binary operator$$
 
 $index +$$
 $index -$$
@@ -125,10 +126,10 @@ The type of the elements of $icode z$$ correspond to the table above
 this only refers to the element types matching as instances).
 
 $children%
-	example/ad_binary.py
+	example/ad_numeric.py
 %$$
 $head Example$$
-The file $cref/ad_binary.py/$$ 
+The file $cref/ad_numeric.py/$$ 
 contains an example and test of $code abs$$.
 
 $end
@@ -222,6 +223,7 @@ $section Binary Operators With a Boolean Result$$
 $index bool, binary operator$$
 $index binary, bool operator$$
 $index operator, bool binary$$
+$index comparison, binary operator$$
 
 $index >$$
 $index <$$
