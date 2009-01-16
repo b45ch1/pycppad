@@ -295,9 +295,12 @@ If the AD $cref/level/adfun/f/level/$$ for $icode f$$ is one,
 all the elements of $icode x$$ must be $code a_float$$ objects.
 
 $head J$$
-The return value $icode J$$ is a $code numpy.array$$ with one dimension
-(i.e., a vector) with length equal to the range size $cref/m/adfun/f/m/$$
-for the function $icode f$$.
+The return value $icode J$$ is a $code numpy.array$$ with two dimensions
+(i.e., a matrix).
+The first dimension (row dimension) is equal to $cref/m/adfun/f/m/$$
+(the number of range components in the function $icode f$$).
+The second dimension (column dimension) is equal to $cref/n/adfun/f/n/$$
+(the number of domain components in the function $icode f$$).
 It is set to the derivative; i.e.,
 $latex \[
 	J = F^{(1)} (x)
