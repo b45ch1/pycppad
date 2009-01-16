@@ -484,20 +484,41 @@ dw
 & = & \partial_u W(0, 0)
 \\
 & = & 
-\partial_u w_0 * F_0 [ X(0, u) ] + \cdots + 
-\partial_u w_{m-1} F_{m-1} [ X(0, u) ]
+\partial_u \left[ 
+w_0 * F_0 ( u + x^{(0)} ) + \cdots +  w_{m-1} F_{m-1} ( u + x^{(0)} )
+\right]_{u = 0}
 \\
 & = & 
 w_0 * F_0^{(1)} ( x^{(0)} ) + \cdots + w_{m-1} * F_{m-1}^{(1)} ( x^{(0)} )
 \end{array}
 \] $$
 
+$head Second Order$$
+In the case where $latex p = 2$$, we have
+$latex \[
+\begin{array}{rcl}
+dw 
+& = & \partial_u \frac{1}{1 !} frac{\partial^1}{\partial t^1} W (0, 0)
+\\
+& = &
+\partial_u \left[
+	w_0 * F_0^{(1)} ( u + x^{(0)} ) * x^{(1)}
+ 	+ \cdots + 
+	w_{m-1} * F_{m-1}^{(1)} ( u + x^{(0)} ) * x^{(1)}
+\right]_{u = 0}
+\\
+& = &
+w_0 * ( x^{(1)} )^\R{T} * F_0^{(2)} ( x^{(0)} ) 
++ \cdots + 
+w_{m-1} * ( x^{(1)} )^\R{T} * F_{m-1}^{(2)} ( x^{(0)} )
+\end{array}
+\] $$
+
+$head Example$$ 
 $childtable%
-	example/reverse_1.py
+	example/reverse_1.py%
+	example/reverse_2.py
 %$$
-$head Example$$
-The file $cref/reverse_1.py/$$ contains an example and test of
-this operation.
 
 $end
 ---------------------------------------------------------------------------

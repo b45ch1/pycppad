@@ -32,7 +32,11 @@ namespace pycppad {
 	array ADFun<Base>::Reverse(int p, array& w)
 	{	size_t    p_sz(p);
 		vec<Base> w_vec(w);
-		vec<Base> result = f_.Reverse(p_sz, w_vec);
+		vec<Base> dw_vec = f_.Reverse(p_sz, w_vec);
+		size_t n = f_.Domain();
+		vec<Base> result(n);
+		for(size_t j = 0; j < n; j++)
+			result[j] = dw_vec[j*p + p - 1];
 		return vec2array(result);
 	}
 	// member function Jacobian
