@@ -56,6 +56,7 @@ $childtable%
 	cppad.py%
 	pycppad.cpp%
 	adfun.cpp%
+	example/two_levels.py%
 	omh/whats_new_09.omh
 %$$
 
