@@ -1,17 +1,58 @@
-# jacobian result with type double
-
+# $begin jacobian.py$$ $newlinech #$$
+# $spell
+#	Jacobian
+# $$
+#
+# $section Entire Derivative: Example and Test$$
+#
+# $index jacobian, example$$
+# $index derivative, entire example$$
+# $index entire, derivative example$$
+# $index example, entire derivative$$
+#
+# $code
+# $verbatim%example/jacobian.py%0%# BEGIN CODE%# END CODE%1%$$
+# $$
+# $end
+# BEGIN CODE
 from cppad import *
+# Example using a_float -----------------------------------------------------
 def test_jacobian():
-  # A = [ 0 1 2 ]  f(x) = A * x
-  #     [ 3 4 5 ]
-  A   = numpy.array([ 
-    [ 1., 2., 3. ],
-    [ 4., 5., 6. ]
-  ])
-  x   = numpy.array( [ 0., 0., 0. ] )
-  a_x = independent(x)
-  a_y = numpy.dot(A, a_x)
+  delta = 10. * numpy.finfo(float).eps
+  x     = numpy.array( [ 0., 0. ] )
+  a_x   = independent(x)
+  a_y   = numpy.array( [ 
+    a_x[0] * exp(a_x[1]) , 
+    a_x[0] * sin(a_x[1]) ,
+    a_x[0] * cos(a_x[1]) 
+  ] )
   f   = adfun(a_x, a_y)
-  x   = numpy.array( [ 1., 2., 3. ] )
+  x   = numpy.array( [ 2., 3. ] )
   J   = f.jacobian(x)
-  assert numpy.all( A == J )
+  assert abs( J[0,0] -        exp(x[1]) ) < delta
+  assert abs( J[0,1] - x[0] * exp(x[1]) ) < delta
+  assert abs( J[1,0] -        sin(x[1]) ) < delta
+  assert abs( J[1,1] - x[0] * cos(x[1]) ) < delta
+  assert abs( J[2,0] -        cos(x[1]) ) < delta
+  assert abs( J[2,1] + x[0] * sin(x[1]) ) < delta
+# Example using a2float -----------------------------------------------------
+def test_jacobian_a2():
+  delta = 10. * numpy.finfo(float).eps
+  a_x   = ad( numpy.array( [ 0., 0. ] ) )
+  a2x   = independent(a_x)
+  a2y   = numpy.array( [ 
+    a2x[0] * exp(a2x[1]) , 
+    a2x[0] * sin(a2x[1]) ,
+    a2x[0] * cos(a2x[1]) 
+  ] )
+  a_f   = adfun(a2x, a2y)
+  x     = numpy.array( [2., 3.] )
+  a_x   = ad(x)
+  a_J   = a_f.jacobian(a_x)
+  assert abs( a_J[0,0] -        exp(x[1]) ) < delta
+  assert abs( a_J[0,1] - x[0] * exp(x[1]) ) < delta
+  assert abs( a_J[1,0] -        sin(x[1]) ) < delta
+  assert abs( a_J[1,1] - x[0] * cos(x[1]) ) < delta
+  assert abs( a_J[2,0] -        cos(x[1]) ) < delta
+  assert abs( a_J[2,1] + x[0] * sin(x[1]) ) < delta
+# END CODE

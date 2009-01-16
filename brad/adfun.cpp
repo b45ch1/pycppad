@@ -7,7 +7,13 @@ $spell
 	Taylor
 $$
 
-$section  Forward Mode$$
+$section  Forward Mode: Derivative in One Domain Direction$$
+
+$index forward$$
+$index domain, direction derivative$$
+$index derivative, domain direction$$
+$index direction, domain derivative$$
+
 
 $head Syntax$$
 $icode%y_p% = %f%.forward(%p%, %x_p%)%$$
@@ -103,7 +109,12 @@ $spell
 	Taylor
 $$
 
-$section  Reverse Mode$$
+$section  Reverse Mode: Derivative in One Range Direction$$
+
+$index reverse$$
+$index derivative, range direction$$
+$index range, direction derivative$$
+$index direction, range derivative$$
 
 $head Syntax$$
 $icode%dw% = %f%.forward(%p%, %w%)%$$
@@ -242,6 +253,66 @@ $table
 $rref reverse_1.py$$
 $rref reverse_2.py$$
 $tend
+
+$end
+---------------------------------------------------------------------------
+$begin jacobian$$
+$spell
+	jacobian
+	numpy
+	adfun
+$$
+
+$section Driver for Computing Entire Derivative$$
+
+$index jacobian$$
+$index driver, entire derivative$$
+$index entire, derivative driver$$
+$index derivative, entire driver$$
+
+$head Syntax$$
+$icode%J% = %f%.jacobian(%x%)%$$
+
+$head Purpose$$
+This routine computes the entire derivative $latex F^{(1)} (x)$$
+where $latex F : \B{R}^n \rightarrow \B{R}^m$$ is the 
+function corresponding to the $code adfun$$ object $cref/f/adfun/f/$$.
+
+$head f$$
+The object $icode f$$ must be an $cref/adfun/$$ object.
+We use $cref/level/adfun/f/level/$$ for the AD $cref/ad/$$ level of 
+this object.
+
+$head x$$
+The argument $icode x$$ is a $code numpy.array$$ with one dimension
+(i.e., a vector) with length equal to the domain size $cref/n/adfun/f/n/$$
+for the function $icode f$$.
+It specifies the argument value at which the derivative is computed.
+If the AD $cref/level/adfun/f/level/$$ for $icode f$$ is zero,
+all the elements of $icode x$$ must be either $code int$$ or instances
+of $code float$$.
+If the AD $cref/level/adfun/f/level/$$ for $icode f$$ is one,
+all the elements of $icode x$$ must be $code a_float$$ objects.
+
+$head J$$
+The return value $icode J$$ is a $code numpy.array$$ with one dimension
+(i.e., a vector) with length equal to the range size $cref/m/adfun/f/m/$$
+for the function $icode f$$.
+It is set to the derivative; i.e.,
+$latex \[
+	J = F^{(1)} (x)
+\] $$
+If the AD $cref/level/adfun/f/level/$$ for $icode f$$ is zero,
+all the elements of $icode J$$ will be instances of $code float$$.
+If the AD $cref/level/adfun/f/level/$$ for $icode f$$ is one,
+all the elements of $icode J$$ will be $code a_float$$ objects.
+
+$children%
+	example/jacobian.py
+%$$
+$head Example$$ 
+The file $cref/jacobian.py/$$ contains an example and test of this operation.
+
 $end
 ---------------------------------------------------------------------------
 */

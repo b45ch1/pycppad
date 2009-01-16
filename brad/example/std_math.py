@@ -18,7 +18,6 @@ import numpy
 import math
 # Example using a_float ----------------------------------------------------
 def test_std_math(): 
-  n     = 10
   delta = 10. * numpy.finfo(float).eps
   pi    = numpy.pi
   x     = pi / 6
