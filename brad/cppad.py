@@ -287,9 +287,9 @@ CppAD to evaluate derivatives of arbitrary order.
 """
 
 import numpy
-import pycppad
-from pycppad import a_float
-from pycppad import a2float
+import cppad_
+from cppad_ import a_float
+from cppad_ import a2float
 
 def ad(x) :
   """
@@ -320,9 +320,9 @@ def value(a_x) :
   If a_x is an a2float, value(a_x) is an a_float (AD level 1). 
   """
   if isinstance(a_x, a_float) :
-    return pycppad.float_(a_x);
+    return cppad_.float_(a_x);
   elif isinstance(a_x, a2float) :
-    return pycppad.a_float_(a_x);
+    return cppad_.a_float_(a_x);
   elif isinstance(a_x, numpy.ndarray) :
     s      = a_x.shape
     length = numpy.prod(s)
@@ -342,16 +342,16 @@ def independent(x) :
     raise NotImplementedError('independent(x): x is not of type numpy.array')
   x0 = x[0]
   if isinstance(x0, int) or isinstance(x0, float) :
-    return pycppad.independent(x, 1)     # level = 1
+    return cppad_.independent(x, 1)     # level = 1
   elif isinstance(x0, a_float) :
-    return pycppad.independent(x, 2)     # level = 2
+    return cppad_.independent(x, 2)     # level = 2
   else:
     print "type(x[j]) = ", type(x0)
     raise NotImplementedError(
       'independent(x): only implemented where x[j] is float or a_float'
     )
 
-class adfun_float(pycppad.adfun_float) :
+class adfun_float(cppad_.adfun_float) :
   """
   Create a level zero function object (evaluates using floats).
   """
@@ -362,7 +362,7 @@ class adfun_float(pycppad.adfun_float) :
     return self.hessian_(x, w).reshape(self.domain(), self.domain())
   pass
 
-class adfun_a_float(pycppad.adfun_a_float) :
+class adfun_a_float(cppad_.adfun_a_float) :
   """
   Create a level one function object (evaluates using a_float).
   """

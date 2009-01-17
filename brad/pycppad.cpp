@@ -405,7 +405,7 @@ namespace pycppad {
 	{	return Value(x); }
 }
 
-BOOST_PYTHON_MODULE(pycppad)
+BOOST_PYTHON_MODULE(cppad_)
 {
 	// AD_double is used in pycppad namespace
 	typedef CppAD::AD<double>    AD_double;
