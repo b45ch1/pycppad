@@ -353,18 +353,24 @@ def independent(x) :
 
 class adfun_float(pycppad.adfun_float) :
   """
-  Create a function object that evaluates using floats.
+  Create a level zero function object (evaluates using floats).
   """
+  # Kludge: The following reshaping should be done in adfun.cpp
   def jacobian(self, x) :
     return self.jacobian_(x).reshape(self.range(), self.domain())
+  def hessian(self, x, w) :
+    return self.hessian_(x, w).reshape(self.domain(), self.domain())
   pass
 
 class adfun_a_float(pycppad.adfun_a_float) :
   """
-  Create a function object that evaluates using a_float.
+  Create a level one function object (evaluates using a_float).
   """
+  # Kludge: The following reshaping should be done in adfun.cpp
   def jacobian(self, x) :
     return self.jacobian_(x).reshape(self.range(), self.domain())
+  def hessian(self, x, w) :
+    return self.hessian_(x, w).reshape(self.domain(), self.domain())
   pass
 
 def adfun(x,y) :

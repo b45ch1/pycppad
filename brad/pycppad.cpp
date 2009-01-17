@@ -451,6 +451,7 @@ BOOST_PYTHON_MODULE(pycppad)
 		.def("forward",   &ADFun_double::Forward)
 		.def("reverse",   &ADFun_double::Reverse)
 		.def("jacobian_", &ADFun_double::Jacobian)
+		.def("hessian_" , &ADFun_double::Hessian)
 	;
 	// --------------------------------------------------------------------
 	class_<AD_AD_double>("a2float", init<AD_double>())
@@ -468,5 +469,6 @@ BOOST_PYTHON_MODULE(pycppad)
 		.def("forward",   &ADFun_AD_double::Forward)
 		.def("reverse",   &ADFun_AD_double::Reverse)
 		.def("jacobian_", &ADFun_AD_double::Jacobian)
+		.def("hessian_",  &ADFun_AD_double::Hessian)
 	;
 }

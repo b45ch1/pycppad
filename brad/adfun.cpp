@@ -297,9 +297,9 @@ all the elements of $icode x$$ must be $code a_float$$ objects.
 $head J$$
 The return value $icode J$$ is a $code numpy.array$$ with two dimensions
 (i.e., a matrix).
-The first dimension (row dimension) is equal to $cref/m/adfun/f/m/$$
+The first dimension (row size) is equal to $cref/m/adfun/f/m/$$
 (the number of range components in the function $icode f$$).
-The second dimension (column dimension) is equal to $cref/n/adfun/f/n/$$
+The second dimension (column size) is equal to $cref/n/adfun/f/n/$$
 (the number of domain components in the function $icode f$$).
 It is set to the derivative; i.e.,
 $latex \[
@@ -315,6 +315,81 @@ $children%
 %$$
 $head Example$$ 
 The file $cref/jacobian.py/$$ contains an example and test of this operation.
+
+$end
+---------------------------------------------------------------------------
+$begin hessian$$
+$spell
+	hessian
+	numpy
+	adfun
+$$
+
+$section Driver for Computing Hessian in a Range Direction$$
+
+$index hessian, driver$$
+$index driver, hessian$$
+$index Lagrangian, hessian$$
+$index hessian, Lagrangian$$
+
+$head Syntax$$
+$icode%H% = %f%.hessian(%x%, %w%)%$$
+
+$head Purpose$$
+This routine computes the Hessian of the weighted sum
+$latex \[
+	w_0 * F_0 (x) + \cdots + w_{m-1} * F_{m-1} (x)
+\] $$
+where $latex F : \B{R}^n \rightarrow \B{R}^m$$ is the 
+function corresponding to the $code adfun$$ object $cref/f/adfun/f/$$.
+
+$head f$$
+The object $icode f$$ must be an $cref/adfun/$$ object.
+We use $cref/level/adfun/f/level/$$ for the AD $cref/ad/$$ level of 
+this object.
+
+$head x$$
+The argument $icode x$$ is a $code numpy.array$$ with one dimension
+(i.e., a vector) with length equal to the domain size $cref/n/adfun/f/n/$$
+for the function $icode f$$.
+It specifies the argument value at which the derivative is computed.
+If the AD $cref/level/adfun/f/level/$$ for $icode f$$ is zero,
+all the elements of $icode x$$ must be either $code int$$ or instances
+of $code float$$.
+If the AD $cref/level/adfun/f/level/$$ for $icode f$$ is one,
+all the elements of $icode x$$ must be $code a_float$$ objects.
+
+$head w$$
+The argument $icode w$$ is a $code numpy.array$$ with one dimension
+(i.e., a vector) with length equal to the range size $cref/m/adfun/f/m/$$
+for the function $icode f$$.
+It specifies the argument value at which the derivative is computed.
+If the AD $cref/level/adfun/f/level/$$ for $icode f$$ is zero,
+all the elements of $icode w$$ must be either $code int$$ or instances
+of $code float$$.
+If the AD $cref/level/adfun/f/level/$$ for $icode f$$ is one,
+all the elements of $icode w$$ must be $code a_float$$ objects.
+
+$head H$$
+The return value $icode H$$ is a $code numpy.array$$ with two dimensions
+(i.e., a matrix).
+Both its first and second dimension size 
+(row and column size) are equal to $cref/n/adfun/f/n/$$
+(the number of domain components in the function $icode f$$).
+It is set to the Hessian; i.e.,
+$latex \[
+	H = w_0 * F_0^{(2)} (x) + \cdots + w_{m-1} * F_{m-1}^{(2)} (x)
+\] $$
+If the AD $cref/level/adfun/f/level/$$ for $icode f$$ is zero,
+all the elements of $icode H$$ will be instances of $code float$$.
+If the AD $cref/level/adfun/f/level/$$ for $icode f$$ is one,
+all the elements of $icode H$$ will be $code a_float$$ objects.
+
+$children%
+	example/hessian.py
+%$$
+$head Example$$ 
+The file $cref/hessian.py/$$ contains an example and test of this operation.
 
 $end
 ---------------------------------------------------------------------------
@@ -365,6 +440,16 @@ namespace pycppad {
 	array ADFun<Base>::Jacobian(array& x)
 	{	vec<Base> x_vec(x);
 		vec<Base> result = f_.Jacobian(x_vec);
+		// Kludge: return a vector which is reshaped by cppad.py
+		return vec2array(result);
+	}
+	// member function Hessian
+	template <class Base>
+	array ADFun<Base>::Hessian(array& x, array& w)
+	{	vec<Base> x_vec(x);
+		vec<Base> w_vec(w);
+		vec<Base> result = f_.Hessian(x_vec, w_vec);
+		// Kludge: return a vector which is reshaped by cppad.py
 		return vec2array(result);
 	}
 	// -------------------------------------------------------------

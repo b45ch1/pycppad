@@ -19,6 +19,7 @@ namespace pycppad {
 		array Forward(int p, array& xp);
 		array Reverse(int p, array& w);
 		array Jacobian(array& x);
+		array Hessian(array& x, array& w);
 	};
 	typedef ADFun<double>    ADFun_double;
 	typedef ADFun<AD_double> ADFun_AD_double;
