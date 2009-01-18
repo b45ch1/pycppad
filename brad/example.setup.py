@@ -3,8 +3,8 @@
 # build with: $ python setup.py build_ext --inplace
 # clean with: # python setup.py clean --all
 cppad_include_dir = '../cppad-20081128'
-library_dirs = ['/usr/lib']
-libraries = ['boost_python']
+boost_lib_dir     = '/usr/lib'
+boost_python_lib  = 'boost_python'
 # ---------------------------------------------------------------------
 
 
@@ -69,9 +69,9 @@ config.add_extension(
 	sources = ['adfun.cpp', 'pycppad.cpp', 'vec2array.cpp', 'vector.cpp'],
 	include_dirs = [ get_numpy_include_dirs(), cppad_include_dir ],
 	extra_compile_args = [ ],
-	library_dirs = library_dirs,
-	runtime_library_dirs = library_dirs,
-	libraries = libraries
+	library_dirs = [ boost_lib_dir ],
+	runtime_library_dirs = [ boost_lib_dir ] ,
+	libraries = [ boost_python_lib ]
 )
 #include_dirs, define_macros, undef_macros, library_dirs, libraries, runtime_library_dirs, extra_objects, extra_compile_args, extra_link_args, export_symbols, swig_opts, depends, language, f2py_options, module_dirs, extra_info.
 
