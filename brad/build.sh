@@ -43,7 +43,7 @@ then
 	echo "Cannot remove previous setup output."
 	exit 1
 fi
-cmd="./example.setup.py build_ext --inplace"
+cmd="./example.setup.py build_ext --inplace --debug --undef NDEBUG"
 echo "$cmd"
 if ! $cmd
 then

@@ -14,7 +14,7 @@ from numpy.distutils.core import Command
 
 # ADAPT THIS TO FIT YOUR SYSTEM
 include_dirs = [get_numpy_include_dirs(),'../cppad-20081128']
-extra_compile_args = ['-ftemplate-depth-100 -DBOOST_PYTHON_DYNAMIC_LIB']
+extra_compile_args = [ ]
 library_dirs = ['/usr/lib']
 libraries = ['boost_python']
 
