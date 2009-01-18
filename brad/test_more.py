@@ -1,5 +1,18 @@
 from cppad import *
 
+def test_compile_cppad_without_ndebug() :
+  try :
+    x   = numpy.array( [ 1 , 2 ] )
+    a_x = independent(x)
+    f   = adfun(a_x, a_x)
+    x   = numpy.array( [ 1 ] )
+    J   = f.jacobian(x)
+    # line above should raise a ValueError exception because length of x not 2
+    raise RuntimeError
+  except ValueError : 
+    # exception should come here
+    pass
+
 def test_compare_op():
   delta = 10. * numpy.finfo(float).eps
   x_array = numpy.array( range(5) )
@@ -423,20 +436,18 @@ def test_jacobian():
 	
 	assert numpy.prod( A == J )
 	
-#def test_hessian():
-#	N = 4
-#	A = numpy.ones((N,N)) + 2.*numpy.eye(N)
-#	def f(x):
-#		return numpy.array([0.5* numpy.dot(x,numpy.dot(A,x))])
-#	
-#	x = numpy.array([0. for n in range(N) ])
-#	ax = independent(x)
-#	ay = f(ax)
-#	af = adfun (ax, ay);
-#	x = numpy.array([1. for n in range(N)])
-#	H = af.hessian(x)
-#
-#	assert numpy.prod( A == H )
-#
-
+def test_hessian():
+	N = 4
+	A = numpy.ones((N,N)) + 2.*numpy.eye(N)
+	def fun(x):
+		return numpy.array([0.5* numpy.dot(x,numpy.dot(A,x))])
+	
+	x = numpy.array([0. for n in range(N) ])
+	a_x = independent(x)
+	a_y = fun(a_x)
+	f   = adfun (a_x, a_y);
+	x = numpy.array([1. for n in range(N)])
+        w = numpy.array( [ 1. ] )
+	H = f.hessian(x, w)
+	assert numpy.prod( A == H )
 
