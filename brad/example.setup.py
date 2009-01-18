@@ -1,6 +1,14 @@
 #!/usr/bin/env python
+# ---------------------------------------------------------------------
 # build with: $ python setup.py build_ext --inplace
 # clean with: # python setup.py clean --all
+cppad_include_dir = '../cppad-20081128'
+library_dirs = ['/usr/lib']
+libraries = ['boost_python']
+# ---------------------------------------------------------------------
+
+
+# IT IS USUALLY NOT NECESSARY TO CHANGE ANTHING BELOW THIS POINT
 # see:
 # http://www.scipy.org/Documentation/numpy_distutils
 # http://docs.cython.org/docs/tutorial.html
@@ -12,14 +20,6 @@ from numpy.distutils.misc_util import Configuration
 from numpy.distutils.core import setup
 from numpy.distutils.core import Command
 
-# ADAPT THIS TO FIT YOUR SYSTEM
-include_dirs = [get_numpy_include_dirs(),'../cppad-20081128']
-extra_compile_args = [ ]
-library_dirs = ['/usr/lib']
-libraries = ['boost_python']
-
-
-# IT IS USUALLY NOT NECESSARY TO CHANGE ANTHING BELOW THIS POINT
 # override default setup.py help output
 import sys
 if len(sys.argv) == 1:
@@ -38,6 +38,7 @@ if len(sys.argv) == 1:
 	Remark: This is an override of the default behaviour of the distutils setup.
 	"""
 	exit()
+
 
 class clean(Command):
 	"""
@@ -66,8 +67,8 @@ config = Configuration('',parent_package='',top_path='')
 config.add_extension(
 	name = 'cppad_',
 	sources = ['adfun.cpp', 'pycppad.cpp', 'vec2array.cpp', 'vector.cpp'],
-	include_dirs = include_dirs,
-	extra_compile_args = extra_compile_args,
+	include_dirs = [ get_numpy_include_dirs(), cppad_include_dir ],
+	extra_compile_args = [ ],
 	library_dirs = library_dirs,
 	runtime_library_dirs = library_dirs,
 	libraries = libraries
