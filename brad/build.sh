@@ -1,5 +1,21 @@
 #! /bin/bash
-# 
+#
+location=`which omhelp`
+if [ "$location" = "" ]
+then
+	echo "Cannot find the omhelp command in your path"
+	echo "Use the following web page to download and install omhelp"
+	echo "	http://www.seanet.com/~bradbell/omhelp/install.xml"
+	exit 1
+fi
+location=`which py.test`
+if [ "$location" == "" ]
+then
+	echo "Cannot find py.test in your path"
+	echo "On ubuntu, the following command installs py.test"
+	echo "	sudo apt-get install python-codespeak-lib"
+	exit 1
+fi
 echo "# Build documentation --------------------------------------------------"
 yyyymmdd=`date +%G%m%d`
 sed -i doc.omh -e "s/pycppad-[0-9]{8}/pycppad-$yyyymmdd/"
