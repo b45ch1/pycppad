@@ -285,7 +285,7 @@ contains an example and test of these operations.
 
 $end
 */
-# include "setup.hpp"
+# include "environment.hpp"
 # include "vector.hpp"
 # include "vec2array.hpp"
 # include "adfun.hpp"

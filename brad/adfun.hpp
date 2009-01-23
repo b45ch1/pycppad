@@ -1,7 +1,7 @@
 # ifndef PYCPPAD_ADFUN_INCLUDED
 # define PYCPPAD_ADFUN_INCLUDED
 
-# include "setup.hpp"
+# include "environment.hpp"
 
 namespace pycppad {
 	// -------------------------------------------------------------
