@@ -16,8 +16,10 @@ then
 	echo "	sudo apt-get install python-codespeak-lib"
 	exit 1
 fi
-echo "# Build documentation --------------------------------------------------"
+# ----------------------------------------------------------------------------
+# todays year, month, and day in yyyymmdd format
 yyyymmdd=`date +%G%m%d`
+echo "# Build documentation --------------------------------------------------"
 sed -i doc.omh -e "s/pycppad-[0-9]{8}/pycppad-$yyyymmdd/"
 if [ -e doc ]
 then
@@ -52,16 +54,21 @@ then
 fi
 cd ..
 echo "# Run setup.py --------------------------------------------------" 
-cmd="./example.setup.py clean --all"
+cmd="rm -rf cppad_.so build"
 echo "$cmd"
 if ! $cmd
 then
 	echo "Cannot remove previous setup output."
 	exit 1
 fi
-cmd="./example.setup.py build_ext --inplace --debug --undef NDEBUG"
+sed < ./example.setup.py > setup.py \
+	-e "s/\(package_version *=\).*/\1 '$yyyymmdd'/" 
+chmod +x setup.py
+cmd="./setup.py build_ext --inplace --debug"
 echo "$cmd"
-if ! $cmd
+# Kludge: setup.py is mistakenly putting -Wstrict-prototypes on compile line
+$cmd 2>&1 |  sed -e '/warning: command line option "-Wstrict-prototypes"/d'
+if [ ! -e cppad_.so ]
 then
 	echo "setup.py failed"
 	exit 1
