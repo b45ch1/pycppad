@@ -17,8 +17,11 @@ then
 	exit 1
 fi
 # ----------------------------------------------------------------------------
-# todays year, month, and day in yyyymmdd format
+# Create setup.py with todays year, month, and day in yyyymmdd format
 yyyymmdd=`date +%G%m%d`
+sed < ./example.setup.py > setup.py \
+	-e "s/\(package_version *=\).*/\1 '$yyyymmdd'/" 
+chmod +x setup.py
 echo "# Build documentation --------------------------------------------------"
 sed -i doc.omh -e "s/pycppad-[0-9]{8}/pycppad-$yyyymmdd/"
 if [ -e doc ]
@@ -53,17 +56,50 @@ then
 	exit 1
 fi
 cd ..
-echo "# Run setup.py --------------------------------------------------" 
-cmd="rm -rf cppad_.so build"
+echo "# Create a source distribution ----------------------------------" 
+cmd="rm -rf dist"
 echo "$cmd"
 if ! $cmd
 then
-	echo "Cannot remove previous setup output."
+	echo "Cannot remove previous source distribution."
 	exit 1
 fi
-sed < ./example.setup.py > setup.py \
-	-e "s/\(package_version *=\).*/\1 '$yyyymmdd'/" 
-chmod +x setup.py
+cat << EOF > MANIFEST.in
+include *.cpp
+include *.hpp
+include build.sh
+include setup.py
+include example/*
+include doc.omh
+include doc/*
+include README
+include test_more.py
+EOF
+./setup.py sdist
+echo "# Extract the source distribution -------------------------------" 
+cmd="cd dist"
+echo "$cmd"
+if ! $cmd
+then
+	echo "Cannot change into distribution directory."
+	exit 1
+fi
+cmd="tar -xvzf pycppad-$yyyymmdd.tar.gz"
+echo "$cmd"
+if ! $cmd
+then
+	echo "Cannot extract the source distribution file"
+	exit 1
+fi
+cmd="cd pycppad-$yyyymmdd"
+if ! $cmd
+then
+	echo "Cannot change into the extracted soruce directory"
+	exit 1
+fi
+echo "# Build the extension inplace -----------------------------------" 
+# Kludge: move debug and other local setting to this script 
+# from example.setup.py
 cmd="./setup.py build_ext --inplace --debug"
 echo "$cmd"
 # Kludge: setup.py is mistakenly putting -Wstrict-prototypes on compile line
