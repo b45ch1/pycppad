@@ -1,5 +1,39 @@
 #! /bin/bash
+# ---------------------------------------------------------------------
+# User options
+cppad_include_dir="/home/bradbell/CppAD/trunk"  # directory where CppAD is
+boost_lib_dir="/usr/lib"                        # directory where boost_python_lib is
+boost_python_lib="boost_python"                 # name of boost::python library 
+pycppad_debug="True"                            # True (debugging) False (optimized)
+# ---------------------------------------------------------------------
+if [ ! -e $cppad_include_dir/cppad/cppad.hpp ]
+then
+	echo "Cannot find the CppAD include file cppad/cppad.hpp"
+	echo "in the directory $cppad_include_dir."
+	echo "Use the following web page for information about CppAD"
+	echo "	http://www.coin-or.org/CppAD/"
+	echo "Make sure that cppad_include_dir is set correctly"
+	echo "at the beginning of the file ./build.sh"
+	exit 1
+fi
+match=`ls $boost_lib_dir | grep "lib$boost_python_lib\."`
+if [ "$match" == "" ]
+then
+	echo "Cannot find the boost::python library lib$boost_python_lib.*"
+	echo "in the directory $boost_lib_dir."
+	echo "Use the following web page for information about boost::python"
+	echo "	http://www.boost.org/doc/libs/1_37_0/libs/python/doc/index.html"
+	echo "Make sure that boost_lib_dir and boost_python_lib are set correctly"
+	echo "at the beginnin of the file ./build.sh"
+	exit 1
+fi
 #
+if [ "$pycppad_debug" != "True" ] && [ "$pycppad_debug" != "False" ]
+then
+	echo "At the beginning of ./build.sh, the value of pycppad_debug"
+	echo "is $pycppad_debug. It should be either True or False."
+	exit 1
+fi
 location=`which omhelp`
 if [ "$location" = "" ]
 then
@@ -19,8 +53,12 @@ fi
 # ----------------------------------------------------------------------------
 # Create setup.py with todays year, month, and day in yyyymmdd format
 yyyymmdd=`date +%G%m%d`
-sed < ./example.setup.py > setup.py \
-	-e "s/\(package_version *=\).*/\1 '$yyyymmdd'/" 
+sed < ./setup.template > setup.py \
+	-e "s|\(package_version *=\).*|\1 '$yyyymmdd'|"  \
+	-e "s|\(cppad_include_dir *=\).*|\1 '$cppad_include_dir'|" \
+	-e "s|\(boost_lib_dir *=\).*|\1 '$boost_lib_dir'|" \
+	-e "s|\(boost_python_lib *=\).*|\1 '$boost_python_lib'|" \
+	-e "s|\(pycppad_debug *=\).*|\1 '$pycppad_debug'|" 
 chmod +x setup.py
 echo "# Build documentation --------------------------------------------------"
 sed -i doc.omh -e "s/pycppad-[0-9]{8}/pycppad-$yyyymmdd/"
