@@ -6,9 +6,17 @@ boost_lib_dir     = # directory where boost::python library is installed
 boost_python_lib  = # name of boost::python library without leading lib
 package_version   = # date in yyyymmdd format corresonding to this distribution
 # ---------------------------------------------------------------------
-# This file follows the specifications in
-# http://docs.python.org/distutils/setupscript.html
+# See http://docs.python.org/distutils/setupscript.html
+# for documentation on how to write the script setup.py
+#
+# See  http://docs.python.org/install/index.html
+# for documentation on how to use the script setup.py 
+#
 from distutils.core import setup, Extension
+from os import listdir
+doc_files    = listdir('doc')
+for i in range( len(doc_files) ) :
+  doc_files[i] = 'doc/' + doc_files[i]
 #
 brad_email             = 'bradbell @ seanet dot com'
 sebastian_email        = 'sebastian dot walter @ gmail dot com'
@@ -17,6 +25,7 @@ package_author         = 'Sebastian F. Walter and Bradley M. Bell'
 package_author_email   = brad_email + ' , ' + sebastian_email 
 package_url            = 'http://github.com/b45ch1/pycppad/tree/master'
 package_description    = 'python Algorihtmic Differentiation using CppAD'
+package_data_files     = [ ('share/doc/pycppad', doc_files ) ]
 #
 python_modules         = [ 'cppad' ]
 #
@@ -47,5 +56,6 @@ setup(
   py_modules   = python_modules             , 
   ext_modules  = extension_modules          ,
   packages     = [ package_name ]           ,
-  package_dir  = { package_name : './' }
+  package_dir  = { package_name : './' }    ,
+  data_files   = package_data_files
 )

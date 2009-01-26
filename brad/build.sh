@@ -155,4 +155,21 @@ check=`grep '^def' test_example.py | wc -l`
 echo "Number of tests in test_example.py should be [$check]"
 check=`grep '^def' test_more.py | wc -l`
 echo "Number of tests in test_more.py should be [$check]"
+# ----------------------------------------------------------------------------
+dir="$HOME/prefix/pycppad"
+cmd="rm -rf $dir"
+echo "$cmd"
+if ! $cmd
+then
+	echo "Cannot remove old version of $dir"
+	exit 1
+fi
+cmd="./setup.py install --prefix=$HOME/prefix/pycppad"
+echo "$cmd"
+if ! $cmd
+then
+	echo "setup.py install failed"
+	exit 1
+fi
+# ----------------------------------------------------------------------------
 exit 0

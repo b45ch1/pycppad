@@ -1,0 +1,99 @@
+$begin install$$
+$spell
+	cppad
+	sys sys
+	uninstalling
+	distutils
+	uninstall
+	pycppad
+	xvzf
+	gz
+	py
+$$
+
+$section Installing pycppad$$
+
+$index install, pycppad$$
+$index pycppad, install$$
+
+$head Downloading$$
+$index download, pycppad$$
+$index pycppad, download$$
+Download the file
+$href%
+	http://www.seanet.com/~bradbell/pycppad-20090104.tar.gz
+%$$
+and store it on your machine.
+
+$head Unpacking$$
+$index unpack, pycppad$$
+$index pycppad, unpack$$
+$index extract, pycppad$$
+$index pycppad, extract$$
+On unix, you could use the command
+$codei%
+	tar -xvzf  pycppad-20090104.tar.gz
+%$$
+which would create the directory $code pycppad-20090104$$.
+
+$head Installing$$
+$index install, pycppad$$
+$index pycppad, install$$
+Change into the directory $code pycppad-20090104$$ and execute the command
+$codei%
+	python setup.py install --prefix=%prefix%
+%$$
+or just
+$codei%
+	./setup.py install --prefix=%prefix%
+%$$
+where $icode prefix$$ is the prefix for the location
+where  you wish to install $code pycppad$$.
+
+$head Python Path$$
+$index python, path$$
+$index path, python$$
+You will not be able to use the python command
+$codei%
+	import cppad
+%$$
+unless the directory
+$codei%
+	%prefix%/lib/python%major%.%minor%/site-packages
+%$$
+is in you python path.
+Here $icode major$$ and $icode minor$$
+are the major and minor version numbers printed by the command
+$code%
+	python --version
+%$$
+You can check your python path with the following commands
+$codei%
+	python
+	import sys
+	sys.path
+%$$
+If it is not yet there,
+you could add the directory above to your python path using the command
+$codei%
+	sys.path.append('%prefix%/lib/python%major%.%minor%/site-packages')
+%$$
+
+$head pycppad Documentation$$
+The documentation for $code pycppad$$ will be copied to the directory
+$codei%
+	%prefix%/share/doc/pycppad
+%$$
+
+$head Uninstalling$$
+Unfortunately, python's $code distutils$$ package does not provide
+an uninstall command. You can uninstall the $code pycppad$$ package
+by removing the entries
+$codei%
+%prefix%/lib/python%major%.%minor%/site-packages/cppad
+%prefix%/lib/python%major%.%minor%/site-packages/pycppad
+%prefix%/lib/python%major%.%minor%/site-packages/pycppad-20090104.egg-info
+%prefix%/share/doc/pycppad
+%$$
+
+$end

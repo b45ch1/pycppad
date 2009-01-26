@@ -53,6 +53,7 @@ which in true can be differentiated using AD.
 See $cref/whats_new_09/$$ for a list of recent extensions and bug fixes.
 
 $childtable%
+	omh/install.omh%
 	cppad.py%
 	pycppad.cpp%
 	adfun.cpp%
