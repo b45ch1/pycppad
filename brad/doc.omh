@@ -1,4 +1,4 @@
-$begin pycppad$$
+$begin pyad$$
 $spell
 	pycppad
 	cppad
@@ -6,7 +6,7 @@ $$
 $latex \newcommand{\B}[1]{{\bf #1}}$$
 $latex \newcommand{\R}[1]{{\rm #1}}$$
 
-$section pycppad-20090125: A Python Algorithm Derivative Package$$
+$section pyad-20090126: A Python Algorithm Derivative Package$$
 
 $index AD, python$$
 $index python, AD$$
@@ -29,7 +29,7 @@ Math displayed using MathML $pre  $$ $cnext
 $tend
 
 $head Syntax$$
-$codei%from cppad import *%$$
+$codei%from pyad.cppad import *%$$
 
 $head Purpose$$
 The command above imports a 
