@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 # ---------------------------------------------------------------------
-# These options are system specific.
+# BEGIN USER SETTINGS
 cppad_include_dir = # where CppAD is installed, contains cppad/cppad.hpp
 boost_lib_dir     = # directory where boost::python library is installed
 boost_python_lib  = # name of boost::python library without leading lib
-package_version   = # date in yyyymmdd format corresonding to this distribution
+# END USER SETTINGS
 # ---------------------------------------------------------------------
+package_version   = # date in yyyymmdd format corresonding to this distribution
+#
 # See http://docs.python.org/distutils/setupscript.html
 # for documentation on how to write the script setup.py
 #

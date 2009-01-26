@@ -1,5 +1,6 @@
 $begin install$$
 $spell
+	CppAD
 	cppad
 	sys sys
 	uninstalling
@@ -21,7 +22,8 @@ $index download, pyad$$
 $index pyad, download$$
 Download the file
 $href%
-	http://www.seanet.com/~bradbell/pyad-20090126.tar.gz
+	http://www.seanet.com/~bradbell/pyad-20090126.tar.gz%
+	pyad-20090126.tar.gz
 %$$
 and store it on your machine.
 
@@ -35,6 +37,18 @@ $codei%
 	tar -xvzf  pyad-20090126.tar.gz
 %$$
 which would create the directory $code pyad-20090126$$.
+
+$head Required Setup Information$$
+The value of the following setup variables, in the file
+$codei%
+	pyad-20090126/setup.py
+%$$
+must be set to agree with your system:
+$code
+$verbatim%setup.template%5%# BEGIN USER SETTINGS%# END USER SETTINGS%$$
+$$
+Note that CppAD and Boost Python must be installed on your before you can
+properly set this information.
 
 $head Installing$$
 $index install, pyad$$
