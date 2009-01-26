@@ -1,6 +1,6 @@
 # First order reverse mode with two levels of taping
 
-from pyad import *
+from pyad.cppad import *
 def test_reverse_a2():
   # start recording a_float operations
   x   = numpy.array( [ 2. , 3. ] )

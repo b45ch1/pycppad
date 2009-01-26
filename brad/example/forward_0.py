@@ -12,7 +12,7 @@
 # $$
 # $end
 # BEGIN CODE
-from pyad import *
+from pyad.cppad import *
 # Example using a_float ----------------------------------------------------
 def test_forward_0() :
 

@@ -20,34 +20,33 @@ for i in range( len(doc_files) ) :
 #
 brad_email             = 'bradbell @ seanet dot com'
 sebastian_email        = 'sebastian dot walter @ gmail dot com'
-package_name           = 'pyad'
 package_author         = 'Bradley M. Bell and Sebastian F. Walter'
 package_author_email   = sebastian_email + ' , ' + brad_email
 package_url            = 'http://github.com/b45ch1/pycppad/tree/master'
-package_description    = 'python Algorihtmic Differentiation using CppAD'
+package_description    = 'python Algorihtmic Differentiation'
 package_data_files     = [ ('share/doc/pyad', doc_files ) ]
 package_license        = 'BSD'
 #
-extension_name         = package_name + '.cppad_'
-extension_include_dirs = [ cppad_include_dir ]
-extension_library_dirs = [ boost_lib_dir ]
-extension_libraries    = [ boost_python_lib ]
-extension_sources      = [ 
-  package_name + '/adfun.cpp'       ,
-  package_name + '/pycppad.cpp'     ,
-  package_name + '/vec2array.cpp'   ,
-  package_name + '/vector.cpp' 
+cppad_extension_name         = 'pyad' + '/cppad/.cppad_'
+cppad_extension_include_dirs = [ cppad_include_dir ]
+cppad_extension_library_dirs = [ boost_lib_dir ]
+cppad_extension_libraries    = [ boost_python_lib ]
+cppad_extension_sources      = [ 
+  'pyad' + '/cppad/adfun.cpp'       ,
+  'pyad' + '/cppad/pycppad.cpp'     ,
+  'pyad' + '/cppad/vec2array.cpp'   ,
+  'pyad' + '/cppad/vector.cpp' 
 ]
 extension_modules = [ Extension( 
-  extension_name                        , 
-  extension_sources                     ,
-  include_dirs = extension_include_dirs ,
-  library_dirs = extension_library_dirs ,
-  libraries    = extension_libraries    ,
+  cppad_extension_name                        , 
+  cppad_extension_sources                     ,
+  include_dirs = cppad_extension_include_dirs ,
+  library_dirs = cppad_extension_library_dirs ,
+  libraries    = cppad_extension_libraries    ,
 ) ]
 #
 setup(
-  name         = package_name               ,
+  name         = 'pyad'               ,
   version      = package_version            ,
   license      = package_license            ,
   description  = package_description        ,
@@ -55,7 +54,7 @@ setup(
   author_email = package_author_email       ,
   url          = package_url                ,
   ext_modules  = extension_modules          ,
-  packages     = [ package_name ]           ,
-  package_dir  = { package_name : package_name }    ,
+  packages     = [ 'pyad' , 'pyad.cppad' ]  ,
+  package_dir  = { 'pyad' : 'pyad' }        ,
   data_files   = package_data_files
 )

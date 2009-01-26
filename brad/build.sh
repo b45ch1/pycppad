@@ -99,8 +99,8 @@ then
 	exit 1
 fi
 cat << EOF > MANIFEST.in
-include pyad/*.cpp
-include pyad/*.hpp
+include pyad/cppad/*.cpp
+include pyad/cppad/*.hpp
 include build.sh
 include setup.py
 include example/*
@@ -136,9 +136,9 @@ cmd="./setup.py build_ext --inplace --debug --undef NDEBUG"
 echo "$cmd"
 # Kludge: setup.py is mistakenly putting -Wstrict-prototypes on compile line
 $cmd 2>&1 |  sed -e '/warning: command line option "-Wstrict-prototypes"/d'
-if [ ! -e pyad/cppad_.so ]
+if [ ! -e pyad/cppad/cppad_.so ]
 then
-	echo "setup.py failed to create pyad/cppad_.so"
+	echo "setup.py failed to create pyad/cppad/cppad_.so"
 	exit 1
 fi
 # ----------------------------------------------------------------------------

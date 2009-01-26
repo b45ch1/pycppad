@@ -10,7 +10,7 @@
 # $$
 # $end
 # BEGIN CODE
-from pyad import *
+from pyad.cppad import *
 # Example using a_float ---------------------------------------------------
 def test_independent() :
   x   = numpy.array( [ 0., 0., 0. ] )
