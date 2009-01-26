@@ -52,8 +52,12 @@ sed < ./setup.template > setup.py \
 	-e "s|\(boost_lib_dir *=\).*|\1 '$boost_lib_dir'|" \
 	-e "s|\(boost_python_lib *=\).*|\1 '$boost_python_lib'|"
 chmod +x setup.py
+# ----------------------------------------------------------------------------
+# Create setup.py with todays year, month, and day in yyyymmdd format
+sed -i doc.omh -e "s/pycppad-[0-9]\{8\}/pycppad-$yyyymmdd/"
+sed -i omh/install.omh -e "s/pycppad-[0-9]\{8\}/pycppad-$yyyymmdd/"
+# ----------------------------------------------------------------------------
 echo "# Build documentation --------------------------------------------------"
-sed -i doc.omh -e "s/pycppad-[0-9]{8}/pycppad-$yyyymmdd/"
 if [ -e doc ]
 then
 	echo "rm -r doc"

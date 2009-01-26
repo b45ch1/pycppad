@@ -21,7 +21,7 @@ $index download, pycppad$$
 $index pycppad, download$$
 Download the file
 $href%
-	http://www.seanet.com/~bradbell/pycppad-20090104.tar.gz
+	http://www.seanet.com/~bradbell/pycppad-20090125.tar.gz
 %$$
 and store it on your machine.
 
@@ -32,14 +32,14 @@ $index extract, pycppad$$
 $index pycppad, extract$$
 On unix, you could use the command
 $codei%
-	tar -xvzf  pycppad-20090104.tar.gz
+	tar -xvzf  pycppad-20090125.tar.gz
 %$$
-which would create the directory $code pycppad-20090104$$.
+which would create the directory $code pycppad-20090125$$.
 
 $head Installing$$
 $index install, pycppad$$
 $index pycppad, install$$
-Change into the directory $code pycppad-20090104$$ and execute the command
+Change into the directory $code pycppad-20090125$$ and execute the command
 $codei%
 	python setup.py install --prefix=%prefix%
 %$$
@@ -90,10 +90,10 @@ Unfortunately, python's $code distutils$$ package does not provide
 an uninstall command. You can uninstall the $code pycppad$$ package
 by removing the entries
 $codei%
-%prefix%/lib/python%major%.%minor%/site-packages/cppad
-%prefix%/lib/python%major%.%minor%/site-packages/pycppad
-%prefix%/lib/python%major%.%minor%/site-packages/pycppad-20090104.egg-info
-%prefix%/share/doc/pycppad
+	%prefix%/lib/python%major%.%minor%/site-packages/cppad
+	%prefix%/lib/python%major%.%minor%/site-packages/pycppad
+	%prefix%/lib/python%major%.%minor%/site-packages/pycppad-20090125.egg-info
+	%prefix%/share/doc/pycppad
 %$$
 
 $end
