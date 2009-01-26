@@ -74,6 +74,11 @@ then
 	echo "Error while building xml documentatioin"
 	exit 1
 fi
+if grep '^OMhelp Warning:' omhelp.log
+then
+	echo "There are warnings in doc/omhelp.log"
+	exit 1
+fi
 if ! omhelp ../doc.omh -xml -noframe -debug -printable
 then
 	echo "Error while building _printable.xml documentatioin"
