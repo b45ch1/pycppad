@@ -5,41 +5,41 @@ $spell
 	uninstalling
 	distutils
 	uninstall
-	pycppad
+	pyad
 	xvzf
 	gz
 	py
 $$
 
-$section Installing pycppad$$
+$section Installing pyad$$
 
-$index install, pycppad$$
-$index pycppad, install$$
+$index install, pyad$$
+$index pyad, install$$
 
 $head Downloading$$
-$index download, pycppad$$
-$index pycppad, download$$
+$index download, pyad$$
+$index pyad, download$$
 Download the file
 $href%
-	http://www.seanet.com/~bradbell/pycppad-20090125.tar.gz
+	http://www.seanet.com/~bradbell/pyad-20090126.tar.gz
 %$$
 and store it on your machine.
 
 $head Unpacking$$
-$index unpack, pycppad$$
-$index pycppad, unpack$$
-$index extract, pycppad$$
-$index pycppad, extract$$
+$index unpack, pyad$$
+$index pyad, unpack$$
+$index extract, pyad$$
+$index pyad, extract$$
 On unix, you could use the command
 $codei%
-	tar -xvzf  pycppad-20090125.tar.gz
+	tar -xvzf  pyad-20090126.tar.gz
 %$$
-which would create the directory $code pycppad-20090125$$.
+which would create the directory $code pyad-20090126$$.
 
 $head Installing$$
-$index install, pycppad$$
-$index pycppad, install$$
-Change into the directory $code pycppad-20090125$$ and execute the command
+$index install, pyad$$
+$index pyad, install$$
+Change into the directory $code pyad-20090126$$ and execute the command
 $codei%
 	python setup.py install --prefix=%prefix%
 %$$
@@ -48,14 +48,14 @@ $codei%
 	./setup.py install --prefix=%prefix%
 %$$
 where $icode prefix$$ is the prefix for the location
-where  you wish to install $code pycppad$$.
+where  you wish to install $code pyad$$.
 
 $head Python Path$$
 $index python, path$$
 $index path, python$$
 You will not be able to use the python command
 $codei%
-	import cppad
+	import pyad
 %$$
 unless the directory
 $codei%
@@ -79,21 +79,20 @@ $codei%
 	sys.path.append('%prefix%/lib/python%major%.%minor%/site-packages')
 %$$
 
-$head pycppad Documentation$$
-The documentation for $code pycppad$$ will be copied to the directory
+$head pyad Documentation$$
+The documentation for $code pyad$$ will be copied to the directory
 $codei%
-	%prefix%/share/doc/pycppad
+	%prefix%/share/doc/pyad
 %$$
 
 $head Uninstalling$$
 Unfortunately, python's $code distutils$$ package does not provide
-an uninstall command. You can uninstall the $code pycppad$$ package
+an uninstall command. You can uninstall the $code pyad$$ package
 by removing the entries
 $codei%
-	%prefix%/lib/python%major%.%minor%/site-packages/cppad
-	%prefix%/lib/python%major%.%minor%/site-packages/pycppad
-	%prefix%/lib/python%major%.%minor%/site-packages/pycppad-20090125.egg-info
-	%prefix%/share/doc/pycppad
+	%prefix%/lib/python%major%.%minor%/site-packages/pyad
+	%prefix%/lib/python%major%.%minor%/site-packages/pyad-20090126.egg-info
+	%prefix%/share/doc/pyad
 %$$
 
 $end

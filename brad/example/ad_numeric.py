@@ -24,7 +24,7 @@
 # $$
 # $end
 # BEGIN CODE
-from cppad import *
+from pyad import *
 # Example using a_float -----------------------------------------------------
 def test_ad_numeric() :
   x    = 2.

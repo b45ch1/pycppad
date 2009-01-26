@@ -45,7 +45,7 @@
 # \] $$
 #                         
 # $end
-from cppad import *
+from pyad import *
 def test_two_levels():
   # start recording a_float operations
   x   = numpy.array( [ 2. , 3. ] )

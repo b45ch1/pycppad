@@ -54,8 +54,8 @@ sed < ./setup.template > setup.py \
 chmod +x setup.py
 # ----------------------------------------------------------------------------
 # Create setup.py with todays year, month, and day in yyyymmdd format
-sed -i doc.omh -e "s/pycppad-[0-9]\{8\}/pycppad-$yyyymmdd/"
-sed -i omh/install.omh -e "s/pycppad-[0-9]\{8\}/pycppad-$yyyymmdd/"
+sed -i doc.omh -e "s/pyad-[0-9]\{8\}/pyad-$yyyymmdd/"
+sed -i omh/install.omh -e "s/pyad-[0-9]\{8\}/pyad-$yyyymmdd/"
 # ----------------------------------------------------------------------------
 echo "# Build documentation --------------------------------------------------"
 if [ -e doc ]
@@ -99,8 +99,8 @@ then
 	exit 1
 fi
 cat << EOF > MANIFEST.in
-include *.cpp
-include *.hpp
+include pyad/*.cpp
+include pyad/*.hpp
 include build.sh
 include setup.py
 include example/*
@@ -118,14 +118,14 @@ then
 	echo "Cannot change into distribution directory."
 	exit 1
 fi
-cmd="tar -xvzf pycppad-$yyyymmdd.tar.gz"
+cmd="tar -xvzf pyad-$yyyymmdd.tar.gz"
 echo "$cmd"
 if ! $cmd
 then
 	echo "Cannot extract the source distribution file"
 	exit 1
 fi
-cmd="cd pycppad-$yyyymmdd"
+cmd="cd pyad-$yyyymmdd"
 if ! $cmd
 then
 	echo "Cannot change into the extracted soruce directory"
@@ -136,14 +136,13 @@ cmd="./setup.py build_ext --inplace --debug --undef NDEBUG"
 echo "$cmd"
 # Kludge: setup.py is mistakenly putting -Wstrict-prototypes on compile line
 $cmd 2>&1 |  sed -e '/warning: command line option "-Wstrict-prototypes"/d'
-if [ ! -e cppad_.so ]
+if [ ! -e pyad/cppad_.so ]
 then
-	echo "setup.py failed"
+	echo "setup.py failed to create pyad/cppad_.so"
 	exit 1
 fi
 # ----------------------------------------------------------------------------
-echo 'from cppad import *' > test_example.py
-cat example/*.py           >> test_example.py
+cat example/*.py    > test_example.py
 if ! py.test test_example.py
 then
 	echo "test_example failed."
@@ -160,7 +159,7 @@ echo "Number of tests in test_example.py should be [$check]"
 check=`grep '^def' test_more.py | wc -l`
 echo "Number of tests in test_more.py should be [$check]"
 # ----------------------------------------------------------------------------
-dir="$HOME/prefix/pycppad"
+dir="$HOME/prefix/pyad"
 cmd="rm -rf $dir"
 echo "$cmd"
 if ! $cmd
@@ -168,7 +167,7 @@ then
 	echo "Cannot remove old version of $dir"
 	exit 1
 fi
-cmd="./setup.py install --prefix=$HOME/prefix/pycppad"
+cmd="./setup.py install --prefix=$HOME/prefix/pyad"
 echo "$cmd"
 if ! $cmd
 then

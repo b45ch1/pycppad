@@ -23,7 +23,7 @@
 # $end
 # BEGIN CODE
 # Example using a_float ------------------------------------------------------
-from cppad import *
+from pyad import *
 def test_assign_op() :
   x = 2.
   y = 3.
@@ -57,7 +57,7 @@ def test_assign_op() :
   assert tmp == x / y
 
 # Example using a2float ------------------------------------------------------
-from cppad import *
+from pyad import *
 def test_assign_op_a2() :
   x = 2.
   y = 3.

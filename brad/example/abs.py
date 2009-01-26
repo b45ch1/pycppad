@@ -11,7 +11,7 @@
 # $end
 # BEGIN CODE
 # Example using a_float ----------------------------------------------------
-from cppad import *
+from pyad import *
 def test_abs() :
   x   = numpy.array( [ -1.,  0.,  1.] )
   n   = len(x)

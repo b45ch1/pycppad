@@ -13,7 +13,7 @@
 # $$
 # $end
 # BEGIN CODE
-from cppad import *
+from pyad import *
 import numpy
 import math
 # Example using a_float ----------------------------------------------------

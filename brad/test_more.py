@@ -1,4 +1,4 @@
-from cppad import *
+from pyad import *
 
 def test_compile_cppad_without_ndebug() :
   try :

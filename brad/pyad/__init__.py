@@ -287,9 +287,9 @@ CppAD to evaluate derivatives of arbitrary order.
 """
 
 import numpy
-import cppad_
-from cppad_ import a_float
-from cppad_ import a2float
+import pyad.cppad_
+from pyad.cppad_ import a_float
+from pyad.cppad_ import a2float
 
 def ad(x) :
   """

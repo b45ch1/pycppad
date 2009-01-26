@@ -10,7 +10,7 @@
 # $$
 # $end
 # BEGIN CODE
-from cppad import *
+from pyad import *
 import numpy
 def test_ad() :
   x   = 1
