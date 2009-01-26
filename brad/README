@@ -1,5 +1,5 @@
 -------------------------------------------------------------------------------
-PyCppAD: a Python interface to the Algorithmic Differentiation package CppAD
+pyad: a Python interface to the Algorithmic Differentiation package CppAD
 Authors: Sebastian F. Walter and Bradley M. Bell.
 
 BSD style using http://www.opensource.org/licenses/bsd-license.php template 

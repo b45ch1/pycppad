@@ -28,6 +28,9 @@ Math displayed using MathML $pre  $$ $cnext
 	$href/_printable.xml/$$
 $tend
 
+$head License$$
+$cref/BSD/license/$$
+
 $head Syntax$$
 $codei%from pyad.cppad import *%$$
 
@@ -58,7 +61,8 @@ $childtable%
 	pyad/cppad/pycppad.cpp%
 	pyad/cppad/adfun.cpp%
 	example/two_levels.py%
-	omh/whats_new_09.omh
+	omh/whats_new_09.omh%
+	omh/license.omh
 %$$
 
 $end
