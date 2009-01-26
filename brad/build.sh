@@ -2,9 +2,8 @@
 # ---------------------------------------------------------------------
 # User options
 cppad_include_dir="/home/bradbell/CppAD/trunk"  # directory where CppAD is
-boost_lib_dir="/usr/lib"                        # directory where boost_python_lib is
-boost_python_lib="boost_python"                 # name of boost::python library 
-pycppad_debug="True"                            # True (debugging) False (optimized)
+boost_lib_dir="/usr/lib"         # directory where boost_python_lib is
+boost_python_lib="boost_python"  # name of boost::python library 
 # ---------------------------------------------------------------------
 if [ ! -e $cppad_include_dir/cppad/cppad.hpp ]
 then
@@ -28,12 +27,6 @@ then
 	exit 1
 fi
 #
-if [ "$pycppad_debug" != "True" ] && [ "$pycppad_debug" != "False" ]
-then
-	echo "At the beginning of ./build.sh, the value of pycppad_debug"
-	echo "is $pycppad_debug. It should be either True or False."
-	exit 1
-fi
 location=`which omhelp`
 if [ "$location" = "" ]
 then
@@ -57,8 +50,7 @@ sed < ./setup.template > setup.py \
 	-e "s|\(package_version *=\).*|\1 '$yyyymmdd'|"  \
 	-e "s|\(cppad_include_dir *=\).*|\1 '$cppad_include_dir'|" \
 	-e "s|\(boost_lib_dir *=\).*|\1 '$boost_lib_dir'|" \
-	-e "s|\(boost_python_lib *=\).*|\1 '$boost_python_lib'|" \
-	-e "s|\(pycppad_debug *=\).*|\1 '$pycppad_debug'|" 
+	-e "s|\(boost_python_lib *=\).*|\1 '$boost_python_lib'|"
 chmod +x setup.py
 echo "# Build documentation --------------------------------------------------"
 sed -i doc.omh -e "s/pycppad-[0-9]{8}/pycppad-$yyyymmdd/"
@@ -136,9 +128,7 @@ then
 	exit 1
 fi
 echo "# Build the extension inplace -----------------------------------" 
-# Kludge: move debug and other local setting to this script 
-# from example.setup.py
-cmd="./setup.py build_ext --inplace --debug"
+cmd="./setup.py build_ext --inplace --debug --undef NDEBUG"
 echo "$cmd"
 # Kludge: setup.py is mistakenly putting -Wstrict-prototypes on compile line
 $cmd 2>&1 |  sed -e '/warning: command line option "-Wstrict-prototypes"/d'
