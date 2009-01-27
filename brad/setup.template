@@ -1,0 +1,62 @@
+#!/usr/bin/env python
+# ---------------------------------------------------------------------
+# BEGIN USER SETTINGS
+cppad_include_dir = # where CppAD is installed, contains cppad/cppad.hpp
+boost_lib_dir     = # directory where boost::python library is installed
+boost_python_lib  = # name of boost::python library without leading lib
+# END USER SETTINGS
+# ---------------------------------------------------------------------
+package_version   = # date in yyyymmdd format corresonding to this distribution
+#
+# See http://docs.python.org/distutils/setupscript.html
+# for documentation on how to write the script setup.py
+#
+# See  http://docs.python.org/install/index.html
+# for documentation on how to use the script setup.py 
+#
+from distutils.core import setup, Extension
+from os import listdir
+doc_files    = listdir('doc')
+for i in range( len(doc_files) ) :
+  doc_files[i] = 'doc/' + doc_files[i]
+#
+brad_email             = 'bradbell @ seanet dot com'
+sebastian_email        = 'sebastian dot walter @ gmail dot com'
+package_author         = 'Bradley M. Bell and Sebastian F. Walter'
+package_author_email   = sebastian_email + ' , ' + brad_email
+package_url            = 'http://github.com/b45ch1/pycppad/tree/master'
+package_description    = 'python Algorihtmic Differentiation'
+package_data_files     = [ ('share/doc/pyad', doc_files ) ]
+package_license        = 'BSD'
+#
+cppad_extension_name         = 'pyad' + '/cppad/.cppad_'
+cppad_extension_include_dirs = [ cppad_include_dir ]
+cppad_extension_library_dirs = [ boost_lib_dir ]
+cppad_extension_libraries    = [ boost_python_lib ]
+cppad_extension_sources      = [ 
+  'pyad' + '/cppad/adfun.cpp'       ,
+  'pyad' + '/cppad/pycppad.cpp'     ,
+  'pyad' + '/cppad/vec2array.cpp'   ,
+  'pyad' + '/cppad/vector.cpp' 
+]
+extension_modules = [ Extension( 
+  cppad_extension_name                        , 
+  cppad_extension_sources                     ,
+  include_dirs = cppad_extension_include_dirs ,
+  library_dirs = cppad_extension_library_dirs ,
+  libraries    = cppad_extension_libraries    ,
+) ]
+#
+setup(
+  name         = 'pyad'               ,
+  version      = package_version            ,
+  license      = package_license            ,
+  description  = package_description        ,
+  author       = package_author             ,
+  author_email = package_author_email       ,
+  url          = package_url                ,
+  ext_modules  = extension_modules          ,
+  packages     = [ 'pyad' , 'pyad.cppad' ]  ,
+  package_dir  = { 'pyad' : 'pyad' }        ,
+  data_files   = package_data_files
+)

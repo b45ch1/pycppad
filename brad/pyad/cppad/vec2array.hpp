@@ -1,7 +1,7 @@
 # ifndef PYCPPAD_VEC2ARRAY_INCLUDED
 # define PYCPPAD_VEC2ARRAY_INCLUDED
 
-# include "setup.hpp"
+# include "environment.hpp"
 # include "vector.hpp"
 
 namespace pycppad {

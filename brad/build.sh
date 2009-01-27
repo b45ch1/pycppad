@@ -1,42 +1,63 @@
 #! /bin/bash
-# 
-python_version="2.5"
-python_config_dir="/usr/include/python$python_version"
-numpy_dir="/usr/lib/python2.5/site-packages/numpy/core/include"
-if [ "$USER" == "bradbell" ]
+# ---------------------------------------------------------------------
+# User options
+cppad_include_dir="/home/bradbell/CppAD/trunk"  # directory where CppAD is
+boost_lib_dir="/usr/lib"         # directory where boost_python_lib is
+boost_python_lib="boost_python"  # name of boost::python library 
+# ---------------------------------------------------------------------
+if [ ! -e $cppad_include_dir/cppad/cppad.hpp ]
 then
-	cppad_dir="$HOME/CppAD/trunk"
-else if [ -e "$HOME/workspace/pycppad/cppad-20081128/cppad/cppad.hpp" ]
-then
-	cppad_dir="../cppad-20081128"
-else if [ -e "/u/walter/workspace/PyCPPAD/cppad-20081128/cppad/cppad.hpp" ]
-then
-	echo "this is wronski"
-	cppad_dir="/u/walter/workspace/PyCPPAD/cppad-20081128"
-else
-	echo "Cannot find cppad/cppad.hpp"
+	echo "Cannot find the CppAD include file cppad/cppad.hpp"
+	echo "in the directory $cppad_include_dir."
+	echo "Use the following web page for information about CppAD"
+	echo "	http://www.coin-or.org/CppAD/"
+	echo "Make sure that cppad_include_dir is set correctly"
+	echo "at the beginning of the file ./build.sh"
 	exit 1
 fi
-fi
-fi
-# -------------------------------------------------------------------
-if [ ! -e "$python_config_dir/pyconfig.h" ]
+match=`ls $boost_lib_dir | grep "lib$boost_python_lib\."`
+if [ "$match" == "" ]
 then
-echo "Must change python_config_dir or python_version in pycppad.sh"
+	echo "Cannot find the boost::python library lib$boost_python_lib.*"
+	echo "in the directory $boost_lib_dir."
+	echo "Use the following web page for information about boost::python"
+	echo "	http://www.boost.org/doc/libs/1_37_0/libs/python/doc/index.html"
+	echo "Make sure that boost_lib_dir and boost_python_lib are set correctly"
+	echo "at the beginnin of the file ./build.sh"
 	exit 1
 fi
-python --version >& pycppad.tmp
-py_version=`cat pycppad.tmp`
-if ! grep "Python $python_version" pycppad.tmp > /dev/null
+#
+location=`which omhelp`
+if [ "$location" = "" ]
 then
-	echo "Must change python_version in pycppad.sh"
+	echo "Cannot find the omhelp command in your path"
+	echo "Use the following web page to download and install omhelp"
+	echo "	http://www.seanet.com/~bradbell/omhelp/install.xml"
 	exit 1
 fi
-rm pycppad.tmp
-# -------------------------------------------------------------------
-echo "# Build documentation --------------------------------------------------"
+location=`which py.test`
+if [ "$location" == "" ]
+then
+	echo "Cannot find py.test in your path"
+	echo "On ubuntu, the following command installs py.test"
+	echo "	sudo apt-get install python-codespeak-lib"
+	exit 1
+fi
+# ----------------------------------------------------------------------------
+# Create setup.py with todays year, month, and day in yyyymmdd format
 yyyymmdd=`date +%G%m%d`
-sed -i doc.omh -e "s/pycppad-[0-9]{8}/pycppad-$yyyymmdd/"
+sed < ./setup.template > setup.py \
+	-e "s|\(package_version *=\).*|\1 '$yyyymmdd'|"  \
+	-e "s|\(cppad_include_dir *=\).*|\1 '$cppad_include_dir'|" \
+	-e "s|\(boost_lib_dir *=\).*|\1 '$boost_lib_dir'|" \
+	-e "s|\(boost_python_lib *=\).*|\1 '$boost_python_lib'|"
+chmod +x setup.py
+# ----------------------------------------------------------------------------
+# Create setup.py with todays year, month, and day in yyyymmdd format
+sed -i doc.omh -e "s/pyad-[0-9]\{8\}/pyad-$yyyymmdd/"
+sed -i omh/install.omh -e "s/pyad-[0-9]\{8\}/pyad-$yyyymmdd/"
+# ----------------------------------------------------------------------------
+echo "# Build documentation --------------------------------------------------"
 if [ -e doc ]
 then
 	echo "rm -r doc"
@@ -51,6 +72,11 @@ cd doc
 if ! omhelp ../doc.omh -xml -noframe -debug | tee omhelp.log
 then
 	echo "Error while building xml documentatioin"
+	exit 1
+fi
+if grep '^OMhelp Warning:' omhelp.log
+then
+	echo "There are warnings in doc/omhelp.log"
 	exit 1
 fi
 if ! omhelp ../doc.omh -xml -noframe -debug -printable
@@ -69,54 +95,59 @@ then
 	exit 1
 fi
 cd ..
-echo "# Compile pycppad.cpp --------------------------------------------------" 
-#
-object_list=""
-list="
-	vec2array
-	vector
-	adfun
-	pycppad
-"
-cmd="g++ -fpic -g -c -Wall -I $python_config_dir -I $numpy_dir -I $cppad_dir"
-for name in $list
-do
-	echo "$cmd $name.cpp"
-	if ! $cmd $name.cpp
-	then
-		echo "command failed"
-		exit 1
-	fi
-	object_list="$object_list $name.o"
-done
-# -------------------------------------------------------------------
-echo "# Create pycppad.so dynamic link library ------------------------------"
-# needed to link boost python
-library_flags="-lboost_python"
-cmd="g++ -shared -Wl,-soname,libpycppad.so.1 $library_flags"
-cmd="$cmd -o libpycppad.so.1.0 $object_list -lc"
-echo $cmd
+echo "# Create a source distribution ----------------------------------" 
+cmd="rm -rf dist"
+echo "$cmd"
 if ! $cmd
 then
-	echo "command failed"
+	echo "Cannot remove previous source distribution."
 	exit 1
 fi
-if [ -e pycppad.so ]
-then
-	cmd="rm pycppad.so"
-	echo $cmd
-	$cmd
-fi
-cmd="ln libpycppad.so.1.0 pycppad.so"
-echo $cmd
+cat << EOF > MANIFEST.in
+include pyad/cppad/*.cpp
+include pyad/cppad/*.hpp
+include build.sh
+include setup.py
+include example/*
+include doc.omh
+include doc/*
+include README
+include test_more.py
+EOF
+./setup.py sdist
+echo "# Extract the source distribution -------------------------------" 
+cmd="cd dist"
+echo "$cmd"
 if ! $cmd
 then
-	echo "command failed"
+	echo "Cannot change into distribution directory."
+	exit 1
+fi
+cmd="tar -xvzf pyad-$yyyymmdd.tar.gz"
+echo "$cmd"
+if ! $cmd
+then
+	echo "Cannot extract the source distribution file"
+	exit 1
+fi
+cmd="cd pyad-$yyyymmdd"
+if ! $cmd
+then
+	echo "Cannot change into the extracted soruce directory"
+	exit 1
+fi
+echo "# Build the extension inplace -----------------------------------" 
+cmd="./setup.py build_ext --inplace --debug --undef NDEBUG"
+echo "$cmd"
+# Kludge: setup.py is mistakenly putting -Wstrict-prototypes on compile line
+$cmd 2>&1 |  sed -e '/warning: command line option "-Wstrict-prototypes"/d'
+if [ ! -e pyad/cppad/cppad_.so ]
+then
+	echo "setup.py failed to create pyad/cppad/cppad_.so"
 	exit 1
 fi
 # ----------------------------------------------------------------------------
-echo 'from cppad import *' > test_example.py
-cat example/*.py           >> test_example.py
+cat example/*.py    > test_example.py
 if ! py.test test_example.py
 then
 	echo "test_example failed."
@@ -128,4 +159,25 @@ then
 	exit 1
 fi
 echo "All tests passed."
+check=`grep '^def' test_example.py | wc -l`
+echo "Number of tests in test_example.py should be [$check]"
+check=`grep '^def' test_more.py | wc -l`
+echo "Number of tests in test_more.py should be [$check]"
+# ----------------------------------------------------------------------------
+dir="$HOME/prefix/pyad"
+cmd="rm -rf $dir"
+echo "$cmd"
+if ! $cmd
+then
+	echo "Cannot remove old version of $dir"
+	exit 1
+fi
+cmd="./setup.py install --prefix=$HOME/prefix/pyad"
+echo "$cmd"
+if ! $cmd
+then
+	echo "setup.py install failed"
+	exit 1
+fi
+# ----------------------------------------------------------------------------
 exit 0

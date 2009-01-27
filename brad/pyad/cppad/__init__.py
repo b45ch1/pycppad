@@ -1,4 +1,7 @@
 # $begin ad$$ $newlinech #$$
+# $spell
+#	numpy
+# $$
 #
 # $section Create an Object With One Higher Level of AD$$
 #
@@ -18,15 +21,20 @@
 # the later evaluations are done using $code float$$ operations).
 #
 # $head x$$ 
-# The argument $icode x$$ must be an instance of an $code int$$ (AD level 0),
+# The argument $icode x$$ can be an instance of an $code int$$ (AD level 0),
 # or an instance of $code float$$ (AD level 0),
 # or an $code a_float$$ (AD level 1).
+# The argument $icode x$$ may also be a $code numpy.array$$ with one of the
+# element types listed in the previous sentence.
 #
 # $head a_x$$ 
 # If $icode x$$ is an instance of $code int$$ or $code float$$,
 # $codei a_x$$ is an $code a_float$$ (AD level 1).
 # If $icode x$$ is an $code a_float$$,
 # $icode a_x$$ is an $code a2float$$ (AD level 2).
+# If $icode x$$ is an $code numpy.array$$,
+# $icode a_x$$ is also an $code numpy.array$$ with the 
+# same shape as $icode x$$.
 # 
 # $children%
 #	example/ad.py
@@ -37,6 +45,9 @@
 # $end
 # ---------------------------------------------------------------------------
 # $begin value$$ $newlinech #$$
+# $spell
+#	numpy
+# $$
 #
 # $index value$$
 # $index AD, decrease level$$
@@ -53,61 +64,23 @@
 # $head a_x$$ 
 # The argument $icode a_x$$ must be an $code a_float$$ (AD level 1),
 # or an $code a2float$$ (AD level 2).
-#
+# The argument $icode a_x$$ may also be a $code numpy.array$$ with one of the
+# element types listed in the previous sentence.
 #
 # $head x$$ 
 # If $icode a_x$$ is an $code a_float$$,
 # $icode x$$ is a $code float$$ (AD level 0).
 # If $icode a_x$$ is an $code a2float$$,
 # $icode x$$ is an $code a_float$$ (AD level 1).
-#
+# If $icode a_x$$ is an $code numpy.array$$,
+# $icode x$$ is also an $code numpy.array$$ with the 
+# same shape as $icode a_x$$.
 # 
 # $children%
 #	example/value.py
 # %$$
 # $head Example$$
 # The file $cref/value.py/$$ contains an example and test of this function.
-#
-# $end
-# ---------------------------------------------------------------------------
-# $begin array$$ $newlinech #$$
-# $spell
-#	Numpy
-#	tuple
-#	ndarray
-#	len
-# $$
-#
-# $section Create a Numpy N-Dimensional Array Object$$
-#
-# $head Syntax$$
-# $icode%y% = array(%x%)%$$
-#
-# $head Purpose$$
-# Creates a 
-# $href%http://numpy.scipy.org/%numpy%$$ n-dimensional array object $icode y$$.
-#
-# $head x$$ 
-# The argument $icode x$$ must be either a python list or a tuple
-# with all its elements of the same type.
-#
-# $head y$$ 
-# If $icode%x%[0]%$$ is an instance of $code int$$ or $icode float$$,
-# $icode y$$ is corresponding $code numpy.ndarray$$ object
-# with elements that are instances of $code float$$.
-# Otherwise, it is the corresponding Numpy array with elements
-# that are of type $codei%type(%x%[0])%$$.
-#
-# $head Vector$$
-# If the result $icode y$$ has only one dimension; i.e.
-# $icode len( numpy.shape(%y%) )$$ is equal to one,
-# the array $icode y$$ is referred to as a vector.
-# 
-# $children%
-#	example/array.py
-# %$$
-# $head Example$$
-# The file $cref/array.py/$$ contains an example and test of this function.
 #
 # $end
 # ---------------------------------------------------------------------------
@@ -122,22 +95,29 @@
 # $head Syntax$$
 # $icode%a_x% = independent(%x%)%$$
 #
+# $index independent, variables$$
+# $index variables, independent$$
+# $index recording, start$$
+# $index start, recording$$
+#
 # $head Purpose$$
 # Creates an independent variable vector and starts recording operations
 # involving objects that are instances of $icode%type(%a_x%[0])%$$.
 # You must create an $cref/adfun/$$ object and stop the recording
 #
 # $head x$$ 
-# The argument $icode x$$ must be a $cref/vector/array/Vector/$$.
-# The elements of $icode x$$ must all be of the same type and
-# instances of either $code float$$ or $code  a_float$$.
+# The argument $icode x$$ must be a $code numpy.array$$ with one dimension
+# (i.e., a vector).
+# All the elements of $icode x$$ must all be of the same type and
+# instances of either $code int$$, $code float$$ or $code  a_float$$.
 #
 # $head a_x$$ 
-# The return value $icode a_x$$ is a $cref/vector/array/Vector/$$ 
+# The return value $icode a_x$$ is a $code numpy.array$$ 
 # with the same shape as $icode x$$. 
-# If the elements of $icode x$$ are instances of $code float$$
-# ($code a_float$$) the elements of $icode a_x$$ are instances of 
-# $code a_float$$ ($code a2float$$).
+# If the elements of $icode x$$ are instances of $code int$$ or $code float$$
+# the elements of $icode a_x$$ are instances of # $code a_float$$.
+# If the elements of $icode x$$ are instances of $code a_float$$
+# the elements of $icode a_x$$ are instances of $code a2float$$.
 # The $cref/value/$$ of the elements of $icode a_x$$ 
 # are equal to the corresponding elements of $icode x$$.
 # 
@@ -152,22 +132,28 @@
 # ---------------------------------------------------------------------------
 # $begin adfun$$ $newlinech #$$
 # $spell
+#	numpy
 #	len
 #	adfun
 # $$
 #
-# $section Create a Function Object With One Lower Level of AD$$
+# $section Create an AD Function Object$$
+#
+# $index dependent, variables$$
+# $index variables, dependent$$
+# $index recording, stop$$
+# $index stop, recording$$
 #
 # $head Syntax$$
 # $icode%f% = %adfun%(%a_x%, %a_y%)%$$
 #
 # $head Purpose$$
-# The function object $icode f$$ will store the $codei type( a_x[0] )$$
-# operation sequence that mapped the vector 
-# $icode a_x$$ to the vector $icode a_y$$.
+# The function object $icode f$$ will store the $codei%type( %a_x%[0] )%$$
+# operation sequence that mapped the independent variable vector 
+# $icode a_x$$ to the dependent variable vector $icode a_y$$.
 #
 # $head a_x$$
-# The argument $icode a_x$$ is the $cref/vector/array/Vector/$$ 
+# The argument $icode a_x$$ is the $code numpy.array$$ 
 # returned by the previous call to $cref/independent/$$.
 # Neither the size of $icode a_x$$, or the value it its elements,
 # may change between calling
@@ -175,17 +161,18 @@
 #	%a_x% = independent(%x%)
 # %$$
 # and
-# $icode%
+# $codei%
 #	%f% = adfun(%a_x%, %a_y%)
 # %$$
 # The length of the vector $icode a_x$$ determines the domain size
 # $latex n$$ for the function $latex y = F(x)$$ below.
 #
 # $head a_y$$
-# The argument $icode a_y$$ is a $cref/vector/array/Vector/$$.
-# It specifies the operation sequence stored in $icode f$$ as the 
-# $codei type( a_x[0] )$$ operations that mapped the vector $icode a_x$$
-# to the vector $icode a_y$$.
+# The argument $icode a_y$$ specifies the dependent variables.
+# It must be a $code numpy.array$$ with one dimension
+# (i.e., a vector) and with the same type of elements as $icode a_x$$.
+# The object $icode f$$ stores the $codei type( a_x[0] )$$ operations 
+# that mapped the vector $icode a_x$$ to the vector $icode a_y$$.
 # The length of the vector $icode a_y$$ determines the range size
 # $latex m$$ for the function $latex y = F(x)$$ below.
 #
@@ -197,6 +184,18 @@
 # and its derivatives, where $latex y = F(x)$$ corresponds to the 
 # operation sequence mentioned above.
 #
+# $subhead m$$
+# The range size $latex m$$ is equal to the length of the vector $icode a_y$$.
+#
+# $subhead n$$
+# The domain size $latex n$$ is equal to the length of the vector $icode a_x$$.
+#
+# $subhead level$$
+# The $cref/ad/$$ level for the object $icode f$$ is one less than
+# the AD level for the arguments $icode a_x$$ and $icode a_y$$;
+# i.e., if $codei%type( %a_x%[0] )%$$ is $code a_float$$ ($code a2float$$)
+# the corresponding AD level for $icode f$$ is zero (one).
+#
 # $children%
 #	example/adfun.py
 # %$$
@@ -206,16 +205,91 @@
 #
 # $end
 # ---------------------------------------------------------------------------
+# $begin std_math$$ $newlinech #$$
+# $spell
+#	numpy
+#	arccos
+#	arcsin
+#	arctan
+#	cos
+#	exp
+#	tanh
+#	sqrt
+# $$
+#
+# $section Standard Math Unary Functions$$
+#
+# $index arccos$$
+# $index arcsin$$
+# $index arctan$$
+# $index cos$$
+# $index cosh$$
+# $index exp$$
+# $index log$$
+# $index log10$$
+# $index sin$$
+# $index sinh$$
+# $index sqrt$$
+# $index tan$$ 
+# $index tanh$$
+#
+# $head Syntax$$
+# $icode%y% = %fun%(%x%)%$$
+#
+# $head Purpose$$
+# Evaluate the standard math function $icode fun$$ where $icode fun$$
+# has one argument.
+#
+# $head x$$
+# The argument $icode x$$ can be an instance of $code float$$,
+# an $code a_float$$, an $code a2float$$, or a $code numpy.array$$
+# of such objects.
+#
+# $head y$$
+# If $icode x$$ is an instance of $code float$$,
+# $icode y$$ will also be an instance of $icode float$$.
+# Otherwise $icode y$$ will have the same type as $icode x$$.
+# $pre
+#
+# $$
+# In the case where $icode x$$ is an array, $icode y$$ will 
+# the same shape as $icode x$$ and the elements of $icode y$$
+# will have the  same type as the elements of $icode x$$.
+#
+# $head fun$$
+# The function $icode fun$$ can be any of the following:
+# $code arccos$$,
+# $code arcsin$$,
+# $code arctan$$,
+# $code cos$$,
+# $code cosh$$,
+# $code exp$$,
+# $code log$$,
+# $code log10$$,
+# $code sin$$,
+# $code sinh$$,
+# $code sqrt$$,
+# $code tan$$, or
+# $code tanh$$.
+#
+# $children%
+#	example/std_math.py
+# %$$
+# $head Example$$
+# The file $cref/std_math.py/$$ 
+# contains an example and test of these functions.
+#
+# $end
+# ---------------------------------------------------------------------------
 """\
-pycppad: a Python algorihtmic differentiation module that uses the C++ package
-CppAD to evaluate derivatives of arbitrary order.
+A Python algorihtmic differentiation module that uses the C++ package CppAD
+to evaluate function values and derivatives of arbitrary order.
 """
 
 import numpy
-
-import pycppad
-from pycppad import a_float
-from pycppad import a2float
+import pyad.cppad.cppad_
+from pyad.cppad.cppad_ import a_float
+from pyad.cppad.cppad_ import a2float
 
 def ad(x) :
   """
@@ -228,72 +302,78 @@ def ad(x) :
     return a_float(x)
   elif isinstance(x, a_float) :
     return a2float(x)
-  else:
-    raise NotImplementedError(
-      'ad(x): only implemented where x int, float, or a_float'
-    )
-
-def value(x) :
-  """
-  value(x): returns an object with one lower level of automatic differentation.
-  If x is an a_float, value(x) is a float (AD level 0). 
-  If x is an a2float, value(x) is an a_float (AD level 1). 
-  """
-  if isinstance(x, a_float) :
-    return pycppad.float_(x);
-  elif isinstance(x, a2float) :
-    return pycppad.a_float_(x);
+  elif isinstance(x, numpy.ndarray) :
+    s      = x.shape
+    length = numpy.prod(s)
+    a_x    = numpy.array( list(ad(xi) for xi in x.flat) )
+    return a_x.reshape(s)
   else :
     raise NotImplementedError(
-      'value(x): only implemented where x a_float or a2float'
+      'ad(x): only implemented where x an int, float, a_float or '
+      'an array of such values.'
+    )
+
+def value(a_x) :
+  """
+  value(a_x): returns object with one lower level of automatic differentation.
+  If a_x is an a_float, value(a_x) is a float (AD level 0). 
+  If a_x is an a2float, value(a_x) is an a_float (AD level 1). 
+  """
+  if isinstance(a_x, a_float) :
+    return cppad_.float_(a_x);
+  elif isinstance(a_x, a2float) :
+    return cppad_.a_float_(a_x);
+  elif isinstance(a_x, numpy.ndarray) :
+    s      = a_x.shape
+    length = numpy.prod(s)
+    x      = numpy.array( list(value(a_xi) for a_xi in a_x.flat) )
+    return x.reshape(s)
+  else :
+    raise NotImplementedError(
+      'value(a_x): only implemented where a_x a_float or a2float'
     )
  
-def array(x) :
-  """
-  array(x): converts a list or tuple to an array.
-  If the elements of x are int or float, the elements of the array are floats.
-  Otherwise the elements of the array are the same type as the elements of x.
-  """
-  x0 = x[0]
-  if isinstance(x0, int) or isinstance(x0, float) :
-    return numpy.asarray(x, dtype=float)
-  return numpy.asarray(x, type(x0))
-
-def independent(x):
+def independent(x) :
   """
   a_x = independent(x): create independent variable vector a_x, equal to x,
   and start recording operations that use the class corresponding to ad( x[0] ).
   """
-  if not isinstance(x, numpy.ndarray):
+  if not isinstance(x, numpy.ndarray) :
     raise NotImplementedError('independent(x): x is not of type numpy.array')
   x0 = x[0]
-  if isinstance(x0, float) :
-    return pycppad.independent(x, 1)     # level = 1
+  if isinstance(x0, int) or isinstance(x0, float) :
+    return cppad_.independent(x, 1)     # level = 1
   elif isinstance(x0, a_float) :
-    return pycppad.independent(x, 2)     # level = 2
+    return cppad_.independent(x, 2)     # level = 2
   else:
     print "type(x[j]) = ", type(x0)
     raise NotImplementedError(
       'independent(x): only implemented where x[j] is float or a_float'
     )
 
-class adfun_float(pycppad.adfun_float) :
+class adfun_float(cppad_.adfun_float) :
   """
-  Create a function object that evaluates using floats.
+  Create a level zero function object (evaluates using floats).
   """
+  # Kludge: The following reshaping should be done in adfun.cpp
   def jacobian(self, x) :
     return self.jacobian_(x).reshape(self.range(), self.domain())
+  def hessian(self, x, w) :
+    return self.hessian_(x, w).reshape(self.domain(), self.domain())
   pass
 
-class adfun_a_float(pycppad.adfun_a_float) :
+class adfun_a_float(cppad_.adfun_a_float) :
   """
-  Create a function object that evaluates using a_float.
+  Create a level one function object (evaluates using a_float).
   """
+  # Kludge: The following reshaping should be done in adfun.cpp
   def jacobian(self, x) :
     return self.jacobian_(x).reshape(self.range(), self.domain())
+  def hessian(self, x, w) :
+    return self.hessian_(x, w).reshape(self.domain(), self.domain())
   pass
 
-def adfun(x,y):
+def adfun(x,y) :
   """
   f = adfun(x,y): Stop recording and place it in the function object f.
   x: a numpy one dimnesional array containing the independent variable vector.
@@ -319,7 +399,6 @@ def adfun(x,y):
       raise NotImplementedError(
         'adfun(x, y): elements of x and y are not a_float or a2dobule')
 
-
 from numpy import arccos
 from numpy import arcsin
 from numpy import arctan
@@ -334,24 +413,3 @@ from numpy import sqrt
 from numpy import tan
 from numpy import tanh
 
-# Kludge: for some reason numpy.sin(x) will work for an array of a_float
-# but numpy.abs(x) will not work for an array of a_float.
-def abs(x) :
-  if isinstance(x, a_float) or isinstance(x, a2float) :
-    return x.abs()
-  if isinstance(x, numpy.ndarray) :
-    n  = len(x)
-    x0 = x[0]
-    if isinstance(x0, a_float) :
-      a_zero = ad(0)
-      y = array( list( a_zero for i in range(n) ) )
-      for i in range(n) :
-         y[i] = x[i].abs()
-      return y
-    if isinstance(x0, a2float) :
-      a2zero = ad(0)
-      y = array( list( a2zero for i in range(n) ) )
-      for i in range(n) :
-         y[i] = x[i].abs()
-      return y
-  return numpy.abs(x)

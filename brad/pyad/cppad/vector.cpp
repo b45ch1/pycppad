@@ -16,20 +16,40 @@ vec<double>::vec(array& py_array)
 		"array is not a vector"
 	);
 	PYCPPAD_ASSERT( 
-		PyArray_TYPE(py_array.ptr()) == PyArray_DOUBLE ,
-		"expected array elements of type double"
-	);
-	PYCPPAD_ASSERT( 
 		length >= 0 , 
 		"array length is <= zero"
 	);
 
 	// set private data
 	length_    = static_cast<size_t>( length );
-	pointer_   = static_cast<double*>( 
-		PyArray_DATA(py_array.ptr()) 
+	if( PyArray_TYPE(py_array.ptr()) == PyArray_DOUBLE )
+	{	pointer_ = static_cast<double*>( 
+			PyArray_DATA(py_array.ptr()) 
+		);
+		allocated_ = false;
+	}
+	else if( PyArray_TYPE(py_array.ptr()) == PyArray_INT )
+	{	pointer_   = CPPAD_TRACK_NEW_VEC(length, pointer_);
+		int* data = 	static_cast<int*>( 
+			PyArray_DATA(py_array.ptr()) 
+		);
+		for(size_t i = 0; i < length_; i++)
+			pointer_[i] = static_cast<double>( data[i] );
+		allocated_ = true;
+	}
+	else if( PyArray_TYPE(py_array.ptr()) == PyArray_LONG )
+	{	pointer_   = CPPAD_TRACK_NEW_VEC(length, pointer_);
+		long* data = 	static_cast<long*>( 
+			PyArray_DATA(py_array.ptr()) 
+		);
+		for(size_t i = 0; i < length_; i++)
+			pointer_[i] = static_cast<double>( data[i] );
+		allocated_ = true;
+	}
+	else	PYCPPAD_ASSERT(
+		0,
+		"expected an array with int or float elements"
 	);
-	allocated_ = false;
 	return;
 }
 

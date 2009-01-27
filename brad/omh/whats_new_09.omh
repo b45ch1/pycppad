@@ -1,11 +1,19 @@
 $begin whats_new_09$$ 
 $spell
-	pycppad
+	pyad
+	inplace
+	py
 $$
 
 $section Extensions, Bug Fixes, and Changes During 2009$$
 
-$head 01-04$$
-Started the web based documentation for $code pycppad$$.
+$head 01-26$$
+Released first version, $code pyad-20090126$$.
+$pre
+
+$$
+Add build inplace, and omitting the $code setup.py$$ install step, 
+to $cref/install/$$ documentation.
+
 
 $end

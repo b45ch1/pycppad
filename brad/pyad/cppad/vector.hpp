@@ -1,7 +1,7 @@
 # ifndef PYCPPAD_VECTOR_INCLUDED
 # define PYCPPAD_VECTOR_INCLUDED
 
-# include "setup.hpp"
+# include "environment.hpp"
 
 namespace pycppad {
 // ------------------------------------------------------------------------

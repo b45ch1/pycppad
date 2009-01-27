@@ -9,7 +9,10 @@ list="
 "
 for file in $list
 do
-	cmd="rm $file"
-	echo $cmd
-	$cmd
+	if [ -e "$file" ]
+	then
+		cmd="rm $file"
+		echo $cmd
+		$cmd
+	fi
 done
