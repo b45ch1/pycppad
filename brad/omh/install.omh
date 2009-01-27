@@ -1,5 +1,11 @@
 $begin install$$
+$dollar @$$
 $spell
+	usr
+	inplace
+	undef
+	py py
+	test test
 	CppAD
 	cppad
 	sys sys
@@ -12,7 +18,7 @@ $spell
 	py
 $$
 
-$section Installing pyad$$
+$section Installing PyAD$$
 
 $index install, pyad$$
 $index pyad, install$$
@@ -33,16 +39,16 @@ $index pyad, unpack$$
 $index extract, pyad$$
 $index pyad, extract$$
 On unix, you could use the command
-$codei%
+$codep
 	tar -xvzf  pyad-20090126.tar.gz
-%$$
+$$
 which would create the directory $code pyad-20090126$$.
 
 $head Required Setup Information$$
 The value of the following setup variables, in the file
-$codei%
+$codep
 	pyad-20090126/setup.py
-%$$
+$$
 must be set to agree with your system:
 $code
 $verbatim%setup.template%5%# BEGIN USER SETTINGS%# END USER SETTINGS%$$
@@ -50,9 +56,49 @@ $$
 Note that CppAD and Boost Python must be installed on your before you can
 properly set this information.
 
+$head Building$$
+$index build, pyad$$
+$index pyad, build$$
+Change into the directory $code pyad-20090126$$ and execute the command
+$codep
+	./setup.py build_ext --inplace --debug --undef NDEBUG
+$$
+to compile and link the $code pyad.cppad$$ extension module.
+You can compile and link an optimized version with the command
+$codep
+	./setup.py build_ext
+$$
+Note that in the optimized version, certain error checking is not
+done and improper use of $code pyad.cpp$$ may lead to a segmentation fault.
+
+$head Testing$$
+$index test, pyad$$
+$index pyad, test$$
+You will need the 
+$href%
+	http://codespeak.net/py/dist/%
+	py.test
+%$$ 
+utility to run the $code pyad$$ tests.
+In the $code pyad-20090126$$ directory execute the command
+$codep
+	cat example/*.py > test_example.py
+	py.test test_example.py
+$$
+You can run some more tests with the command
+$codep
+	py.test test_more.py
+$$
+
+
 $head Installing$$
 $index install, pyad$$
 $index pyad, install$$
+Installing $code pyad$$ copies it to the standard location for you system.
+You may or may not preform this step:
+$pre
+
+$$
 Change into the directory $code pyad-20090126$$ and execute the command
 $codei%
 	python setup.py install --prefix=%prefix%
@@ -63,6 +109,23 @@ $codei%
 %$$
 where $icode prefix$$ is the prefix for the location
 where  you wish to install $code pyad$$.
+Note that some common choices for $icode prefix$$ are
+$code @HOME$$, $code /usr/local$$, and $code /usr$$.
+
+$subhead Uninstalling$$
+Unfortunately, python's $code distutils$$ package does not provide
+an uninstall command. You can uninstall the $code pyad$$ package
+by removing the entries
+$codei%
+	%prefix%/lib/python%major%.%minor%/site-packages/pyad
+	%prefix%/lib/python%major%.%minor%/site-packages/pyad-20090126.egg-info
+	%prefix%/share/doc/pyad
+%$$
+where $icode major$$ and $icode minor$$
+are the major and minor version numbers printed by the command
+$codep
+	python --version
+$$
 
 $head Python Path$$
 $index python, path$$
@@ -71,41 +134,34 @@ You will not be able to use the python command
 $codei%
 	import pyad
 %$$
-unless the directory
+unless the distribution directory
+$codep
+	pyad-20090126
+$$
+or (provided you installed $code pyad$$) the installation directory
 $codei%
 	%prefix%/lib/python%major%.%minor%/site-packages
 %$$
 is in you python path.
-Here $icode major$$ and $icode minor$$
-are the major and minor version numbers printed by the command
-$code%
-	python --version
-%$$
 You can check your python path with the following commands
-$codei%
+$codep
 	python
 	import sys
 	sys.path
-%$$
-If it is not yet there,
+$$
+For example, if the installation directory above is not yet there,
 you could add the directory above to your python path using the command
 $codei%
 	sys.path.append('%prefix%/lib/python%major%.%minor%/site-packages')
 %$$
 
-$head pyad Documentation$$
-The documentation for $code pyad$$ will be copied to the directory
+$head PyAD Documentation$$
+The documentation for $code pyad$$ starts out in the directory
+$codep
+	pyad-20090126/doc
+$$
+During the installation process, it is copied to the directory
 $codei%
-	%prefix%/share/doc/pyad
-%$$
-
-$head Uninstalling$$
-Unfortunately, python's $code distutils$$ package does not provide
-an uninstall command. You can uninstall the $code pyad$$ package
-by removing the entries
-$codei%
-	%prefix%/lib/python%major%.%minor%/site-packages/pyad
-	%prefix%/lib/python%major%.%minor%/site-packages/pyad-20090126.egg-info
 	%prefix%/share/doc/pyad
 %$$
 
