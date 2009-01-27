@@ -362,5 +362,6 @@ if __name__ == "__main__":
 	
 	for g in globals_list:
 		if g[:5] == "test_":
+			print "running %s()"%g
 			eval("%s()"%g)
-			
+			print "-----------OK---------!"
