@@ -1,12 +1,19 @@
 $begin whats_new_09$$ 
 $spell
 	pyad
+	inplace
+	py
 $$
 
 $section Extensions, Bug Fixes, and Changes During 2009$$
 
 $head 01-26$$
 Released first version, $code pyad-20090126$$.
+$pre
+
+$$
+Add build inplace, and omitting the $code setup.py$$ install step, 
+to $cref/install/$$ documentation.
 
 
 $end
