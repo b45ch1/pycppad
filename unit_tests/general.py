@@ -356,3 +356,11 @@ def test_abs2():
 			assert df[i] == +1.
 		dx[i] = 0.
 
+
+if __name__ == "__main__":
+	globals_list = globals().copy()
+	
+	for g in globals_list:
+		if g[:5] == "test_":
+			eval("%s()"%g)
+			
