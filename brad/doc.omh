@@ -1,18 +1,18 @@
-$begin pyad$$
+$begin pycppad$$
 $spell
-	pyad
+	pycppad
 	cppad
 $$
 $latex \newcommand{\B}[1]{{\bf #1}}$$
 $latex \newcommand{\R}[1]{{\rm #1}}$$
 
-$section pyad-20090126: A Python Algorithm Derivative Package$$
+$section pycppad-20090128: A Python Algorithm Derivative Package$$
 
 $index AD, python$$
 $index python, AD$$
 $index algorithmic differentiation, python$$
 $index automatic differentiation, python$$
-$index pyad$$
+$index pycppad$$
 
 $table
 $cnext
@@ -20,11 +20,11 @@ $cnext
 	Manual as one web page
 $rnext
 Math displayed using Latex $pre  $$ $cnext
-	$href/pyad.htm/$$ $pre  $$ $cnext
+	$href/pycppad.htm/$$ $pre  $$ $cnext
 	$href/_printable.htm/$$
 $rnext
 Math displayed using MathML $pre  $$ $cnext
-	$href/pyad.xml/$$ $pre  $$ $cnext
+	$href/pycppad.xml/$$ $pre  $$ $cnext
 	$href/_printable.xml/$$
 $tend
 
@@ -32,7 +32,7 @@ $head License$$
 $cref/BSD/license/$$
 
 $head Syntax$$
-$codei%from pyad.cppad import *%$$
+$codei%from pycppad import **%$$
 
 $head Purpose$$
 The command above imports a 
@@ -57,9 +57,9 @@ See $cref/whats_new_09/$$ for a list of recent extensions and bug fixes.
 
 $childtable%
 	omh/install.omh%
-	pyad/cppad/__init__.py%
-	pyad/cppad/pycppad.cpp%
-	pyad/cppad/adfun.cpp%
+	pycppad/__init__.py%
+	pycppad/pycppad.cpp%
+	pycppad/adfun.cpp%
 	example/two_levels.py%
 	omh/whats_new_09.omh%
 	omh/license.omh

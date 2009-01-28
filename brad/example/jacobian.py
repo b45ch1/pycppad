@@ -15,7 +15,7 @@
 # $$
 # $end
 # BEGIN CODE
-from pyad.cppad import *
+from pycppad import *
 # Example using a_float -----------------------------------------------------
 def test_jacobian():
   delta = 10. * numpy.finfo(float).eps

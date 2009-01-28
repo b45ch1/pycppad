@@ -287,9 +287,9 @@ to evaluate function values and derivatives of arbitrary order.
 """
 
 import numpy
-import pyad.cppad.cppad_
-from pyad.cppad.cppad_ import a_float
-from pyad.cppad.cppad_ import a2float
+import pycppad.cppad_
+from pycppad.cppad_ import a_float
+from pycppad.cppad_ import a2float
 
 def ad(x) :
   """

@@ -12,7 +12,7 @@ $spell
 	uninstalling
 	distutils
 	uninstall
-	pyad
+	pycppad
 	xvzf
 	gz
 	py
@@ -20,34 +20,34 @@ $$
 
 $section Installing PyAD$$
 
-$index install, pyad$$
-$index pyad, install$$
+$index install, pycppad$$
+$index pycppad, install$$
 
 $head Downloading$$
-$index download, pyad$$
-$index pyad, download$$
+$index download, pycppad$$
+$index pycppad, download$$
 Download the file
 $href%
-	http://www.seanet.com/~bradbell/pyad-20090126.tar.gz%
-	pyad-20090126.tar.gz
+	http://www.seanet.com/~bradbell/pycppad-20090128.tar.gz%
+	pycppad-20090128.tar.gz
 %$$
 and store it on your machine.
 
 $head Unpacking$$
-$index unpack, pyad$$
-$index pyad, unpack$$
-$index extract, pyad$$
-$index pyad, extract$$
+$index unpack, pycppad$$
+$index pycppad, unpack$$
+$index extract, pycppad$$
+$index pycppad, extract$$
 On unix, you could use the command
 $codep
-	tar -xvzf  pyad-20090126.tar.gz
+	tar -xvzf  pycppad-20090128.tar.gz
 $$
-which would create the directory $code pyad-20090126$$.
+which would create the directory $code pycppad-20090128$$.
 
 $head Required Setup Information$$
 The value of the following setup variables, in the file
 $codep
-	pyad-20090126/setup.py
+	pycppad-20090128/setup.py
 $$
 must be set to agree with your system:
 $code
@@ -57,30 +57,30 @@ Note that CppAD and Boost Python must be installed on your before you can
 properly set this information.
 
 $head Building$$
-$index build, pyad$$
-$index pyad, build$$
-Change into the directory $code pyad-20090126$$ and execute the command
+$index build, pycppad$$
+$index pycppad, build$$
+Change into the directory $code pycppad-20090128$$ and execute the command
 $codep
 	./setup.py build_ext --inplace --debug --undef NDEBUG
 $$
-to compile and link the $code pyad.cppad$$ extension module.
+to compile and link the CppAD extension module.
 You can compile and link an optimized version with the command
 $codep
 	./setup.py build_ext
 $$
 Note that in the optimized version, certain error checking is not
-done and improper use of $code pyad.cpp$$ may lead to a segmentation fault.
+done and improper use of $code pycppad.cpp$$ may lead to a segmentation fault.
 
 $head Testing$$
-$index test, pyad$$
-$index pyad, test$$
+$index test, pycppad$$
+$index pycppad, test$$
 You will need the 
 $href%
 	http://codespeak.net/py/dist/%
 	py.test
 %$$ 
-utility to run the $code pyad$$ tests.
-In the $code pyad-20090126$$ directory execute the command
+utility to run the $code pycppad$$ tests.
+In the $code pycppad-20090128$$ directory execute the command
 $codep
 	cat example/*.py > test_example.py
 	py.test test_example.py
@@ -92,14 +92,14 @@ $$
 
 
 $head Installing$$
-$index install, pyad$$
-$index pyad, install$$
-Installing $code pyad$$ copies it to the standard location for you system.
+$index install, pycppad$$
+$index pycppad, install$$
+Installing $code pycppad$$ copies it to the standard location for you system.
 You may or may not preform this step:
 $pre
 
 $$
-Change into the directory $code pyad-20090126$$ and execute the command
+Change into the directory $code pycppad-20090128$$ and execute the command
 $codei%
 	python setup.py install --prefix=%prefix%
 %$$
@@ -108,18 +108,18 @@ $codei%
 	./setup.py install --prefix=%prefix%
 %$$
 where $icode prefix$$ is the prefix for the location
-where  you wish to install $code pyad$$.
+where  you wish to install $code pycppad$$.
 Note that some common choices for $icode prefix$$ are
 $code @HOME$$, $code /usr/local$$, and $code /usr$$.
 
 $subhead Uninstalling$$
 Unfortunately, python's $code distutils$$ package does not provide
-an uninstall command. You can uninstall the $code pyad$$ package
+an uninstall command. You can uninstall the $code pycppad$$ package
 by removing the entries
 $codei%
-	%prefix%/lib/python%major%.%minor%/site-packages/pyad
-	%prefix%/lib/python%major%.%minor%/site-packages/pyad-20090126.egg-info
-	%prefix%/share/doc/pyad
+	%prefix%/lib/python%major%.%minor%/site-packages/pycppad
+	%prefix%/lib/python%major%.%minor%/site-packages/pycppad-20090128.egg-info
+	%prefix%/share/doc/pycppad
 %$$
 where $icode major$$ and $icode minor$$
 are the major and minor version numbers printed by the command
@@ -132,13 +132,13 @@ $index python, path$$
 $index path, python$$
 You will not be able to use the python command
 $codei%
-	import pyad
+	import pycppad
 %$$
 unless the distribution directory
 $codep
-	pyad-20090126
+	pycppad-20090128
 $$
-or (provided you installed $code pyad$$) the installation directory
+or (provided you installed $code pycppad$$) the installation directory
 $codei%
 	%prefix%/lib/python%major%.%minor%/site-packages
 %$$
@@ -156,13 +156,13 @@ $codei%
 %$$
 
 $head PyAD Documentation$$
-The documentation for $code pyad$$ starts out in the directory
+The documentation for $code pycppad$$ starts out in the directory
 $codep
-	pyad-20090126/doc
+	pycppad-20090128/doc
 $$
 During the installation process, it is copied to the directory
 $codei%
-	%prefix%/share/doc/pyad
+	%prefix%/share/doc/pycppad
 %$$
 
 $end

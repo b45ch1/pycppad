@@ -25,19 +25,19 @@ sebastian_email        = 'sebastian dot walter @ gmail dot com'
 package_author         = 'Bradley M. Bell and Sebastian F. Walter'
 package_author_email   = sebastian_email + ' , ' + brad_email
 package_url            = 'http://github.com/b45ch1/pycppad/tree/master'
-package_description    = 'python Algorihtmic Differentiation'
-package_data_files     = [ ('share/doc/pyad', doc_files ) ]
+package_description    = 'Python Algorihtmic Differentiation Using CppAD'
+package_data_files     = [ ('share/doc/pycppad', doc_files ) ]
 package_license        = 'BSD'
 #
-cppad_extension_name         = 'pyad' + '/cppad/.cppad_'
+cppad_extension_name         = 'pycppad' + '/.cppad_'
 cppad_extension_include_dirs = [ cppad_include_dir ]
 cppad_extension_library_dirs = [ boost_lib_dir ]
 cppad_extension_libraries    = [ boost_python_lib ]
 cppad_extension_sources      = [ 
-  'pyad' + '/cppad/adfun.cpp'       ,
-  'pyad' + '/cppad/pycppad.cpp'     ,
-  'pyad' + '/cppad/vec2array.cpp'   ,
-  'pyad' + '/cppad/vector.cpp' 
+  'pycppad' + '/adfun.cpp'       ,
+  'pycppad' + '/pycppad.cpp'     ,
+  'pycppad' + '/vec2array.cpp'   ,
+  'pycppad' + '/vector.cpp' 
 ]
 extension_modules = [ Extension( 
   cppad_extension_name                        , 
@@ -48,7 +48,7 @@ extension_modules = [ Extension(
 ) ]
 #
 setup(
-  name         = 'pyad'               ,
+  name         = 'pycppad'               ,
   version      = package_version            ,
   license      = package_license            ,
   description  = package_description        ,
@@ -56,7 +56,7 @@ setup(
   author_email = package_author_email       ,
   url          = package_url                ,
   ext_modules  = extension_modules          ,
-  packages     = [ 'pyad' , 'pyad.cppad' ]  ,
-  package_dir  = { 'pyad' : 'pyad' }        ,
+  packages     = [ 'pycppad' , 'pycppad' ]  ,
+  package_dir  = { 'pycppad' : 'pycppad' }        ,
   data_files   = package_data_files
 )

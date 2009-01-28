@@ -13,7 +13,7 @@
 # $$
 # $end
 # BEGIN CODE
-from pyad.cppad import *
+from pycppad import *
 def test_adfun() :
   # record operations at x = (0, 0, 0)
   x    = numpy.array( [ 0., 0., 0. ] )

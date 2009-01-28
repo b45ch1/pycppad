@@ -54,8 +54,8 @@ sed < ./setup.template > setup.py \
 chmod +x setup.py
 # ----------------------------------------------------------------------------
 # Create setup.py with todays year, month, and day in yyyymmdd format
-sed -i doc.omh -e "s/pyad-[0-9]\{8\}/pyad-$yyyymmdd/"
-sed -i omh/install.omh -e "s/pyad-[0-9]\{8\}/pyad-$yyyymmdd/"
+sed -i doc.omh -e "s/pycppad-[0-9]\{8\}/pycppad-$yyyymmdd/"
+sed -i omh/install.omh -e "s/pycppad-[0-9]\{8\}/pycppad-$yyyymmdd/"
 # ----------------------------------------------------------------------------
 echo "# Build documentation --------------------------------------------------"
 if [ -e doc ]
@@ -104,11 +104,11 @@ then
 	exit 1
 fi
 cat << EOF > MANIFEST.in
-include pyad/cppad/*.cpp
-include pyad/cppad/*.hpp
+include pycppad/*.cpp
+include pycppad/*.hpp
 include build.sh
 include setup.py
-include example/*
+include example/*.py
 include doc.omh
 include doc/*
 include README
@@ -123,14 +123,14 @@ then
 	echo "Cannot change into distribution directory."
 	exit 1
 fi
-cmd="tar -xvzf pyad-$yyyymmdd.tar.gz"
+cmd="tar -xvzf pycppad-$yyyymmdd.tar.gz"
 echo "$cmd"
 if ! $cmd
 then
 	echo "Cannot extract the source distribution file"
 	exit 1
 fi
-cmd="cd pyad-$yyyymmdd"
+cmd="cd pycppad-$yyyymmdd"
 if ! $cmd
 then
 	echo "Cannot change into the extracted soruce directory"
@@ -141,9 +141,9 @@ cmd="./setup.py build_ext --inplace --debug --undef NDEBUG"
 echo "$cmd"
 # Kludge: setup.py is mistakenly putting -Wstrict-prototypes on compile line
 $cmd 2>&1 |  sed -e '/warning: command line option "-Wstrict-prototypes"/d'
-if [ ! -e pyad/cppad/cppad_.so ]
+if [ ! -e pycppad/cppad_.so ]
 then
-	echo "setup.py failed to create pyad/cppad/cppad_.so"
+	echo "setup.py failed to create pycppad/cppad_.so"
 	exit 1
 fi
 # ----------------------------------------------------------------------------
@@ -164,7 +164,7 @@ echo "Number of tests in test_example.py should be [$check]"
 check=`grep '^def' test_more.py | wc -l`
 echo "Number of tests in test_more.py should be [$check]"
 # ----------------------------------------------------------------------------
-dir="$HOME/prefix/pyad"
+dir="$HOME/prefix/pycppad"
 cmd="rm -rf $dir"
 echo "$cmd"
 if ! $cmd
@@ -172,7 +172,7 @@ then
 	echo "Cannot remove old version of $dir"
 	exit 1
 fi
-cmd="./setup.py install --prefix=$HOME/prefix/pyad"
+cmd="./setup.py install --prefix=$HOME/prefix/pycppad"
 echo "$cmd"
 if ! $cmd
 then

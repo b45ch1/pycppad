@@ -10,7 +10,7 @@
 # $$
 # $end
 # BEGIN CODE
-from pyad.cppad import *
+from pycppad import *
 # Example using a_float ------------------------------------------------------
 def test_value() :
   x   = 2

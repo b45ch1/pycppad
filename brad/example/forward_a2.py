@@ -1,6 +1,6 @@
 
 # First order forward mode with two levels of taping
-from pyad.cppad import *
+from pycppad import *
 def test_forward_a2():
   # start recording a_float operations
   x   = numpy.array( [ 2. , 3. ] )
