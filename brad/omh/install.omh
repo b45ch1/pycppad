@@ -18,7 +18,7 @@ $spell
 	py
 $$
 
-$section Installing PyAD$$
+$section Installing pycppad$$
 
 $index install, pycppad$$
 $index pycppad, install$$
@@ -155,7 +155,7 @@ $codei%
 	sys.path.append('%prefix%/lib/python%major%.%minor%/site-packages')
 %$$
 
-$head PyAD Documentation$$
+$head pycppad Documentation$$
 The documentation for $code pycppad$$ starts out in the directory
 $codep
 	pycppad-20090128/doc
