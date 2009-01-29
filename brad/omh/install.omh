@@ -70,7 +70,7 @@ $$
 to compile and link the CppAD extension module.
 You can compile and link an optimized version with the command
 $codep
-	./setup.py build_ext
+	./setup.py build_ext --inplace
 $$
 Note that in the optimized version, certain error checking is not
 done and improper use of $code pycppad.cpp$$ may lead to a segmentation fault.
