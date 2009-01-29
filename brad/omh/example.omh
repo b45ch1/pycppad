@@ -4,6 +4,8 @@ $spell
 $$
 
 $section List of All the pycppad Examples$$
+$index example, list$$
+$index list, example$$
 
 $table
 $rref abs.py$$

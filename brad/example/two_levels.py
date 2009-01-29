@@ -43,8 +43,13 @@
 #	\partial_{x(1)} G (x) & = & 2 * x_0
 # \end{array}
 # \] $$
-#                         
+#
+# $code
+# $verbatim%example/two_levels.py%0%# BEGIN CODE%# END CODE%1%$$
+# $$
 # $end
+# BEGIN CODE
+
 from pycppad import *
 def pycppad_test_two_levels():
   # start recording a_float operations
@@ -71,3 +76,4 @@ def pycppad_test_two_levels():
 
   assert J[0,0] == 2. * x[1] + 2
   assert J[0,1] == 2. * x[0]
+# END CODE

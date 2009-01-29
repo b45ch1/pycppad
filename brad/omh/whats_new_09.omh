@@ -23,6 +23,12 @@ This is a change in API requiring user code to change
 $code import pyad.cppad$$ to $code import pycppad$$.
 
 $head 01-29$$
+A list of $cref/examples/example/$$ has been added to the documentation.
+The code for the $cref/two_levels.py/$$ example was missing, 
+this has been fixed.
+$pre
+
+$$
 The $code pycppad$$ tests no longer require any package to run; i.e.,
 it is no longer necessary to install
 -$href%
