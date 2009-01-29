@@ -123,6 +123,15 @@ then
 	exit 1
 fi
 cd ..
+for file in example/*.py
+do
+	name=`echo $file | sed -e 's|example/||'`
+	if ! grep "$name" omh/example.omh
+	then
+		echo "$file is not listed in omh/example.omh"
+		exit 1
+	fi
+done
 echo "# Create a source distribution ----------------------------------" 
 cmd="rm -rf dist"
 echo "$cmd"

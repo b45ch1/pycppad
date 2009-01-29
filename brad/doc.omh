@@ -57,6 +57,7 @@ See $cref/whats_new_09/$$ for a list of recent extensions and bug fixes.
 
 $childtable%
 	omh/install.omh%
+	omh/example.omh%
 	pycppad/__init__.py%
 	pycppad/pycppad.cpp%
 	pycppad/adfun.cpp%

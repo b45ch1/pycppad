@@ -92,6 +92,20 @@ $href%
 %$$
 package.
 
+$head Testing$$
+$index test, pycppad$$
+$index pycppad, test$$
+You can test of all the 
+$cref/examples/example/$$ in the $code pycppad$$ documentation.
+Change into the directory $code pycppad-20090129$$ and execute the command
+$codep
+	python test_example.py
+$$
+You can run some more tests with the command
+$codep
+	python test_more.py
+$$
+
 $head Installing$$
 $index install, pycppad$$
 $index pycppad, install$$
