@@ -12,7 +12,7 @@
 # BEGIN CODE
 from pycppad import *
 # Example using a_float ---------------------------------------------------
-def test_independent() :
+def pycppad_test_independent() :
   x   = numpy.array( [ 0., 0., 0. ] )
   a_x = independent(x)    # level 1 independent variables and start recording
   assert type(a_x) == numpy.ndarray
@@ -22,7 +22,7 @@ def test_independent() :
     assert a_x[j] == x[j]
   f   = adfun(a_x, a_x)   # stop level 1 recording
 # Example using a2float ---------------------------------------------------
-def test_independent_a2() :
+def pycppad_test_independent_a2() :
   x   = numpy.array( [ 0., 0., 0. ] )
   a_x = independent(x)    # level 1 independent variables and start recording
   a2x = independent(a_x)  # level 2 independent variables and start recording

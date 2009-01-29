@@ -16,6 +16,10 @@ $spell
 	xvzf
 	gz
 	py
+	gcc
+	Wstrict
+	Ada
+	Obj
 $$
 
 $section Installing pycppad$$
@@ -28,8 +32,8 @@ $index download, pycppad$$
 $index pycppad, download$$
 Download the file
 $href%
-	http://www.seanet.com/~bradbell/pycppad-20090128.tar.gz%
-	pycppad-20090128.tar.gz
+	http://www.seanet.com/~bradbell/pycppad-20090129.tar.gz%
+	pycppad-20090129.tar.gz
 %$$
 and store it on your machine.
 
@@ -40,14 +44,14 @@ $index extract, pycppad$$
 $index pycppad, extract$$
 On unix, you could use the command
 $codep
-	tar -xvzf  pycppad-20090128.tar.gz
+	tar -xvzf  pycppad-20090129.tar.gz
 $$
-which would create the directory $code pycppad-20090128$$.
+which would create the directory $code pycppad-20090129$$.
 
 $head Required Setup Information$$
 The value of the following setup variables, in the file
 $codep
-	pycppad-20090128/setup.py
+	pycppad-20090129/setup.py
 $$
 must be set to agree with your system:
 $code
@@ -59,7 +63,7 @@ properly set this information.
 $head Building$$
 $index build, pycppad$$
 $index pycppad, build$$
-Change into the directory $code pycppad-20090128$$ and execute the command
+Change into the directory $code pycppad-20090129$$ and execute the command
 $codep
 	./setup.py build_ext --inplace --debug --undef NDEBUG
 $$
@@ -71,25 +75,22 @@ $$
 Note that in the optimized version, certain error checking is not
 done and improper use of $code pycppad.cpp$$ may lead to a segmentation fault.
 
-$head Testing$$
-$index test, pycppad$$
-$index pycppad, test$$
-You will need the 
+$subhead Bug in Python Distutils$$
+$index bug, python distutils$$
+$index python, bug distutils$$
+$index distutils, python bug$$
+When using the GNU C++ compiler $code gcc$$, the warning 
+$codep
+cc1plus: warning: command line option "-Wstrict-prototypes" is valid for Ada/C/ObjC but not for C++
+$$
+will be printed. 
+This is not requested by $code setup.py$$ but is rather a bug
+in the Python 
 $href%
-	http://codespeak.net/py/dist/%
-	py.test
-%$$ 
-utility to run the $code pycppad$$ tests.
-In the $code pycppad-20090128$$ directory execute the command
-$codep
-	cat example/*.py > test_example.py
-	py.test test_example.py
-$$
-You can run some more tests with the command
-$codep
-	py.test test_more.py
-$$
-
+	http://docs.python.org/distutils/%
+	distutils
+%$$
+package.
 
 $head Installing$$
 $index install, pycppad$$
@@ -99,7 +100,7 @@ You may or may not preform this step:
 $pre
 
 $$
-Change into the directory $code pycppad-20090128$$ and execute the command
+Change into the directory $code pycppad-20090129$$ and execute the command
 $codei%
 	python setup.py install --prefix=%prefix%
 %$$
@@ -118,7 +119,7 @@ an uninstall command. You can uninstall the $code pycppad$$ package
 by removing the entries
 $codei%
 	%prefix%/lib/python%major%.%minor%/site-packages/pycppad
-	%prefix%/lib/python%major%.%minor%/site-packages/pycppad-20090128.egg-info
+	%prefix%/lib/python%major%.%minor%/site-packages/pycppad-20090129.egg-info
 	%prefix%/share/doc/pycppad
 %$$
 where $icode major$$ and $icode minor$$
@@ -136,7 +137,7 @@ $codei%
 %$$
 unless the distribution directory
 $codep
-	pycppad-20090128
+	pycppad-20090129
 $$
 or (provided you installed $code pycppad$$) the installation directory
 $codei%
@@ -158,7 +159,7 @@ $codei%
 $head pycppad Documentation$$
 The documentation for $code pycppad$$ starts out in the directory
 $codep
-	pycppad-20090128/doc
+	pycppad-20090129/doc
 $$
 During the installation process, it is copied to the directory
 $codei%

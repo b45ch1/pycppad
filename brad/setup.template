@@ -29,7 +29,7 @@ package_description    = 'Python Algorihtmic Differentiation Using CppAD'
 package_data_files     = [ ('share/doc/pycppad', doc_files ) ]
 package_license        = 'BSD'
 #
-cppad_extension_name         = 'pycppad' + '/.cppad_'
+cppad_extension_name         = 'pycppad' + '/cppad_'
 cppad_extension_include_dirs = [ cppad_include_dir ]
 cppad_extension_library_dirs = [ boost_lib_dir ]
 cppad_extension_libraries    = [ boost_python_lib ]

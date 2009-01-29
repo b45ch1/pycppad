@@ -12,7 +12,7 @@
 # BEGIN CODE
 # Example using a_float ----------------------------------------------------
 from pycppad import *
-def test_abs() :
+def pycppad_test_abs() :
   x   = numpy.array( [ -1.,  0.,  1.] )
   n   = len(x)
   a_x = independent(x)
@@ -35,7 +35,7 @@ def test_abs() :
       assert df[i] == +1.
     dx[i] = 0.
 # Example using a2float ----------------------------------------------------
-def test_abs_a2() :
+def pycppad_test_abs_a2() :
   x   = ad( numpy.array( [-1,  0,  1] ) )
   n   = len(x)
   a_x = independent(x)

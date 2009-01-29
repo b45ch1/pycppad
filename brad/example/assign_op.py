@@ -24,7 +24,7 @@
 # BEGIN CODE
 # Example using a_float ------------------------------------------------------
 from pycppad import *
-def test_assign_op() :
+def pycppad_test_assign_op() :
   x = 2.
   y = 3.
   #
@@ -58,7 +58,7 @@ def test_assign_op() :
 
 # Example using a2float ------------------------------------------------------
 from pycppad import *
-def test_assign_op_a2() :
+def pycppad_test_assign_op_a2() :
   x = 2.
   y = 3.
   #

@@ -14,7 +14,7 @@
 # $end
 # BEGIN CODE
 from pycppad import *
-def test_adfun() :
+def pycppad_test_adfun() :
   # record operations at x = (0, 0, 0)
   x    = numpy.array( [ 0., 0., 0. ] )
   a_x  = independent(x)   # declare independent variables and start recording

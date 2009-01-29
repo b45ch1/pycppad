@@ -12,7 +12,7 @@
 # BEGIN CODE
 from pycppad import *
 import numpy
-def test_ad() :
+def pycppad_test_ad() :
   x   = 1
   a_x = ad(x)
   a2x = ad(a_x)

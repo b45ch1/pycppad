@@ -17,7 +17,7 @@ from pycppad import *
 import numpy
 import math
 # Example using a_float ----------------------------------------------------
-def test_std_math(): 
+def pycppad_test_std_math(): 
   delta = 10. * numpy.finfo(float).eps
   pi    = numpy.pi
   x     = pi / 6
@@ -51,7 +51,7 @@ def test_std_math():
       else :      assert J[j][k] == 0.
 
 # Example using a2float ----------------------------------------------------
-def test_std_math_a2(): 
+def pycppad_test_std_math_a2(): 
   n     = 10
   delta = 10. * numpy.finfo(float).eps
   pi    = numpy.pi

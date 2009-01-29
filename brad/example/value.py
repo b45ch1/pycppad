@@ -12,7 +12,7 @@
 # BEGIN CODE
 from pycppad import *
 # Example using a_float ------------------------------------------------------
-def test_value() :
+def pycppad_test_value() :
   x   = 2
   a_x = ad(x)
   #
@@ -26,7 +26,7 @@ def test_value() :
     assert type(xi) == float and xi == x[i]
 
 # Example using a2float ------------------------------------------------------
-def test_value_a2() :
+def pycppad_test_value_a2() :
   x   = 2
   a2x = ad(ad(x))
   #

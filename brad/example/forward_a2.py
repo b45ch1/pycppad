@@ -1,7 +1,7 @@
 
 # First order forward mode with two levels of taping
 from pycppad import *
-def test_forward_a2():
+def pycppad_test_forward_a2():
   # start recording a_float operations
   x   = numpy.array( [ 2. , 3. ] )
   a_x = independent(x)

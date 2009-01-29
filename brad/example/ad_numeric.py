@@ -26,7 +26,7 @@
 # BEGIN CODE
 from pycppad import *
 # Example using a_float -----------------------------------------------------
-def test_ad_numeric() :
+def pycppad_test_ad_numeric() :
   x    = 2.
   y    = 3.
   a_x  = ad(x)
@@ -53,7 +53,7 @@ def test_ad_numeric() :
   assert x   ** a_y == x ** y
   #
 # Example using a2float -----------------------------------------------------
-def test_ad_numeric_a2() :
+def pycppad_test_ad_numeric_a2() :
   x    = 2.
   y    = 3.
   a2x  = ad(ad(x))

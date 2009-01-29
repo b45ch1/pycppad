@@ -15,7 +15,7 @@
 from pycppad import *
 
 # Example using a_float -----------------------------------------------------
-def test_forward_1() :
+def pycppad_test_forward_1() :
 
   # start record a_float operations
   x   = numpy.array( [ 2., 3. ] )  # value of independent variables
@@ -44,7 +44,7 @@ def test_forward_1() :
   assert fp[0] == 2. * x[0]              # f_x1 (x0, x1) = 2 * x0
 
 # Example using a2float -----------------------------------------------------
-def test_forward_1_a2() :
+def pycppad_test_forward_1_a2() :
 
   # start record a_float operations
   a_x = ad(numpy.array( [ 2., 3. ] ))  # a_float value of independent variables

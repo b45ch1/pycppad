@@ -14,7 +14,7 @@
 # BEGIN CODE
 from pycppad import *
 # Example using a_float ------------------------------------------------------
-def test_reverse_1():
+def pycppad_test_reverse_1():
 
   # start record a_float operations
   x   = numpy.array( [ 2. , 3. ] )  # value of independent variables
@@ -38,7 +38,7 @@ def test_reverse_1():
   assert fp[1] == 2. * x[0]              # f_x1 (x0, x1) = 2 * x0
 
 # Example using a2float ------------------------------------------------------
-def test_reverse_1_a2():
+def pycppad_test_reverse_1_a2():
 
   # start record a_float operations
   a_x = ad(numpy.array( [ 2. , 3. ] ))  # value of independent variables

@@ -34,7 +34,7 @@
 # BEGIN CODE
 from pycppad import *
 # Example using a_float ------------------------------------------------------
-def test_compare_op():
+def pycppad_test_compare_op():
   x = ad(2.)
   y = ad(3.)
   z = ad(2.)
@@ -55,7 +55,7 @@ def test_compare_op():
   assert not x >= y
   assert not x >  y
 # Example using a2float ------------------------------------------------------
-def test_compare_op_a2():
+def pycppad_test_compare_op_a2():
   x = ad(ad(2.))
   y = ad(ad(3.))
   z = ad(ad(2.))

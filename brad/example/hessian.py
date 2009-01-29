@@ -15,7 +15,7 @@
 # BEGIN CODE
 from pycppad import *
 # Example using a_float -----------------------------------------------------
-def test_hessian():
+def pycppad_test_hessian():
   delta = 10. * numpy.finfo(float).eps
   x     = numpy.array( [ 0., 0. ] )
   a_x   = independent(x)
@@ -33,7 +33,7 @@ def test_hessian():
   assert abs( H[1,0] - cos(x[1])        ) < delta
   assert abs( H[1,1] + x[0] * sin(x[1]) ) < delta
 # Example using a2float -----------------------------------------------------
-def test_hessian_a2():
+def pycppad_test_hessian_a2():
   delta = 10. * numpy.finfo(float).eps
   a_x   = ad( numpy.array( [ 0., 0. ] ) )
   a2x   = independent(a_x)

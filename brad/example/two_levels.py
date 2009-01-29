@@ -46,7 +46,7 @@
 #                         
 # $end
 from pycppad import *
-def test_two_levels():
+def pycppad_test_two_levels():
   # start recording a_float operations
   x   = numpy.array( [ 2. , 3. ] )
   a_x = independent(x)

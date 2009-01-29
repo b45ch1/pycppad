@@ -53,9 +53,37 @@ sed < ./setup.template > setup.py \
 	-e "s|\(boost_python_lib *=\).*|\1 '$boost_python_lib'|"
 chmod +x setup.py
 # ----------------------------------------------------------------------------
-# Create setup.py with todays year, month, and day in yyyymmdd format
+# Change doc.omh and install.omh to use todays yyyymmdd 
 sed -i doc.omh -e "s/pycppad-[0-9]\{8\}/pycppad-$yyyymmdd/"
 sed -i omh/install.omh -e "s/pycppad-[0-9]\{8\}/pycppad-$yyyymmdd/"
+# ----------------------------------------------------------------------------
+# Create test_example.py
+cat example/* > test_example.py
+cat << EOF   >> test_example.py
+if __name__ == "__main__" :
+  number_ok   = 0
+  number_fail = 0
+  list_of_globals = globals().copy()
+  for g in list_of_globals :
+    if g[:13] == "pycppad_test_" :
+      ok = True
+      try :
+        eval("%s()" % g)
+      except AssertionError :
+        ok = False
+      if ok : 
+        print "OK:    %s" % g[13:]
+        number_ok = number_ok + 1
+      else : 
+        print "Error: %s" % g[13:]
+        number_fail = number_fail + 1
+  if number_fail == 0 : 
+    print "All %d tests passed" % number_ok
+    exit(0)
+  else :
+    print "%d tests failed" % number_fail 
+    exit(1)
+EOF
 # ----------------------------------------------------------------------------
 echo "# Build documentation --------------------------------------------------"
 if [ -e doc ]
@@ -113,6 +141,7 @@ include doc.omh
 include doc/*
 include README
 include test_more.py
+include test_example.py
 EOF
 ./setup.py sdist
 echo "# Extract the source distribution -------------------------------" 
@@ -147,22 +176,22 @@ then
 	exit 1
 fi
 # ----------------------------------------------------------------------------
-cat example/*.py    > test_example.py
-if ! py.test test_example.py
+if ! python test_example.py
 then
 	echo "test_example failed."
 	exit 1
 fi
-if ! py.test test_more.py
+check=`grep '^def' test_example.py | wc -l`
+echo "Number of tests in test_example.py should be $check"
+echo
+if ! python test_more.py
 then
 	echo "test_more.py failed."
 	exit 1
 fi
-echo "All tests passed."
-check=`grep '^def' test_example.py | wc -l`
-echo "Number of tests in test_example.py should be [$check]"
 check=`grep '^def' test_more.py | wc -l`
-echo "Number of tests in test_more.py should be [$check]"
+echo "Number of tests in test_more.py should be $check"
+echo
 # ----------------------------------------------------------------------------
 dir="$HOME/prefix/pycppad"
 cmd="rm -rf $dir"
