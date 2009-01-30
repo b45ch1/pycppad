@@ -16,6 +16,7 @@ $rref assign_op.py$$
 $rref compare_op.py$$
 $rref forward_0.py$$
 $rref forward_1.py$$
+$rref get_started.py$$
 $rref hessian.py$$
 $rref independent.py$$
 $rref jacobian.py$$

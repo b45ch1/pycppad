@@ -1,0 +1,22 @@
+$begin ad_variable$$
+
+$section AD Variable Methods$$
+
+$childtable%
+	pycppad/__init__.py%
+	pycppad/pycppad.cpp
+%$$
+
+$end
+
+$begin ad_function$$
+
+$section AD Function Methods$$
+
+$childtable%
+	pycppad/adfun.py%
+	pycppad/adfun.cpp
+%$$
+
+$end
+

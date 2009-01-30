@@ -6,7 +6,7 @@ $$
 $latex \newcommand{\B}[1]{{\bf #1}}$$
 $latex \newcommand{\R}[1]{{\rm #1}}$$
 
-$section pycppad-20090129: A Python Algorithm Derivative Package$$
+$section pycppad-20090130: A Python Algorithm Derivative Package$$
 
 $index AD, python$$
 $index python, AD$$
@@ -57,10 +57,9 @@ See $cref/whats_new_09/$$ for a list of recent extensions and bug fixes.
 
 $childtable%
 	omh/install.omh%
+	example/get_started.py%
 	omh/example.omh%
-	pycppad/__init__.py%
-	pycppad/pycppad.cpp%
-	pycppad/adfun.cpp%
+	omh/ad_method.omh%
 	example/two_levels.py%
 	omh/whats_new_09.omh%
 	omh/license.omh
