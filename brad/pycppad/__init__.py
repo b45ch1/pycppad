@@ -208,9 +208,10 @@ def value(a_x) :
     x      = numpy.array( list(value(a_xi) for a_xi in a_x.flat) )
     return x.reshape(s)
   else :
-    raise NotImplementedError(
-      'value(a_x): only implemented where a_x a_float or a2float'
-    )
+    msg = 'type(a_x) = ' + str( type(a_x) ) + '\n'
+    msg += 'value(a_x): only implemented where a_x is an a_float, a2float,\n'
+    msg += 'or an array of a_float or a2float'
+    raise NotImplementedError(msg)
  
 def independent(x) :
   """

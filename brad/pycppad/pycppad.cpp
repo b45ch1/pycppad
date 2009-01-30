@@ -1,6 +1,6 @@
 /*
 ---------------------------------------------------------------------------
-$begin abs$$ $newlinech #$$
+$begin abs$$
 $spell
 	numpy
 $$
@@ -63,7 +63,49 @@ contains an example and test of these functions.
 
 $end
 ---------------------------------------------------------------------------
-$begin ad_numeric$$ $newlinech #$$
+$begin ad_unary$$
+$spell
+	numpy
+$$
+
+$section Unary Plus and Minus Operators$$
+
+$index AD, unary operator$$
+$index unary, AD operator$$
+$index operator, AD unary$$
+$index +, unary$$
+$index -, unary$$
+$index plus, unary$$
+$index minus, unary$$
+
+$head Syntax$$
+$icode%y% = + %x
+%$$
+$icode%y% = - %x
+%$$
+
+$head Purpose$$
+The operator $code +$$ ( $code -$$ ) above results
+in $icode z$$ equal to $icode x$$ (minus $icode x$$). 
+
+$head Type$$
+The argument $icode x$$ can be $code a_float$$ or $code a2float$$
+and the result $icode z$$ will have the same type as $icode x$$.
+
+$head Arrays$$
+The argument $icode x$$ may be
+a $code numpy.array$$ with elements of type
+$code a_float$$ or $code a2float$$.
+In this case, the result $icode z$$ is an array with the same shape
+and element type as $icode x$$.
+
+$children%
+	example/ad_unary.py
+%$$
+
+$end
+---------------------------------------------------------------------------
+$begin ad_numeric$$
 $spell
 	numpy
 	op
@@ -76,11 +118,17 @@ $index binary, AD numeric operator$$
 $index operator, AD numeric binary$$
 $index numeric, AD binary operator$$
 
-$index +$$
-$index -$$
+$index +, binary$$
+$index -, binary$$
 $index *$$
 $index /$$
 $index **$$
+
+$index plus, binary$$
+$index minus, binary$$
+$index times$$
+$index divide$$
+$index exponentiation$$ 
 
 $head Syntax$$
 $icode%z% = %x% %op% %y%$$
@@ -134,7 +182,7 @@ contains an example and test of $code abs$$.
 
 $end
 ---------------------------------------------------------------------------
-$begin assign_op$$ $newlinech #$$
+$begin assign_op$$
 $spell
 	numpy
 	op
@@ -208,7 +256,7 @@ contains an example and test of these operations.
 
 $end
 ---------------------------------------------------------------------------
-$begin compare_op$$ $newlinech #$$
+$begin compare_op$$
 $spell
 	numpy
 	yes yes
@@ -299,6 +347,8 @@ $end
 
 
 # define PYCPPAD_OPERATOR_LIST \
+     .def(- self)              \
+     .def(+ self)              \
                                \
      PYCPPAD_BINARY(+)         \
      PYCPPAD_BINARY(-)         \

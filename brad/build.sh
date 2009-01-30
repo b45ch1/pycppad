@@ -58,12 +58,12 @@ sed -i doc.omh -e "s/pycppad-[0-9]\{8\}/pycppad-$yyyymmdd/"
 sed -i omh/install.omh -e "s/pycppad-[0-9]\{8\}/pycppad-$yyyymmdd/"
 # ----------------------------------------------------------------------------
 # Create test_example.py
-cat example/* > test_example.py
+cat example/*.py > test_example.py
 cat << EOF   >> test_example.py
 if __name__ == "__main__" :
   number_ok   = 0
   number_fail = 0
-  list_of_globals = globals().copy()
+  list_of_globals = sorted( globals().copy() )
   for g in list_of_globals :
     if g[:13] == "pycppad_test_" :
       ok = True

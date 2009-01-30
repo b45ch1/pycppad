@@ -541,7 +541,7 @@ def pycppad_test_hessian():
 if __name__ == "__main__" :
   number_ok   = 0
   number_fail = 0
-  list_of_globals = globals().copy()
+  list_of_globals = sorted( globals().copy() )
   for g in list_of_globals :
     if g[:13] == "pycppad_test_" :
       ok = True

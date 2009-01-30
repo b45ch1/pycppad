@@ -21,7 +21,7 @@
 from pycppad import *
 def pycppad_test_get_started() :
   def F(x) :
-    return exp( ( x[0] * x[0] + x[1] * x[1] ) / 2. )
+    return exp( .5*( x[0]**2. + x[1]**2. ) )
   x     = numpy.array( [ 1.,  2.] )
   a_x   = independent(x)
   a_y   = numpy.array( [ F(a_x) ] )

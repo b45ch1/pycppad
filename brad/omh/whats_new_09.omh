@@ -8,19 +8,25 @@ $$
 
 $section Extensions, Bug Fixes, and Changes During 2009$$
 
-$head 01-26$$
-Released first version, $code pyad-20090126$$.
-$pre
+$head 01-30$$
+$list number$$
+Organize the documentation by grouping the $cref ad_variable$$ 
+and $cref ad_function$$ operations.
+$lnext
+Add a $cref get_started.py$$ section.
+$lnext
+Add the $cref/unary plus and minus operators/ad_unary/$$.
+$lnext
+Sort the installation $cref/testing/install/Testing/$$ results
+in alphabetical order.
+$lnext
+Use the $code **$$ exponentiation operator in $cref/get_started.py/$$.
+$lnext
+Put this whats new section in inverse order by date.
+$lnext
+Improve the error reporting done by the $cref/value/$$ function.
+$lend
 
-$$
-Add build inplace, and omitting the $code setup.py$$ install step, 
-to $cref/install/$$ documentation.
-
-$head 01-28$$
-Change from an general AD package to just one package; i.e.
-from $codei%pyad-%yyyymmdd%.tar.gz%$$ to $codei%pycppad-%yyyymmdd%.tar.gz%$$.
-This is a change in API requiring user code to change
-$code import pyad.cppad$$ to $code import pycppad$$.
 
 $head 01-29$$
 A list of $cref/examples/example/$$ has been added to the documentation.
@@ -36,5 +42,19 @@ it is no longer necessary to install
 -       py.test
 -%$$ 
 for testing $code pycppad$$.
+
+$head 01-28$$
+Change from an general AD package to just one package; i.e.
+from $codei%pyad-%yyyymmdd%.tar.gz%$$ to $codei%pycppad-%yyyymmdd%.tar.gz%$$.
+This is a change in API requiring user code to change
+$code import pyad.cppad$$ to $code import pycppad$$.
+
+$head 01-26$$
+Released first version, $code pyad-20090126$$.
+$pre
+
+$$
+Add build inplace, and omitting the $code setup.py$$ install step, 
+to $cref/install/$$ documentation.
 
 $end
