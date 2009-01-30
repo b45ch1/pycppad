@@ -45,6 +45,12 @@ $href%
 package
 $href%http://www.coin-or.org/CppAD/CppAD/%CppAD%$$. 
 
+$head Simple Example$$
+$code
+$verbatim%example/get_started.py%0%# BEGIN CODE%# END CODE%1%$$
+$$
+
+
 $head Features$$
 Operator overloading is used to store the operation sequence
 corresponding to a python algorithm.
