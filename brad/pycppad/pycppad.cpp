@@ -374,7 +374,7 @@ $end
 
 # define PYCPPAD_UNARY_FUNCTION(Name, Base)                              \
      CppAD::AD<Base> (* Name##_AD_##Base ) (const CppAD::AD<Base> &x ) = \
-          CppAD::Name<Base>; 
+          CppAD::Name; 
 
 # define PYCPPAD_STD_MATH_LINK_CPP(Base)   \
      PYCPPAD_UNARY_FUNCTION(acos,  Base)   \
@@ -389,7 +389,11 @@ $end
      PYCPPAD_UNARY_FUNCTION(sinh,  Base)   \
      PYCPPAD_UNARY_FUNCTION(sqrt,  Base)   \
      PYCPPAD_UNARY_FUNCTION(tan,   Base)   \
+
+# if 0
+     // not available in cppad-20080919.0 will be in cppad-20090131.0
      PYCPPAD_UNARY_FUNCTION(tanh,  Base) 
+# endif
 
 # define PYCPPAD_STD_MATH_LINK_PY(Base)  \
      .def("arccos",  acos_AD_##Base)     \
@@ -404,7 +408,11 @@ $end
      .def("sinh",    sinh_AD_##Base)     \
      .def("sqrt",    sqrt_AD_##Base)     \
      .def("tan",     tan_AD_##Base)      \
+
+# if 0
+     // not available in cppad-20080919.0 will be in cppad-20090131.0
      .def("tanh",    tanh_AD_##Base)
+# endif
 
 namespace pycppad {
 	// Replacement for the CppAD error handler

@@ -1,20 +1,13 @@
 #! /bin/bash
 # ---------------------------------------------------------------------
 # User options
-cppad_include_dir="/home/bradbell/CppAD/trunk"  # directory where CppAD is
-boost_lib_dir="/usr/lib"         # directory where boost_python_lib is
-boost_python_lib="boost_python"  # name of boost::python library 
+cppad_parent_dir="$HOME/install"  # directory above CppAD distribution
+boost_lib_dir="/usr/lib"          # directory where boost_python_lib is
+boost_python_lib="boost_python"   # name of boost::python library 
 # ---------------------------------------------------------------------
-if [ ! -e $cppad_include_dir/cppad/cppad.hpp ]
-then
-	echo "Cannot find the CppAD include file cppad/cppad.hpp"
-	echo "in the directory $cppad_include_dir."
-	echo "Use the following web page for information about CppAD"
-	echo "	http://www.coin-or.org/CppAD/"
-	echo "Make sure that cppad_include_dir is set correctly"
-	echo "at the beginning of the file ./build.sh"
-	exit 1
-fi
+# Other options
+cppad_version="20080919.0"
+# ---------------------------------------------------------------------
 match=`ls $boost_lib_dir | grep "lib$boost_python_lib\."`
 if [ "$match" == "" ]
 then
@@ -45,12 +38,14 @@ then
 fi
 # ----------------------------------------------------------------------------
 # Create setup.py with todays year, month, and day in yyyymmdd format
+# and proper version of CppAD
 yyyymmdd=`date +%G%m%d`
 sed < ./setup.template > setup.py \
 	-e "s|\(package_version *=\).*|\1 '$yyyymmdd'|"  \
-	-e "s|\(cppad_include_dir *=\).*|\1 '$cppad_include_dir'|" \
+	-e "s|\(cppad_parent_dir *=\).*|\1 '$cppad_parent_dir'|" \
 	-e "s|\(boost_lib_dir *=\).*|\1 '$boost_lib_dir'|" \
-	-e "s|\(boost_python_lib *=\).*|\1 '$boost_python_lib'|"
+	-e "s|\(boost_python_lib *=\).*|\1 '$boost_python_lib'|" \
+	-e "s|\(cppad_version *=\).*|\1 '$cppad_version'|"
 chmod +x setup.py
 # ----------------------------------------------------------------------------
 # Change doc.omh and install.omh to use todays yyyymmdd 

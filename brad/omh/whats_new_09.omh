@@ -1,5 +1,7 @@
 $begin whats_new_09$$ 
 $spell
+	tanh
+	CppAD
 	pyad.cppad
 	pycppad-yyyymmdd.tar.gz
 	inplace
@@ -7,6 +9,15 @@ $spell
 $$
 
 $section Extensions, Bug Fixes, and Changes During 2009$$
+
+$head 01-31$$
+Change distribution to automatically download proper 
+release version of CppAD.
+Remove $code tanh$$ from standard math functions because 
+previous release of CppAD did not include it
+(a new release of CppAD is being built so that 
+$code tanh$$ can be included in $code pycppad$$).
+ 
 
 $head 01-30$$
 $list number$$
