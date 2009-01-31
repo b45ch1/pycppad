@@ -1,25 +1,8 @@
 #! /bin/bash
 # ---------------------------------------------------------------------
-# User options
-cppad_parent_dir="$HOME/install"  # directory above CppAD distribution
-boost_lib_dir="/usr/lib"          # directory where boost_python_lib is
-boost_python_lib="boost_python"   # name of boost::python library 
-# ---------------------------------------------------------------------
-# Other options
 cppad_version="20080919.0"
+yyyymmdd=`date +%G%m%d`
 # ---------------------------------------------------------------------
-match=`ls $boost_lib_dir | grep "lib$boost_python_lib\."`
-if [ "$match" == "" ]
-then
-	echo "Cannot find the boost::python library lib$boost_python_lib.*"
-	echo "in the directory $boost_lib_dir."
-	echo "Use the following web page for information about boost::python"
-	echo "	http://www.boost.org/doc/libs/1_37_0/libs/python/doc/index.html"
-	echo "Make sure that boost_lib_dir and boost_python_lib are set correctly"
-	echo "at the beginnin of the file ./build.sh"
-	exit 1
-fi
-#
 location=`which omhelp`
 if [ "$location" = "" ]
 then
@@ -39,12 +22,8 @@ fi
 # ----------------------------------------------------------------------------
 # Create setup.py with todays year, month, and day in yyyymmdd format
 # and proper version of CppAD
-yyyymmdd=`date +%G%m%d`
 sed < ./setup.template > setup.py \
 	-e "s|\(package_version *=\).*|\1 '$yyyymmdd'|"  \
-	-e "s|\(cppad_parent_dir *=\).*|\1 '$cppad_parent_dir'|" \
-	-e "s|\(boost_lib_dir *=\).*|\1 '$boost_lib_dir'|" \
-	-e "s|\(boost_python_lib *=\).*|\1 '$boost_python_lib'|" \
 	-e "s|\(cppad_version *=\).*|\1 '$cppad_version'|"
 chmod +x setup.py
 # ----------------------------------------------------------------------------
