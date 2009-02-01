@@ -11,13 +11,19 @@ $$
 $section Extensions, Bug Fixes, and Changes During 2009$$
 
 $head 01-31$$
-Change distribution to automatically download proper 
-release version of CppAD.
+$list number$$
+Change distribution to automatically download and link in proper 
+version of CppAD.
+$lnext
 Remove $code tanh$$ from standard math functions because 
 previous release of CppAD did not include it
 (a new release of CppAD is being built so that 
 $code tanh$$ can be included in $code pycppad$$).
- 
+$lnext
+The two tests in $code example/ad_unary.py$$ had the same name
+and hence only one was being run.
+This has been fixed.
+$lend
 
 $head 01-30$$
 $list number$$

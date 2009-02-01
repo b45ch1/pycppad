@@ -35,7 +35,7 @@ def pycppad_test_ad_unary() :
   assert all( value(minus_x) == - value(x) )
 
 # Example using a2float ------------------------------------------------------
-def pycppad_test_ad_unary() :
+def pycppad_test_ad_unary_a2() :
   x       = ad( ad(2.) )
   plus_x  = + x
   minus_x = - x

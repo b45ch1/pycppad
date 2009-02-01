@@ -1,7 +1,11 @@
 #! /bin/bash
 # ---------------------------------------------------------------------
-cppad_version="20080919.0"
-yyyymmdd=`date +%G%m%d`
+cppad_version="20080919.0"       # cppad release version we are using
+yyyymmdd=`date +%G%m%d`          # todays year, month, and day
+# ---------------------------------------------------------------------
+# Note for Sebastian: this choice forces cppad to be dowloanded each time. 
+# I like to use $HOME/install to speed up testing.
+cppad_parent_dir="."             # directory for cppad tarball etc
 # ---------------------------------------------------------------------
 location=`which omhelp`
 if [ "$location" = "" ]
@@ -20,11 +24,11 @@ then
 	exit 1
 fi
 # ----------------------------------------------------------------------------
-# Create setup.py with todays year, month, and day in yyyymmdd format
-# and proper version of CppAD
+# Create setup.py from setup.template with certain replacements
 sed < ./setup.template > setup.py \
 	-e "s|\(package_version *=\).*|\1 '$yyyymmdd'|"  \
-	-e "s|\(cppad_version *=\).*|\1 '$cppad_version'|"
+	-e "s|\(cppad_version *=\).*|\1 '$cppad_version'|" \
+	-e "s|\(cppad_parent_dir *=\).*|\1 '$cppad_parent_dir'|"
 chmod +x setup.py
 # ----------------------------------------------------------------------------
 # Change doc.omh and install.omh to use todays yyyymmdd 
@@ -159,21 +163,31 @@ then
 	exit 1
 fi
 # ----------------------------------------------------------------------------
-if ! python test_example.py
+if ! python test_example.py | tee test_example.out
 then
 	echo "test_example failed."
 	exit 1
 fi
+number=`grep '^All' test_example.out | sed -e 's|All \([0-9]*\) .*|\1|'`
 check=`grep '^def' test_example.py | wc -l`
-echo "Number of tests in test_example.py should be $check"
+if [ "$number" != "$check" ]
+then
+	echo "Expected $check tests but only found $number"
+	exit 1
+fi
 echo
-if ! python test_more.py
+if ! python test_more.py | tee test_more.out
 then
 	echo "test_more.py failed."
 	exit 1
 fi
+number=`grep '^All' test_more.out | sed -e 's|All \([0-9]*\) .*|\1|'`
 check=`grep '^def' test_more.py | wc -l`
-echo "Number of tests in test_more.py should be $check"
+if [ "$number" != "$check" ] 
+then
+	echo "Expected $check tests but only found $number"
+	exit 1
+fi
 echo
 # ----------------------------------------------------------------------------
 dir="$HOME/prefix/pycppad"
