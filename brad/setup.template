@@ -17,6 +17,7 @@ boost_python_lib  = 'boost_python' # name of the library in that directory
 # for documentation on how to use the script setup.py 
 # ---------------------------------------------------------------------
 import os
+import sys
 from distutils.core import setup, Extension
 # ---------------------------------------------------------------------
 boost_python_lib_path = boost_lib_dir + '/lib' + boost_python_lib + '.so'
@@ -30,21 +31,27 @@ if not os.access ( boost_python_lib_path , os.R_OK ) :
 # ---------------------------------------------------------------------
 # set cppad_include_dir
 cppad_include_dir = cppad_parent_dir + '/' + 'cppad-' + cppad_version
-if not os.access( cppad_include_dir , os.R_OK ) :
-  print 'Please wait while the proper version of CppAD is downloaded'
-  cppad_tarball = 'cppad-' + cppad_version + '.gpl.tgz'
-  cppad_download_dir = 'http://www.coin-or.org/download/source/CppAD/'
-  cmd = 'wget --no-clobber -P ' + cppad_parent_dir
-  cmd = cmd + ' ' + cppad_download_dir + cppad_tarball
-  print cmd
-  os.system( cmd )
-  cmd = 'tar -C ' + cppad_parent_dir 
-  cmd = cmd + ' -xzf ' + cppad_parent_dir + '/' + cppad_tarball
-  print cmd
-  os.system( cmd )
-if not os.access( cppad_include_dir , os.R_OK ) :
-  print 'Did not successfully retrieve the proper verison of CppAD'
-  exit(1)
+build_source_dist = False
+if len( sys.argv ) == 2 :
+  if sys.argv[1]  == 'sdist' :
+    build_source_dist = True 
+if not build_source_dist :
+  if not os.access( cppad_include_dir , os.R_OK ) :
+    print 'os.getcwd() = ' + os.getcwd()
+    print 'Please wait while the proper version of CppAD is downloaded'
+    cppad_tarball = 'cppad-' + cppad_version + '.gpl.tgz'
+    cppad_download_dir = 'http://www.coin-or.org/download/source/CppAD/'
+    cmd = 'wget --no-clobber -P ' + cppad_parent_dir
+    cmd = cmd + ' ' + cppad_download_dir + cppad_tarball
+    print cmd
+    os.system( cmd )
+    cmd = 'tar -C ' + cppad_parent_dir 
+    cmd = cmd + ' -xzf ' + cppad_parent_dir + '/' + cppad_tarball
+    print cmd
+    os.system( cmd )
+  if not os.access( cppad_include_dir , os.R_OK ) :
+    print 'Did not successfully retrieve the proper verison of CppAD'
+    exit(1)
 # ---------------------------------------------------------------------
 doc_files    = os.listdir('doc')
 for i in range( len(doc_files) ) :
