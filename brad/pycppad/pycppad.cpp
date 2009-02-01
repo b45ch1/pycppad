@@ -102,6 +102,9 @@ and element type as $icode x$$.
 $children%
 	example/ad_unary.py
 %$$
+$head Example$$
+The file $cref/ad_unary.py/$$ 
+contains an example and test of these functions.
 
 $end
 ---------------------------------------------------------------------------

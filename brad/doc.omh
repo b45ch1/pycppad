@@ -6,7 +6,7 @@ $$
 $latex \newcommand{\B}[1]{{\bf #1}}$$
 $latex \newcommand{\R}[1]{{\rm #1}}$$
 
-$section pycppad-20090131: A Python Algorithm Derivative Package$$
+$section pycppad-20090201: A Python Algorithm Derivative Package$$
 
 $index AD, python$$
 $index python, AD$$
@@ -32,7 +32,7 @@ $head License$$
 $cref/BSD/license/$$
 
 $head Syntax$$
-$codei%from pycppad import **%$$
+$codei%from pycppad import *%$$
 
 $head Purpose$$
 The command above imports a 
