@@ -113,7 +113,8 @@ done
 echo "# Create a source distribution ----------------------------------" 
 cmd="rm -rf dist"
 echo "$cmd"
-if ! $cmd
+$cmd
+if [ -e "dist" ] 
 then
 	echo "Cannot remove previous source distribution."
 	exit 1
