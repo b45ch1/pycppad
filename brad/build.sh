@@ -7,7 +7,7 @@ yyyymmdd=`date +%G%m%d`          # todays year, month, and day
 # I like to use $HOME/install to speed up testing.
 cppad_parent_dir="."             # directory for cppad tarball etc
 # ---------------------------------------------------------------------
-omhelp_location=`which omhelpabc`
+omhelp_location=`which omhelp`
 if [ "$omhelp_location" = "" ]
 then
 	echo "Cannot find the omhelp command in your path"
