@@ -7,21 +7,11 @@ yyyymmdd=`date +%G%m%d`          # todays year, month, and day
 # I like to use $HOME/install to speed up testing.
 cppad_parent_dir="."             # directory for cppad tarball etc
 # ---------------------------------------------------------------------
-location=`which omhelp`
-if [ "$location" = "" ]
+omhelp_location=`which omhelpabc`
+if [ "$omhelp_location" = "" ]
 then
 	echo "Cannot find the omhelp command in your path"
-	echo "Use the following web page to download and install omhelp"
-	echo "	http://www.seanet.com/~bradbell/omhelp/install.xml"
-	exit 1
-fi
-location=`which py.test`
-if [ "$location" == "" ]
-then
-	echo "Cannot find py.test in your path"
-	echo "On ubuntu, the following command installs py.test"
-	echo "	sudo apt-get install python-codespeak-lib"
-	exit 1
+	echo "skipping the build of the documentation"
 fi
 # ----------------------------------------------------------------------------
 # Create setup.py from setup.template with certain replacements
@@ -31,9 +21,61 @@ sed < ./setup.template > setup.py \
 	-e "s|\(cppad_parent_dir *=\).*|\1 '$cppad_parent_dir'|"
 chmod +x setup.py
 # ----------------------------------------------------------------------------
-# Change doc.omh and install.omh to use todays yyyymmdd 
-sed -i doc.omh -e "s/pycppad-[0-9]\{8\}/pycppad-$yyyymmdd/"
-sed -i omh/install.omh -e "s/pycppad-[0-9]\{8\}/pycppad-$yyyymmdd/"
+if [ "$omhelp_location" != "" ]
+then
+	# check that every example file is documented
+	for file in example/*.py
+	do
+		name=`echo $file | sed -e 's|example/||'`
+		if ! grep "$name" omh/example.omh > /dev/null
+		then
+			echo "$file is not listed in omh/example.omh"
+			exit 1
+		fi
+	done
+	#
+	# Change doc.omh and install.omh to use todays yyyymmdd 
+	sed -i doc.omh -e "s/pycppad-[0-9]\{8\}/pycppad-$yyyymmdd/"
+	sed -i omh/install.omh -e "s/pycppad-[0-9]\{8\}/pycppad-$yyyymmdd/"
+	#
+	if [ -e doc ]
+	then
+		echo "rm -r doc"
+		if ! rm -r doc
+		then
+			echo "Cannot remove old documentation directory"
+			exit 1
+		fi
+	fi
+	mkdir doc
+	cd doc
+	if ! omhelp ../doc.omh -xml -noframe -debug | tee omhelp.log
+	then
+		echo "Error while building xml documentatioin"
+		exit 1
+	fi
+	if grep '^OMhelp Warning:' omhelp.log
+	then
+		echo "There are warnings in doc/omhelp.log"
+		exit 1
+	fi
+	if ! omhelp ../doc.omh -xml -noframe -debug -printable
+	then
+		echo "Error while building _printable.xml documentatioin"
+		exit 1
+	fi
+	if ! omhelp ../doc.omh -noframe -debug 
+	then
+		echo "Error while building html documentatioin"
+		exit 1
+	fi
+	if ! omhelp ../doc.omh -noframe -debug -printable
+	then
+		echo "Error while building _printable.html documentatioin"
+		exit 1
+	fi
+	cd ..
+fi
 # ----------------------------------------------------------------------------
 # Create test_example.py
 cat example/*.py > test_example.py
@@ -62,54 +104,6 @@ if __name__ == "__main__" :
     print "%d tests failed" % number_fail 
     exit(1)
 EOF
-# ----------------------------------------------------------------------------
-echo "# Build documentation --------------------------------------------------"
-if [ -e doc ]
-then
-	echo "rm -r doc"
-	if ! rm -r doc
-	then
-		echo "Cannot remove old documentation directory"
-		exit 1
-	fi
-fi
-mkdir doc
-cd doc
-if ! omhelp ../doc.omh -xml -noframe -debug | tee omhelp.log
-then
-	echo "Error while building xml documentatioin"
-	exit 1
-fi
-if grep '^OMhelp Warning:' omhelp.log
-then
-	echo "There are warnings in doc/omhelp.log"
-	exit 1
-fi
-if ! omhelp ../doc.omh -xml -noframe -debug -printable
-then
-	echo "Error while building _printable.xml documentatioin"
-	exit 1
-fi
-if ! omhelp ../doc.omh -noframe -debug 
-then
-	echo "Error while building html documentatioin"
-	exit 1
-fi
-if ! omhelp ../doc.omh -noframe -debug -printable
-then
-	echo "Error while building _printable.html documentatioin"
-	exit 1
-fi
-cd ..
-for file in example/*.py
-do
-	name=`echo $file | sed -e 's|example/||'`
-	if ! grep "$name" omh/example.omh
-	then
-		echo "$file is not listed in omh/example.omh"
-		exit 1
-	fi
-done
 echo "# Create a source distribution ----------------------------------" 
 cmd="rm -rf dist"
 echo "$cmd"
