@@ -5,8 +5,20 @@ $spell
 $$
 $latex \newcommand{\B}[1]{{\bf #1}}$$
 $latex \newcommand{\R}[1]{{\rm #1}}$$
+$hilitecmd%verbatim%$$
+$hilitetok% 
+	  %abs%(%         abs
+	% %ad%(%          ad
+	% %adfun%(%       adfun
+	%.%forward%(%     forward
+	%.%hessian%(%     hessian
+	% %independent%(% independent
+	%.%jacobian%(%    jacobian
+	%.%reverse%(%     reverse
+	% %value%(%        value
+%$$
 
-$section pycppad-20090201: A Python Algorithm Derivative Package$$
+$section pycppad-20090209: A Python Algorithm Derivative Package$$
 
 $index AD, python$$
 $index python, AD$$

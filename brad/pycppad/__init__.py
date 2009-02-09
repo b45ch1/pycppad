@@ -10,7 +10,7 @@
 # $index level, increase AD$$
 #
 # $head Syntax$$
-# $icode%a_x% = %ad(%x%)%$$
+# $icode%a_x% = ad(%x%)%$$
 #
 # $head Purpose$$
 # Creates an AD object $icode a_x$$ that records floating point operations.
