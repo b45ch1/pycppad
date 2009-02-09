@@ -10,6 +10,11 @@ $$
 
 $section Extensions, Bug Fixes, and Changes During 2009$$
 
+$head 02-09$$
+Added cross reference links from the examples to the corresponding
+section. For example, when $code independent$$ appears in example code,
+it is linked in the following way: $cref independent$$.
+
 $head 01-31$$
 $list number$$
 Change distribution to automatically download and link in proper 
