@@ -7,7 +7,7 @@ namespace pycppad {
 // constructor from a python array
 vec<double>::vec(array& py_array)
 {	// get array info
-	int* dims_ptr = PyArray_DIMS(py_array.ptr());
+	npy_intp* dims_ptr = PyArray_DIMS(py_array.ptr());
 	int length    = dims_ptr[0];
 
 	// check array info
@@ -123,7 +123,7 @@ template <class Scalar>
 vec<Scalar>::vec(array& py_array)
 {
 	// get array info
-	int* dims_ptr = PyArray_DIMS(py_array.ptr());
+	npy_intp* dims_ptr = PyArray_DIMS(py_array.ptr());
 	int length    = dims_ptr[0];
 
 	// check array info

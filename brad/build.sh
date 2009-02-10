@@ -1,11 +1,20 @@
 #! /bin/bash
+if [ "$1" != "omhelp" ] && [ "$1" != "sdist" ] && [ "$1" != "all" ]
+then
+	echo "build.sh option, where option is one of the following"
+	echo "omhelp: stop when the help is done"
+	echo "sdist:  stop when the done building the source distribution"
+	echo "all:    go all the way"
+	exit 1
+fi
+option="$1"
 # ---------------------------------------------------------------------
 cppad_version="20080919.0"       # cppad release version we are using
 yyyymmdd=`date +%G%m%d`          # todays year, month, and day
 # ---------------------------------------------------------------------
 # Note for Sebastian: this choice forces cppad to be dowloanded each time. 
 # I like to use $HOME/install to speed up testing.
-cppad_parent_dir="."             # directory for cppad tarball etc
+cppad_parent_dir="$HOME/install"             # directory for cppad tarball etc
 # ---------------------------------------------------------------------
 omhelp_location=`which omhelp`
 if [ "$omhelp_location" = "" ]
@@ -75,7 +84,7 @@ then
 		exit 1
 	fi
 	cd ..
-	if [ "$1" == "omhelp" ]
+	if [ "$option" == "omhelp" ]
 	then
 		exit 0
 	fi
@@ -130,6 +139,10 @@ include test_more.py
 include test_example.py
 EOF
 ./setup.py sdist
+if [ "$option" == "sdist" ]
+then
+	exit 0
+fi
 echo "# Extract the source distribution -------------------------------" 
 cmd="cd dist"
 echo "$cmd"
