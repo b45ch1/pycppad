@@ -75,6 +75,10 @@ then
 		exit 1
 	fi
 	cd ..
+	if [ "$1" == "omhelp" ]
+	then
+		exit 0
+	fi
 fi
 # ----------------------------------------------------------------------------
 # Create test_example.py
