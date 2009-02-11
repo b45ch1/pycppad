@@ -1,10 +1,14 @@
 #! /bin/bash
-if [ "$1" != "omhelp" ] && [ "$1" != "sdist" ] && [ "$1" != "all" ]
+if [ "$1" != "omhelp" ] &&  \
+   [ "$1" != "sdist" ] &&  \
+   [ "$1" != "all" ]   && \
+   [ "$1" != "final" ] 
 then
 	echo "build.sh option, where option is one of the following"
 	echo "omhelp: stop when the help is done"
 	echo "sdist:  stop when the done building the source distribution"
 	echo "all:    go all the way"
+	echo "final:  go all the way and include download of cppad"
 	exit 1
 fi
 option="$1"
@@ -15,6 +19,10 @@ yyyymmdd=`date +%G%m%d`          # todays year, month, and day
 # Note for Sebastian: this choice forces cppad to be dowloanded each time. 
 # I like to use $HOME/install to speed up testing.
 cppad_parent_dir="$HOME/install"             # directory for cppad tarball etc
+if [ "$option" == "final" ]
+then
+	cppad_parent_dir="."
+fi
 # ---------------------------------------------------------------------
 omhelp_location=`which omhelp`
 if [ "$omhelp_location" = "" ]

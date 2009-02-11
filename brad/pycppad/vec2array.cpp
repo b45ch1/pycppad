@@ -20,20 +20,20 @@ array vec2array(double_vec& vec)
 }
 array vec2array(AD_double_vec& vec)
 {
-	int n = static_cast<int>( vec.size() );
+	npy_intp n = static_cast<npy_intp>( vec.size() );
 	PYCPPAD_ASSERT( n >= 0 , "");
 
-	object obj(handle<>( PyArray_FromDims(1, &n, PyArray_OBJECT) ));
+	object obj(handle<>( PyArray_SimpleNew(1, &n, PyArray_OBJECT) ));
 	for(size_t i = 0; i < vec.size(); i++){
 		obj[i] = vec[i];
 	}
 	return  static_cast<array>( obj );
 }
 array vec2array(AD_AD_double_vec& vec)
-{	int n = static_cast<int>( vec.size() );
+{	npy_intp n = static_cast<npy_intp>( vec.size() );
 	PYCPPAD_ASSERT( n >= 0 , "");
 
-	object obj(handle<>( PyArray_FromDims(1, &n, PyArray_OBJECT) ));
+	object obj(handle<>( PyArray_SimpleNew(1, &n, PyArray_OBJECT) ));
 	for(size_t i = 0; i < vec.size(); i++){
 		obj[i] = vec[i];
 	}
