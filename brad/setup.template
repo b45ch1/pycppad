@@ -15,7 +15,20 @@ boost_python_lib  = 'boost_python' # name of the library in that directory
 cppad_parent_dir  = # cppad tarball and distribution directory will be here
 package_version   = # date in yyyymmdd format corresonding to this distribution
 cppad_version     = # version of CppAD corresponding to this version of pycppad
+cppad_with_doc    = # include documentation in CppAD download [yes/no]
 # ---------------------------------------------------------------------
+if cppad_with_doc == 'yes' :
+  cppad_dir = 'cppad' + '-' + cppad_version
+  cppad_tarball =  cppad_dir + '.cpl.tgz'
+elif cppad_with_doc == 'no' :
+  cppad_dir = 'CppAD' + '-' + cppad_version
+  cppad_tarball =  cppad_dir + '.tgz'
+else :
+    print 'cppad_with_doc: ' + cppad_with_doc + ' is not a valid choice.'
+    exit(1)
+cppad_include_dir = cppad_parent_dir + '/' + cppad_dir
+# ---------------------------------------------------------------------
+
 import os
 import sys
 from distutils.core import setup, Extension
@@ -31,7 +44,6 @@ if not os.access ( boost_python_lib_path , os.R_OK ) :
   print 'at the beginnin of the file setup.py'
 # ---------------------------------------------------------------------
 # set cppad_include_dir
-cppad_include_dir = cppad_parent_dir + '/' + 'cppad-' + cppad_version
 build_source_dist = False
 if len( sys.argv ) == 2 :
   if sys.argv[1]  == 'sdist' :
@@ -40,7 +52,6 @@ if not build_source_dist :
   if not os.access( cppad_include_dir , os.R_OK ) :
     print 'os.getcwd() = ' + os.getcwd()
     print 'Please wait while the proper version of CppAD is downloaded'
-    cppad_tarball = 'cppad-' + cppad_version + '.gpl.tgz'
     cppad_download_dir = 'http://www.coin-or.org/download/source/CppAD/'
     cmd = 'wget --no-clobber -P ' + cppad_parent_dir
     cmd = cmd + ' ' + cppad_download_dir + cppad_tarball

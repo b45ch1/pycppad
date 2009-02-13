@@ -28,6 +28,10 @@
 # element types listed in the previous sentence.
 #
 # $head a_x$$ 
+# $index a_float, create$$
+# $index create, a_float$$
+# $index a2float, create$$
+# $index create, a2float$$
 # If $icode x$$ is an instance of $code int$$ or $code float$$,
 # $codei a_x$$ is an $code a_float$$ (AD level 1).
 # If $icode x$$ is an $code a_float$$,

@@ -13,7 +13,8 @@ then
 fi
 option="$1"
 # ---------------------------------------------------------------------
-cppad_version="20080919.0"       # cppad release version we are using
+cppad_version="20090131.0"       # cppad release version we are using
+cppad_with_doc="no"              # include CppAD documention in download
 yyyymmdd=`date +%G%m%d`          # todays year, month, and day
 # ---------------------------------------------------------------------
 # Note for Sebastian: this choice forces cppad to be dowloanded each time. 
@@ -32,10 +33,12 @@ then
 fi
 # ----------------------------------------------------------------------------
 # Create setup.py from setup.template with certain replacements
+# only edit line corresponding to assignment statement not check for ==
 sed < ./setup.template > setup.py \
-	-e "s|\(package_version *=\).*|\1 '$yyyymmdd'|"  \
-	-e "s|\(cppad_version *=\).*|\1 '$cppad_version'|" \
-	-e "s|\(cppad_parent_dir *=\).*|\1 '$cppad_parent_dir'|"
+	-e "s|\(package_version *=\)[^=].*|\1 '$yyyymmdd'|"  \
+	-e "s|\(cppad_version *=\)[^=].*|\1 '$cppad_version'|" \
+	-e "s|\(cppad_parent_dir *=\)[^=].*|\1 '$cppad_parent_dir'|" \
+	-e "s|\(cppad_with_doc *=\)[^=].*|\1 '$cppad_with_doc'|"
 chmod +x setup.py
 # ----------------------------------------------------------------------------
 if [ "$omhelp_location" != "" ]

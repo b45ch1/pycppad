@@ -9,6 +9,17 @@ $spell
 $$
 
 $section Extensions, Bug Fixes, and Changes During 2009$$
+$index bug, fix 2009$$
+$index fix, bug 2009$$
+$index version, feature 2009$$
+$index feature, version 2009$$
+$index 2009, feature$$
+
+$head 02-13$$
+Changed to new version of CppAD, (20090131.0)
+so that $code tanh$$ is now included in $cref std_math$$
+(it was documented but missing from the actual 
+pycppad implementation before this date).
 
 $head 02-09$$
 Added cross reference links from the examples to the corresponding

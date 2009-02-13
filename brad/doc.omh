@@ -28,7 +28,7 @@ $hiliteseq%
 	%.%reverse%(%           reverse
 %$$
 
-$section pycppad-20090210: A Python Algorithm Derivative Package$$
+$section pycppad-20090213: A Python Algorithm Derivative Package$$
 
 $index AD, python$$
 $index python, AD$$
@@ -58,7 +58,7 @@ $codei%from pycppad import *%$$
 
 $head Purpose$$
 The command above imports a
-$href%http://www.boost.org%boost python%$$
+$href%http://www.boost.org%boost%$$$code ::python%$$
 interface to the C++
 $href%
 	http://en.wikipedia.org/wiki/Automatic_differentiation%
@@ -80,7 +80,7 @@ The operation sequence can be evaluated
 to obtain new function values or derivatives of arbitrary order.
 In addition, multiple levels of AD are supported.
 This means that AD derivatives can be used in the definition of a function
-which in true can be differentiated using AD.
+which in turn can be differentiated using AD.
 See $cref/whats_new_09/$$ for a list of recent extensions and bug fixes.
 
 $childtable%

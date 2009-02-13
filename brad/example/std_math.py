@@ -36,9 +36,7 @@ def pycppad_test_std_math():
   assert abs( sinh(a_x)   - math.sinh(x) )  < delta
   assert abs( sqrt(a_x)   - math.sqrt(x) )  < delta
   assert abs( tan(a_x)    - math.tan(x) )   < delta
-  # tanh was not available in the previouis release cppad-20080919.0.
-  # A new CppAD release is being built so that tanh can be inclued in pycppad
-  # assert abs( tanh(a_x)   - math.tanh(x) )  < delta
+  assert abs( tanh(a_x)   - math.tanh(x) )  < delta
 
   # example array and derivative calculation
   n = 5
@@ -73,9 +71,7 @@ def pycppad_test_std_math_a2():
   assert abs( sinh(a2x)   - math.sinh(x) )  < delta
   assert abs( sqrt(a2x)   - math.sqrt(x) )  < delta
   assert abs( tan(a2x)    - math.tan(x) )   < delta
-  # tanh was not available in the previouis release cppad-20080919.0.
-  # A new CppAD release is being built so that tanh can be inclued in pycppad
-  # assert abs( tanh(a2x)   - math.tanh(x) )  < delta
+  assert abs( tanh(a2x)   - math.tanh(x) )  < delta
 
   # example array and derivative calculation
   n = 5

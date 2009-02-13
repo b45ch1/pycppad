@@ -1,6 +1,8 @@
 $begin ad_variable$$
 
 $section AD Variable Methods$$
+$index ad, variable$$
+$index variable, ad$$
 
 $childtable%
 	pycppad/__init__.py%
