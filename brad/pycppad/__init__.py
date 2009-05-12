@@ -181,7 +181,9 @@ def ad(x) :
   (AD level 1).  If x is an a_float (AD level 1), ad(x) is an a2float 
   (AD level 2).  Higher AD levels for the argument x are not yet supported.
   """
-  if isinstance(x, int) or isinstance(x, float) :
+  if isinstance(x, int) :
+    return a_float( float(x) )
+  elif isinstance(x, float) :
     return a_float(x)
   elif isinstance(x, a_float) :
     return a2float(x)

@@ -1,6 +1,7 @@
 $begin install$$
 $dollar @$$
 $spell
+	numpy
 	usr
 	inplace
 	undef
@@ -27,13 +28,18 @@ $section Installing pycppad$$
 $index install, pycppad$$
 $index pycppad, install$$
 
+$head Requires$$
+This package requires the following other packages to be installed:
+Boost Python (development version),
+numpy.
+
 $head Downloading$$
 $index download, pycppad$$
 $index pycppad, download$$
 Download the file
 $href%
-	http://www.seanet.com/~bradbell/pycppad-20090213.tar.gz%
-	pycppad-20090213.tar.gz
+	http://www.seanet.com/~bradbell/pycppad-20090512.tar.gz%
+	pycppad-20090512.tar.gz
 %$$
 and store it on your machine.
 
@@ -44,14 +50,14 @@ $index extract, pycppad$$
 $index pycppad, extract$$
 On unix, you could use the command
 $codep
-	tar -xvzf  pycppad-20090213.tar.gz
+	tar -xvzf  pycppad-20090512.tar.gz
 $$
-which would create the directory $code pycppad-20090213$$.
+which would create the directory $code pycppad-20090512$$.
 
 $head Required Setup Information$$
 The value of the following setup variables, in the file
 $codep
-	pycppad-20090213/setup.py
+	pycppad-20090512/setup.py
 $$
 must be set to agree with your system:
 $code
@@ -64,7 +70,7 @@ properly set this information
 $head Building$$
 $index build, pycppad$$
 $index pycppad, build$$
-Change into the directory $code pycppad-20090213$$ and execute the command
+Change into the directory $code pycppad-20090512$$ and execute the command
 $codep
 	./setup.py build_ext --inplace --debug --undef NDEBUG
 $$
@@ -98,7 +104,7 @@ $index test, pycppad$$
 $index pycppad, test$$
 You can test of all the 
 $cref/examples/example/$$ in the $code pycppad$$ documentation.
-Change into the directory $code pycppad-20090213$$ and execute the command
+Change into the directory $code pycppad-20090512$$ and execute the command
 $codep
 	python test_example.py
 $$
@@ -115,7 +121,7 @@ You may or may not preform this step:
 $pre
 
 $$
-Change into the directory $code pycppad-20090213$$ and execute the command
+Change into the directory $code pycppad-20090512$$ and execute the command
 $codei%
 	python setup.py install --prefix=%prefix%
 %$$
@@ -134,7 +140,7 @@ an uninstall command. You can uninstall the $code pycppad$$ package
 by removing the entries
 $codei%
 	%prefix%/lib/python%major%.%minor%/site-packages/pycppad
-	%prefix%/lib/python%major%.%minor%/site-packages/pycppad-20090213.egg-info
+	%prefix%/lib/python%major%.%minor%/site-packages/pycppad-20090512.egg-info
 	%prefix%/share/doc/pycppad
 %$$
 where $icode major$$ and $icode minor$$
@@ -152,7 +158,7 @@ $codei%
 %$$
 unless the distribution directory
 $codep
-	pycppad-20090213
+	pycppad-20090512
 $$
 or (provided you installed $code pycppad$$) the installation directory
 $codei%
@@ -174,7 +180,7 @@ $codei%
 $head pycppad Documentation$$
 The documentation for $code pycppad$$ starts out in the directory
 $codep
-	pycppad-20090213/doc
+	pycppad-20090512/doc
 $$
 During the installation process, it is copied to the directory
 $codei%

@@ -1,8 +1,12 @@
 #!/usr/bin/env python
 # ---------------------------------------------------------------------
+# The code below is included verbatim in omh/install.omh
 # BEGIN USER SETTINGS
-boost_lib_dir = '/usr/lib' # Directory where boost::python library is located
-boost_python_lib  = 'boost_python' # name of the library in that directory
+# Directory where Boost Python library is located
+boost_python_lib_dir = '/usr/lib' 
+# The name of the Boost Python library in that directory which must
+# begin with 'lib' and end with '.so'.
+boost_python_lib_name  = 'libboost_python-py26.so' 
 # END USER SETTINGS
 # ---------------------------------------------------------------------
 # See http://docs.python.org/distutils/setupscript.html
@@ -28,20 +32,23 @@ else :
     exit(1)
 cppad_include_dir = cppad_parent_dir + '/' + cppad_dir
 # ---------------------------------------------------------------------
-
+import re
 import os
 import sys
 from distutils.core import setup, Extension
 from numpy.distutils.misc_util import get_numpy_include_dirs
 # ---------------------------------------------------------------------
-boost_python_lib_path = boost_lib_dir + '/lib' + boost_python_lib + '.so'
+m = re.search('lib([a-zA-Z0-9_-]+)[.]so', boost_python_lib_name)
+if m == None :
+  print 'boost_python_lib_name must begin with \'lib\' and end with \'.so\''
+boost_python_lib = m.group(1)
+boost_python_lib_path = boost_python_lib_dir + boost_python_lib_name
 if not os.access ( boost_python_lib_path , os.R_OK ) :
-  print 'Cannot find the boost::python library'
-  print boost_python_lib_path
+  print 'Cannot find the Boost Python library.'
   print 'Use the following web page for information about boost::python'
   print 'http://www.boost.org/doc/libs/1_37_0/libs/python/doc/index.html'
-  print 'Make sure that boost_lib_dir and boost_python_lib are set correctly'
-  print 'at the beginnin of the file setup.py'
+  print 'Make sure that boost_python_lib_dir and boost_python_lib_name'
+  print 'are set correctly at the beginnin of the file setup.py'
 # ---------------------------------------------------------------------
 # set cppad_include_dir
 build_source_dist = False
@@ -81,7 +88,7 @@ package_license        = 'BSD'
 cppad_extension_name         = 'pycppad' + '/cppad_'
 cppad_extension_include_dirs = get_numpy_include_dirs()
 cppad_extension_include_dirs.append( cppad_include_dir )
-cppad_extension_library_dirs = [ boost_lib_dir ]
+cppad_extension_library_dirs = [ boost_python_lib_dir ]
 cppad_extension_libraries    = [ boost_python_lib ]
 cppad_extension_sources      = [ 
   'pycppad' + '/adfun.cpp'       ,
