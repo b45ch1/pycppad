@@ -13,13 +13,13 @@ then
 fi
 option="$1"
 # ---------------------------------------------------------------------
-cppad_version="20090131.0"       # cppad release version we are using
+cppad_version="20090303.0"       # cppad release version we are using
 cppad_with_doc="no"              # include CppAD documention in download
 yyyymmdd=`date +%G%m%d`          # todays year, month, and day
 # ---------------------------------------------------------------------
-# Note for Sebastian: this choice forces cppad to be dowloanded each time. 
-# I like to use $HOME/install to speed up testing.
-cppad_parent_dir="$HOME/install"             # directory for cppad tarball etc
+# Using cppad_parent_dir not equal to "." speeds up testing.  I like to use 
+# $HOME/install as the place to put the cppad tarball and extraction
+cppad_parent_dir="$HOME/install"
 if [ "$option" == "final" ]
 then
 	cppad_parent_dir="."

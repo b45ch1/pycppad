@@ -1,5 +1,6 @@
 $begin whats_new_09$$ 
 $spell
+	libboost
 	tanh
 	CppAD
 	pyad.cppad
@@ -14,6 +15,15 @@ $index fix, bug 2009$$
 $index version, feature 2009$$
 $index feature, version 2009$$
 $index 2009, feature$$
+
+$head 05-13$$
+Changed to a new version of CppAD, (20090303.0).
+
+$head 05-12$$
+The Boost Python library
+$code libboost_python-py26.so$$ had a problem with 
+$codei%ad(%x%)%$$ where $icode x$$ was of type
+$code int$$.  This has been fixed.
 
 $head 02-13$$
 Changed to new version of CppAD, (20090131.0)
