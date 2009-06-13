@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import os
 # ---------------------------------------------------------------------
 # The code below is included verbatim in omh/install.omh
 # BEGIN USER SETTINGS
@@ -7,6 +8,10 @@ boost_python_lib_dir = '/usr/lib'
 # The name of the Boost Python library in that directory which must
 # begin with 'lib' and end with '.so'.
 boost_python_lib_name  = 'libboost_python-py26.so' 
+# The CppAD tarball will be downloaded into this directory
+# and it will be extraced to a subdirectory called  cppad-*.
+cppad_parent_dir = os.environ.get('HOME') + '/install'
+# 
 # END USER SETTINGS
 # ---------------------------------------------------------------------
 # See http://docs.python.org/distutils/setupscript.html
@@ -16,24 +21,14 @@ boost_python_lib_name  = 'libboost_python-py26.so'
 # for documentation on how to use the script setup.py 
 # ---------------------------------------------------------------------
 # Values set by build.sh
-cppad_parent_dir  = # cppad tarball and distribution directory will be here
 package_version   = # date in yyyymmdd format corresonding to this distribution
 cppad_version     = # version of CppAD corresponding to this version of pycppad
-cppad_with_doc    = # include documentation in CppAD download [yes/no]
 # ---------------------------------------------------------------------
-if cppad_with_doc == 'yes' :
-  cppad_dir = 'cppad' + '-' + cppad_version
-  cppad_tarball =  cppad_dir + '.cpl.tgz'
-elif cppad_with_doc == 'no' :
-  cppad_dir = 'CppAD' + '-' + cppad_version
-  cppad_tarball =  cppad_dir + '.tgz'
-else :
-    print 'cppad_with_doc: ' + cppad_with_doc + ' is not a valid choice.'
-    exit(1)
+cppad_dir = 'cppad' + '-' + cppad_version
+cppad_tarball =  cppad_dir + '.gpl.tgz'
 cppad_include_dir = cppad_parent_dir + '/' + cppad_dir
 # ---------------------------------------------------------------------
 import re
-import os
 import sys
 from distutils.core import setup, Extension
 from numpy.distutils.misc_util import get_numpy_include_dirs

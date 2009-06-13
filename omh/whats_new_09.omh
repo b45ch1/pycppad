@@ -1,5 +1,8 @@
 $begin whats_new_09$$ 
+$dollar @$$
 $spell
+	dir
+	bradbell
 	libboost
 	tanh
 	CppAD
@@ -15,6 +18,13 @@ $index fix, bug 2009$$
 $index version, feature 2009$$
 $index feature, version 2009$$
 $index 2009, feature$$
+
+$head 06-13$$
+The $code setup.py$$ file
+(used during the $cref/build/install/Building/$$ step of the install)
+had $code /home/bradbell/install$$ as the value of $code cppad_parent_dir$$.
+This has been changed so that the default is
+$code @HOME/install$$.
 
 $head 05-13$$
 Changed to a new version of CppAD, (20090303.0).

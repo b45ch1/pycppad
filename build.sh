@@ -14,15 +14,18 @@ fi
 option="$1"
 # ---------------------------------------------------------------------
 cppad_version="20090303.0"       # cppad release version we are using
-cppad_with_doc="no"              # include CppAD documention in download
 yyyymmdd=`date +%G%m%d`          # todays year, month, and day
 # ---------------------------------------------------------------------
-# Using cppad_parent_dir not equal to "." speeds up testing.  I like to use 
-# $HOME/install as the place to put the cppad tarball and extraction
-cppad_parent_dir="$HOME/install"
 if [ "$option" == "final" ]
 then
-	cppad_parent_dir="."
+        # directory for cppad tarball (see setup.template)
+	cppad_parent_dir="$HOME/install"
+	echo "rm -r $cppad_parent_dir/cppad-$cppad_version*"
+	if ! rm -r $cppad_parent_dir/cppad-$cppad_version*
+	then
+		echo "Cannot remove old version of cppad distribution."
+		exit 1
+	fi
 fi
 # ---------------------------------------------------------------------
 omhelp_location=`which omhelp`
@@ -36,9 +39,7 @@ fi
 # only edit line corresponding to assignment statement not check for ==
 sed < ./setup.template > setup.py \
 	-e "s|\(package_version *=\)[^=].*|\1 '$yyyymmdd'|"  \
-	-e "s|\(cppad_version *=\)[^=].*|\1 '$cppad_version'|" \
-	-e "s|\(cppad_parent_dir *=\)[^=].*|\1 '$cppad_parent_dir'|" \
-	-e "s|\(cppad_with_doc *=\)[^=].*|\1 '$cppad_with_doc'|"
+	-e "s|\(cppad_version *=\)[^=].*|\1 '$cppad_version'|" 
 chmod +x setup.py
 # ----------------------------------------------------------------------------
 if [ "$omhelp_location" != "" ]
