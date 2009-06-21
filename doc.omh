@@ -28,7 +28,7 @@ $hiliteseq%
 	%.%reverse%(%           reverse
 %$$
 
-$section pycppad-20090613: A Python Algorithm Derivative Package$$
+$section pycppad-20090621: A Python Algorithm Derivative Package$$
 
 $index AD, python$$
 $index python, AD$$

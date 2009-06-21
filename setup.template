@@ -7,7 +7,7 @@ import os
 boost_python_lib_dir = '/usr/lib' 
 # The name of the Boost Python library in that directory which must
 # begin with 'lib' and end with '.so'.
-boost_python_lib_name  = 'libboost_python-py26.so' 
+boost_python_lib_name  = 'libboost_python.so' 
 # The CppAD tarball will be downloaded into this directory
 # and it will be extraced to a subdirectory called  cppad-*.
 cppad_parent_dir = os.environ.get('HOME') + '/install'
@@ -37,13 +37,14 @@ m = re.search('lib([a-zA-Z0-9_-]+)[.]so', boost_python_lib_name)
 if m == None :
   print 'boost_python_lib_name must begin with \'lib\' and end with \'.so\''
 boost_python_lib = m.group(1)
-boost_python_lib_path = boost_python_lib_dir + boost_python_lib_name
+boost_python_lib_path = boost_python_lib_dir + '/' + boost_python_lib_name
 if not os.access ( boost_python_lib_path , os.R_OK ) :
-  print 'Cannot find the Boost Python library.'
+  print 'Cannot find the Boost Python library: ' + boost_python_lib_path 
   print 'Use the following web page for information about boost::python'
   print 'http://www.boost.org/doc/libs/1_37_0/libs/python/doc/index.html'
   print 'Make sure that boost_python_lib_dir and boost_python_lib_name'
-  print 'are set correctly at the beginnin of the file setup.py'
+  print 'are set correctly at the beginning of the file setup.py'
+  exit(1)
 # ---------------------------------------------------------------------
 # set cppad_include_dir
 build_source_dist = False

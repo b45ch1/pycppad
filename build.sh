@@ -150,7 +150,11 @@ include README
 include test_more.py
 include test_example.py
 EOF
-./setup.py sdist
+if ! ./setup.py sdist
+then
+	echo "Error during: ./setup.py sdist"
+	exit 1
+fi
 if [ "$option" == "sdist" ]
 then
 	exit 0
