@@ -19,6 +19,12 @@ $index version, feature 2009$$
 $index feature, version 2009$$
 $index 2009, feature$$
 
+$head 06-21$$
+The Boost Python library name was not being used correctly and hence one
+would get the error message:
+"Cannot find the Boost Python library" ...
+This has been fixed.
+
 $head 06-13$$
 The $code setup.py$$ file
 (used during the $cref/build/install/Building/$$ step of the install)
