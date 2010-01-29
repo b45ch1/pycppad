@@ -9,14 +9,14 @@
 #	yf
 # $$
 #
-# $section runge_kutta_4 correctness test$$
+# $section runge_kutta_4 A Correctness Example and Test$$
 #
 # $head Discussion$$
 # Define $latex y : \B{R} \rightarrow \B{R}^n$$ by
 # $latex \[
 #	y_j (t) =  t^{j+1}
 # \] $$ 
-# it follows that the derivative of $latex y(t)$$ satisfies the 
+# It follows that the derivative of $latex y(t)$$ satisfies the 
 # $cref/runge_kutta_4/$$ ODE equation where 
 # $latex y(0) = 0 $$ and $latex f(t, y)$$ is given by
 # $latex \[
@@ -29,7 +29,7 @@
 # $head Source Code$$
 #
 # $code
-# $verbatim%example/runge_kutta_4_correct.py%0%# BEGIN CODE%# END CODE%$$
+# $verbatim%example/runge_kutta_4_correct.py%0%# BEGIN CODE%# END CODE%1%$$
 # $$
 # $end
 # BEGIN CODE
@@ -51,8 +51,8 @@ def pycppad_test_runge_kutta_4_correct() :
 	yf = runge_kutta_4(f, ti, yi, dt)
 
 	# check the results
-	check = 1.                                # t^0 at t = dt
+	t_jp = 1.                                # t^0 at t = dt
 	for j in range(n-1) :
-		check = check * dt                   # t^j at t = dt
-		assert abs( yf[j] - check ) < 1e-10  # check yf[j] = t^j
+		t_jp = t_jp * dt                    # t^(j+1) at t = dt
+		assert abs( yf[j] - t_jp ) < 1e-10  # check yf[j] = t^(j+1)
 # END CODE

@@ -23,6 +23,8 @@ $rref independent.py$$
 $rref jacobian.py$$
 $rref reverse_1.py$$
 $rref reverse_2.py$$
+$rref runge_kutta_4_ad.py$$
+$rref runge_kutta_4_correct.py$$
 $rref std_math.py$$
 $rref two_levels.py$$
 $rref value.py$$

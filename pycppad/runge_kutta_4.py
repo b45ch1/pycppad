@@ -86,10 +86,16 @@ def runge_kutta_4(f, ti, yi, dt) :
 #
 #
 # $children%
-#	example/runge_kutta_4_correct.py
+#	example/runge_kutta_4_correct.py%
+#	example/runge_kutta_4_ad.py
 # %$$
 # $head Example$$
+# $list number$$
 # The file $cref/runge_kutta_4_correct.py/$$ contains an example and test of
-# this function.
+# using $code runge_kutta_4$$ to solve an ODE.
+# $lnext
+# The file $cref/runge_kutta_4_ad.py/$$ contains an example and test of
+# differentiating the numerical solution of an ODE.
+# $lend
 #
 # $end
