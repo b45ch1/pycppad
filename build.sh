@@ -13,8 +13,8 @@ then
 fi
 option="$1"
 # ---------------------------------------------------------------------
-yyyymmdd=`date +%F | sed -e 's|-||g'` # todays year, month, and day
-cppad_tarball='CppAD-20100101.0.tgz'  # name in download directory
+yyyymmdd=`date +%F | sed -e 's|-||g'`     # todays year, month, and day
+cppad_tarball='cppad-20100101.0.gpl.tgz'  # name in download directory
 # ---------------------------------------------------------------------
 if [ "$option" == "final" ]
 then
