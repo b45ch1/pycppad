@@ -39,7 +39,7 @@
 # BEGIN CODE
 from pycppad import *
 def pycppad_test_runge_kutta_4_ad() :
-	def f(t , y) :
+	def fun(t , y) :
 		n        = y.size
 		f        = ad( numpy.zeros(n) )
 		f[0]     = a_x[0]
@@ -58,7 +58,7 @@ def pycppad_test_runge_kutta_4_ad() :
 	a_x  = independent( numpy.array( x ) )
 
 	# take one 4-th order Runge-Kutta integration step of size dt 
-	a_yf = runge_kutta_4(f, ti, a_yi, dt)
+	a_yf = runge_kutta_4(fun, ti, a_yi, dt)
 
 	# define the AD function g : x -> yf
 	g = adfun(a_x, a_yf)

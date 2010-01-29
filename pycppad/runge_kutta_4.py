@@ -1,5 +1,6 @@
 # $begin runge_kutta_4$$ $newlinech #$$
 # $spell
+#	pycppad
 #	def
 #	numpy
 #	yi
@@ -87,7 +88,8 @@ def runge_kutta_4(f, ti, yi, dt) :
 #
 # $children%
 #	example/runge_kutta_4_correct.py%
-#	example/runge_kutta_4_ad.py
+#	example/runge_kutta_4_ad.py%
+#	example/runge_kutta_4_cpp.py
 # %$$
 # $head Example$$
 # $list number$$
@@ -96,6 +98,10 @@ def runge_kutta_4(f, ti, yi, dt) :
 # $lnext
 # The file $cref/runge_kutta_4_ad.py/$$ contains an example and test of
 # differentiating the numerical solution of an ODE.
+# $lnext
+# The file $cref/runge_kutta_4_ad.py/$$ contains an example and test of
+# using pycppad $cref/adfun/$$ object to evaluate python functions with
+# C++ speed of execution.
 # $lend
 #
 # $end

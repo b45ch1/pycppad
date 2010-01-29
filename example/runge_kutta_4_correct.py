@@ -35,7 +35,7 @@
 # BEGIN CODE
 from pycppad import *
 def pycppad_test_runge_kutta_4_correct() :
-	def f(t , y) :
+	def fun(t , y) :
 		n        = y.size
 		f        = numpy.zeros(n)
 		f[0]     = 1.
@@ -48,7 +48,7 @@ def pycppad_test_runge_kutta_4_correct() :
 	yi = numpy.zeros(n) # initial value for y(t); i.e., y(0)
 
 	# take one 4-th order Runge-Kutta integration step of size dt 
-	yf = runge_kutta_4(f, ti, yi, dt)
+	yf = runge_kutta_4(fun, ti, yi, dt)
 
 	# check the results
 	t_jp = 1.                                # t^0 at t = dt
