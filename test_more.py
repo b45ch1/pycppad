@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from pycppad import *
 
 def pycppad_test_forward_a2():

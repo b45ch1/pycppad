@@ -104,7 +104,8 @@ then
 fi
 # ----------------------------------------------------------------------------
 # Create test_example.py
-cat example/*.py > test_example.py
+echo "#!/usr/bin/env python" > test_example.py
+cat example/*.py >> test_example.py
 cat << EOF   >> test_example.py
 if __name__ == "__main__" :
   number_ok   = 0
@@ -130,6 +131,8 @@ if __name__ == "__main__" :
     print "%d tests failed" % number_fail 
     exit(1)
 EOF
+echo "chmod +x test_example.py"
+chmod +x test_example.py
 echo "# Create a source distribution ----------------------------------" 
 cmd="rm -rf dist"
 echo "$cmd"

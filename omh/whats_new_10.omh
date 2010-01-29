@@ -1,0 +1,28 @@
+$begin whats_new_10$$ 
+$dollar @$$
+$spell
+	pycppad
+	cppad
+$$
+
+$section Extensions, Bug Fixes, and Changes During 2010$$
+
+$head Previous Years$$
+$children%
+	omh/whats_new_09.omh
+%$$
+$table
+$tref whats_new_09$$
+$tend
+
+$head 01-29$$
+Added the python ODE solver $cref/runge_kutta_4/$$
+which can be used with `smart' floating point types
+(e.g., AD types).
+
+$head 01-28$$
+Upgraded from using $code cppad-20090909.0$$ to
+$code cppad-20100101.0$$.
+
+
+$end

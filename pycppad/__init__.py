@@ -238,6 +238,7 @@ def independent(x) :
     )
 
 from adfun import *
+from runge_kutta_4 import *
 from numpy import arccos
 from numpy import arcsin
 from numpy import arctan
