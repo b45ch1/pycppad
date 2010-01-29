@@ -9,8 +9,8 @@ FILE_TO_COMMIT: COMMMENT ENDING WITH A ;
 "
 # -----------------------------------------------------------------------
 list=`echo $msg | sed -e 's|^[^;]*;||' -e 's|:[^;]*;||g'`
-msg=`echo $msg | sed -e 's|;|.\n|g'`
-echo "git commit \\"
+msg=`echo $msg | \
+sed -e 's|omh/||g' -e 's|pycppad/||g' -e 's|example/||g' -e 's|;|.\n|g'` echo "git commit \\"
 echo "\"$msg\" \\"
 echo "$list"
 read -p "is this ok [y/n] ?" response
