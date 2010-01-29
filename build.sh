@@ -13,8 +13,8 @@ then
 fi
 option="$1"
 # ---------------------------------------------------------------------
-cppad_version="20090303.0"       # cppad release version we are using
-yyyymmdd=`date +%G%m%d`          # todays year, month, and day
+yyyymmdd=`date +%F | sed -e 's|-||g'` # todays year, month, and day
+cppad_tarball='CppAD-20100101.0.tgz'  # name in download directory
 # ---------------------------------------------------------------------
 if [ "$option" == "final" ]
 then
@@ -39,7 +39,8 @@ fi
 # only edit line corresponding to assignment statement not check for ==
 sed < ./setup.template > setup.py \
 	-e "s|\(package_version *=\)[^=].*|\1 '$yyyymmdd'|"  \
-	-e "s|\(cppad_version *=\)[^=].*|\1 '$cppad_version'|" 
+	-e "s|\(cppad_tarball *=\)[^=].*|\1 '$cppad_tarball'|"
+#
 chmod +x setup.py
 # ----------------------------------------------------------------------------
 if [ "$omhelp_location" != "" ]

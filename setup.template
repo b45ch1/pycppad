@@ -22,10 +22,11 @@ cppad_parent_dir = os.environ.get('HOME') + '/install'
 # ---------------------------------------------------------------------
 # Values set by build.sh
 package_version   = # date in yyyymmdd format corresonding to this distribution
-cppad_version     = # version of CppAD corresponding to this version of pycppad
+cppad_tarball     = # name of the tarball in CppAD download directory
 # ---------------------------------------------------------------------
-cppad_dir = 'cppad' + '-' + cppad_version
-cppad_tarball =  cppad_dir + '.gpl.tgz'
+import re
+match=re.search('([^-]*-[0-9]*[.][0-9]*)[.].*', cppad_tarball)
+cppad_dir         = match.group(1)
 cppad_include_dir = cppad_parent_dir + '/' + cppad_dir
 # ---------------------------------------------------------------------
 import re
