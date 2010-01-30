@@ -1,6 +1,8 @@
 $begin whats_new_10$$ 
 $dollar @$$
 $spell
+	py
+	CppAD
 	pycppad
 	cppad
 $$
@@ -14,6 +16,11 @@ $children%
 $table
 $tref whats_new_09$$
 $tend
+
+$head 01-30$$
+Change $code setup.py$$ do that it patches the CppAD distribution
+(this fixes a problem with the 
+$cref/optimized/install/Building/Optimized/$$ build). 
 
 $head 01-29$$
 Added the python ODE solver $cref/runge_kutta_4/$$

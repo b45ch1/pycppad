@@ -8,6 +8,9 @@
 #	yi
 #	yf
 # $$
+# $index ODE solution, correct$$
+# $index runge_kutta_4, correct$$
+# $index example, runge_kutta_4$$
 #
 # $section runge_kutta_4 A Correctness Example and Test$$
 #

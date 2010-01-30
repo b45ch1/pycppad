@@ -15,13 +15,14 @@ option="$1"
 # ---------------------------------------------------------------------
 yyyymmdd=`date +%F | sed -e 's|-||g'`     # todays year, month, and day
 cppad_tarball='cppad-20100101.0.gpl.tgz'  # name in download directory
+cppad_parent_dir="$HOME/install"          # parrent of download directory
 # ---------------------------------------------------------------------
-if [ "$option" == "final" ]
+sub_dir=`echo $cppad_tarball | sed -e 's|\([^-]*-[0-9]\{8\}\.[0-9]*\).*|\1|'`
+if [ "$option" == "final" ] && [ -e "$cppad_parent_dir/$sub_dir" ]
 then
-        # directory for cppad tarball (see setup.template)
-	cppad_parent_dir="$HOME/install"
-	echo "rm -r $cppad_parent_dir/cppad-$cppad_version*"
-	if ! rm -r $cppad_parent_dir/cppad-$cppad_version*
+	# directory for cppad tarball (see setup.template)
+	echo "rm -r $cppad_parent_dir/$sub_dir"
+	if ! rm -r $cppad_parent_dir/$sub_dir
 	then
 		echo "Cannot remove old version of cppad distribution."
 		exit 1

@@ -8,6 +8,11 @@
 #	yi
 #	yf
 # $$
+# $index example, runge_kutta_4$$
+# $index C++ speed, python function$$
+# $index speed, python function$$
+# $index tape, python function$$
+# $index runge_kutta_4, evaluate solution$$
 #
 # $section runge_kutta_4 With C++ Speed Example and Test $$
 #
@@ -70,7 +75,7 @@ def pycppad_test_runge_kutta_4_cpp() :
 	s0          = time.time()
 	y           = g.forward(0, x)
 	s1          = time.time()
-	cpp_seconds = s1 - s0
+	cpp_secs = s1 - s0
 
 	# check solution is correct
 	assert( abs( y[0] - x[0] * exp( x[1] * tf ) ) < 1e-10 ) 
@@ -82,12 +87,17 @@ def pycppad_test_runge_kutta_4_cpp() :
 	for k in range(M) :
 		y = runge_kutta_4(fun, t, y, dt)
 	s1             = time.time()
-	python_seconds =  s1 - s0
+	python_secs =  s1 - s0
 
 	# check solution is correct
 	assert( abs( y[0] - x[0] * exp( x[1] * tf ) ) < 1e-10 ) 
 	
 	# check that C++ is always more than 20 times faster
-	assert( cpp_seconds <= python_seconds / 20. )
+	assert( 20. * cpp_secs <= python_secs )
+
+	# Actual factor is ~ 100 for debug ~ 400 for optimized build
+	# uncomment the print statement below to see it on your machine / build.
+	factor = python_secs / cpp_secs
+	# print "python_secs = ", python_secs, ", python_sec/cpp_secs =", factor
 
 # END CODE

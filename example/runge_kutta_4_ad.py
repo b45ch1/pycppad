@@ -8,6 +8,10 @@
 #	yi
 #	yf
 # $$
+# $index example, runge_kutta_4$$
+# $index ODE solution, derivative$$
+# $index derivative, ODE solution$$
+# $index runge_kutta_4, example$$
 #
 # $section runge_kutta_4 An AD Example and Test$$
 #
