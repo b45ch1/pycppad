@@ -99,7 +99,9 @@ def pycppad_test_compile_with_debugging() :
     f   = adfun(a_x, a_x)
     x   = numpy.array( [ 1 ] )
     J   = f.jacobian(x)
-    # line above should raise a ValueError exception because length of x not 2
+    # The Line above should raise a CppAD exception because length of x not 2.
+    # Currently, CppAD exceptions are returned as ValueError exceptions, but
+    # it would be better to have a separate name for them.
     raise RuntimeError
   except ValueError : 
     # exception should come here

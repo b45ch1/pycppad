@@ -108,7 +108,7 @@ def pycppad_test_runge_kutta_4_cpp() :
 	for k in range(N/M) :
 		y    = rk4.forward(0, x);
 		x[0] = y[0];
-	# number of seconds to solve the ODE using python float
+	# number of seconds to solve the ODE using pycppad function object
 	cpp_sec =  time.time() - s0
 	# check solution is correct
 	assert( abs( y[0] - x_0 * exp( x_1 * tf ) ) < 1e-10 ) 

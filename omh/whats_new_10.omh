@@ -17,6 +17,9 @@ $table
 $tref whats_new_09$$
 $tend
 
+$head 01-31$$
+Add the $cref/abort_recording/$$ function.
+
 $head 01-30$$
 Change $code setup.py$$ do that it patches the CppAD distribution
 (this fixes a problem with the 

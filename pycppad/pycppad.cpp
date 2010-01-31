@@ -457,6 +457,11 @@ namespace pycppad {
 	{	return Value(x); }
 	AD_double AD_double_(const AD_AD_double& x)
 	{	return Value(x); }
+	void abort_recording(void)
+	{	AD_double::abort_recording();
+		AD_AD_double::abort_recording();
+		return;
+	}
 }
 
 BOOST_PYTHON_MODULE(cppad_)
@@ -488,6 +493,8 @@ BOOST_PYTHON_MODULE(cppad_)
 	def("independent", pycppad::Independent);
 	def("float_",     pycppad::double_);
 	def("a_float_",   pycppad::AD_double_);
+	// documented in adfun.py
+	def("abort_recording", pycppad::abort_recording);
 	// --------------------------------------------------------------------
 	class_<AD_double>("a_float", init<double>())
 		.def(str(self))

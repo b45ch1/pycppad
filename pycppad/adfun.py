@@ -17,7 +17,8 @@
 # $head Purpose$$
 # Creates an independent variable vector and starts recording operations
 # involving objects that are instances of $codei%type(%a_x%[0])%$$.
-# You must create an $cref/adfun/$$ object and stop the recording
+# You must create an $cref/adfun/$$ object, or use $cref/abort_recording/$$,
+# to stop the recording before making another call to $code independent$$,
 #
 # $head x$$ 
 # The argument $icode x$$ must be a $code numpy.array$$ with one dimension
@@ -118,8 +119,44 @@
 # contains an example and test of this function.
 #
 # $end
-
+# ---------------------------------------------------------------------------
+# $begin abort_recording$$ $newlinech #$$
+# $comment implemented in pycppad.cpp$$
+# $spell 
+# $$
+# 
+# $section Abort a Recording of AD Operations$$
+# 
+# $index abort, AD recording$$
+# $index AD, abort recording$$
+# $index recording, abort AD$$
+# $index independent, abort recording$$
+# 
+# $head Syntax$$
+# $codei%abort_recording()%$$
+#
+#$head Purpose$$
+# Sometimes it is necessary to abort the recording of AD operations
+# that started with a call of the form
+# $codei%
+# 	%a_x% = independent(%x%)
+# %$$
+# If such a recording is currently in progress,
+# this will stop the recording and delete the corresponding information.
+# Otherwise, $code abort_recording$$ has no effect.
+#
+# $children%
+#	example/abort_recording.py
+# %$$
+# $head Example$$
+# The file $cref/abort_recording.py/$$ 
+# contains an example and test of this operation.
+# It returns true if it succeeds and false otherwise.
+#
+# $end
+# ---------------------------------------------------------------------------
 import cppad_
+from cppad_ import abort_recording
 import numpy
 
 def independent(x) :
