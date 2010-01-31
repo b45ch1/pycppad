@@ -120,6 +120,6 @@ def pycppad_test_runge_kutta_4_cpp() :
 	# see it for your machine / optimized or debug build.
 	format = 'cpp_sec = %8f, python_sec/cpp_sec = %5.1f'
 	format = format + ', tape_sec/cpp_sec = %5.1f'
-	print format % ( cpp_sec, python_sec/cpp_sec, tape_sec/cpp_sec )
+	# print format % ( cpp_sec, python_sec/cpp_sec, tape_sec/cpp_sec )
 
 # END CODE
