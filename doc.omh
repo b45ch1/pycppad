@@ -7,27 +7,30 @@ $latex \newcommand{\B}[1]{{\bf #1}}$$
 $latex \newcommand{\R}[1]{{\rm #1}}$$
 $hilitecmd%verbatim%$$
 $hiliteseq%
-	%abort_recording%()%   abort_recording
+	       %abort_recording%()%   abort_recording
 
-	%      %abs%(%         abs
-	%+-*/=(%abs%(%         abs
+	%      %abs%(%                abs
+	%+-*/=(%abs%(%                abs
 
-	%      %ad%(%          ad
-	%+-*/=(%ad%(%          ad
+	%      %ad%(%                 ad
+	%+-*/=(%ad%(%                 ad
 
-	%      %adfun%(%       adfun
-	%+-*/=(%adfun%(%       adfun
+	%      %adfun%(%              adfun
+	%+-*/=(%adfun%(%              adfun
 
-	%      %independent%(% independent
-	%+-*/=(%independent%(% independent
+	%      %independent%(%        independent
+	%+-*/=(%independent%(%        independent
 
-	%      %value%(%        value
-	%+-*/=(%value%(%        value
+	%      %runge_kutta_4%(%      runge_kutta_4
+	%+-*/=(%runge_kutta_4%(%      runge_kutta_4
 
-	%.%forward%(%           forward
-	%.%hessian%(%           hessian
-	%.%jacobian%(%          jacobian
-	%.%reverse%(%           reverse
+	%      %value%(%              value
+	%+-*/=(%value%(%              value
+
+	%.%forward%(%                 forward
+	%.%hessian%(%                 hessian
+	%.%jacobian%(%                jacobian
+	%.%reverse%(%                 reverse
 %$$
 
 $section pycppad-20100131: A Python Algorithm Derivative Package$$
