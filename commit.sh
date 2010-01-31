@@ -1,18 +1,19 @@
 #! /bin/bash
 #
-# replace text in msg for this commit
-msg="summary_commnet_ending_with_semicolon;
+# replace text beloer for this commit
+cat << EOF > commit.$$
+Modify commit.sh to use a temporary file for the message.
 
-file_to_commit:comment_for_this_file_ending_with_semicolon;
-...
-file_to_commit:comment_for_this_file_ending_with_semicolon;
-"
+Lines with colon characters are file names followed by messages; for example,
+commit.sh: in this case, commit.sh is the file to be commited.
+EOF
 # -----------------------------------------------------------------------
-list=`echo $msg | sed -e 's|^[^;]*;||' -e 's|:[^;]*;||g'`
-msg=`echo $msg | sed -e 's|omh/||g' -e 's|pycppad/||g' \
-	-e 's|example/||g' -e 's|;|.\n|g'` 
+list=`sed -e '/:/! d' -e 's/:.*//' commit.$$`
+msg=`sed -e 's|.*/\([^/]*:\)|\1|' commit.$$` 
+rm commit.$$
 echo "git commit \\"
 echo "\"$msg\" \\"
+echo "\\"
 echo "$list"
 read -p "is this ok [y/n] ?" response
 if [ "$response" != "y" ]
