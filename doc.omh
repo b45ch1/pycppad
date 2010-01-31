@@ -7,7 +7,9 @@ $latex \newcommand{\B}[1]{{\bf #1}}$$
 $latex \newcommand{\R}[1]{{\rm #1}}$$
 $hilitecmd%verbatim%$$
 $hiliteseq%
-	       %abs%(%         abs
+	%abort_recording%()%   abort_recording
+
+	%      %abs%(%         abs
 	%+-*/=(%abs%(%         abs
 
 	%      %ad%(%          ad
@@ -28,7 +30,7 @@ $hiliteseq%
 	%.%reverse%(%           reverse
 %$$
 
-$section pycppad-20100129: A Python Algorithm Derivative Package$$
+$section pycppad-20100131: A Python Algorithm Derivative Package$$
 
 $index AD, python$$
 $index python, AD$$
