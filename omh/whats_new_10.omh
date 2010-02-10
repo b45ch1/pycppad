@@ -1,6 +1,9 @@
 $begin whats_new_10$$ 
 $dollar @$$
 $spell
+	inplace
+	sys
+	numpy
 	py
 	CppAD
 	pycppad
@@ -16,6 +19,23 @@ $children%
 $table
 $tref whats_new_09$$
 $tend
+
+$head 02-10$$
+$list number$$
+Added $code --inplace$$ to the
+$cref/optimized/install/Building/Optimized/$$ build instructions.
+Improved the $cref/install/install/Installing/$$ instructions
+and the discussion of the
+$cref/python path/install/Python Path/$$.
+$lnext
+Changes $code exit$$ to $code sys.exit$$ in 
+$cref/test_example.py/install/Testing/$$
+and $code test_more.py$$ (required on some systems).
+$lnext
+Fixed the $cref/ad_unary.py/$$ example so it displays the correct source
+code and changed $code all$$ to $code numpy.all$$ in that example
+(required on some systems).
+$lend
 
 $head 01-31$$
 Add the $cref/abort_recording/$$ function.

@@ -11,7 +11,7 @@
 # $index unary, -$$
 #
 # $code
-# $verbatim%example/assign_op.py%0%# BEGIN CODE%# END CODE%1%$$
+# $verbatim%example/ad_unary.py%0%# BEGIN CODE%# END CODE%1%$$
 # $$
 # $end
 # BEGIN CODE
@@ -31,8 +31,8 @@ def pycppad_test_ad_unary() :
   plus_x  = + x
   minus_x = - x
   # test using corresponding unary float operators 
-  assert all( value(plus_x)  == + value(x) )
-  assert all( value(minus_x) == - value(x) )
+  assert numpy.all( value(plus_x)  == + value(x) )
+  assert numpy.all( value(minus_x) == - value(x) )
 
 # Example using a2float ------------------------------------------------------
 def pycppad_test_ad_unary_a2() :
@@ -47,8 +47,8 @@ def pycppad_test_ad_unary_a2() :
   plus_x  = + x
   minus_x = - x
   # test using corresponding unary float operators 
-  assert all( value(plus_x)  == + value(x) )
-  assert all( value(minus_x) == - value(x) )
+  assert numpy.all( value(plus_x)  == + value(x) )
+  assert numpy.all( value(minus_x) == - value(x) )
 
 # END CODE
 

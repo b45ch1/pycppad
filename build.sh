@@ -108,6 +108,7 @@ fi
 echo "#!/usr/bin/env python" > test_example.py
 cat example/*.py >> test_example.py
 cat << EOF   >> test_example.py
+import sys
 if __name__ == "__main__" :
   number_ok   = 0
   number_fail = 0
@@ -127,10 +128,10 @@ if __name__ == "__main__" :
         number_fail = number_fail + 1
   if number_fail == 0 : 
     print "All %d tests passed" % number_ok
-    exit(0)
+    sys.exit(0)
   else :
     print "%d tests failed" % number_fail 
-    exit(1)
+    sys.exit(1)
 EOF
 echo "chmod +x test_example.py"
 chmod +x test_example.py
