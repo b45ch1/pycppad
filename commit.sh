@@ -1,6 +1,6 @@
 #! /bin/bash
 #
-# replace text beloer for this commit
+# replacement text for this commit
 cat << EOF > commit.$$
 Modify commit.sh to use a temporary file for the message.
 
