@@ -14,8 +14,9 @@ fi
 option="$1"
 # ---------------------------------------------------------------------
 yyyymmdd=`date +%F | sed -e 's|-||g'`     # todays year, month, and day
-cppad_tarball='cppad-20100101.0.gpl.tgz'  # name in download directory
+cppad_tarball='cppad-20100101.2.gpl.tgz'  # name in download directory
 cppad_parent_dir="$HOME/install"          # parrent of download directory
+cppad_download_dir='http://www.seanet.com/~bradbell'
 # ---------------------------------------------------------------------
 sub_dir=`echo $cppad_tarball | sed -e 's|\([^-]*-[0-9]\{8\}\.[0-9]*\).*|\1|'`
 if [ "$option" == "final" ] && [ -e "$cppad_parent_dir/$sub_dir" ]
@@ -40,7 +41,8 @@ fi
 # only edit line corresponding to assignment statement not check for ==
 sed < ./setup.template > setup.py \
 	-e "s|\(package_version *=\)[^=].*|\1 '$yyyymmdd'|"  \
-	-e "s|\(cppad_tarball *=\)[^=].*|\1 '$cppad_tarball'|"
+	-e "s|\(cppad_tarball *=\)[^=].*|\1 '$cppad_tarball'|" \
+	-e "s|\(cppad_download_dir *=\)[^=].*|\1 '$cppad_download_dir'|" 
 #
 chmod +x setup.py
 # ----------------------------------------------------------------------------

@@ -21,8 +21,9 @@ cppad_parent_dir = os.environ.get('HOME') + '/install'
 # for documentation on how to use the script setup.py 
 # ---------------------------------------------------------------------
 # Values in setup.py that are replaced by build.sh
-package_version   = # date in yyyymmdd format corresonding to this distribution
-cppad_tarball     = # name of the tarball in CppAD download directory
+package_version    = # date in yyyymmdd format corresonding to this distribution
+cppad_tarball      = # name of the tarball in CppAD download directory
+cppad_download_dir = # web address where the tarball is downloaded from
 # ---------------------------------------------------------------------
 import re
 import sys
@@ -57,24 +58,12 @@ if not build_source_dist :
   if not os.access( cppad_include_dir , os.R_OK ) :
     print 'os.getcwd() = ' + os.getcwd()
     print 'Please wait while the proper version of CppAD is downloaded'
-    cppad_download_dir = 'http://www.coin-or.org/download/source/CppAD/'
     cmd = 'wget --no-clobber -P ' + cppad_parent_dir
-    cmd = cmd + ' ' + cppad_download_dir + cppad_tarball
+    cmd = cmd + ' ' + cppad_download_dir + '/' + cppad_tarball
     print cmd
     os.system( cmd )
     cmd = 'tar -C ' + cppad_parent_dir 
     cmd = cmd + ' -xzf ' + cppad_parent_dir + '/' + cppad_tarball
-    print cmd
-    os.system( cmd )
-    # patch this version of the distribution -------------------------------
-    if cppad_tarball != 'cppad-20100101.0.gpl.tgz' :
-      print 'Remove this patch (should not longer be needed)'
-      exit(1)
-    file = cppad_include_dir + '/cppad/local/ad_fun.hpp'
-    cmd  = 'sed -i ' + file
-    cmd  = cmd+' -e "231,243s/CPPAD_ASSERT_KNOWN/CppAD::ErrorHandler::Call/"'
-    cmd  = cmd+' -e "s/false,/true, __LINE__, __FILE__, \\"ADFun(ADFun)\\",/"' 
-    cmd  = cmd+' -e "121,126d" -e "231d" -e "243d"'
     print cmd
     os.system( cmd )
   if not os.access( cppad_include_dir , os.R_OK ) :

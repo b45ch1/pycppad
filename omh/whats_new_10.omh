@@ -20,6 +20,11 @@ $table
 $tref whats_new_09$$
 $tend
 
+$head 03-18$$
+There was a problem with the automatic download of
+CppAD during the $cref/install/$$ process.
+This has been fixed.
+
 $head 02-10$$
 $list number$$
 Added $code --inplace$$ to the

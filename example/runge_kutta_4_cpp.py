@@ -17,7 +17,7 @@
 # $section runge_kutta_4 With C++ Speed: Example and Test$$
 #
 # $head Purpose$$
-# In this example we should how any Python function can be recorded
+# In this example we demonstrate how a Python function can be recorded
 # in a $code pycppad$$ function object and then evaluated at much
 # higher speeds than the Python evaluation.
 #
