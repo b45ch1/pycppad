@@ -2,7 +2,7 @@
 #
 # replacement text for this commit
 cat << EOF > commit.$$
-Modify commit.sh to use a temporary file for the message.
+A summay of the changes being commited should replace this line.
 
 Lines with colon characters are file names followed by messages; for example,
 commit.sh: in this case, commit.sh is the file to be commited.
@@ -21,3 +21,6 @@ then
 	exit 1
 fi
 git commit -m "$msg" $list
+#
+mv commit.sh ~/trash
+git checkout commit.sh
