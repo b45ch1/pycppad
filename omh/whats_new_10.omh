@@ -1,6 +1,7 @@
 $begin whats_new_10$$ 
 $dollar @$$
 $spell
+	tarball
 	inplace
 	sys
 	numpy
@@ -21,9 +22,11 @@ $tref whats_new_09$$
 $tend
 
 $head 03-18$$
-There was a problem with the automatic download of
-CppAD during the $cref/install/$$ process.
-This has been fixed.
+The upstream tarball for CppAD was missing from
+The $cref/install/$$ process was failing because the upstream tarball
+was missing from
+$href|http://www.coin-or.org/download/source/CppAD/|$$.
+This has been fixed, and a newer upstream release has been used.
 
 $head 02-10$$
 $list number$$

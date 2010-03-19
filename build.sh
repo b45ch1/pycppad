@@ -16,7 +16,7 @@ option="$1"
 yyyymmdd=`date +%F | sed -e 's|-||g'`     # todays year, month, and day
 cppad_tarball='cppad-20100101.2.gpl.tgz'  # name in download directory
 cppad_parent_dir="$HOME/install"          # parrent of download directory
-cppad_download_dir='http://www.seanet.com/~bradbell'
+cppad_download_dir='http://www.coin-or.org/download/source/CppAD/'
 # ---------------------------------------------------------------------
 sub_dir=`echo $cppad_tarball | sed -e 's|\([^-]*-[0-9]\{8\}\.[0-9]*\).*|\1|'`
 if [ "$option" == "final" ] && [ -e "$cppad_parent_dir/$sub_dir" ]
