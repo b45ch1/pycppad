@@ -21,6 +21,14 @@ $table
 $tref whats_new_09$$
 $tend
 
+$head 11-30$$
+Upgraded from using $code cppad-20100101.2$$ to
+$code cppad-20100101.5$$.
+This fixes a problem when installing pycppad with version 1.44.0 of
+$href%http://www.boost.org/doc/libs/1_44_0/libs/python/doc/index.html%
+	boost-python
+%$$.
+
 $head 03-18$$
 The upstream tarball for CppAD was missing from
 The $cref/install/$$ process was failing because the upstream tarball

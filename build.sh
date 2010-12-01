@@ -1,4 +1,8 @@
 #! /bin/bash
+#
+# exit on any error
+set -e
+#
 if [ "$1" != "omhelp" ] &&  \
    [ "$1" != "sdist" ] &&  \
    [ "$1" != "all" ]   && \
@@ -14,40 +18,36 @@ fi
 option="$1"
 # ---------------------------------------------------------------------
 yyyymmdd=`date +%F | sed -e 's|-||g'`     # todays year, month, and day
-cppad_tarball='cppad-20100101.2.gpl.tgz'  # name in download directory
+cppad_tarball='cppad-20100101.5.gpl.tgz'  # name in download directory
 cppad_parent_dir="$HOME/install"          # parrent of download directory
 cppad_download_dir='http://www.coin-or.org/download/source/CppAD/'
+log_dir=`pwd`
 # ---------------------------------------------------------------------
-sub_dir=`echo $cppad_tarball | sed -e 's|\([^-]*-[0-9]\{8\}\.[0-9]*\).*|\1|'`
-if [ "$option" == "final" ] && [ -e "$cppad_parent_dir/$sub_dir" ]
+# directory for cppad tarball (see setup.template)
+cppad_dir=`echo $cppad_tarball | sed -e 's|\([^-]*-[0-9]\{8\}\.[0-9]*\).*|\1|'`
+if [ "$option" == "final" ] && [ -e "$cppad_parent_dir/$cppad_dir" ]
 then
-	# directory for cppad tarball (see setup.template)
-	echo "rm -r $cppad_parent_dir/$sub_dir"
-	if ! rm -r $cppad_parent_dir/$sub_dir
-	then
-		echo "Cannot remove old version of cppad distribution."
-		exit 1
-	fi
-fi
-# ---------------------------------------------------------------------
-omhelp_location=`which omhelp`
-if [ "$omhelp_location" = "" ]
-then
-	echo "Cannot find the omhelp command in your path"
-	echo "skipping the build of the documentation"
+	echo "rm -r $cppad_parent_dir/$cppad_dir"
+	rm -r $cppad_parent_dir/$cppad_dir
 fi
 # ----------------------------------------------------------------------------
 # Create setup.py from setup.template with certain replacements
 # only edit line corresponding to assignment statement not check for ==
+echo "sed < ./setup.template > setup.py -e ..."
 sed < ./setup.template > setup.py \
 	-e "s|\(package_version *=\)[^=].*|\1 '$yyyymmdd'|"  \
 	-e "s|\(cppad_tarball *=\)[^=].*|\1 '$cppad_tarball'|" \
 	-e "s|\(cppad_download_dir *=\)[^=].*|\1 '$cppad_download_dir'|" 
 #
+echo "chmod +x setup.py"
 chmod +x setup.py
 # ----------------------------------------------------------------------------
-if [ "$omhelp_location" != "" ]
+omhelp_location=`which omhelp`
+if [ "$omhelp_location" = "" ]
 then
+	echo "Cannot find the omhelp command in your path"
+	echo "skipping the build of the documentation"
+else
 	# check that every example file is documented
 	for file in example/*.py
 	do
@@ -66,39 +66,30 @@ then
 	if [ -e doc ]
 	then
 		echo "rm -r doc"
-		if ! rm -r doc
-		then
-			echo "Cannot remove old documentation directory"
-			exit 1
-		fi
+		rm -r doc
 	fi
+	echo "mkdir doc"
 	mkdir doc
+	#
+	echo "cd doc"
 	cd doc
-	if ! omhelp ../doc.omh -xml -noframe -debug | tee omhelp.log
-	then
-		echo "Error while building xml documentatioin"
-		exit 1
-	fi
+	#
+	echo "omhelp ../doc.omh -xml -noframe -debug > omhelp.log"
+	omhelp ../doc.omh -xml -noframe -debug > $log_dir/omhelp.log
 	if grep '^OMhelp Warning:' omhelp.log
 	then
 		echo "There are warnings in doc/omhelp.log"
 		exit 1
 	fi
-	if ! omhelp ../doc.omh -xml -noframe -debug -printable
-	then
-		echo "Error while building _printable.xml documentatioin"
-		exit 1
-	fi
-	if ! omhelp ../doc.omh -noframe -debug 
-	then
-		echo "Error while building html documentatioin"
-		exit 1
-	fi
-	if ! omhelp ../doc.omh -noframe -debug -printable
-	then
-		echo "Error while building _printable.html documentatioin"
-		exit 1
-	fi
+	echo "omhelp ../doc.omh -xml -noframe -debug -printable > /dev/null"
+	omhelp ../doc.omh -xml -noframe -debug -printable > /dev/null
+	#
+	echo "omhelp ../doc.omh -noframe -debug > /dev/null"
+	omhelp ../doc.omh -noframe -debug > /dev/null
+	#
+	echo "omhelp ../doc.omh -noframe -debug -printable > /dev/null"
+	omhelp ../doc.omh -noframe -debug -printable > /dev/null
+	#
 	cd ..
 	if [ "$option" == "omhelp" ]
 	then
@@ -106,7 +97,7 @@ then
 	fi
 fi
 # ----------------------------------------------------------------------------
-# Create test_example.py
+echo "Create test_example.py"
 echo "#!/usr/bin/env python" > test_example.py
 cat example/*.py >> test_example.py
 cat << EOF   >> test_example.py
@@ -137,15 +128,16 @@ if __name__ == "__main__" :
 EOF
 echo "chmod +x test_example.py"
 chmod +x test_example.py
-echo "# Create a source distribution ----------------------------------" 
-cmd="rm -rf dist"
-echo "$cmd"
-$cmd
-if [ -e "dist" ] 
-then
-	echo "Cannot remove previous source distribution."
-	exit 1
-fi
+# ----------------------------------------------------------------------------
+for dir in dist pycppad-$yyyymmdd
+do
+	if [ -e "$dir" ] 
+	then
+		echo "rm -rf $dir"
+		rm -rf $dir
+	fi
+done
+echo "create MANIFEST.in"
 cat << EOF > MANIFEST.in
 include pycppad/*.cpp
 include pycppad/*.hpp
@@ -158,88 +150,63 @@ include README
 include test_more.py
 include test_example.py
 EOF
-if ! ./setup.py sdist
-then
-	echo "Error during: ./setup.py sdist"
-	exit 1
-fi
+echo "./setup.py sdist > setup.log"
+./setup.py sdist > setup.log
 if [ "$option" == "sdist" ]
 then
 	exit 0
 fi
-echo "# Extract the source distribution -------------------------------" 
+# ----------------------------------------------------------------------------
 cmd="cd dist"
-echo "$cmd"
-if ! $cmd
-then
-	echo "Cannot change into distribution directory."
-	exit 1
-fi
-cmd="tar -xvzf pycppad-$yyyymmdd.tar.gz"
-echo "$cmd"
-if ! $cmd
-then
-	echo "Cannot extract the source distribution file"
-	exit 1
-fi
-cmd="cd pycppad-$yyyymmdd"
-if ! $cmd
-then
-	echo "Cannot change into the extracted soruce directory"
-	exit 1
-fi
-echo "# Build the extension inplace -----------------------------------" 
-cmd="./setup.py build_ext --inplace --debug --undef NDEBUG"
-echo "$cmd"
+cd dist
+#
+echo "tar -xzf pycppad-$yyyymmdd.tar.gz"
+tar -xzf pycppad-$yyyymmdd.tar.gz
+#
+echo "cd pycppad-$yyyymmdd"
+cd pycppad-$yyyymmdd
+#
+echo "./setup.py build_ext --inplace --debug --undef NDEBUG >> setup.log"
+./setup.py build_ext --inplace --debug --undef NDEBUG > build.$$
 # Kludge: setup.py is mistakenly putting -Wstrict-prototypes on compile line
-$cmd 2>&1 |  sed -e '/warning: command line option "-Wstrict-prototypes"/d'
+sed < build.$$ >> setup.log \
+	-e '/warning: command line option "-Wstrict-prototypes"/d'
+#
 if [ ! -e pycppad/cppad_.so ]
 then
-	echo "setup.py failed to create pycppad/cppad_.so"
+	dir=`pwd`
+	echo "setup.py failed to create $dir/pycppad/cppad_.so"
 	exit 1
 fi
 # ----------------------------------------------------------------------------
-if ! python test_example.py | tee test_example.out
-then
-	echo "test_example failed."
-	exit 1
-fi
-number=`grep '^All' test_example.out | sed -e 's|All \([0-9]*\) .*|\1|'`
+echo "python test_example.py > test_example.log"
+python test_example.py > $log_dir/test_example.log
+#
+number=`grep '^All' $log_dir/test_example.log | \
+	sed -e 's|All \([0-9]*\) .*|\1|'`
 check=`grep '^def' test_example.py | wc -l`
 if [ "$number" != "$check" ]
 then
 	echo "Expected $check tests but only found $number"
 	exit 1
 fi
-echo
-if ! python test_more.py | tee test_more.out
-then
-	echo "test_more.py failed."
-	exit 1
-fi
-number=`grep '^All' test_more.out | sed -e 's|All \([0-9]*\) .*|\1|'`
+echo "python test_more.py > test_more.log"
+python test_more.py > $log_dir/test_more.log 
+#
+number=`grep '^All' $log_dir/test_more.log | \
+	sed -e 's|All \([0-9]*\) .*|\1|'`
 check=`grep '^def' test_more.py | wc -l`
 if [ "$number" != "$check" ] 
 then
 	echo "Expected $check tests but only found $number"
 	exit 1
 fi
-echo
 # ----------------------------------------------------------------------------
-dir="$HOME/prefix/pycppad"
-cmd="rm -rf $dir"
-echo "$cmd"
-if ! $cmd
-then
-	echo "Cannot remove old version of $dir"
-	exit 1
-fi
-cmd="./setup.py install --prefix=$HOME/prefix/pycppad"
-echo "$cmd"
-if ! $cmd
-then
-	echo "setup.py install failed"
-	exit 1
-fi
+echo "rm -rf $HOME/prefix/pycppad"
+rm -rf $HOME/prefix/pycppad
+#
+echo "./setup.py install --prefix=$HOME/prefix/pycppad >> setup.log"
+./setup.py install --prefix=$HOME/prefix/pycppad >> $log_dir/setup.log
 # ----------------------------------------------------------------------------
+echo "OK: build.sh $1"
 exit 0
