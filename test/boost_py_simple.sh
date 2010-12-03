@@ -58,6 +58,11 @@ if python boost_py_simple.py
 then
 	flag=0
 	echo "boost_py_simple.sh: OK"
+	for ext in .cpp .o .dll .py
+	do
+		echo "rm boost_py_simple$ext"
+		rm boost_py_simple$ext
+	done
 else
 	echo "boost_py_simple.sh: Error"
 	flag=1
