@@ -412,7 +412,7 @@ $end
 
 namespace pycppad {
 	// Replacement for the CppAD error handler
-	void error_handler(
+	void cppad_error_handler(
 		bool known           ,
 		int  line            ,
 		const char *file     ,
@@ -421,13 +421,18 @@ namespace pycppad {
 	{	if( ! known ) msg = 
 			"Bug detected in pycppad, Please report this.";
 
-		PyErr_SetString(PyExc_ValueError, msg);
-		boost::python::throw_error_already_set();
 		// erorr handler must not return
+		throw pycppad::exception(msg);
 	}
-	// This ojbect lasts forever, so forever replacement of 
+	// This object lasts forever, so this is forever replacement of 
 	// the default CppAD erorr handler 
-	CppAD::ErrorHandler myhandler(error_handler);
+	CppAD::ErrorHandler myhandler(cppad_error_handler);
+	// call back function used by boost-python exception handler
+	// to translate the exception to a user error message
+	void translate_exception(pycppad::exception const& e)
+	{	// Use the Python 'C' API to set up an exception object
+		PyErr_SetString(PyExc_ValueError, e.what());
+	}
 	// -------------------------------------------------------------
 	// Kludge: Pass level to Independent until we know how to determine if 
 	// the elements are x_array are AD_double or AD_AD_double.
@@ -463,9 +468,13 @@ namespace pycppad {
 		return;
 	}
 }
-
 BOOST_PYTHON_MODULE(cppad_)
 {
+	// This tells boost-python which exception handler to use to use
+	// when the throw in cppad_error_handler occurs
+	boost::python::register_exception_translator<pycppad::exception>
+		(&pycppad::translate_exception); 
+
 	// AD_double is used in pycppad namespace
 	typedef CppAD::AD<double>    AD_double;
 	typedef CppAD::AD<AD_double> AD_AD_double;

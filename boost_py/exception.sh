@@ -45,10 +45,9 @@ void something_which_throws()
 
 BOOST_PYTHON_MODULE(exception)
 {
-  using namespace boost::python;
-  register_exception_translator<my_exception>(&translate);
+  boost::python::register_exception_translator<my_exception>(&translate);
   
-  def("something_which_throws", something_which_throws);
+  boost::python::def("something_which_throws", something_which_throws);
 }
 EOF
 #

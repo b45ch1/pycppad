@@ -45,7 +45,7 @@ chmod +x setup.py
 omhelp_location=`which omhelp`
 if [ "$omhelp_location" = "" ]
 then
-	echo "Cannot find the omhelp command in your path"
+	echo "build.sh: Cannot find the omhelp command in your path"
 	echo "skipping the build of the documentation"
 else
 	# check that every example file is documented
@@ -54,7 +54,7 @@ else
 		name=`echo $file | sed -e 's|example/||'`
 		if ! grep "$name" omh/example.omh > /dev/null
 		then
-			echo "$file is not listed in omh/example.omh"
+			echo "build.sh: $file is not listed in omh/example.omh"
 			exit 1
 		fi
 	done
@@ -76,9 +76,9 @@ else
 	#
 	echo "omhelp ../doc.omh -xml -noframe -debug > omhelp.log"
 	omhelp ../doc.omh -xml -noframe -debug > $log_dir/omhelp.log
-	if grep '^OMhelp Warning:' omhelp.log
+	if grep '^OMhelp Warning:' $log_dir/omhelp.log
 	then
-		echo "There are warnings in doc/omhelp.log"
+		echo "build.sh: There are warnings in omhelp.log"
 		exit 1
 	fi
 	echo "omhelp ../doc.omh -xml -noframe -debug -printable > /dev/null"
@@ -151,7 +151,7 @@ include test_more.py
 include test_example.py
 EOF
 echo "./setup.py sdist > setup.log"
-./setup.py sdist > setup.log
+./setup.py sdist > $log_dir/setup.log
 if [ "$option" == "sdist" ]
 then
 	exit 0
@@ -167,15 +167,17 @@ echo "cd pycppad-$yyyymmdd"
 cd pycppad-$yyyymmdd
 #
 echo "./setup.py build_ext --inplace --debug --undef NDEBUG >> setup.log"
-./setup.py build_ext --inplace --debug --undef NDEBUG > build.$$
+./setup.py build_ext --inplace --debug --undef NDEBUG >> $log_dir/setup.log
 # Kludge: setup.py is mistakenly putting -Wstrict-prototypes on compile line
-sed < build.$$ >> setup.log \
+echo "sed -i $log_dir/setup.log \\"
+echo "	-e '/warning: command line option \"-Wstrict-prototypes\"/d'"
+sed -i $log_dir/setup.log \
 	-e '/warning: command line option "-Wstrict-prototypes"/d'
 #
-if [ ! -e pycppad/cppad_.so ]
+if [ ! -e pycppad/cppad_.so ] && [ ! -e pycppad/cppad_.dll ]
 then
 	dir=`pwd`
-	echo "setup.py failed to create $dir/pycppad/cppad_.so"
+	echo "build.sh: setup.py failed to create $dir/pycppad/cppad_.so"
 	exit 1
 fi
 # ----------------------------------------------------------------------------
@@ -187,7 +189,7 @@ number=`grep '^All' $log_dir/test_example.log | \
 check=`grep '^def' test_example.py | wc -l`
 if [ "$number" != "$check" ]
 then
-	echo "Expected $check tests but only found $number"
+	echo "build.sh: Expected $check tests but only found $number"
 	exit 1
 fi
 echo "python test_more.py > test_more.log"
@@ -198,7 +200,7 @@ number=`grep '^All' $log_dir/test_more.log | \
 check=`grep '^def' test_more.py | wc -l`
 if [ "$number" != "$check" ] 
 then
-	echo "Expected $check tests but only found $number"
+	echo "build.sh: Expected $check tests but only found $number"
 	exit 1
 fi
 # ----------------------------------------------------------------------------

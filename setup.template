@@ -5,9 +5,10 @@ import os
 # BEGIN USER SETTINGS
 # Directory where Boost Python library is located
 boost_python_lib_dir = '/usr/lib' 
-# The name of the Boost Python library in that directory which must
-# begin with 'lib' and end with '.so'.
-boost_python_lib_name  = 'libboost_python.so' 
+# Name of the Boost Python library in boost_python_lib_dir.
+# Must begin with 'lib' and end with '.so' (under unix) or '.a' (under cygwin).
+boost_python_lib_name_cygwin  = 'libboost_python-mt.a' 
+boost_python_lib_name_unix    = 'libboost_python.so'
 # The CppAD tarball will be downloaded into this directory
 # and it will be extraced to a subdirectory called  cppad-* or CppAD-*
 cppad_parent_dir = os.environ.get('HOME') + '/install'
@@ -27,8 +28,13 @@ cppad_download_dir = # web address where the tarball is downloaded from
 # ---------------------------------------------------------------------
 import re
 import sys
+import platform
 from distutils.core import setup, Extension
 from numpy.distutils.misc_util import get_numpy_include_dirs
+# ---------------------------------------------------------------------
+# determine if this is a cygwin system
+uname     = (( platform.uname() )[0] )[0:6]
+is_cygwin = (uname == 'CYGWIN')
 # ---------------------------------------------------------------------
 # determine the install directory and the include directory
 match=re.search('([^-]*-[0-9]*[.][0-9]*)[.].*', cppad_tarball)
@@ -36,9 +42,16 @@ cppad_dir         = match.group(1)
 cppad_include_dir = cppad_parent_dir + '/' + cppad_dir
 # ---------------------------------------------------------------------
 # check for the specified boost-python library
-m = re.search('lib([a-zA-Z0-9_-]+)[.]so', boost_python_lib_name)
-if m == None :
-  print 'boost_python_lib_name must begin with \'lib\' and end with \'.so\''
+if is_cygwin :
+  boost_python_lib_name = boost_python_lib_name_cygwin
+  m = re.search('lib([a-zA-Z0-9_-]+)[.]a', boost_python_lib_name)
+  if m == None :
+    print "boost_python_lib_name_cygwin must begin with 'lib' & end with '.a'"
+else :
+  boost_python_lib_name = boost_python_lib_name_unix
+  m = re.search('lib([a-zA-Z0-9_-]+)[.]so', boost_python_lib_name)
+  if m == None :
+    print "boost_python_lib_name_unix must begin with 'lib' & end with '.so'"
 boost_python_lib = m.group(1)
 boost_python_lib_path = boost_python_lib_dir + '/' + boost_python_lib_name
 if not os.access ( boost_python_lib_path , os.R_OK ) :

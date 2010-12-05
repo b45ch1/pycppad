@@ -1,6 +1,7 @@
 $begin whats_new_10$$ 
 $dollar @$$
 $spell
+	cygwin
 	tarball
 	inplace
 	sys
@@ -20,6 +21,12 @@ $children%
 $table
 $tref whats_new_09$$
 $tend
+
+$head 12-05$$
+First version that works (and installs properly) under MS windows using the 
+$href%www.cygwin.com%cygwin%$$ system; see special 
+pycppad instructions for installing under
+$cref/cygwin/install/Building/Cygwin/$$.
 
 $head 11-30$$
 Upgraded from using $code cppad-20100101.2$$ to

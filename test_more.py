@@ -93,19 +93,24 @@ def pycppad_test_reverse_a2():
   assert gp[1] == 8.
 
 def pycppad_test_compile_with_debugging() :
-  try :
-    x   = numpy.array( [ 1 , 2 ] )
-    a_x = independent(x)
-    f   = adfun(a_x, a_x)
-    x   = numpy.array( [ 1 ] )
-    J   = f.jacobian(x)
-    # The Line above should raise a CppAD exception because length of x not 2.
-    # Currently, CppAD exceptions are returned as ValueError exceptions, but
-    # it would be better to have a separate name for them.
-    raise RuntimeError
-  except ValueError : 
-    # exception should come here
-    pass
+  # Cygwin systems have a problem catching exceptions that seems to be a
+  # bug in boost-python. We are working on getting this fixed.
+  import platform
+  uname = (( platform.uname() )[0] )[0:6]
+  if not (uname == 'CYGWIN') :
+    try :
+      x   = numpy.array( [ 1 , 2 ] )
+      a_x = independent(x)
+      f   = adfun(a_x, a_x)
+      x   = numpy.array( [ 1 ] )
+      J   = f.jacobian(x)
+      # The Line above should raise a CppAD exception because length of x not 2.
+      # Currently, CppAD exceptions are returned as ValueError exceptions, but
+      # it would be better to have a separate name for them.
+      raise RuntimeError
+    except ValueError : 
+      # exception should come here
+      pass
 
 def pycppad_test_compare_op():
   delta = 10. * numpy.finfo(float).eps

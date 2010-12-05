@@ -1,6 +1,11 @@
 $begin install$$
 $dollar @$$
 $spell
+	cmd
+	exe
+	Cygwin
+	rebaseall
+	ps
 	yum
 	bashrc
 	messaging
@@ -48,8 +53,8 @@ $index download, pycppad$$
 $index pycppad, download$$
 Download the file
 $href%
-	http://www.seanet.com/~bradbell/pycppad-20101201.tar.gz%
-	pycppad-20101201.tar.gz
+	http://www.seanet.com/~bradbell/pycppad-20101205.tar.gz%
+	pycppad-20101205.tar.gz
 %$$
 and store it on your machine.
 
@@ -60,14 +65,14 @@ $index extract, pycppad$$
 $index pycppad, extract$$
 On unix, you could use the command
 $codep
-	tar -xvzf  pycppad-20101201.tar.gz
+	tar -xvzf  pycppad-20101205.tar.gz
 $$
-which would create the directory $code pycppad-20101201$$.
+which would create the directory $code pycppad-20101205$$.
 
 $head Required Setup Information$$
 The value of the following setup variables, in the file
 $codep
-	pycppad-20101201/setup.py
+	pycppad-20101205/setup.py
 $$
 must be set to agree with your system:
 $code
@@ -84,7 +89,7 @@ $index pycppad, build$$
 $subhead With Debugging$$
 $index debugging, build$$
 $index build, debugging$$
-Change into the directory $code pycppad-20101201$$ and execute the command
+Change into the directory $code pycppad-20101205$$ and execute the command
 $codep
 	./setup.py build_ext --inplace --debug --undef NDEBUG
 $$
@@ -119,12 +124,45 @@ $href%
 %$$
 package.
 
+$subhead Cygwin$$
+If python crashes during the build procedure under cygwin, 
+you may need to run the $code rebaseall$$ program.
+For example, execute the following steps:
+$list number$$
+Check which cygwin processes are running using the $code ps$$ command,
+and shut them all down.
+$lnext
+Open an DOS command window, for example, select $codei%Start %|% Run%$$ 
+and then enter $code cmd$$ in as the program to run.
+$lnext
+Change into the cygwin $code bin$$ directory.
+If you installed cygwin in the default location, the following command
+will do this:
+$codep
+	cd c:\cygwin\bin
+$$
+$lnext
+Start the $code ash$$ shell by executing the command
+$codep
+	ash.exe
+$$
+$lnext
+The execute the command
+$codep
+	/usr/bin/rebaseall
+$$
+This will take a few minutes to execute.
+When it is done, you can close the command window by executing
+the command $code exit$$ twice.
+$lend
+
+
 $head Testing$$
 $index test, pycppad$$
 $index pycppad, test$$
 You can test of all the 
 $cref/examples/example/$$ in the $code pycppad$$ documentation.
-Change into the directory $code pycppad-20101201$$ and execute the command
+Change into the directory $code pycppad-20101205$$ and execute the command
 $codep
 	python test_example.py
 $$
@@ -141,7 +179,7 @@ You may or may not preform this step:
 $pre
 
 $$
-Change into the directory $code pycppad-20101201$$ and execute the command
+Change into the directory $code pycppad-20101205$$ and execute the command
 $codei%
 	python setup.py install --prefix=%prefix%
 %$$
@@ -168,7 +206,7 @@ an uninstall command. You can uninstall the $code pycppad$$ package
 by removing the entries
 $codei%
 	%prefix%/lib/python%major%.%minor%/site-packages/pycppad
-	%prefix%/lib/python%major%.%minor%/site-packages/pycppad-20101201.egg-info
+	%prefix%/lib/python%major%.%minor%/site-packages/pycppad-20101205.egg-info
 	%prefix%/share/doc/pycppad
 %$$
 where $icode major$$ and $icode minor$$
@@ -187,7 +225,7 @@ $codei%
 %$$
 unless the distribution directory
 $codep
-	pycppad-20101201
+	pycppad-20101205
 $$
 is in your python path.
 If you have installed $code pycppad$$,
@@ -219,7 +257,7 @@ to your $code @HOME/.bashrc$$ file.
 $head pycppad Documentation$$
 The documentation for $code pycppad$$ starts out in the directory
 $codep
-	pycppad-20101201/doc
+	pycppad-20101205/doc
 $$
 During the installation process, it is copied to the directory
 $codei%
