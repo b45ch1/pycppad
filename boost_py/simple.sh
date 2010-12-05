@@ -4,7 +4,7 @@ set -e
 # http://wiki.python.org/moin/boost.python/SimpleExample
 # ----------------------------------------------------------------------
 python_version=`ls /usr/include | grep python | sed -e 's/python//'` 
-system=`uname | sed -e s/\(......\).*/\1/`
+system=`uname | sed -e 's/\(......\).*/\1/'`
 if [ "$system" == "CYGWIN" ]
 then
 	extra_compile="-Wl,--enable-auto-image-base"
