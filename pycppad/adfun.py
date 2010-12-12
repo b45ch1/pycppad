@@ -241,13 +241,13 @@ def adfun(x,y) :
     for j in range( len(x) ) :
       if not isinstance(x[j], cppad_.a_float) :
         other = 'x[' + str(j) + '] is ' + type(x[j]).__name__
-        msg   = 'independent(x): mixed types x[0] is a_float and ' + other
+        msg   = 'adfun(x, y): mixed types x[0] is a_float and ' + other
         raise NotImplementedError(msg)
     #
     for i in range( len(y) ) :
       if not isinstance(y[i], cppad_.a_float) :
         other = 'y[' + str(i) + '] is ' + type(y[i]).__name__
-        msg   = 'independent(x): mixed types x[0] is a_float and ' + other
+        msg   = 'adfun(x, y): mixed types x[0] is a_float and ' + other
         raise NotImplementedError(msg)
     #
     return adfun_float(x, y)
