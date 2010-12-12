@@ -23,12 +23,6 @@ cat << EOF > exception.cpp
 # include <exception>
 # include <string>
 
-# if 0
-struct my_exception : std::exception
-{
-  char const* what() throw() { return "One of my exceptions"; }
-};
-# else
 class my_exception : public std::exception
 {	
 private : 
@@ -42,7 +36,6 @@ public :
 	{	return message_; }
 
 };
-# endif
 
 void translate(my_exception const& e)
 {
@@ -63,8 +56,8 @@ BOOST_PYTHON_MODULE(exception)
 }
 EOF
 #
-echo "gcc  -I/usr/include/python$python_version -g -c exception.cpp"
-gcc  -I/usr/include/python$python_version -g -c exception.cpp 
+echo "g++  -I/usr/include/python$python_version -g -c exception.cpp"
+g++  -I/usr/include/python$python_version -g -c exception.cpp 
 #
 echo "g++ -shared $extra_compile \\"
 echo "	-g \\"
