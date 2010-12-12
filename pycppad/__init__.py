@@ -218,24 +218,6 @@ def value(a_x) :
     msg += 'value(a_x): only implemented where a_x is an a_float, a2float,\n'
     msg += 'or an array of a_float or a2float'
     raise NotImplementedError(msg)
- 
-def independent(x) :
-  """
-  a_x = independent(x): create independent variable vector a_x, equal to x,
-  and start recording operations that use the class corresponding to ad( x[0] ).
-  """
-  if not isinstance(x, numpy.ndarray) :
-    raise NotImplementedError('independent(x): x is not of type numpy.array')
-  x0 = x[0]
-  if isinstance(x0, int) or isinstance(x0, float) :
-    return cppad_.independent(x, 1)     # level = 1
-  elif isinstance(x0, a_float) :
-    return cppad_.independent(x, 2)     # level = 2
-  else:
-    print "type(x[j]) = ", type(x0)
-    raise NotImplementedError(
-      'independent(x): only implemented where x[j] is float or a_float'
-    )
 
 from adfun import *
 from runge_kutta_4 import *

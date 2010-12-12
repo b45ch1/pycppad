@@ -546,6 +546,28 @@ def pycppad_test_hessian():
   H = f.hessian(x, w)
   assert numpy.prod( A == H )
 
+def pycppad_test_mixed_element_types():
+	x   = numpy.array( [ 1 , 2. ], dtype=object )
+	ok  = False
+	try :
+		a_x = independent(x)
+	except NotImplementedError :
+		x[0] = 0.
+		a_x  = independent(x)
+		ok   = True
+	assert ok
+	#
+	a_y = numpy.array( [ ad(0) , 1. ], dtype=object )
+	ok  = False
+	try :
+		f = adfun(a_x, a_y)
+	except NotImplementedError :
+		a_y[1] = ad(1)
+		f      = adfun(a_x, a_y) 
+		ok     = True
+	assert ok
+	#
+
 import sys
 if __name__ == "__main__" :
   number_ok   = 0

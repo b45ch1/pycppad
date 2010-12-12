@@ -158,24 +158,48 @@
 import cppad_
 from cppad_ import abort_recording
 import numpy
-
+ 
 def independent(x) :
   """
   a_x = independent(x): create independent variable vector a_x, equal to x,
   and start recording operations that use the class corresponding to ad( x[0] ).
   """
+  #
+  # It would be better faster if all this type checking were done in the C++
+  #
   if not isinstance(x, numpy.ndarray) :
     raise NotImplementedError('independent(x): x is not of type numpy.array')
+  #
   x0 = x[0]
-  if isinstance(x0, int) or isinstance(x0, float) :
+  if isinstance(x0, int) :
+    for j in range( len(x) ) :
+      if not isinstance(x[j], int) :
+        other = 'x[' + str(j) + '] is ' + type(x[j]).__name__
+        msg   = 'independent(x): mixed types x[0] is int and ' + other
+        raise NotImplementedError(msg)
+    x = numpy.array(x, dtype=int)       # incase dtype of x is object
     return cppad_.independent(x, 1)     # level = 1
-  elif isinstance(x0, cppad_.a_float) :
+  #
+  if isinstance(x0, float) :
+    for j in range( len(x) ) :
+      if not isinstance(x[j], float) :
+        other = 'x[' + str(j) + '] is ' + type(x[j]).__name__
+        msg   = 'independent(x): mixed types x[0] is float and ' + other
+        raise NotImplementedError(msg)
+    x = numpy.array(x, dtype=float)     # incase dtype of x is object
+    return cppad_.independent(x, 1)     # level = 1
+  #
+  if isinstance(x0, cppad_.a_float) :
+    for j in range( len(x) ) :
+      if not isinstance(x[j], cppad_.a_float) :
+        other = 'x[' + str(j) + '] is ' + type(x[j]).__name__
+        msg   = 'independent(x): mixed types x[0] is a_float and ' + other
+        raise NotImplementedError(msg)
     return cppad_.independent(x, 2)     # level = 2
-  else:
-    print "type(x[j]) = ", type(x0)
-    raise NotImplementedError(
-      'independent(x): only implemented where x[j] is float or a_float'
-    )
+  #
+  msg = 'independent(x): x[0] has type' + type(x0).__name__ + '\n'
+  msg = 'only implemented where x[j] is int, float, or a_float'
+  raise NotImplementedError(msg)
 
 class adfun_float(cppad_.adfun_float) :
   """
@@ -205,23 +229,43 @@ def adfun(x,y) :
   x: a numpy one dimnesional array containing the independent variable vector.
   y: a vector with same type as x and containing the dependent variable vector.
   """
-  if not isinstance(x, numpy.ndarray) or not isinstance(x, numpy.ndarray) :
+  #
+  # It would be better faster if all this type checking were done in the C++
+  #
+  if not isinstance(x, numpy.ndarray) or not isinstance(y, numpy.ndarray) :
     raise NotImplementedError('adfun(x, y): x or y is not of type numpy.array')
+  #
   x0 = x[0]
   y0 = y[0]
   if isinstance(x0, cppad_.a_float) :
-    if isinstance(y0, cppad_.a_float) :
-      return adfun_float(x, y)
-    else :
-      raise NotImplementedError(
-        'adfun(x, y): x[j] and y[j] have different elements types')
-  elif isinstance(x0, cppad_.a2float) :
-    if isinstance(y0, cppad_.a2float) :
-      return adfun_a_float(x, y)
-    else :
-      raise NotImplementedError(
-        'adfun(x, y): x[j] and y[j] have different elements types')
-  else :
-      raise NotImplementedError(
-        'adfun(x, y): elements of x and y are not a_float or a2dobule')
-
+    for j in range( len(x) ) :
+      if not isinstance(x[j], cppad_.a_float) :
+        other = 'x[' + str(j) + '] is ' + type(x[j]).__name__
+        msg   = 'independent(x): mixed types x[0] is a_float and ' + other
+        raise NotImplementedError(msg)
+    #
+    for i in range( len(y) ) :
+      if not isinstance(y[i], cppad_.a_float) :
+        other = 'y[' + str(i) + '] is ' + type(y[i]).__name__
+        msg   = 'independent(x): mixed types x[0] is a_float and ' + other
+        raise NotImplementedError(msg)
+    #
+    return adfun_float(x, y)
+  #
+  if isinstance(x0, cppad_.a2float) :
+    for j in range( len(x) ) :
+      if not isinstance(x[j], cppad_.a2float) :
+        other = 'x[' + str(j) + '] is ' + type(x[j]).__name__
+        msg   = 'independent(x): mixed types x[0] is a2float and ' + other
+        raise NotImplementedError(msg)
+    #
+    for i in range( len(y) ) :
+      if not isinstance(y[i], cppad_.a2float) :
+        other = 'y[' + str(i) + '] is ' + type(y[i]).__name__
+        msg   = 'independent(x): mixed types x[0] is a2float and ' + other
+        raise NotImplementedError(msg)
+    #
+    return adfun_a_float(x, y)
+  #
+  raise NotImplementedError(
+        'adfun(x, y): elements of x and y are not a_float or a2float')

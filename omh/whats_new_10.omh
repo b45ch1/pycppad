@@ -1,6 +1,7 @@
 $begin whats_new_10$$ 
 $dollar @$$
 $spell
+	adfun
 	cygwin
 	tarball
 	inplace
@@ -21,6 +22,15 @@ $children%
 $table
 $tref whats_new_09$$
 $tend
+
+$head 12-12$$
+The $cref/independent(x)/independent/$$ 
+and $cref/adfun(x,y)/adfun/$$ functions 
+require the elements of $icode x$$ and $icode y$$ to all have
+the same type.
+If this was not the case, $code pycppad$$ might crash with out
+a useful error message.
+This has been fixed.
 
 $head 12-05$$
 First version that works (and installs properly) under MS windows using the 
