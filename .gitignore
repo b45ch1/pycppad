@@ -24,6 +24,7 @@ include/*
 release
 SConstruct
 setup.py
+build
 
 # exceptions
 !.gitignore
