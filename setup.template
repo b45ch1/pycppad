@@ -83,9 +83,13 @@ if not build_source_dist :
     print 'Did not successfully retrieve the proper verison of CppAD'
     exit(1)
 # ---------------------------------------------------------------------
-doc_files    = os.listdir('doc')
-for i in range( len(doc_files) ) :
-  doc_files[i] = 'doc/' + doc_files[i]
+try:
+    doc_files    = os.listdir('doc')
+    for i in range( len(doc_files) ):
+        doc_files[i] = 'doc/' + doc_files[i]
+    
+except:
+    doc_files = []
 #
 brad_email             = 'bradbell @ seanet dot com'
 sebastian_email        = 'sebastian dot walter @ gmail dot com'
