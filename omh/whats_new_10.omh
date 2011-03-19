@@ -15,14 +15,6 @@ $$
 
 $section Extensions, Bug Fixes, and Changes During 2010$$
 
-$head Previous Years$$
-$children%
-	omh/whats_new_09.omh
-%$$
-$table
-$tref whats_new_09$$
-$tend
-
 $head 12-12$$
 The $cref/independent(x)/independent/$$ 
 and $cref/adfun(x,y)/adfun/$$ functions 

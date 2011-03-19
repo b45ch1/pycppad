@@ -18,7 +18,7 @@ fi
 option="$1"
 # ---------------------------------------------------------------------
 yyyymmdd=`date +%F | sed -e 's|-||g'`     # todays year, month, and day
-cppad_tarball='cppad-20100101.5.gpl.tgz'  # name in download directory
+cppad_tarball='cppad-20110101.2.gpl.tgz'  # name in download directory
 cppad_parent_dir="$HOME/install"          # parrent of download directory
 cppad_download_dir='http://www.coin-or.org/download/source/CppAD/'
 log_dir=`pwd`

@@ -1,0 +1,30 @@
+$begin whats_new_11$$ 
+$dollar @$$
+$spell
+	cppad 
+	gpl.tgz
+$$
+
+$section Extensions, Bug Fixes, and Changes During 2011$$
+
+$head Previous Years$$
+$children%
+	omh/whats_new_10.omh%
+	omh/whats_new_09.omh
+%$$
+$table
+$tref whats_new_10$$
+$tref whats_new_09$$
+$tend
+
+$head 03-19$$
+Change from using $code cppad-20100101.5$$ 
+to using $code cppad-20110101.2.gpl.tgz$$;
+see
+$href%
+	http://www.coin-or.org/CppAD/Doc/whats_new.htm%
+	CppAD whats_new
+%$$.
+
+
+$end

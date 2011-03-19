@@ -33,7 +33,7 @@ $hiliteseq%
 	%.%reverse%(%                 reverse
 %$$
 
-$section pycppad-20101212: A Python Algorithm Derivative Package$$
+$section pycppad-20110319: A Python Algorithm Derivative Package$$
 
 $index AD, python$$
 $index python, AD$$
@@ -86,7 +86,7 @@ to obtain new function values or derivatives of arbitrary order.
 In addition, multiple levels of AD are supported.
 This means that AD derivatives can be used in the definition of a function
 which in turn can be differentiated using AD.
-See $cref/whats_new_09/$$ for a list of recent extensions and bug fixes.
+See $cref/whats_new_11/$$ for a list of recent extensions and bug fixes.
 
 $childtable%
 	omh/install.omh%
@@ -95,7 +95,7 @@ $childtable%
 	omh/ad_method.omh%
 	example/two_levels.py%
 	pycppad/runge_kutta_4.py%
-	omh/whats_new_10.omh%
+	omh/whats_new_11.omh%
 	omh/license.omh
 %$$
 
