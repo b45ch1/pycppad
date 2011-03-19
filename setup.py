@@ -10,8 +10,8 @@ boost_python_lib_dir = '/usr/lib'
 boost_python_lib_name_cygwin  = 'libboost_python-mt.a' 
 boost_python_lib_name_unix    = 'libboost_python.so'
 # The CppAD tarball will be downloaded into this directory
-# and it will be extraced to a subdirectory called  cppad-* or CppAD-*
-cppad_parent_dir = os.environ.get('HOME') + '/install'
+# and it will be extraced to a subdirectory called  cppad-*
+cppad_parent_dir = '.'
 # 
 # END USER SETTINGS
 # ---------------------------------------------------------------------
@@ -22,9 +22,9 @@ cppad_parent_dir = os.environ.get('HOME') + '/install'
 # for documentation on how to use the script setup.py 
 # ---------------------------------------------------------------------
 # Values in setup.py that are replaced by build.sh
-package_version    = # date in yyyymmdd format corresonding to this distribution
-cppad_tarball      = # name of the tarball in CppAD download directory
-cppad_download_dir = # web address where the tarball is downloaded from
+package_version    = '20110319'
+cppad_tarball      = 'cppad-20110101.2.gpl.tgz'
+cppad_download_dir = 'http://www.coin-or.org/download/source/CppAD/'
 # ---------------------------------------------------------------------
 import re
 import sys

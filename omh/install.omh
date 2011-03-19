@@ -76,7 +76,7 @@ $codep
 $$
 must be set to agree with your system:
 $code
-$verbatim%setup.template%5%# BEGIN USER SETTINGS%# END USER SETTINGS%$$
+$verbatim%setup.py%5%# BEGIN USER SETTINGS%# END USER SETTINGS%$$
 $$
 Note that Boost Python must be installed before you can
 properly set this information

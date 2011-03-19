@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/bash -e
 #
 # exit on any error
 set -e
@@ -18,29 +18,32 @@ fi
 option="$1"
 # ---------------------------------------------------------------------
 yyyymmdd=`date +%F | sed -e 's|-||g'`     # todays year, month, and day
-cppad_tarball='cppad-20110101.2.gpl.tgz'  # name in download directory
-cppad_parent_dir="$HOME/install"          # parrent of download directory
+cppad_tarball='cppad-20110101.2.gpl.tgz'  # local_cppad_directory.gpl.tgz
+cppad_parent_dir=`pwd`                    # parrent of local_cppad_directory
+log_dir=`pwd`                             # write build.sh logs in here
 cppad_download_dir='http://www.coin-or.org/download/source/CppAD/'
-log_dir=`pwd`
-# ---------------------------------------------------------------------
-# directory for cppad tarball (see setup.template)
-cppad_dir=`echo $cppad_tarball | sed -e 's|\([^-]*-[0-9]\{8\}\.[0-9]*\).*|\1|'`
-if [ "$option" == "final" ] && [ -e "$cppad_parent_dir/$cppad_dir" ]
-then
-	echo "rm -r $cppad_parent_dir/$cppad_dir"
-	rm -r $cppad_parent_dir/$cppad_dir
-fi
 # ----------------------------------------------------------------------------
-# Create setup.py from setup.template with certain replacements
-# only edit line corresponding to assignment statement not check for ==
-echo "sed < ./setup.template > setup.py -e ..."
-sed < ./setup.template > setup.py \
-	-e "s|\(package_version *=\)[^=].*|\1 '$yyyymmdd'|"  \
-	-e "s|\(cppad_tarball *=\)[^=].*|\1 '$cppad_tarball'|" \
-	-e "s|\(cppad_download_dir *=\)[^=].*|\1 '$cppad_download_dir'|" 
+# Update setup.py so it corresponds to current build.sh options above.
+# only edit line corresponding to assignment statement, check not a == case
+echo "sed -i setup.py"
+sed -i setup.py \
+	-e "s|^\(package_version *=\)[^=].*|\1 '$yyyymmdd'|"  \
+	-e "s|^\(cppad_tarball *=\)[^=].*|\1 '$cppad_tarball'|" \
+	-e "s|^\(cppad_download_dir *=\)[^=].*|\1 '$cppad_download_dir'|" 
 #
-echo "chmod +x setup.py"
-chmod +x setup.py
+# Create test_setup.py 
+if [ "$option" == "final" ]
+then
+	echo "cp setup.py test_setup.py"
+	cp setup.py test_setup.py
+else
+	echo "sed < setup.py > test_setup.py"
+	sed < setup.py > test_setup.py \
+		-e "s|^\(cppad_parent_dir *=\)[^=].*|\1 '$cppad_parent_dir'|"
+	echo "chmod +x test_setup.py"
+	chmod +x test_setup.py
+fi
+#
 # ----------------------------------------------------------------------------
 omhelp_location=`which omhelp`
 if [ "$omhelp_location" = "" ]
@@ -150,8 +153,8 @@ include README
 include test_more.py
 include test_example.py
 EOF
-echo "./setup.py sdist > setup.log"
-./setup.py sdist > $log_dir/setup.log
+echo "./test_setup.py sdist > setup.log"
+./test_setup.py sdist > $log_dir/setup.log
 if [ "$option" == "sdist" ]
 then
 	exit 0
@@ -166,8 +169,8 @@ tar -xzf pycppad-$yyyymmdd.tar.gz
 echo "cd pycppad-$yyyymmdd"
 cd pycppad-$yyyymmdd
 #
-echo "./setup.py build_ext --inplace --debug --undef NDEBUG >> setup.log"
-./setup.py build_ext --inplace --debug --undef NDEBUG >> $log_dir/setup.log
+echo "./test_setup.py build_ext --inplace --debug --undef NDEBUG >> setup.log"
+./test_setup.py build_ext --inplace --debug --undef NDEBUG >> $log_dir/setup.log
 # Kludge: setup.py is mistakenly putting -Wstrict-prototypes on compile line
 echo "sed -i $log_dir/setup.log \\"
 echo "	-e '/warning: command line option \"-Wstrict-prototypes\"/d'"
@@ -177,7 +180,7 @@ sed -i $log_dir/setup.log \
 if [ ! -e pycppad/cppad_.so ] && [ ! -e pycppad/cppad_.dll ]
 then
 	dir=`pwd`
-	echo "build.sh: setup.py failed to create $dir/pycppad/cppad_.so"
+	echo "build.sh: test_setup.py failed to create $dir/pycppad/cppad_.so"
 	exit 1
 fi
 # ----------------------------------------------------------------------------
@@ -207,8 +210,8 @@ fi
 echo "rm -rf $HOME/prefix/pycppad"
 rm -rf $HOME/prefix/pycppad
 #
-echo "./setup.py install --prefix=$HOME/prefix/pycppad >> setup.log"
-./setup.py install --prefix=$HOME/prefix/pycppad >> $log_dir/setup.log
+echo "./test_setup.py install --prefix=$HOME/prefix/pycppad >> setup.log"
+./test_setup.py install --prefix=$HOME/prefix/pycppad >> $log_dir/setup.log
 # ----------------------------------------------------------------------------
 echo "OK: build.sh $1"
 exit 0
