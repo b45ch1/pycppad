@@ -21,7 +21,7 @@ yyyymmdd=`date +%F | sed -e 's|-||g'`     # todays year, month, and day
 cppad_tarball='cppad-20110101.2.gpl.tgz'  # local_cppad_directory.gpl.tgz
 cppad_parent_dir=`pwd`                    # parrent of local_cppad_directory
 log_dir=`pwd`                             # write build.sh logs in here
-cppad_download_dir='http://www.coin-or.org/download/source/CppAD/'
+cppad_download_dir='http://www.coin-or.org/download/source/CppAD'
 omhelp_download_dir='http://www.seanet.com/~bradbell'
 # ----------------------------------------------------------------------------
 # Update setup.py so it corresponds to current build.sh options above.
@@ -64,8 +64,8 @@ then
 		echo "rm OMhelp.unix.tar.gz"
 		rm OMhelp.unix.tar.gz
 	fi
-	echo "wget $omhelp_download_dir/OMhelp.unix.tar.gz"
-	wget "$omhelp_download_dir/OMhelp.unix.tar.gz"
+	echo "curl -O $omhelp_download_dir/OMhelp.unix.tar.gz"
+	curl -O "$omhelp_download_dir/OMhelp.unix.tar.gz"
 	#
 	echo "tar -xzf OMhelp.unix.tar.gz"
 	tar -xzf OMhelp.unix.tar.gz

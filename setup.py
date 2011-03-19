@@ -24,7 +24,7 @@ cppad_parent_dir = '.'
 # Values in setup.py that are replaced by build.sh
 package_version    = '20110319'
 cppad_tarball      = 'cppad-20110101.2.gpl.tgz'
-cppad_download_dir = 'http://www.coin-or.org/download/source/CppAD/'
+cppad_download_dir = 'http://www.coin-or.org/download/source/CppAD'
 # ---------------------------------------------------------------------
 import re
 import sys
@@ -71,12 +71,12 @@ if not build_source_dist :
   if not os.access( cppad_include_dir , os.R_OK ) :
     print 'os.getcwd() = ' + os.getcwd()
     print 'Please wait while the proper version of CppAD is downloaded'
-    cmd = 'wget --no-clobber -P ' + cppad_parent_dir
-    cmd = cmd + ' ' + cppad_download_dir + '/' + cppad_tarball
+    cmd = '( cd ' + cppad_parent_dir + ';'
+    cmd = cmd + ' curl -O ' + cppad_download_dir + '/' + cppad_tarball + ')'
     print cmd
     os.system( cmd )
-    cmd = 'tar -C ' + cppad_parent_dir 
-    cmd = cmd + ' -xzf ' + cppad_parent_dir + '/' + cppad_tarball
+    cmd = '( cd ' + cppad_parent_dir + ';'
+    cmd = cmd + ' tar -xzf ' + cppad_parent_dir + '/' + cppad_tarball + ')'
     print cmd
     os.system( cmd )
   if not os.access( cppad_include_dir , os.R_OK ) :
