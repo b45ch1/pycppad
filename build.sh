@@ -22,6 +22,7 @@ cppad_tarball='cppad-20110101.2.gpl.tgz'  # local_cppad_directory.gpl.tgz
 cppad_parent_dir=`pwd`                    # parrent of local_cppad_directory
 log_dir=`pwd`                             # write build.sh logs in here
 cppad_download_dir='http://www.coin-or.org/download/source/CppAD/'
+omhelp_download_dir='http://www.seanet.com/~bradbell'
 # ----------------------------------------------------------------------------
 # Update setup.py so it corresponds to current build.sh options above.
 # only edit line corresponding to assignment statement, check not a == case
@@ -45,59 +46,101 @@ else
 fi
 #
 # ----------------------------------------------------------------------------
-omhelp_location=`which omhelp`
-if [ "$omhelp_location" = "" ]
+if ! (ls | grep omhelp-) > /dev/null
 then
-	echo "build.sh: Cannot find the omhelp command in your path"
-	echo "skipping the build of the documentation"
+	count="0"
 else
-	# check that every example file is documented
-	for file in example/*.py
-	do
-		name=`echo $file | sed -e 's|example/||'`
-		if ! grep "$name" omh/example.omh > /dev/null
-		then
-			echo "build.sh: $file is not listed in omh/example.omh"
-			exit 1
-		fi
-	done
-	#
-	# Change doc.omh and install.omh to use todays yyyymmdd 
-	sed -i doc.omh -e "s/pycppad-[0-9]\{8\}/pycppad-$yyyymmdd/"
-	sed -i omh/install.omh -e "s/pycppad-[0-9]\{8\}/pycppad-$yyyymmdd/"
-	#
-	if [ -e doc ]
+	count=`ls | grep omhelp- | wc -l`
+fi
+if [ "$count" != "1" ]
+then
+	if [ "$count" != "0" ]
 	then
-		echo "rm -r doc"
-		rm -r doc
+		echo "rm -r omhelp-*"
+		rm -r omhelp-*
 	fi
-	echo "mkdir doc"
-	mkdir doc
-	#
-	echo "cd doc"
-	cd doc
-	#
-	echo "omhelp ../doc.omh -xml -noframe -debug > omhelp.log"
-	omhelp ../doc.omh -xml -noframe -debug > $log_dir/omhelp.log
-	if grep '^OMhelp Warning:' $log_dir/omhelp.log
+	if [ -e OMhelp.unix.tar.gz ]
 	then
-		echo "build.sh: There are warnings in omhelp.log"
-		exit 1
+		echo "rm OMhelp.unix.tar.gz"
+		rm OMhelp.unix.tar.gz
 	fi
-	echo "omhelp ../doc.omh -xml -noframe -debug -printable > /dev/null"
-	omhelp ../doc.omh -xml -noframe -debug -printable > /dev/null
+	echo "wget $omhelp_download_dir/OMhelp.unix.tar.gz"
+	wget "$omhelp_download_dir/OMhelp.unix.tar.gz"
 	#
-	echo "omhelp ../doc.omh -noframe -debug > /dev/null"
-	omhelp ../doc.omh -noframe -debug > /dev/null
+	echo "tar -xzf OMhelp.unix.tar.gz"
+	tar -xzf OMhelp.unix.tar.gz
 	#
-	echo "omhelp ../doc.omh -noframe -debug -printable > /dev/null"
-	omhelp ../doc.omh -noframe -debug -printable > /dev/null
+	echo "cd omhelp-*"
+	cd omhelp-* 
+	#
+	omhelp_dir=`pwd`
+	#
+	echo "./configure --prefix=$omhelp_dir/prefix"
+	./configure --prefix="$omhelp_dir/prefix"
+	#
+	echo "make install"
+	make install
 	#
 	cd ..
-	if [ "$option" == "omhelp" ]
+fi
+count=`ls | grep omhelp-* | wc -l`
+if [ "$count" != "1" ]
+then
+	echo "There should be one and only on omhelp-* directory"
+	exit 1
+fi
+omhelp_dir=`ls | grep omhelp-`
+#
+# check that every example file is documented
+for file in example/*.py
+do
+	name=`echo $file | sed -e 's|example/||'`
+	if ! grep "$name" omh/example.omh > /dev/null
 	then
-		exit 0
+		echo "build.sh: $file is not listed in omh/example.omh"
+		exit 1
 	fi
+done
+#
+# Change doc.omh and install.omh to use todays yyyymmdd 
+sed -i doc.omh -e "s/pycppad-[0-9]\{8\}/pycppad-$yyyymmdd/"
+sed -i omh/install.omh -e "s/pycppad-[0-9]\{8\}/pycppad-$yyyymmdd/"
+#
+if [ -e doc ]
+then
+	echo "rm -r doc"
+	rm -r doc
+fi
+echo "mkdir doc"
+mkdir doc
+#
+echo "cd doc"
+cd doc
+#
+echo "omhelp ../doc.omh -xml -noframe -debug > omhelp.log"
+../$omhelp_dir/prefix/bin/omhelp \
+	../doc.omh -xml -noframe -debug > $log_dir/omhelp.log
+if grep '^OMhelp Warning:' $log_dir/omhelp.log
+then
+	echo "build.sh: There are warnings in omhelp.log"
+	exit 1
+fi
+echo "omhelp ../doc.omh -xml -noframe -debug -printable > /dev/null"
+../$omhelp_dir/prefix/bin/omhelp \
+	../doc.omh -xml -noframe -debug -printable > /dev/null
+#
+echo "omhelp ../doc.omh -noframe -debug > /dev/null"
+../$omhelp_dir/prefix/bin/omhelp \
+	../doc.omh -noframe -debug > /dev/null
+#
+echo "omhelp ../doc.omh -noframe -debug -printable > /dev/null"
+../$omhelp_dir/prefix/bin/omhelp \
+	../doc.omh -noframe -debug -printable > /dev/null
+#
+cd ..
+if [ "$option" == "omhelp" ]
+then
+	exit 0
 fi
 # ----------------------------------------------------------------------------
 echo "Create test_example.py"

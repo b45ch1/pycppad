@@ -1,7 +1,9 @@
 $begin whats_new_11$$ 
 $dollar @$$
 $spell
-	cppad 
+	CppAD
+	cppad
+	dir 
 	gpl.tgz
 $$
 
@@ -13,11 +15,14 @@ $children%
 	omh/whats_new_09.omh
 %$$
 $table
-$tref whats_new_10$$
-$tref whats_new_09$$
+$cref/2010/whats_new_10/$$
+$rnext
+$cref/2008/whats_new_09/$$
 $tend
 
 $head 03-19$$
+
+$list number$$
 Change from using $code cppad-20100101.5$$ 
 to using $code cppad-20110101.2.gpl.tgz$$;
 see
@@ -26,5 +31,12 @@ $href%
 	CppAD whats_new
 %$$.
 
+$lnext
+Use current working directory instead of $code @HOME/install$$
+for default directory that holds a local copy of CppAD; see
+$code cppad_parent_dir$$ under
+$cref/Required Setup Information/install/Required Setup Information/$$.
+
+$lend
 
 $end
