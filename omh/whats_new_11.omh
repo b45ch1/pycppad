@@ -37,6 +37,10 @@ for default directory that holds a local copy of CppAD; see
 $code cppad_parent_dir$$ under
 $cref/Required Setup Information/install/Required Setup Information/$$.
 
+$lnext
+Add $code boost_python_include_dir$$ to list of 
+$cref/Required Setup Information/install/Required Setup Information/$$.
+
 $lend
 
 $end

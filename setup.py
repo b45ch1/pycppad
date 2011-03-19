@@ -3,8 +3,9 @@ import os
 # ---------------------------------------------------------------------
 # The code below is included verbatim in omh/install.omh
 # BEGIN USER SETTINGS
-# Directory where Boost Python library is located
+# Directory where Boost Python library and include files are located
 boost_python_lib_dir = '/usr/lib' 
+boost_python_include_dir= '/usr/include'
 # Name of the Boost Python library in boost_python_lib_dir.
 # Must begin with 'lib' and end with '.so' (under unix) or '.a' (under cygwin).
 boost_python_lib_name_cygwin  = 'libboost_python-mt.a' 
@@ -103,6 +104,7 @@ package_license        = 'BSD'
 cppad_extension_name         = 'pycppad' + '/cppad_'
 cppad_extension_include_dirs = get_numpy_include_dirs()
 cppad_extension_include_dirs.append( cppad_include_dir )
+cppad_extension_include_dirs.append( boost_python_include_dir )
 cppad_extension_library_dirs = [ boost_python_lib_dir ]
 cppad_extension_libraries    = [ boost_python_lib ]
 cppad_extension_sources      = [ 
