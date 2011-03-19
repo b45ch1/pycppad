@@ -179,8 +179,8 @@ for dir in dist pycppad-$yyyymmdd
 do
 	if [ -e "$dir" ] 
 	then
-		echo "rm -rf $dir"
-		rm -rf $dir
+		echo "rm -r $dir"
+		rm -r $dir
 	fi
 done
 echo "create MANIFEST.in"
