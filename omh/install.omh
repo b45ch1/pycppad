@@ -129,7 +129,7 @@ If python crashes during the build procedure under cygwin,
 you may need to run the $code rebaseall$$ program.
 For example, execute the following steps:
 $list number$$
-Check which cygwin processes are running using the $code ps$$ command,
+Check which cygwin processes are running using the $code ps -e$$ command,
 and shut them all down.
 $lnext
 Open an DOS command window, for example, select $codei%Start %|% Run%$$ 
