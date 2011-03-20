@@ -3,28 +3,31 @@
 # subdirectories here. Add them in the ".gitignore" file
 # in that subdirectory instead.
 #
-# Normal rules
+# General purpose rules for python packages
 #
 .*
 *.*~
+*.a
+*.dylib
 *.py~
 *.pyc
-*.txt
-include
-include/
-include/*
-*.png
-*.svg
-*.dot
-*.o
 *.so
-*.os
-*.eps
-*~
-release
-SConstruct
-setup.py
 build
+#
+# Special temporary extension (created by build.sh)
+*.log
+# Special temporary files (created by build.sh)
+dist
+MANIFEST
+MANIFEST.in
+doc
+external
+
+# Special temporary file (created by commit.sh)
+commit.old
+
+# Automatically generated (by build.sh) file that is in pycppad distribution
+test_example.py
 
 # exceptions
 !.gitignore

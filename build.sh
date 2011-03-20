@@ -17,10 +17,10 @@ then
 fi
 option="$1"
 # ---------------------------------------------------------------------
-yyyymmdd=`date +%F | sed -e 's|-||g'`     # todays year, month, and day
-cppad_tarball='cppad-20110101.3.gpl.tgz'  # local_cppad_directory.gpl.tgz
-cppad_parent_dir=`pwd`                    # parrent of local_cppad_directory
-log_dir=`pwd`                             # write build.sh logs in here
+yyyymmdd=`date +%F | sed -e 's|-||g'`    # todays year, month, and day
+cppad_tarball='cppad-20110101.3.gpl.tgz' # local_cppad_directory.gpl.tgz
+external_dir=`pwd`/external              # externals are placed here
+log_dir=`pwd`                            # build progress logs written here
 cppad_download_dir='http://www.coin-or.org/download/source/CppAD'
 omhelp_download_dir='http://www.seanet.com/~bradbell'
 # ----------------------------------------------------------------------------
@@ -36,22 +36,17 @@ then
 	echo "Replacing setup.py using changes in setup.py.new"
 	chmod +x setup.py.new
 	mv setup.py.new setup.py
-fi
-#
-# Create test_setup.py 
-if [ "$option" == "final" ]
-then
-	echo "cp setup.py test_setup.py"
-	cp setup.py test_setup.py
 else
-	echo "sed < setup.py > test_setup.py"
-	sed < setup.py > test_setup.py \
-		-e "s|^\(cppad_parent_dir *=\)[^=].*|\1 '$cppad_parent_dir'|"
-	echo "chmod +x test_setup.py"
-	chmod +x test_setup.py
+	echo "rm setup.py.new"
+	rm setup.py.new
 fi
-#
 # ----------------------------------------------------------------------------
+if [ ! -d external ]
+then
+	echo "mkdir external"
+	mkdir external
+fi
+cd external
 if ! (ls | grep omhelp-) > /dev/null
 then
 	count="0"
@@ -92,10 +87,12 @@ fi
 count=`ls | grep omhelp-* | wc -l`
 if [ "$count" != "1" ]
 then
-	echo "There should be one and only on omhelp-* directory"
+	echo "There should be one and only on omhelp-* directory in external"
 	exit 1
 fi
 omhelp_dir=`ls | grep omhelp-`
+cd ..
+omhelp_dir="$external_dir/$omhelp_dir"
 #
 # check that every example file is documented
 for file in example/*.py
@@ -118,6 +115,9 @@ do
 	then
 		echo "Replacing $file using changes in $file.new"
 		mv $file.new $file 
+	else
+		echo "rm $file.new"
+		rm $file.new
 	fi
 done
 #
@@ -133,7 +133,7 @@ echo "cd doc"
 cd doc
 #
 echo "omhelp ../doc.omh -xml -noframe -debug > omhelp.log"
-../$omhelp_dir/prefix/bin/omhelp \
+$omhelp_dir/prefix/bin/omhelp \
 	../doc.omh -xml -noframe -debug > $log_dir/omhelp.log
 if grep '^OMhelp Warning:' $log_dir/omhelp.log
 then
@@ -141,15 +141,15 @@ then
 	exit 1
 fi
 echo "omhelp ../doc.omh -xml -noframe -debug -printable > /dev/null"
-../$omhelp_dir/prefix/bin/omhelp \
+$omhelp_dir/prefix/bin/omhelp \
 	../doc.omh -xml -noframe -debug -printable > /dev/null
 #
 echo "omhelp ../doc.omh -noframe -debug > /dev/null"
-../$omhelp_dir/prefix/bin/omhelp \
+$omhelp_dir/prefix/bin/omhelp \
 	../doc.omh -noframe -debug > /dev/null
 #
 echo "omhelp ../doc.omh -noframe -debug -printable > /dev/null"
-../$omhelp_dir/prefix/bin/omhelp \
+$omhelp_dir/prefix/bin/omhelp \
 	../doc.omh -noframe -debug -printable > /dev/null
 #
 cd ..
@@ -211,8 +211,8 @@ include README
 include test_more.py
 include test_example.py
 EOF
-echo "./test_setup.py sdist > setup.log"
-./test_setup.py sdist > $log_dir/setup.log
+echo "./setup.py sdist > setup.log"
+./setup.py sdist > $log_dir/setup.log
 if [ "$option" == "sdist" ]
 then
 	exit 0
@@ -226,6 +226,19 @@ tar -xzf pycppad-$yyyymmdd.tar.gz
 #
 echo "cd pycppad-$yyyymmdd"
 cd pycppad-$yyyymmdd
+#
+# Create test_setup.py 
+if [ "$option" == "final" ]
+then
+	echo "cp setup.py test_setup.py"
+	cp setup.py test_setup.py
+else
+	echo "sed < setup.py > test_setup.py"
+	sed < setup.py > test_setup.py \
+		-e "s|^\(cppad_parent_dir *=\)[^=].*|\1 '$external_dir'|"
+	echo "chmod +x test_setup.py"
+	chmod +x test_setup.py
+fi
 #
 echo "./test_setup.py build_ext --inplace --debug --undef NDEBUG >> setup.log"
 ./test_setup.py build_ext --inplace --debug --undef NDEBUG >> $log_dir/setup.log

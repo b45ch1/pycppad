@@ -13,7 +13,7 @@ boost_python_lib_name_darwin  = 'libboost_python.dylib'
 boost_python_lib_name_unix    = 'libboost_python.so'
 # The CppAD tarball will be downloaded into this directory
 # and it will be extraced to a subdirectory called  cppad-*
-cppad_parent_dir = '.'
+cppad_parent_dir = 'external'
 # 
 # END USER SETTINGS
 # ---------------------------------------------------------------------
@@ -76,6 +76,9 @@ if len( sys.argv ) == 2 :
   if sys.argv[1]  == 'sdist' :
     build_source_dist = True 
 if not build_source_dist :
+  if not os.access( cppad_parent_dir , os.R_OK ) :
+    cmd = 'mkdir ' + cppad_parent_dir
+    os.system( cmd )
   if not os.access( cppad_include_dir , os.R_OK ) :
     print 'os.getcwd() = ' + os.getcwd()
     print 'Please wait while the proper version of CppAD is downloaded'
@@ -84,7 +87,7 @@ if not build_source_dist :
     print cmd
     os.system( cmd )
     cmd = '( cd ' + cppad_parent_dir + ';'
-    cmd = cmd + ' tar -xzf ' + cppad_parent_dir + '/' + cppad_tarball + ')'
+    cmd = cmd + ' tar -xzf ' + cppad_tarball + ')'
     print cmd
     os.system( cmd )
   if not os.access( cppad_include_dir , os.R_OK ) :
