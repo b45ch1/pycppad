@@ -20,7 +20,7 @@ $rnext
 $cref/2008/whats_new_09/$$
 $tend
 
-$head 03-19$$
+$head 03-20$$
 
 $list number$$
 Change from using $code cppad-20100101.5$$ 
@@ -32,7 +32,8 @@ $href%
 %$$.
 
 $lnext
-Use current working directory instead of $code @HOME/install$$
+Use $code external$$ sub directory of
+current working directory,  instead of $code @HOME/install$$,
 for default directory that holds a local copy of CppAD; see
 $code cppad_parent_dir$$ under
 $cref/Required Setup Information/install/Required Setup Information/$$.
