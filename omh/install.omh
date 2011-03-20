@@ -91,7 +91,7 @@ $index debugging, build$$
 $index build, debugging$$
 Change into the directory $code pycppad-20110320$$ and execute the command
 $codep
-	./setup.py build_ext --inplace --debug --undef NDEBUG
+	./setup.py build --debug --undef NDEBUG
 $$
 to compile and link a version of the CppAD extension module
 with debugging (improved error messaging).
@@ -102,7 +102,7 @@ $index build, optimize$$
 You can compile and link an optimized version of the CppAD extension
 module with the command
 $codep
-	./setup.py build_ext --inplace
+	./setup.py build
 $$
 Note that in the optimized version, certain error checking is not
 done and improper use of $code pycppad.cpp$$ may lead to a segmentation fault.

@@ -1,6 +1,9 @@
 $begin whats_new_11$$ 
 $dollar @$$
 $spell
+	pycppad
+	inplace
+	py
 	CppAD
 	cppad
 	dir 
@@ -23,6 +26,13 @@ $tend
 $head 03-20$$
 
 $list number$$
+There was a problem with the pycppad $cref/install/$$ instructions.
+To be specific, the debug build was not being
+installed because of the presence of $code --inplace$$
+in the example $code setup.py$$ command.
+This has been fixed in the new
+$cref/debug build instructions/install/Building/With Debugging/$$.
+
 Change from using $code cppad-20100101.5$$ 
 to using $code cppad-20110101.2.gpl.tgz$$;
 see
