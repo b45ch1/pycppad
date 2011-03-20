@@ -17,11 +17,8 @@ $children%
 	omh/whats_new_10.omh%
 	omh/whats_new_09.omh
 %$$
-$table
-$cref/2010/whats_new_10/$$
-$rnext
+$cref/2010/whats_new_10/$$,
 $cref/2008/whats_new_09/$$
-$tend
 
 $head 03-20$$
 
@@ -33,6 +30,7 @@ in the example $code setup.py$$ command.
 This has been fixed in the new
 $cref/debug build instructions/install/Building/With Debugging/$$.
 
+$lnext
 Change from using $code cppad-20100101.5$$ 
 to using $code cppad-20110101.2.gpl.tgz$$;
 see
