@@ -9,6 +9,7 @@ boost_python_include_dir= '/usr/include'
 # Name of the Boost Python library in boost_python_lib_dir.
 # Must begin with 'lib' and end with '.so' (under unix) or '.a' (under cygwin).
 boost_python_lib_name_cygwin  = 'libboost_python-mt.a' 
+boost_python_lib_name_darwin  = 'libboost_python.dylib'
 boost_python_lib_name_unix    = 'libboost_python.so'
 # The CppAD tarball will be downloaded into this directory
 # and it will be extraced to a subdirectory called  cppad-*
@@ -24,7 +25,7 @@ cppad_parent_dir = '.'
 # ---------------------------------------------------------------------
 # Values in setup.py that are replaced by build.sh
 package_version    = '20110319'
-cppad_tarball      = 'cppad-20110101.2.gpl.tgz'
+cppad_tarball      = 'cppad-20100101.5.gpl.tgz'
 cppad_download_dir = 'http://www.coin-or.org/download/source/CppAD'
 # ---------------------------------------------------------------------
 import re
@@ -36,6 +37,7 @@ from numpy.distutils.misc_util import get_numpy_include_dirs
 # determine if this is a cygwin system
 uname     = (( platform.uname() )[0] )[0:6]
 is_cygwin = (uname == 'CYGWIN')
+is_darwin = (uname == 'Darwin')
 # ---------------------------------------------------------------------
 # determine the install directory and the include directory
 match=re.search('([^-]*-[0-9]*[.][0-9]*)[.].*', cppad_tarball)
@@ -48,6 +50,11 @@ if is_cygwin :
   m = re.search('lib([a-zA-Z0-9_-]+)[.]a', boost_python_lib_name)
   if m == None :
     print "boost_python_lib_name_cygwin must begin with 'lib' & end with '.a'"
+elif is_darwin :
+  boost_python_lib_name = boost_python_lib_name_darwin
+  m = re.search('lib([a-zA-Z0-9_-]+)[.]dylib', boost_python_lib_name)
+  if m == None :
+    print "boost_python_lib_name_darwin must begin with 'lib' & end with '.dylib'"
 else :
   boost_python_lib_name = boost_python_lib_name_unix
   m = re.search('lib([a-zA-Z0-9_-]+)[.]so', boost_python_lib_name)
