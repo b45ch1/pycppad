@@ -26,11 +26,17 @@ omhelp_download_dir='http://www.seanet.com/~bradbell'
 # ----------------------------------------------------------------------------
 # Update setup.py so it corresponds to current build.sh options above.
 # only edit line corresponding to assignment statement, check not a == case
-echo "sed -i setup.py"
-sed -i setup.py \
+echo "sed < setup.py > setup.py.new"
+sed < setup.py > setup.py.new \
 	-e "s|^\(package_version *=\)[^=].*|\1 '$yyyymmdd'|"  \
 	-e "s|^\(cppad_tarball *=\)[^=].*|\1 '$cppad_tarball'|" \
 	-e "s|^\(cppad_download_dir *=\)[^=].*|\1 '$cppad_download_dir'|" 
+if ! diff setup.py setup.py.new > /dev/null
+then
+	echo "Replacing setup.py using changes in setup.py.new"
+	chmod +x setup.py.new
+	mv setup.py.new setup.py
+fi
 #
 # Create test_setup.py 
 if [ "$option" == "final" ]
@@ -103,8 +109,17 @@ do
 done
 #
 # Change doc.omh and install.omh to use todays yyyymmdd 
-sed -i doc.omh -e "s/pycppad-[0-9]\{8\}/pycppad-$yyyymmdd/"
-sed -i omh/install.omh -e "s/pycppad-[0-9]\{8\}/pycppad-$yyyymmdd/"
+for file in doc.omh omh/install.omh
+do
+	echo "sed < $file > $file.new"
+	sed < $file > $file.new \
+		-e "s/pycppad-[0-9]\{8\}/pycppad-$yyyymmdd/"
+	if ! diff $file $file.new > /dev/null
+	then
+		echo "Replacing $file using changes in $file.new"
+		mv $file.new $file 
+	fi
+done
 #
 if [ -e doc ]
 then
