@@ -249,12 +249,20 @@ then
 	echo "build.sh: Expected $check tests but only found $number"
 	exit 1
 fi
-# ----------------------------------------------------------------------------
-echo "rm -rf $HOME/prefix/pycppad"
-rm -rf $HOME/prefix/pycppad
 #
-echo "./test_setup.py install --prefix=$HOME/prefix/pycppad >> setup.log"
-./test_setup.py install --prefix=$HOME/prefix/pycppad >> $log_dir/setup.log
+dir=`pwd`
+prefix_dir="$dir/prefix/pycppad"
+#
+echo "./test_setup.py install --prefix=$prefix_dir >> setup.log"
+./test_setup.py install --prefix=$prefix_dir >> $log_dir/setup.log
+#
+python_version=`ls $prefix_dir/lib`
+if [ ! -d $prefix_dir/lib/$python_version/site-packages/pycppad ] 
+then
+	echo "Install failed to create"
+	echo "$prefix_dir/$python_version/site-packages/pycppad"
+	exit 1
+fi
 # ----------------------------------------------------------------------------
 echo "OK: build.sh $1"
 exit 0
