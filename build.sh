@@ -284,8 +284,14 @@ prefix_dir="$dir/prefix/pycppad"
 echo "./test_setup.py install --prefix=$prefix_dir >> setup.log"
 ./test_setup.py install --prefix=$prefix_dir >> $log_dir/setup.log
 #
-python_version=`ls $prefix_dir/lib`
-if [ ! -d $prefix_dir/lib/$python_version/site-packages/pycppad ] 
+if [ -e $prefix_dir/lib64 ]
+then
+	lib="lib64"
+else
+	lib="lib"
+fi
+python_version=`ls $prefix_dir/$lib`
+if [ ! -d $prefix_dir/$lib/$python_version/site-packages/pycppad ] 
 then
 	echo "Install failed to create"
 	echo "$prefix_dir/$python_version/site-packages/pycppad"
