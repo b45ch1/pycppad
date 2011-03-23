@@ -1,6 +1,7 @@
 $begin whats_new_11$$ 
 $dollar @$$
 $spell
+	undef
 	pycppad
 	inplace
 	py
@@ -19,6 +20,11 @@ $children%
 %$$
 $cref/2010/whats_new_10/$$,
 $cref/2008/whats_new_09/$$
+
+$head 03-23$$
+The $code --undef$$ option is not available to $code ./setup.py build$$ so
+$code ./setup.py build$$ was changed to $code ./setup.py build_ext$$
+in the $cref/build instructions/install/Building/$$.
 
 $head 03-20$$
 
