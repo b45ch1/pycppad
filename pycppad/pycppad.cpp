@@ -1,144 +1,4 @@
 /*
-# ---------------------------------------------------------------------------
-# $begin std_math$$ $newlinech #$$
-# $spell
-#	numpy
-#	arccos
-#	arcsin
-#	arctan
-#	cos
-#	exp
-#	tanh
-#	sqrt
-# $$
-#
-# $section Standard Math Unary Functions$$
-#
-# $index arccos$$
-# $index arcsin$$
-# $index arctan$$
-# $index cos$$
-# $index cosh$$
-# $index exp$$
-# $index log$$
-# $index log10$$
-# $index sin$$
-# $index sinh$$
-# $index sqrt$$
-# $index tan$$ 
-# $index tanh$$
-#
-# $head Syntax$$
-# $icode%y% = %fun%(%x%)%$$
-#
-# $head Purpose$$
-# Evaluate the standard math function $icode fun$$ where $icode fun$$
-# has one argument.
-#
-# $head x$$
-# The argument $icode x$$ can be an instance of $code float$$,
-# an $code a_float$$, an $code a2float$$, or a $code numpy.array$$
-# of such objects.
-#
-# $head y$$
-# If $icode x$$ is an instance of $code float$$,
-# $icode y$$ will also be an instance of $code float$$.
-# Otherwise $icode y$$ will have the same type as $icode x$$.
-# $pre
-#
-# $$
-# In the case where $icode x$$ is an array, $icode y$$ will 
-# the same shape as $icode x$$ and the elements of $icode y$$
-# will have the  same type as the elements of $icode x$$.
-#
-# $head fun$$
-# The function $icode fun$$ can be any of the following:
-# $code arccos$$,
-# $code arcsin$$,
-# $code arctan$$,
-# $code cos$$,
-# $code cosh$$,
-# $code exp$$,
-# $code log$$,
-# $code log10$$,
-# $code sin$$,
-# $code sinh$$,
-# $code sqrt$$,
-# $code tan$$, or
-# $code tanh$$.
-#
-# $children%
-#	example/std_math.py
-# %$$
-# $head Example$$
-# The file $cref/std_math.py/$$ 
-# contains an example and test of these functions.
-#
-# $end
----------------------------------------------------------------------------
-$begin abs$$
-$spell
-	numpy
-$$
-
-$section Absolute Value Functions$$
-$index abs$$
-
-$head Syntax$$
-$icode%y% = abs(%x%)%$$
-
-$head Purpose$$
-Sets $icode y$$ equal to the absolute value of $latex x$$.
-
-$head x$$
-The argument $icode x$$ can be an instance of $code float$$,
-an $code a_float$$, an $code a2float$$, or an $code numpy.array$$ 
-of such objects.
-
-$head y$$
-If $icode x$$ is an instance of $code float$$,
-$icode y$$ will also be an instance of $icode float$$.
-Otherwise $icode y$$ will have the same type as $icode x$$.
-$pre
-
-$$
-In the case where $icode x$$ is an array, $icode y$$ will 
-the same shape as $icode x$$ and the elements of $icode y$$
-will have the  same type as the elements of $icode x$$.
-
-$head Derivative$$
-Define $latex F(x) = \R{abs}(x)$$. It follows that
-$latex \[
-	F^{(1)} (x) = \left\{ \begin{array}{ll} 
-		1 & \R{if} \; x > 0
-		\\
-		-1 & \R{if} \; x < 0
-	\end{array} \right.
-\] $$
-and the derivative $latex F^{(1)} (0)$$ does not exist.
-
-$head Directional Derivative$$
-On the other hand, for the absolute value function,
-$cref/forward/$$ mode computes directional derivatives
-which are defined by
-$latex \[
-	F^\circ ( x , d ) = \lim_{\lambda \downarrow 0 } 
-		\frac{F(x + \lambda d) - F(x) }{ \lambda }
-\] $$ 
-For $latex x \neq 0$$,
-$latex \[
-	F^\circ ( x , d ) = F^{(1)} ( x ) * d
-\] $$
-and $latex F^\circ (0 , d) = |d|$$.
-
-$children%
-	example/abs.py
-%$$
-$head Example$$
-The file $cref/abs.py/$$ 
-contains an example and test of these functions.
-
-$end
 ---------------------------------------------------------------------------
 $begin ad_unary$$
 $spell
@@ -412,6 +272,147 @@ The file $cref/compare_op.py/$$
 contains an example and test of these operations.
 
 $end
+---------------------------------------------------------------------------
+$begin std_math$$ 
+$spell
+	numpy
+	arccos
+	arcsin
+	arctan
+	cos
+	exp
+	tanh
+	sqrt
+$$
+
+$section Standard Math Unary Functions$$
+
+$index arccos$$
+$index arcsin$$
+$index arctan$$
+$index cos$$
+$index cosh$$
+$index exp$$
+$index log$$
+$index log10$$
+$index sin$$
+$index sinh$$
+$index sqrt$$
+$index tan$$ 
+$index tanh$$
+
+$head Syntax$$
+$icode%y% = %fun%(%x%)%$$
+
+$head Purpose$$
+Evaluate the standard math function $icode fun$$ where $icode fun$$
+has one argument.
+
+$head x$$
+The argument $icode x$$ can be an instance of $code float$$,
+an $code a_float$$, an $code a2float$$, or a $code numpy.array$$
+of such objects.
+
+$head y$$
+If $icode x$$ is an instance of $code float$$,
+$icode y$$ will also be an instance of $code float$$.
+Otherwise $icode y$$ will have the same type as $icode x$$.
+$pre
+
+$$
+In the case where $icode x$$ is an array, $icode y$$ will 
+the same shape as $icode x$$ and the elements of $icode y$$
+will have the  same type as the elements of $icode x$$.
+
+$head fun$$
+The function $icode fun$$ can be any of the following:
+$code arccos$$,
+$code arcsin$$,
+$code arctan$$,
+$code cos$$,
+$code cosh$$,
+$code exp$$,
+$code log$$,
+$code log10$$,
+$code sin$$,
+$code sinh$$,
+$code sqrt$$,
+$code tan$$, or
+$code tanh$$.
+
+$children%
+	example/std_math.py
+%$$
+$head Example$$
+The file $cref/std_math.py/$$ 
+contains an example and test of these functions.
+
+$end
+---------------------------------------------------------------------------
+$begin abs$$
+$spell
+	numpy
+$$
+
+$section Absolute Value Functions$$
+$index abs$$
+
+$head Syntax$$
+$icode%y% = abs(%x%)%$$
+
+$head Purpose$$
+Sets $icode y$$ equal to the absolute value of $latex x$$.
+
+$head x$$
+The argument $icode x$$ can be an instance of $code float$$,
+an $code a_float$$, an $code a2float$$, or an $code numpy.array$$ 
+of such objects.
+
+$head y$$
+If $icode x$$ is an instance of $code float$$,
+$icode y$$ will also be an instance of $icode float$$.
+Otherwise $icode y$$ will have the same type as $icode x$$.
+$pre
+
+$$
+In the case where $icode x$$ is an array, $icode y$$ will 
+the same shape as $icode x$$ and the elements of $icode y$$
+will have the  same type as the elements of $icode x$$.
+
+$head Derivative$$
+Define $latex F(x) = \R{abs}(x)$$. It follows that
+$latex \[
+	F^{(1)} (x) = \left\{ \begin{array}{ll} 
+		1 & \R{if} \; x > 0
+		\\
+		-1 & \R{if} \; x < 0
+	\end{array} \right.
+\] $$
+and the derivative $latex F^{(1)} (0)$$ does not exist.
+
+$head Directional Derivative$$
+On the other hand, for the absolute value function,
+$cref/forward/$$ mode computes directional derivatives
+which are defined by
+$latex \[
+	F^\circ ( x , d ) = \lim_{\lambda \downarrow 0 } 
+		\frac{F(x + \lambda d) - F(x) }{ \lambda }
+\] $$ 
+For $latex x \neq 0$$,
+$latex \[
+	F^\circ ( x , d ) = F^{(1)} ( x ) * d
+\] $$
+and $latex F^\circ (0 , d) = |d|$$.
+
+$children%
+	example/abs.py
+%$$
+$head Example$$
+The file $cref/abs.py/$$ 
+contains an example and test of these functions.
+
+$end
+---------------------------------------------------------------------------
 */
 # include "environment.hpp"
 # include "vector.hpp"
