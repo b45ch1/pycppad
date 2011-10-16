@@ -509,10 +509,14 @@ BOOST_PYTHON_MODULE(cppad_)
 		.def(str(self))
 		PYCPPAD_OPERATOR_LIST
 		PYCPPAD_STD_MATH_LINK_PY(double)
-     		.def( pow(self, self) ) 
-     		.def( pow(self, double()) )
-     		.def( pow(double(), self) )
+
+		// abs
 		.def( abs(self) )
+
+		// pow
+     	.def( pow(self, self) ) 
+     	.def( pow(self, double()) )
+     	.def( pow(double(), self) )
 	;
 
 	class_<ADFun_double>("adfun_float", init< array& , array& >())
@@ -528,10 +532,14 @@ BOOST_PYTHON_MODULE(cppad_)
 		.def(str(self))
 		PYCPPAD_OPERATOR_LIST
 		PYCPPAD_STD_MATH_LINK_PY(AD_double)
-     		.def( pow(self, self) ) 
-     		.def( pow(self, double()) )
-     		.def( pow(double(), self) )
+
+		// abs
 		.def( abs(self) )
+
+		// pow
+     	.def( pow(self, self) ) 
+     	.def( pow(self, double()) )
+     	.def( pow(double(), self) )
 	;
 	class_<ADFun_AD_double>("adfun_a_float", init< array& , array& >())
 		.def("domain",    &ADFun_AD_double::Domain)
