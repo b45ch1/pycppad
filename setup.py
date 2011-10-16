@@ -25,7 +25,7 @@ cppad_parent_dir = 'external'
 # ---------------------------------------------------------------------
 # Values in setup.py that are replaced by build.sh
 package_version    = '20111016'
-cppad_tarball      = 'cppad-20110101.3.gpl.tgz'
+cppad_tarball      = 'cppad-20110101.5.gpl.tgz'
 cppad_download_dir = 'http://www.coin-or.org/download/source/CppAD'
 # ---------------------------------------------------------------------
 import re

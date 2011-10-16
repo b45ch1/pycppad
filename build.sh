@@ -18,7 +18,7 @@ fi
 option="$1"
 # ---------------------------------------------------------------------
 yyyymmdd=`date +%F | sed -e 's|-||g'`    # todays year, month, and day
-cppad_tarball='cppad-20110101.3.gpl.tgz' # local_cppad_directory.gpl.tgz
+cppad_tarball='cppad-20110101.5.gpl.tgz' # local_cppad_directory.gpl.tgz
 external_dir=`pwd`/external              # externals are placed here
 log_dir=`pwd`                            # build progress logs written here
 cppad_download_dir='http://www.coin-or.org/download/source/CppAD'
