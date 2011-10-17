@@ -54,9 +54,9 @@ if [ "$1" == 'list' ] || [ "$1" == 'edit' ]
 then
 	# ------------------------------------------------
 	unknown=`git status -s | sed -n \
+		-e '/[/ ]junk\./d' \
 		-e '/^[^?]/d' \
 		-e 's/^?? */ /' \
-		-e '/[/ ]junk/d' \
 		-e '/[/ ]makefile.in/d' \
 		-e '/[/ ]config.h.in/d' \
 		-e '/.*\.am$/p'  \
