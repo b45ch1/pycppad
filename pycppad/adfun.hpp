@@ -11,8 +11,9 @@ namespace pycppad {
 	private:
 		CppAD::ADFun<Base> f_;
 	public:
-		// constructor
+		// python constructor call
 		ADFun(array& x_array, array& y_array);
+
 		// member functions
 		int   Domain(void);
 		int   Range(void);
@@ -20,6 +21,7 @@ namespace pycppad {
 		array Reverse(int p, array& w);
 		array Jacobian(array& x);
 		array Hessian(array& x, array& w);
+		void  optimize(void);
 	};
 	typedef ADFun<double>    ADFun_double;
 	typedef ADFun<AD_double> ADFun_AD_double;

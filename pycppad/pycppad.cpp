@@ -705,11 +705,12 @@ BOOST_PYTHON_MODULE(cppad_)
 
 	class_<ADFun_double>("adfun_float", init< array& , array& >())
 		.def("domain",    &ADFun_double::Domain)
-		.def("range",     &ADFun_double::Range)
 		.def("forward",   &ADFun_double::Forward)
-		.def("reverse",   &ADFun_double::Reverse)
-		.def("jacobian_", &ADFun_double::Jacobian)
 		.def("hessian_" , &ADFun_double::Hessian)
+		.def("jacobian_", &ADFun_double::Jacobian)
+		.def("optimize",  &ADFun_double::optimize)
+		.def("range",     &ADFun_double::Range)
+		.def("reverse",   &ADFun_double::Reverse)
 	;
 	// --------------------------------------------------------------------
 	class_<AD_AD_double>("a2float", init<AD_double>())

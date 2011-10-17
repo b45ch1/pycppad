@@ -60,7 +60,7 @@
 # $index stop, recording$$
 #
 # $head Syntax$$
-# $icode%f% = %adfun%(%a_x%, %a_y%)%$$
+# $icode%f% = adfun(%a_x%, %a_y%)%$$
 #
 # $head Purpose$$
 # The function object $icode f$$ will store the $codei%type( %a_x%[0] )%$$

@@ -21,6 +21,17 @@ $children%
 $cref/2010/whats_new_10/$$,
 $cref/2008/whats_new_09/$$
 
+$head 10-17$$
+Add tape optimization; see $cref optimize$$.
+
+$head 10-16$$
+$list number$$
+Add the conditional expressions; see $cref condexp$$.
+$lnext
+Use newer version of CppAD that fixes warnings found by
+$code g++$$ version 4.6.1.
+$lend
+
 $head 03-23$$
 The $code --undef$$ option is not available to $code ./setup.py build$$ so
 $code ./setup.py build$$ was changed to $code ./setup.py build_ext$$

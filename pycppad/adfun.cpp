@@ -58,8 +58,8 @@ The coefficient $latex y^{(p)}$$ is equal to
 the value $icode y_p$$ returned by this call.
 
 $head f$$
-The object $icode f$$ must be an $cref/adfun/$$ object.
-We use $cref/level/adfun/f/level/$$ for the AD $cref/ad/$$ level of 
+The object $icode f$$ must be an $cref adfun$$ object.
+We use $cref/level/adfun/f/level/$$ for the AD $cref ad$$ level of 
 this object.
 
 $head p$$
@@ -120,7 +120,7 @@ $head Syntax$$
 $icode%dw% = %f%.forward(%p%, %w%)%$$
 
 $head Purpose$$
-Reverse mode computes the derivative of the $cref/forward/$$ more 
+Reverse mode computes the derivative of the $cref forward$$ more 
 Taylor coefficients with respect to the domain variable $latex x$$.
 
 $head x_k$$
@@ -162,8 +162,8 @@ where $latex o( t^{p-1} ) / t^{p-1} \rightarrow 0$$
 as $latex t \rightarrow 0$$.
 
 $head f$$
-The object $icode f$$ must be an $cref/adfun/$$ object.
-We use $cref/level/adfun/f/level/$$ for the AD $cref/ad/$$ level of 
+The object $icode f$$ must be an $cref adfun$$ object.
+We use $cref/level/adfun/f/level/$$ for the AD $cref ad$$ level of 
 this object.
 
 $head p$$
@@ -279,8 +279,8 @@ where $latex F : \B{R}^n \rightarrow \B{R}^m$$ is the
 function corresponding to the $code adfun$$ object $cref/f/adfun/f/$$.
 
 $head f$$
-The object $icode f$$ must be an $cref/adfun/$$ object.
-We use $cref/level/adfun/f/level/$$ for the AD $cref/ad/$$ level of 
+The object $icode f$$ must be an $cref adfun$$ object.
+We use $cref/level/adfun/f/level/$$ for the AD $cref ad$$ level of 
 this object.
 
 $head x$$
@@ -314,7 +314,7 @@ $children%
 	example/jacobian.py
 %$$
 $head Example$$ 
-The file $cref/jacobian.py/$$ contains an example and test of this operation.
+The file $cref jacobian.py$$ contains an example and test of this operation.
 
 $end
 ---------------------------------------------------------------------------
@@ -344,8 +344,8 @@ where $latex F : \B{R}^n \rightarrow \B{R}^m$$ is the
 function corresponding to the $code adfun$$ object $cref/f/adfun/f/$$.
 
 $head f$$
-The object $icode f$$ must be an $cref/adfun/$$ object.
-We use $cref/level/adfun/f/level/$$ for the AD $cref/ad/$$ level of 
+The object $icode f$$ must be an $cref adfun$$ object.
+We use $cref/level/adfun/f/level/$$ for the AD $cref ad$$ level of 
 this object.
 
 $head x$$
@@ -389,7 +389,49 @@ $children%
 	example/hessian.py
 %$$
 $head Example$$ 
-The file $cref/hessian.py/$$ contains an example and test of this operation.
+The file $cref hessian.py$$ contains an example and test of this operation.
+
+$end
+---------------------------------------------------------------------------
+$begin optimize$$
+$spell
+	Taylor
+	var
+$$
+
+$section Optimize an AD Function Object Tape$$
+
+$index optimize$$
+$index tape, optimize$$
+$index sequence, optimize operations$$
+$index operations, optimize sequence$$
+$index speed, optimize$$
+$index memory, optimize$$
+
+$head Syntax$$
+$icode%f%.optimize()%$$
+
+
+$head Purpose$$
+The operation sequence corresponding to an $cref ADFun$$ object can
+be very large and involve many operations.
+$icode%f%.optimize%$$ enables one to reduce the number of operations
+and thereby reduce the time and the memory required to
+compute function and derivative values. 
+
+$head f$$
+The object $icode f$$ is an $cref adfun$$ object.
+
+$head Efficiency$$
+The $code optimize$$ member function
+may greatly reduce the size of the operation sequence corresponding to 
+$icode f$$.
+
+$children%
+	example/optimize.py
+%$$
+$head Example$$ 
+The file $cref optimize.py$$ contains an example and test of this operation.
 
 $end
 ---------------------------------------------------------------------------
@@ -400,7 +442,8 @@ $end
 
 namespace pycppad {
 	// -------------------------------------------------------------
-	// class ADFun<Base>
+
+	// constructor for python class ADFun<Base>
 	template <class Base>
 	ADFun<Base>::ADFun(array& x_array, array& y_array)
 	{	vec< CppAD::AD<Base> > x_vec(x_array);
@@ -408,14 +451,18 @@ namespace pycppad {
 
 		f_.Dependent(x_vec, y_vec);
 	}
-	// member functions Domain and Range
+
+	// Domain
 	template <class Base>
 	int ADFun<Base>::Domain(void)
 	{	return static_cast<int>( f_.Domain() ); }
+
+	// Range
 	template <class Base>
 	int ADFun<Base>::Range(void)
 	{	return static_cast<int>( f_.Range() ); }
-	// member function Forward
+
+	// Forward
 	template <class Base>
 	array ADFun<Base>::Forward(int p, array& xp)
 	{	size_t    p_sz(p);
@@ -423,7 +470,8 @@ namespace pycppad {
 		vec<Base> result = f_.Forward(p_sz, xp_vec);
 		return vec2array(result);
 	}
-	// member function Reverse
+
+	// Reverse
 	template <class Base>
 	array ADFun<Base>::Reverse(int p, array& w)
 	{	size_t    p_sz(p);
@@ -435,7 +483,8 @@ namespace pycppad {
 			result[j] = dw_vec[j*p + p - 1];
 		return vec2array(result);
 	}
-	// member function Jacobian
+
+	// Jacobian
 	template <class Base>
 	array ADFun<Base>::Jacobian(array& x)
 	{	vec<Base> x_vec(x);
@@ -443,7 +492,8 @@ namespace pycppad {
 		// Kludge: return a vector which is reshaped by cppad.py
 		return vec2array(result);
 	}
-	// member function Hessian
+
+	// Hessian
 	template <class Base>
 	array ADFun<Base>::Hessian(array& x, array& w)
 	{	vec<Base> x_vec(x);
@@ -452,11 +502,18 @@ namespace pycppad {
 		// Kludge: return a vector which is reshaped by cppad.py
 		return vec2array(result);
 	}
+
+	// optimize
+	template <class Base>
+	void ADFun<Base>::optimize(void)
+	{	f_.optimize(); }
+
 	// -------------------------------------------------------------
 	// instantiate instances of ADFun<Base>
 	template class ADFun<double>;
 	template class ADFun<AD_double>;
 	// -------------------------------------------------------------
+
 	void adfun_avoid_warning_that_import_array_not_used(void)
 	{	import_array(); }
 }
