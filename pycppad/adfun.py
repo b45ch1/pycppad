@@ -30,7 +30,7 @@
 # The return value $icode a_x$$ is a $code numpy.array$$ 
 # with the same shape as $icode x$$. 
 # If the elements of $icode x$$ are instances of $code int$$ or $code float$$
-# the elements of $icode a_x$$ are instances of # $code a_float$$.
+# the elements of $icode a_x$$ are instances of $code a_float$$.
 # If the elements of $icode x$$ are instances of $code a_float$$
 # the elements of $icode a_x$$ are instances of $code a2float$$.
 # The $cref/value/$$ of the elements of $icode a_x$$ 

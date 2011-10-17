@@ -40,7 +40,7 @@ $children%
 	example/ad_unary.py
 %$$
 $head Example$$
-The file $cref/ad_unary.py/$$ 
+The file $cref ad_unary.py$$ 
 contains an example and test of these functions.
 
 $end
@@ -117,7 +117,7 @@ $children%
 	example/ad_numeric.py
 %$$
 $head Example$$
-The file $cref/ad_numeric.py/$$ 
+The file $cref ad_numeric.py$$ 
 contains an example and test of $code abs$$.
 
 $end
@@ -191,7 +191,7 @@ $children%
 	example/assign_op.py
 %$$
 $head Example$$
-The file $cref/assign_op.py/$$  
+The file $cref assign_op.py$$  
 contains an example and test of these operations.
 
 $end
@@ -268,7 +268,7 @@ $children%
 	example/compare_op.py
 %$$
 $head Example$$
-The file $cref/compare_op.py/$$  
+The file $cref compare_op.py$$  
 contains an example and test of these operations.
 
 $end
@@ -344,7 +344,7 @@ $children%
 	example/std_math.py
 %$$
 $head Example$$
-The file $cref/std_math.py/$$ 
+The file $cref std_math.py$$ 
 contains an example and test of these functions.
 
 $end
@@ -392,7 +392,7 @@ and the derivative $latex F^{(1)} (0)$$ does not exist.
 
 $head Directional Derivative$$
 On the other hand, for the absolute value function,
-$cref/forward/$$ mode computes directional derivatives
+$cref forward$$ mode computes directional derivatives
 which are defined by
 $latex \[
 	F^\circ ( x , d ) = \lim_{\lambda \downarrow 0 } 
@@ -408,9 +408,75 @@ $children%
 	example/abs.py
 %$$
 $head Example$$
-The file $cref/abs.py/$$ 
-contains an example and test of these functions.
+The file $cref abs.py$$ 
+contains an example and test of this function.
 
+$end
+---------------------------------------------------------------------------
+$begin condexp$$
+$spell
+	condexp
+	op
+	lt
+	le
+	eq
+	ge
+	gt
+	rel
+$$
+
+$section Conditional Expressions$$
+$index abs$$
+
+$head Syntax$$
+$icode%result% = condexp_%rel%(%left%, %right%, %if_true%, %if_false%)%$$
+
+$head Purpose$$
+Record, as part of an operation sequence, the conditional result
+$codei%
+	if( %left% %op% %right% )
+		%result% = %if_true%
+	else	%result% = %if_false%
+%$$
+The relation $icode rel%$$, and operator $icode op$$,
+have the following correspondence:
+$codei%
+	%rel%   lt   le   eq   ge   gt
+	 %op%    <   <=   ==    >   >=
+%$$
+
+$head rel$$
+In the syntax above, the relation $icode rel$$ represents one of the following
+two characters: $code lt$$, $code le$$, $code eq$$, $code ge$$, $code gt$$. 
+As in the table above,
+$icode rel$$ determines which comparison operator $icode op$$ is used
+when comparing $icode left$$ and $icode right$$.
+
+$head left$$
+The argument $icode left$$ must have type $code a_float$$ or $code a2float$$.
+It specifies the value for the left side of the comparison operator.
+ 
+$head right$$
+The argument $icode right$$ must have the same type as $icode left$$.
+It specifies the value for the right side of the comparison operator.
+
+$head if_true$$
+The argument $icode if_true$$ must have the same type as $icode left$$.
+It specifies the return value if the result of the comparison is true.
+
+$head if_false$$
+The argument $icode if_false$$ must have the same type as $icode left$$.
+It specifies the return value if the result of the comparison is false.
+
+$head result$$
+This result has the same type as $icode left$$.
+
+$children%
+	example/condexp.py
+%$$
+$head Example$$
+The file $cref condexp.py$$ 
+contains an example and test of these functions.
 $end
 ---------------------------------------------------------------------------
 */
@@ -487,6 +553,41 @@ $end
      .def("tan",     tan_AD_##Base)      \
      .def("tanh",    tanh_AD_##Base)
 
+# define PYCPPAD_COND_EXP_LINK_CPP(Base) \
+     CppAD::AD<Base> (* condexp_lt_AD_##Base ) (                  \
+		const CppAD::AD<Base> &left     ,                       \
+		const CppAD::AD<Base> &right    ,                       \
+		const CppAD::AD<Base> &if_true  ,                       \
+		const CppAD::AD<Base> &if_false ) = CppAD::CondExpLt;   \
+     CppAD::AD<Base> (* condexp_le_AD_##Base ) (                  \
+		const CppAD::AD<Base> &left     ,                       \
+		const CppAD::AD<Base> &right    ,                       \
+		const CppAD::AD<Base> &if_true  ,                       \
+		const CppAD::AD<Base> &if_false ) = CppAD::CondExpLe;   \
+     CppAD::AD<Base> (* condexp_eq_AD_##Base ) (                  \
+		const CppAD::AD<Base> &left     ,                       \
+		const CppAD::AD<Base> &right    ,                       \
+		const CppAD::AD<Base> &if_true  ,                       \
+		const CppAD::AD<Base> &if_false ) = CppAD::CondExpEq;   \
+     CppAD::AD<Base> (* condexp_ge_AD_##Base ) (                  \
+		const CppAD::AD<Base> &left     ,                       \
+		const CppAD::AD<Base> &right    ,                       \
+		const CppAD::AD<Base> &if_true  ,                       \
+		const CppAD::AD<Base> &if_false ) = CppAD::CondExpGe;   \
+     CppAD::AD<Base> (* condexp_gt_AD_##Base ) (                  \
+		const CppAD::AD<Base> &left     ,                       \
+		const CppAD::AD<Base> &right    ,                       \
+		const CppAD::AD<Base> &if_true  ,                       \
+		const CppAD::AD<Base> &if_false ) = CppAD::CondExpGt;
+
+# define PYCPPAD_COND_EXP_LINK_PY(Base) \
+	def("condexp_lt", condexp_lt_AD_##Base); \
+	def("condexp_le", condexp_le_AD_##Base); \
+	def("condexp_eq", condexp_eq_AD_##Base); \
+	def("condexp_ge", condexp_ge_AD_##Base); \
+	def("condexp_gt", condexp_gt_AD_##Base);
+
+
 namespace pycppad {
 	// Replacement for the CppAD error handler
 	void cppad_error_handler(
@@ -556,9 +657,12 @@ BOOST_PYTHON_MODULE(cppad_)
 	typedef CppAD::AD<double>    AD_double;
 	typedef CppAD::AD<AD_double> AD_AD_double;
 
+	// standard math functions
 	PYCPPAD_STD_MATH_LINK_CPP(double);
-
 	PYCPPAD_STD_MATH_LINK_CPP(AD_double);
+	// conditional expressions
+	PYCPPAD_COND_EXP_LINK_CPP(double);
+	PYCPPAD_COND_EXP_LINK_CPP(AD_double);
 
 	// here are the things we are using from boost::python
 	using boost::python::numeric::array;
@@ -581,6 +685,9 @@ BOOST_PYTHON_MODULE(cppad_)
 	def("a_float_",   pycppad::AD_double_);
 	// documented in adfun.py
 	def("abort_recording", pycppad::abort_recording);
+	// conditional expressions
+	PYCPPAD_COND_EXP_LINK_PY(double)
+	PYCPPAD_COND_EXP_LINK_PY(AD_double)
 	// --------------------------------------------------------------------
 	class_<AD_double>("a_float", init<double>())
 		.def(str(self))

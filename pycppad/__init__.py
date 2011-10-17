@@ -97,6 +97,11 @@ import numpy
 import pycppad.cppad_
 from pycppad.cppad_ import a_float
 from pycppad.cppad_ import a2float
+from pycppad.cppad_ import condexp_lt
+from pycppad.cppad_ import condexp_le
+from pycppad.cppad_ import condexp_eq
+from pycppad.cppad_ import condexp_ge
+from pycppad.cppad_ import condexp_gt
 
 def ad(x) :
   """

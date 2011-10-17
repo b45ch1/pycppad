@@ -15,6 +15,7 @@ $rref adfun.py$$
 $rref ad_numeric.py$$
 $rref ad_unary.py$$
 $rref assign_op.py$$
+$rref condexp.py$$
 $rref compare_op.py$$
 $rref forward_0.py$$
 $rref forward_1.py$$
