@@ -156,7 +156,6 @@
 # $end
 # ---------------------------------------------------------------------------
 import cppad_
-from cppad_ import abort_recording
 import numpy
  
 def independent(x) :

@@ -94,14 +94,15 @@ to evaluate function values and derivatives of arbitrary order.
 """
 
 import numpy
-import pycppad.cppad_
-from pycppad.cppad_ import a_float
-from pycppad.cppad_ import a2float
-from pycppad.cppad_ import condexp_lt
-from pycppad.cppad_ import condexp_le
-from pycppad.cppad_ import condexp_eq
-from pycppad.cppad_ import condexp_ge
-from pycppad.cppad_ import condexp_gt
+import cppad_
+from cppad_ import a_float
+from cppad_ import a2float
+from cppad_ import abort_recording
+from cppad_ import condexp_lt
+from cppad_ import condexp_le
+from cppad_ import condexp_eq
+from cppad_ import condexp_ge
+from cppad_ import condexp_gt
 
 def ad(x) :
   """
