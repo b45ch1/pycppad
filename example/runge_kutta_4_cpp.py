@@ -57,7 +57,7 @@ def pycppad_test_runge_kutta_4_cpp() :
 		f     = x_1 * y
 		return f
 	# Number of Runge-Kutta times steps to include in the function object
-	M = 10 
+	M = 100 
 
 	# Start time for recording the pycppad function object
 	s0  = time.time()
@@ -80,7 +80,11 @@ def pycppad_test_runge_kutta_4_cpp() :
 	# define the AD function rk4 : x -> y
 	rk4 = adfun(a_x, a_y)
 	# amount of time it took to tape this function object
-	tape_sec =  time.time() - s0
+	tape_sec = time.time() - s0
+	# make the fucntion object more efficient
+	s0       = time.time()
+	rk4.optimize()
+	opt_sec  = time.time() - s0
 
 	ti  = 0.              # initial time
 	tf  = 1.              # final time
@@ -113,13 +117,14 @@ def pycppad_test_runge_kutta_4_cpp() :
 	# check solution is correct
 	assert( abs( y[0] - x_0 * exp( x_1 * tf ) ) < 1e-10 ) 
 	
-	# check that C++ is always more than 20 times faster
-	assert( 20. * cpp_sec <= python_sec )
+	# check that C++ is always more than 100 times faster
+	assert( 100. * cpp_sec <= python_sec )
 
-	# Actual factor is about 100. Uncomment the print statement below to 
-	# see it for your machine / optimized or debug build.
-	format = 'cpp_sec = %8f, python_sec/cpp_sec = %5.1f'
-	format = format + ', tape_sec/cpp_sec = %5.1f'
-	# print format % ( cpp_sec, python_sec/cpp_sec, tape_sec/cpp_sec )
-
+	# Uncomment the print statement below to see actual times on your machine
+	format =          'cpp_sec            = %8f,\n'
+	format = format + 'python_sec/cpp_sec = %5.1f\n'
+	format = format + 'tape_sec/cpp_sec   = %5.1f\n'
+	format = format + 'opt_sec/cpp_sec    = %5.1f'
+	s      = cpp_sec
+	# print format % (s, python_sec/s, tape_sec/s, opt_sec/s )
 # END CODE

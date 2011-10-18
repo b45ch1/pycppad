@@ -21,6 +21,15 @@ $children%
 $cref/2010/whats_new_10/$$,
 $cref/2008/whats_new_09/$$
 
+$head 10-18$$
+$list number$$
+Fix problem with $code import cppad_$$ in $code 20111017$$ version.
+$lnext
+Change $cref runge_kutta_4_cpp.py$$ to use $cref optimize$$ and to
+check that using $code pycppad$$ is always more than 100 times faster than 
+straight python for this test case.
+$lend
+
 $head 10-17$$
 Add tape optimization; see $cref optimize$$.
 
