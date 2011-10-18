@@ -94,7 +94,7 @@ to evaluate function values and derivatives of arbitrary order.
 """
 
 import numpy
-import cppad_
+import pycppad.cppad_
 from cppad_ import a_float
 from cppad_ import a2float
 from cppad_ import abort_recording

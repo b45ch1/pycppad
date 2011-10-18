@@ -415,8 +415,8 @@ $icode%f%.optimize()%$$
 $head Purpose$$
 The operation sequence corresponding to an $cref ADFun$$ object can
 be very large and involve many operations.
-$icode%f%.optimize%$$ enables one to reduce the number of operations
-and thereby reduce the time and the memory required to
+The $icode%f%.optimize%$$ procedure reduces the number of operations,
+and thereby the time and memory, required to
 compute function and derivative values. 
 
 $head f$$
