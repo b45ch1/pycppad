@@ -28,9 +28,7 @@ omhelp_download_dir='http://www.seanet.com/~bradbell'
 # only edit line corresponding to assignment statement, check not a == case
 echo "sed < setup.py > setup.py.new"
 sed < setup.py > setup.py.new \
-	-e "s|^\(package_version *=\)[^=].*|\1 '$yyyymmdd'|"  \
-	-e "s|^\(cppad_tarball *=\)[^=].*|\1 '$cppad_tarball'|" \
-	-e "s|^\(cppad_download_dir *=\)[^=].*|\1 '$cppad_download_dir'|" 
+	-e "s|^\(package_version *=\)[^=].*|\1 '$yyyymmdd'|" 
 if ! diff setup.py setup.py.new > /dev/null
 then
 	echo "Replacing setup.py using changes in setup.py.new"

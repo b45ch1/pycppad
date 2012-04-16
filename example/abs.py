@@ -23,16 +23,22 @@ def pycppad_test_abs() :
   for i in range( n ) :
     dx[i] = 1.
     df    = f.forward(1, dx)
-    if x[i] >= 0 :
+    if x[i] > 0. :
       assert df[i] == +1.
-    else :
+    elif x[i] < 0. :
       assert df[i] == -1.
+    else :
+      # There was a change in the CppAD specifictions for the abs function
+      # see 12-30 on http://www.coin-or.org/CppAD/Doc/whats_new_11.htm
+      assert df[i] == +1. or df[i] == 0.
     dx[i] = -1.
     df    = f.forward(1, dx)
-    if x[i] > 0 :
+    if x[i] > 0. :
       assert df[i] == -1.
-    else :
+    elif x[i] < 0. :
       assert df[i] == +1.
+    else :
+      assert df[i] == +1 or df[i] == 0.
     dx[i] = 0.
 # Example using a2float ----------------------------------------------------
 def pycppad_test_abs_a2() :
@@ -48,15 +54,19 @@ def pycppad_test_abs_a2() :
   for i in range( n ) :
     dx[i] = ad(1)
     df    = f.forward(1, dx)
-    if x[i] >= 0 :
+    if x[i] > 0. :
       assert df[i] == +1.
-    else :
+    elif x[i] < 0. :
       assert df[i] == -1.
+    else :
+      assert df[i] == +1. or df[i] == 0.
     dx[i] = ad(-1)
     df    = f.forward(1, dx)
-    if x[i] > 0 :
+    if x[i] > 0. :
       assert df[i] == -1.
-    else :
+    elif x[i] < 0. :
       assert df[i] == +1.
+    else:
+      assert df[i] == +1. or df[i] == 0.
     dx[i] = ad(0)
 # END CODE

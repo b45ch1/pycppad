@@ -351,6 +351,7 @@ $end
 ---------------------------------------------------------------------------
 $begin abs$$
 $spell
+	pycppad
 	numpy
 $$
 
@@ -380,29 +381,31 @@ the same shape as $icode x$$ and the elements of $icode y$$
 will have the  same type as the elements of $icode x$$.
 
 $head Derivative$$
-Define $latex F(x) = \R{abs}(x)$$. It follows that
+pycppad defines the derivative of the absolute value function by
 $latex \[
-	F^{(1)} (x) = \left\{ \begin{array}{ll} 
+	\R{abs}^{(1)} (x) = \R{sign} (x) = \left\{ \begin{array}{ll} 
 		1 & \R{if} \; x > 0
+		\\
+		0 & \R{if} \; x = 0
 		\\
 		-1 & \R{if} \; x < 0
 	\end{array} \right.
 \] $$
-and the derivative $latex F^{(1)} (0)$$ does not exist.
 
 $head Directional Derivative$$
-On the other hand, for the absolute value function,
-$cref forward$$ mode computes directional derivatives
-which are defined by
+Prior to 
+$href%http://www.coin-or.org/CppAD/Doc/whats_new_11.htm#12-30%2011-12-30%$$,
+$cref forward$$ mode computed the directional derivative
+of the absolute value function which is defined by
 $latex \[
-	F^\circ ( x , d ) = \lim_{\lambda \downarrow 0 } 
-		\frac{F(x + \lambda d) - F(x) }{ \lambda }
+	\R{abs}^\circ ( x , d ) = \lim_{\lambda \downarrow 0 } 
+		\frac{\R{abs}(x + \lambda d) - \R{abs}(x) }{ \lambda }
 \] $$ 
 For $latex x \neq 0$$,
 $latex \[
-	F^\circ ( x , d ) = F^{(1)} ( x ) * d
+	\R{abs}^\circ ( x , d ) = \R{abs}^{(1)} ( x ) * d
 \] $$
-and $latex F^\circ (0 , d) = |d|$$.
+and $latex \R{abs}^\circ (0 , d) = |d|$$.
 
 $children%
 	example/abs.py
