@@ -22,7 +22,7 @@ boost_python_lib         = [ 'boost_python-mt' ]
 # for documentation on how to use the script setup.py 
 # ---------------------------------------------------------------------
 # Values in setup.py that are replaced by build.sh
-package_version    = '20120416'
+package_version    = '20120416',
 # ---------------------------------------------------------------------
 def remove_duplicates(alist) :
 	n = len(alist)
@@ -36,21 +36,13 @@ def remove_duplicates(alist) :
 	return alist
 # ---------------------------------------------------------------------
 try:
-    doc_files    = os.listdir('doc')
-    for i in range( len(doc_files) ):
-        doc_files[i] = 'doc/' + doc_files[i]
-    
+	doc_files    = os.listdir('doc')
+	for i in range( len(doc_files) ):
+		doc_files[i] = 'doc/' + doc_files[i]
 except:
-    doc_files = []
+	doc_files = []
 #
-brad_email             = 'bradbell @ seanet dot com'
-sebastian_email        = 'sebastian dot walter @ gmail dot com'
-package_author         = 'Bradley M. Bell and Sebastian F. Walter'
-package_author_email   = sebastian_email + ' , ' + brad_email
-package_url            = 'http://github.com/b45ch1/pycppad/tree/master'
-package_description    = 'Python Algorihtmic Differentiation Using CppAD'
 package_data_files     = [ ('share/doc/pycppad', doc_files ) ]
-package_license        = 'BSD'
 #
 cppad_extension_name           = 'pycppad' + '/cppad_'
 cppad_extension_include_dirs   = get_numpy_include_dirs()
@@ -59,30 +51,29 @@ cppad_extension_include_dirs  += boost_python_include_dir
 remove_duplicates(cppad_extension_include_dirs)
 cppad_extension_library_dirs   = boost_python_lib_dir
 cppad_extension_libraries      = boost_python_lib
-cppad_extension_sources      = [ 
-  'pycppad' + '/adfun.cpp'       ,
-  'pycppad' + '/pycppad.cpp'     ,
-  'pycppad' + '/vec2array.cpp'   ,
-  'pycppad' + '/vector.cpp' 
-]
+#
+file_list = [ 'adfun.cpp', 'pycppad.cpp', 'vec2array.cpp', 'vector.cpp' ]
+cppad_extension_sources = [ os.path.join('pycppad', f) for f in file_list ]
 extension_modules = [ Extension( 
-  cppad_extension_name                        , 
-  cppad_extension_sources                     ,
-  include_dirs = cppad_extension_include_dirs ,
-  library_dirs = cppad_extension_library_dirs ,
-  libraries    = cppad_extension_libraries    ,
+	cppad_extension_name                        , 
+	cppad_extension_sources                     ,
+	include_dirs = cppad_extension_include_dirs ,
+	library_dirs = cppad_extension_library_dirs ,
+	libraries    = cppad_extension_libraries    ,
 ) ]
 #
+brad_email        = 'bradbell @ seanet dot com'
+sebastian_email   = 'sebastian dot walter @ gmail dot com'
 setup(
-  name         = 'pycppad'               ,
-  version      = package_version            ,
-  license      = package_license            ,
-  description  = package_description        ,
-  author       = package_author             ,
-  author_email = package_author_email       ,
-  url          = package_url                ,
-  ext_modules  = extension_modules          ,
-  packages     = [ 'pycppad' , 'pycppad' ]  ,
-  package_dir  = { 'pycppad' : 'pycppad' }        ,
-  data_files   = package_data_files
+	name         = 'pycppad',
+	version      = '20120416',
+	license      = 'BSD',
+	description  = 'Python Algorihtmic Differentiation Using CppAD',
+	author       = 'Bradley M. Bell and Sebastian F. Walter',
+	author_email = sebastian_email + ' , ' + brad_email,
+	url          = 'http://github.com/b45ch1/pycppad/tree/master',
+	ext_modules  = extension_modules          ,
+	packages     = [ 'pycppad' , 'pycppad' ]  ,
+	package_dir  = { 'pycppad' : 'pycppad' }        ,
+	data_files   = package_data_files
 )

@@ -1,0 +1,39 @@
+$begin whats_new_12$$ 
+$dollar @$$
+$spell
+	undef
+	pycppad
+	inplace
+	py
+	CppAD
+	cppad
+	dir 
+	gpl.tgz
+$$
+
+$section Extensions, Bug Fixes, and Changes During 2012$$
+
+$head Previous Years$$
+$children%
+	omh/whats_new_11.omh%
+	omh/whats_new_10.omh%
+	omh/whats_new_09.omh
+%$$
+$cref/2010/whats_new_11/$$,
+$cref/2010/whats_new_10/$$,
+$cref/2008/whats_new_09/$$
+
+$head 04-16$$
+$list number$$
+Simplify the $code setup.py$$ script used during the
+$cref install$$ process.
+This included having the user to download and install CppAD,
+instead of having $code setup.py$$ do this task. 
+$lnext
+Document the change to the derivative
+of the $cref abs$$ that occurred in CppAD on 
+$href%http://www.coin-or.org/CppAD/Doc/whats_new_11.htm#12-30%2011-12-30%$$.
+$lend
+
+
+$end

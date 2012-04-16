@@ -13,14 +13,6 @@ $$
 
 $section Extensions, Bug Fixes, and Changes During 2011$$
 
-$head Previous Years$$
-$children%
-	omh/whats_new_10.omh%
-	omh/whats_new_09.omh
-%$$
-$cref/2010/whats_new_10/$$,
-$cref/2008/whats_new_09/$$
-
 $head 10-18$$
 $list number$$
 Fix problem with $code import cppad_$$ in $code 20111017$$ version.
