@@ -38,13 +38,15 @@ def remove_duplicates(alist) :
 try:
 	doc_files    = os.listdir('doc')
 	for i in range( len(doc_files) ):
-		doc_files[i] = 'doc/' + doc_files[i]
+		doc_files[i] = os.path.join('doc', doc_files[i])
 except:
 	doc_files = []
 #
-package_data_files     = [ ('share/doc/pycppad', doc_files ) ]
+directory              = os.path.join('share', 'doc')
+directory              = os.path.join(directory, 'pycppad')
+package_data_files     = [ (directory, doc_files ) ]
 #
-cppad_extension_name           = 'pycppad' + '/cppad_'
+cppad_extension_name           = os.path.join('pycppad', 'cppad_')
 cppad_extension_include_dirs   = get_numpy_include_dirs()
 cppad_extension_include_dirs  += cppad_include_dir
 cppad_extension_include_dirs  += boost_python_include_dir

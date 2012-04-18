@@ -23,6 +23,16 @@ $cref/2010/whats_new_11/$$,
 $cref/2010/whats_new_10/$$,
 $cref/2008/whats_new_09/$$
 
+$head 04-17$$
+$list number$$
+Add missing $code --inplace$$ flag in 
+$cref/build/install/Building/$$ instructions.
+$lnext
+Add $icode with_debugging$$ option to 
+$cref/testing/install/Testing/$$ so that $code test_more.py$$
+does not fail when you build without debugging.
+$lend
+
 $head 04-16$$
 $list number$$
 Simplify the $code setup.py$$ script used during the
