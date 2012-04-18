@@ -570,11 +570,27 @@ def pycppad_test_mixed_element_types():
 
 import sys
 if __name__ == "__main__" :
+  import sys
+  ok = len(sys.argv) == 2
+  if ok :
+     if sys.argv[1] == 'True' :
+         with_debugging = True
+     elif sys.argv[1] == 'False' :
+         with_debugging = False
+     else :
+         ok = False;
+  if not ok :
+    print 'usage: python test_more.py with_debugging'
+    print '       where with_debugging is either True or Flase'
+    sys.exit(1)
+  #
   number_ok   = 0
   number_fail = 0
   list_of_globals = sorted( globals().copy() )
   for g in list_of_globals :
-    if g[:13] == "pycppad_test_" :
+    if g == 'pycppad_test_compile_with_debugging' and (not with_debugging) :
+      pass
+    elif g[:13] == "pycppad_test_" :
       ok = True
       try :
         eval("%s()" % g)

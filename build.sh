@@ -5,14 +5,12 @@ set -e
 #
 if [ "$1" != "omhelp" ] &&  \
    [ "$1" != "sdist" ] &&  \
-   [ "$1" != "all" ]   && \
-   [ "$1" != "final" ] 
+   [ "$1" != "all" ]
 then
 	echo "build.sh option, where option is one of the following"
 	echo "omhelp: stop when the help is done"
 	echo "sdist:  stop when the done building the source distribution"
 	echo "all:    go all the way"
-	echo "final:  go all the way and include download of cppad"
 	exit 1
 fi
 option="$1"
@@ -225,31 +223,13 @@ tar -xzf pycppad-$yyyymmdd.tar.gz
 echo "cd pycppad-$yyyymmdd"
 cd pycppad-$yyyymmdd
 #
-# Create test_setup.py 
-if [ "$option" == "final" ]
-then
-	echo "cp setup.py test_setup.py"
-	cp setup.py test_setup.py
-else
-	echo "sed < setup.py > test_setup.py"
-	sed < setup.py > test_setup.py \
-		-e "s|^\(cppad_parent_dir *=\)[^=].*|\1 '$external_dir'|"
-	echo "chmod +x test_setup.py"
-	chmod +x test_setup.py
-fi
-#
-echo "./test_setup.py build_ext --inplace --debug --undef NDEBUG >> setup.log"
-./test_setup.py build_ext --inplace --debug --undef NDEBUG >> $log_dir/setup.log
-# Kludge: setup.py is mistakenly putting -Wstrict-prototypes on compile line
-echo "sed -i $log_dir/setup.log \\"
-echo "	-e '/warning: command line option \"-Wstrict-prototypes\"/d'"
-sed -i $log_dir/setup.log \
-	-e '/warning: command line option "-Wstrict-prototypes"/d'
+echo "./setup.py build_ext --inplace --debug --undef NDEBUG >> setup.log"
+./setup.py build_ext --inplace --debug --undef NDEBUG >> $log_dir/setup.log
 #
 if [ ! -e pycppad/cppad_.so ] && [ ! -e pycppad/cppad_.dll ]
 then
 	dir=`pwd`
-	echo "build.sh: test_setup.py failed to create $dir/pycppad/cppad_.so"
+	echo "build.sh: setup.py failed to create $dir/pycppad/cppad_.so"
 	exit 1
 fi
 # ----------------------------------------------------------------------------
@@ -264,8 +244,8 @@ then
 	echo "build.sh: Expected $check tests but only found $number"
 	exit 1
 fi
-echo "python test_more.py > test_more.log"
-python test_more.py > $log_dir/test_more.log 
+echo "python test_more.py True > test_more.log"
+python test_more.py True > $log_dir/test_more.log 
 #
 number=`grep '^All' $log_dir/test_more.log | \
 	sed -e 's|All \([0-9]*\) .*|\1|'`
@@ -279,8 +259,8 @@ fi
 dir=`pwd`
 prefix_dir="$dir/prefix/pycppad"
 #
-echo "./test_setup.py install --prefix=$prefix_dir >> setup.log"
-./test_setup.py install --prefix=$prefix_dir >> $log_dir/setup.log
+echo "./setup.py install --prefix=$prefix_dir >> setup.log"
+./setup.py install --prefix=$prefix_dir >> $log_dir/setup.log
 #
 if [ -e $prefix_dir/lib64 ]
 then
@@ -296,5 +276,10 @@ then
 	exit 1
 fi
 # ----------------------------------------------------------------------------
+if grep -i 'warning' $log_dir/setup.log
+then
+	echo "There are warnings in setup.log"
+	exit 1
+fi
 echo "OK: build.sh $1"
 exit 0

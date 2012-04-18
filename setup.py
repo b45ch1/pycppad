@@ -22,7 +22,7 @@ boost_python_lib         = [ 'boost_python-mt' ]
 # for documentation on how to use the script setup.py 
 # ---------------------------------------------------------------------
 # Values in setup.py that are replaced by build.sh
-package_version    = '20120416',
+package_version    = '20120418',
 # ---------------------------------------------------------------------
 def remove_duplicates(alist) :
 	n = len(alist)
@@ -66,7 +66,7 @@ brad_email        = 'bradbell @ seanet dot com'
 sebastian_email   = 'sebastian dot walter @ gmail dot com'
 setup(
 	name         = 'pycppad',
-	version      = '20120416',
+	version      = '20120418',
 	license      = 'BSD',
 	description  = 'Python Algorihtmic Differentiation Using CppAD',
 	author       = 'Bradley M. Bell and Sebastian F. Walter',
