@@ -23,6 +23,11 @@ $cref/2010/whats_new_11/$$,
 $cref/2010/whats_new_10/$$,
 $cref/2008/whats_new_09/$$
 
+$head 10-01$$
+Change the 
+$cref runge_kutta_4_cpp.py$$ test from asserting that
+C++ is 100 times faster than Python to 75 times faster.
+
 $head 04-17$$
 $list number$$
 Add missing $code --inplace$$ flag in 

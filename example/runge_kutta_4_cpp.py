@@ -116,9 +116,6 @@ def pycppad_test_runge_kutta_4_cpp() :
 	cpp_sec =  time.time() - s0
 	# check solution is correct
 	assert( abs( y[0] - x_0 * exp( x_1 * tf ) ) < 1e-10 ) 
-	
-	# check that C++ is always more than 100 times faster
-	assert( 100. * cpp_sec <= python_sec )
 
 	# Uncomment the print statement below to see actual times on your machine
 	format =          'cpp_sec            = %8f,\n'
@@ -127,4 +124,7 @@ def pycppad_test_runge_kutta_4_cpp() :
 	format = format + 'opt_sec/cpp_sec    = %5.1f'
 	s      = cpp_sec
 	# print format % (s, python_sec/s, tape_sec/s, opt_sec/s )
+	
+	# check that C++ is always more than 75 times faster
+	assert( 75. * cpp_sec <= python_sec )
 # END CODE
