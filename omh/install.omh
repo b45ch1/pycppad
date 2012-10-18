@@ -172,6 +172,11 @@ where $icode with_debugging$$ is $code True$$ or $code False$$
 depending on if you built
 $cref/with debugging/install/Building/With Debugging/$$.
 
+$subhead Error$$
+If you get a message about $code cppad_$$ being missing,
+it is probably because you did not use the $code --inplace$$ flag
+when you $cref/built/install/Building/$$ $code pycppad$$.
+
 $head Installing$$
 $index install, pycppad$$
 $index pycppad, install$$

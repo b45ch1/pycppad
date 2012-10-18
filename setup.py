@@ -80,18 +80,3 @@ setup(
 	package_dir  = { 'pycppad' : 'pycppad' }        ,
 	data_files   = package_data_files
 )
-# In case where we are not testing, we are done.
-if sys.argv[1] == 'sdist' :
-	sys.exit(0)
-# check if we need to copy cppad_.so before testing
-if not os.path.exists('pycppad/cppad_.so') :
-	for root, dirs, files in os.walk('build', topdown=False) :
-		if root[-1] != '/' :
-			root = root + '/'
-		for f in files :
-			if f == 'cppad_.so' :
-				cmd   = 'cp ' + root + 'cppad_.so pycppad/cppad_.so'
-				os.system(cmd)
-# check that cppad_.so has been found
-if not os.path.exists('pycppad/cppad_.so') :
-	sys.exit('cannot find pycppad/cppad_.so')
