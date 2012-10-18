@@ -23,6 +23,11 @@ $cref/2010/whats_new_11/$$,
 $cref/2010/whats_new_10/$$,
 $cref/2008/whats_new_09/$$
 
+$head 10-18$$
+The install was failing on some systems because the test object
+$code cppad_.so$$ was not in the right directory for testing
+(before the install).  This has been fixed.
+
 $head 10-01$$
 Change the 
 $cref runge_kutta_4_cpp.py$$ test from asserting that

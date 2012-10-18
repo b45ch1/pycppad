@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import os
+import sys
 from distutils.core import setup, Extension
 from numpy.distutils.misc_util import get_numpy_include_dirs
 # ---------------------------------------------------------------------
@@ -22,7 +23,7 @@ boost_python_lib         = [ 'boost_python-mt' ]
 # for documentation on how to use the script setup.py 
 # ---------------------------------------------------------------------
 # Values in setup.py that are replaced by build.sh
-package_version    = '20121001',
+package_version    = '20121018',
 # ---------------------------------------------------------------------
 def remove_duplicates(alist) :
 	n = len(alist)
@@ -68,7 +69,7 @@ brad_email        = 'bradbell @ seanet dot com'
 sebastian_email   = 'sebastian dot walter @ gmail dot com'
 setup(
 	name         = 'pycppad',
-	version      = '20121001',
+	version      = '20121018',
 	license      = 'BSD',
 	description  = 'Python Algorihtmic Differentiation Using CppAD',
 	author       = 'Bradley M. Bell and Sebastian F. Walter',
@@ -79,3 +80,18 @@ setup(
 	package_dir  = { 'pycppad' : 'pycppad' }        ,
 	data_files   = package_data_files
 )
+# In case where we are not testing, we are done.
+if sys.argv[1] == 'sdist' :
+	sys.exit(0)
+# check if we need to copy cppad_.so before testing
+if not os.path.exists('pycppad/cppad_.so') :
+	for root, dirs, files in os.walk('build', topdown=False) :
+		if root[-1] != '/' :
+			root = root + '/'
+		for f in files :
+			if f == 'cppad_.so' :
+				cmd   = 'cp ' + root + 'cppad_.so pycppad/cppad_.so'
+				os.system(cmd)
+# check that cppad_.so has been found
+if not os.path.exists('pycppad/cppad_.so') :
+	sys.exit('cannot find pycppad/cppad_.so')
