@@ -228,7 +228,7 @@ In the case where $latex p = 2$$, we have
 $latex \[
 \begin{array}{rcl}
 dw 
-& = & \partial_u \frac{1}{1 !} frac{\partial^1}{\partial t^1} W (0, 0)
+& = & \partial_u \frac{1}{1 !} \frac{\partial^1}{\partial t^1} W (0, 0)
 \\
 & = &
 \partial_u \left[
