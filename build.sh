@@ -1,4 +1,6 @@
 #! /bin/bash -e
+pycppad_version='20121018'
+# ----------------------------------------------------------------------------
 #
 # exit on any error
 set -e
@@ -15,7 +17,6 @@ then
 fi
 option="$1"
 # ---------------------------------------------------------------------
-yyyymmdd=`date +%F | sed -e 's|-||g'`    # todays year, month, and day
 cppad_tarball='cppad-20110101.5.gpl.tgz' # local_cppad_directory.gpl.tgz
 external_dir=`pwd`/external              # externals are placed here
 log_dir=`pwd`                            # build progress logs written here
@@ -26,7 +27,7 @@ omhelp_download_dir='http://www.seanet.com/~bradbell'
 # only edit line corresponding to assignment statement, check not a == case
 echo "sed < setup.py > setup.py.new"
 sed < setup.py > setup.py.new \
-	-e "s|\([\t ]*version *=\).*|\1 '$yyyymmdd',|" 
+	-e "s|\([\t ]*version *=\).*|\1 '$pycppad_version',|" 
 if ! diff setup.py setup.py.new > /dev/null
 then
 	echo "Replacing setup.py using changes in setup.py.new"
@@ -101,12 +102,12 @@ do
 	fi
 done
 #
-# Change doc.omh and install.omh to use todays yyyymmdd 
+# Change doc.omh and install.omh to use pycppad version in this file
 for file in doc.omh omh/install.omh
 do
 	echo "sed < $file > $file.new"
 	sed < $file > $file.new \
-		-e "s/pycppad-[0-9]\{8\}/pycppad-$yyyymmdd/"
+		-e "s/pycppad-[0-9]\{8\}/pycppad-$pycppad_version/"
 	if ! diff $file $file.new > /dev/null
 	then
 		echo "Replacing $file using changes in $file.new"
@@ -186,7 +187,7 @@ EOF
 echo "chmod +x test_example.py"
 chmod +x test_example.py
 # ----------------------------------------------------------------------------
-for dir in dist pycppad-$yyyymmdd
+for dir in dist pycppad-$pycppad_version
 do
 	if [ -e "$dir" ] 
 	then
@@ -217,11 +218,11 @@ fi
 cmd="cd dist"
 cd dist
 #
-echo "tar -xzf pycppad-$yyyymmdd.tar.gz"
-tar -xzf pycppad-$yyyymmdd.tar.gz
+echo "tar -xzf pycppad-$pycppad_version.tar.gz"
+tar -xzf pycppad-$pycppad_version.tar.gz
 #
-echo "cd pycppad-$yyyymmdd"
-cd pycppad-$yyyymmdd
+echo "cd pycppad-$pycppad_version"
+cd pycppad-$pycppad_version
 #
 echo "./setup.py build_ext --inplace --debug --undef NDEBUG >> setup.log"
 ./setup.py build_ext --inplace --debug --undef NDEBUG >> $log_dir/setup.log
