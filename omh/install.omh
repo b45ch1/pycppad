@@ -187,11 +187,11 @@ $pre
 $$
 Change into the directory $code pycppad-20121018$$ and execute the command
 $codei%
-	python setup.py install --prefix=%prefix%
+	./setup.py build_ext --debug --undef NDEBUG install --prefix=%prefix%
 %$$
-or just
+or 
 $codei%
-	./setup.py install --prefix=%prefix%
+	./setup.py build_ext install --prefix=%prefix%
 %$$
 where $icode prefix$$ is the prefix for the location
 where  you wish to install $code pycppad$$.

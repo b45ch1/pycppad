@@ -75,8 +75,8 @@ setup(
 	author       = 'Bradley M. Bell and Sebastian F. Walter',
 	author_email = sebastian_email + ' , ' + brad_email,
 	url          = 'http://github.com/b45ch1/pycppad/tree/master',
-	ext_modules  = extension_modules          ,
-	packages     = [ 'pycppad' , 'pycppad' ]  ,
-	package_dir  = { 'pycppad' : 'pycppad' }        ,
+	ext_modules  = extension_modules,
+	packages     = [ 'pycppad'],
+	package_dir  = { 'pycppad' : 'pycppad' },
 	data_files   = package_data_files
 )

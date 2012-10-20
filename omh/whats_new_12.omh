@@ -1,6 +1,8 @@
 $begin whats_new_12$$ 
 $dollar @$$
 $spell
+	http.org.html
+	distutils
 	undef
 	pycppad
 	inplace
@@ -22,6 +24,15 @@ $children%
 $cref/2010/whats_new_11/$$,
 $cref/2010/whats_new_10/$$,
 $cref/2008/whats_new_09/$$
+
+$head 10-19$$
+The package $code pycppad.cppad_$$ was missing form the installation
+(after testing).
+This is due to be a bug in the python 
+$href%http://docs.python.org/library/distutils.html%distutils%$$ 
+package when the $code --inplace$$ option is specified.
+The $cref/install/install/Installing/$$ instructions have been
+changed to avoid this problem.
 
 $head 10-01$$
 Change the 
