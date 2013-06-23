@@ -36,6 +36,15 @@ $section Installing pycppad$$
 $index install, pycppad$$
 $index pycppad, install$$
 
+$head Other Instructions$$
+If you are using
+$href%http://code.google.com/p/winpython/%WinPython%$$,
+see 
+$href%
+	http://list.coin-or.org/pipermail/cppad/2013q2/000309.html%
+	building pycppad in Windows
+%$$
+
 $head Requires$$
 This package requires the following other packages:
 
