@@ -18,6 +18,7 @@ namespace pycppad {
 		int   Domain(void);
 		int   Range(void);
 		array Forward(int p, array& xp);
+		int   CompareChange(void);
 		array Reverse(int p, array& w);
 		array Jacobian(array& x);
 		array Hessian(array& x, array& w);
