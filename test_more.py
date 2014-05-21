@@ -581,7 +581,7 @@ if __name__ == "__main__" :
          ok = False;
   if not ok :
     print 'usage: python test_more.py with_debugging'
-    print '       where with_debugging is either True or Flase'
+    print '       where with_debugging is either True or False'
     sys.exit(1)
   #
   number_ok   = 0
