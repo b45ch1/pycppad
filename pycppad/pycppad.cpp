@@ -490,6 +490,11 @@ $end
 
 # define PY_ARRAY_UNIQUE_SYMBOL PyArray_Pycppad
 
+CppAD::AD<double> *truediv(const CppAD::AD<double> &rhs, CppAD::AD<double> lhs){ return new CppAD::AD<double>(operator/(lhs,rhs));}
+
+
+
+
 # define PYCPPAD_BINARY(op)       \
      .def(self     op self)       \
      .def(double() op self)       \
@@ -674,6 +679,8 @@ BOOST_PYTHON_MODULE(cppad_)
 	using boost::python::self;
 	using boost::python::self_ns::str;
 	using boost::python::def;
+    using boost::python::manage_new_object;
+    using boost::python::return_value_policy;
 
 	using pycppad::ADFun_double;
 	using pycppad::ADFun_AD_double;
@@ -704,6 +711,8 @@ BOOST_PYTHON_MODULE(cppad_)
      	.def( pow(self, self) ) 
      	.def( pow(self, double()) )
      	.def( pow(double(), self) )
+        .def("__truediv__", truediv, return_value_policy<manage_new_object>())
+
 	;
 
 	class_<ADFun_double>("adfun_float", init< array& , array& >())
@@ -738,3 +747,4 @@ BOOST_PYTHON_MODULE(cppad_)
 		.def("hessian_",  &ADFun_AD_double::Hessian)
 	;
 }
+
