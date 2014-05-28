@@ -471,6 +471,11 @@ namespace pycppad {
 		return vec2array(result);
 	}
 
+	// CompareChange
+	template <class Base>
+	int ADFun<Base>::CompareChange(void)
+	{	return static_cast<int>( f_.CompareChange() ); }
+
 	// Reverse
 	template <class Base>
 	array ADFun<Base>::Reverse(int p, array& w)
