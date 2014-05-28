@@ -25,7 +25,13 @@ def pycppad_test_div_op() :
   tmp1 = ad(x)
   tmp2 = ad(y)
   tmp3 = tmp1/tmp2
+  tmp4 = x/tmp2
+  tmp5 = tmp1/y
+
   assert tmp3 == x / y
+  assert tmp4 == x / y
+  assert tmp5 == x / y
+
 # END CODE
 
 pycppad_test_div_op()
