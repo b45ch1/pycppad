@@ -490,9 +490,9 @@ $end
 
 # define PY_ARRAY_UNIQUE_SYMBOL PyArray_Pycppad
 
-CppAD::AD<double> *truediv(const CppAD::AD<double> &rhs, CppAD::AD<double> lhs){ return new CppAD::AD<double>(operator/(lhs,rhs));}
-
-
+CppAD::AD<double> *truediv1(const CppAD::AD<double> &lhs, const CppAD::AD<double> &rhs){ return new CppAD::AD<double>(operator/(lhs,rhs));}
+CppAD::AD<double> *truediv2(const CppAD::AD<double> &lhs, const double &rhs){ return new CppAD::AD<double>(operator/(lhs,rhs));}
+CppAD::AD<double> *truediv3(const CppAD::AD<double> &rhs, const double &lhs){ return new CppAD::AD<double>(operator/(lhs,rhs));}
 
 
 # define PYCPPAD_BINARY(op)       \
@@ -711,7 +711,9 @@ BOOST_PYTHON_MODULE(cppad_)
      	.def( pow(self, self) ) 
      	.def( pow(self, double()) )
      	.def( pow(double(), self) )
-        .def("__truediv__", truediv, return_value_policy<manage_new_object>())
+        .def("__truediv__", truediv1, return_value_policy<manage_new_object>())
+        .def("__truediv__", truediv2, return_value_policy<manage_new_object>())
+        .def("__rtruediv__", truediv3, return_value_policy<manage_new_object>())
 
 	;
 
