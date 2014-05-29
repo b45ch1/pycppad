@@ -23,11 +23,9 @@ MANIFEST.in
 doc
 external
 
-# Special temporary file (created by commit.sh)
-commit.old
-
-# Automatically generated (by build.sh) file that is in pycppad distribution
-test_example.py
+# Temporary files that created while working 
+junk
+junk.*
 
 # exceptions
 !.gitignore
