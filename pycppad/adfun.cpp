@@ -482,6 +482,7 @@ namespace pycppad {
 			"# ifndef NDEBUG",
 			"Cannot use CompareChange when NDEBUG is defined"
 		);
+		return 0;
 	}
 # else
 	// CompareChange
