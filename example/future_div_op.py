@@ -13,7 +13,7 @@
 # Example using a_float ------------------------------------------------------
 from __future__ import division
 from pycppad import *
-def pycppad_test_div_op() :
+def pycppad_test_future_div_op() :
   x = 2.
   y = 3.
   #
@@ -28,5 +28,3 @@ def pycppad_test_div_op() :
   assert tmp5 == x / y
 
 # END CODE
-
-pycppad_test_div_op()

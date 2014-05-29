@@ -12,7 +12,7 @@ for file_name in example_list :
 		module = file_name[:-3]
 		exec('from ' + module + ' import *')
 #
-list_of_globals = globals().keys()
+list_of_globals = sorted( globals().keys() )
 number_ok   = 0
 number_fail = 0
 for name in list_of_globals :
