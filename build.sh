@@ -155,38 +155,6 @@ then
 	exit 0
 fi
 # ----------------------------------------------------------------------------
-echo "Create test_example.py"
-echo "#!/usr/bin/env python" > test_example.py
-cat example/*.py >> test_example.py
-cat << EOF   >> test_example.py
-import sys
-if __name__ == "__main__" :
-  number_ok   = 0
-  number_fail = 0
-  list_of_globals = sorted( globals().copy() )
-  for g in list_of_globals :
-    if g[:13] == "pycppad_test_" :
-      ok = True
-      try :
-        eval("%s()" % g)
-      except AssertionError :
-        ok = False
-      if ok : 
-        print "OK:    %s" % g[13:]
-        number_ok = number_ok + 1
-      else : 
-        print "Error: %s" % g[13:]
-        number_fail = number_fail + 1
-  if number_fail == 0 : 
-    print "All %d tests passed" % number_ok
-    sys.exit(0)
-  else :
-    print "%d tests failed" % number_fail 
-    sys.exit(1)
-EOF
-echo "chmod +x test_example.py"
-chmod +x test_example.py
-# ----------------------------------------------------------------------------
 for dir in dist pycppad-$pycppad_version
 do
 	if [ -e "$dir" ] 
@@ -239,7 +207,7 @@ python test_example.py > $log_dir/test_example.log
 #
 number=`grep '^All' $log_dir/test_example.log | \
 	sed -e 's|All \([0-9]*\) .*|\1|'`
-check=`grep '^def' test_example.py | wc -l`
+check=`cat example/*.py | grep '^def' | wc -l`
 if [ "$number" != "$check" ]
 then
 	echo "build.sh: Expected $check tests but only found $number"

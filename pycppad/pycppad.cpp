@@ -37,7 +37,8 @@ In this case, the result $icode z$$ is an array with the same shape
 and element type as $icode x$$.
 
 $children%
-	example/ad_unary.py
+	example/ad_unary.py%
+	example/div_op.py
 %$$
 $head Example$$
 The file $cref ad_unary.py$$ 
@@ -712,6 +713,8 @@ BOOST_PYTHON_MODULE(cppad_)
      	.def( pow(self, double()) )
      	.def( pow(self, int()) )
      	.def( pow(double(), self) )
+
+        // truediv (returns python 3 division even when in python 2)
         .def("__truediv__", truediv1, return_value_policy<manage_new_object>())
         .def("__truediv__", truediv2, return_value_policy<manage_new_object>())
         .def("__rtruediv__", truediv3, return_value_policy<manage_new_object>())

@@ -471,10 +471,24 @@ namespace pycppad {
 		return vec2array(result);
 	}
 
+# ifdef NDEBUG
+	template <class Base>
+	int ADFun<Base>::CompareChange(void)
+	{	bool known = true;
+		CppAD::ErrorHandler::Call(
+			known,
+			__LINE__,
+			__FILE__,
+			"# ifndef NDEBUG",
+			"Cannot use CompareChange when NDEBUG is defined"
+		);
+	}
+# else
 	// CompareChange
 	template <class Base>
 	int ADFun<Base>::CompareChange(void)
 	{	return static_cast<int>( f_.CompareChange() ); }
+# endif
 
 	// Reverse
 	template <class Base>

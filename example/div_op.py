@@ -1,14 +1,9 @@
-# $begin div_op.py$$ $newlinech #$$
+# $begin future_div_op.py$$ $newlinech #$$
 #
-# $section Division Operator: Example and Test$$
-#
-# $index /, example$$
-#
-# $index example, /$$
-#
-# $index division, division operator example$$
-# $index operator, division example$$
-# $index example, division operator$$
+# $section Future Division Operator: Example and Test$$
+# $index future /, example$$
+# $index example, future /$$
+# $index /, future example$$
 #
 # $code
 # $verbatim%example/div_op.py%0%# BEGIN CODE%# END CODE%1%$$

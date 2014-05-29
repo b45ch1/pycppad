@@ -125,6 +125,6 @@ def pycppad_test_runge_kutta_4_cpp() :
 	s      = cpp_sec
 	# print format % (s, python_sec/s, tape_sec/s, opt_sec/s )
 	
-	# check that C++ is always more than 75 times faster
-	assert( 75. * cpp_sec <= python_sec )
+	# check that C++ is always more than 30 times faster (on all systems)
+	assert( 30. * cpp_sec <= python_sec )
 # END CODE
