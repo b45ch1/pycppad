@@ -37,8 +37,7 @@ In this case, the result $icode z$$ is an array with the same shape
 and element type as $icode x$$.
 
 $children%
-	example/ad_unary.py%
-	example/div_op.py
+	example/ad_unary.py
 %$$
 $head Example$$
 The file $cref ad_unary.py$$ 
@@ -115,11 +114,14 @@ The type of the elements of $icode z$$ correspond to the table above
 this only refers to the element types matching as instances).
 
 $children%
-	example/ad_numeric.py
+	example/ad_numeric.py%
+	example/future_div_op.py
 %$$
 $head Example$$
 The file $cref ad_numeric.py$$ 
-contains an example and test of $code abs$$.
+contains an example and test of these operations.
+The file $cref future_div_op.py$$ contains an example and test of the 
+$href%http://legacy.python.org/dev/peps/pep-0238/%future division operator%$$
 
 $end
 ---------------------------------------------------------------------------

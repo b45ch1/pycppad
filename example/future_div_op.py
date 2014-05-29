@@ -6,7 +6,7 @@
 # $index /, future example$$
 #
 # $code
-# $verbatim%example/div_op.py%0%# BEGIN CODE%# END CODE%1%$$
+# $verbatim%example/future_div_op.py%0%# BEGIN CODE%# END CODE%1%$$
 # $$
 # $end
 # BEGIN CODE
