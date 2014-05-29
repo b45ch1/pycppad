@@ -86,7 +86,7 @@ to obtain new function values or derivatives of arbitrary order.
 In addition, multiple levels of AD are supported.
 This means that AD derivatives can be used in the definition of a function
 which in turn can be differentiated using AD.
-See $cref/whats_new_12/$$ for a list of recent extensions and bug fixes.
+See $cref whats_new$$ for a list of recent extensions and bug fixes.
 
 $childtable%
 	omh/install.omh%
@@ -95,7 +95,7 @@ $childtable%
 	omh/ad_method.omh%
 	example/two_levels.py%
 	pycppad/runge_kutta_4.py%
-	omh/whats_new_12.omh%
+	omh/whats_new.omh%
 	omh/license.omh
 %$$
 

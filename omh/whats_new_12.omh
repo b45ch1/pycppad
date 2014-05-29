@@ -15,16 +15,6 @@ $$
 
 $section Extensions, Bug Fixes, and Changes During 2012$$
 
-$head Previous Years$$
-$children%
-	omh/whats_new_11.omh%
-	omh/whats_new_10.omh%
-	omh/whats_new_09.omh
-%$$
-$cref/2010/whats_new_11/$$,
-$cref/2010/whats_new_10/$$,
-$cref/2008/whats_new_09/$$
-
 $head 10-19$$
 The package $code pycppad.cppad_$$ was missing form the installation
 (after testing).
