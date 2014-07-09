@@ -3,7 +3,7 @@
 
 # include <cppad/cppad.hpp>
 # include <boost/python.hpp>
-# include <numpy/noprefix.h>
+# include <numpy/arrayobject.h>
 # include <numeric>
 # include <iostream>
 # include <string>

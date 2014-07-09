@@ -5,14 +5,15 @@ namespace pycppad {
 // class vec<double>
 //
 // constructor from a python array
-vec<double>::vec(array& py_array)
+vec<double>::vec(array& boost_array)
 {	// get array info
-	npy_intp* dims_ptr = PyArray_DIMS(py_array.ptr());
+	PyArrayObject* py_array_p=reinterpret_cast<PyArrayObject*>(boost_array.ptr());
+	npy_intp* dims_ptr = PyArray_DIMS(py_array_p);
 	int length    = dims_ptr[0];
 
 	// check array info
 	PYCPPAD_ASSERT(
-		PyArray_NDIM(py_array.ptr()) == 1 , 
+		PyArray_NDIM(py_array_p) == 1 ,
 		"array is not a vector"
 	);
 	PYCPPAD_ASSERT( 
@@ -22,25 +23,25 @@ vec<double>::vec(array& py_array)
 
 	// set private data
 	length_    = static_cast<size_t>( length );
-	if( PyArray_TYPE(py_array.ptr()) == PyArray_DOUBLE )
+	if( PyArray_TYPE(py_array_p) == NPY_DOUBLE )
 	{	pointer_ = static_cast<double*>( 
-			PyArray_DATA(py_array.ptr()) 
+			PyArray_DATA(py_array_p)
 		);
 		allocated_ = false;
 	}
-	else if( PyArray_TYPE(py_array.ptr()) == PyArray_INT )
+	else if( PyArray_TYPE(py_array_p) == NPY_INT )
 	{	pointer_   = CPPAD_TRACK_NEW_VEC(length, pointer_);
 		int* data = 	static_cast<int*>( 
-			PyArray_DATA(py_array.ptr()) 
+			PyArray_DATA(py_array_p)
 		);
 		for(size_t i = 0; i < length_; i++)
 			pointer_[i] = static_cast<double>( data[i] );
 		allocated_ = true;
 	}
-	else if( PyArray_TYPE(py_array.ptr()) == PyArray_LONG )
+	else if( PyArray_TYPE(py_array_p) == NPY_LONG )
 	{	pointer_   = CPPAD_TRACK_NEW_VEC(length, pointer_);
 		long* data = 	static_cast<long*>( 
-			PyArray_DATA(py_array.ptr()) 
+			PyArray_DATA(py_array_p)
 		);
 		for(size_t i = 0; i < length_; i++)
 			pointer_[i] = static_cast<double>( data[i] );
@@ -120,19 +121,20 @@ const double& vec<double>::operator[](size_t i) const
 // class vec<Scalar>
 //
 template <class Scalar>
-vec<Scalar>::vec(array& py_array)
+vec<Scalar>::vec(array& boost_array)
 {
 	// get array info
-	npy_intp* dims_ptr = PyArray_DIMS(py_array.ptr());
+	PyArrayObject* py_array_p=reinterpret_cast<PyArrayObject*>(boost_array.ptr());
+	npy_intp* dims_ptr = PyArray_DIMS(py_array_p);
 	int length    = dims_ptr[0];
 
 	// check array info
 	PYCPPAD_ASSERT(
-		PyArray_NDIM(py_array.ptr()) == 1 , 
+		PyArray_NDIM(py_array_p) == 1 ,
 		"array is not a vector"
 	);
 	PYCPPAD_ASSERT( 
-		PyArray_TYPE(py_array.ptr()) == PyArray_OBJECT ,
+		PyArray_TYPE(py_array_p) == NPY_OBJECT ,
 		"expected array elements of type object"
 	);
 	PYCPPAD_ASSERT( 
@@ -142,7 +144,7 @@ vec<Scalar>::vec(array& py_array)
 
 	// pointer to object
 	object *obj_ptr = static_cast<object*>( 
-		PyArray_DATA(py_array.ptr()) 
+		PyArray_DATA(py_array_p)
 	);
 
 	// set private data
