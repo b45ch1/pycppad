@@ -61,8 +61,8 @@ $index download, pycppad$$
 $index pycppad, download$$
 Download the file
 $href%
-	http://www.seanet.com/~bradbell/pycppad-20121020.tar.gz%
-	pycppad-20121020.tar.gz
+	http://www.seanet.com/~bradbell/pycppad-20140710.tar.gz%
+	pycppad-20140710.tar.gz
 %$$
 and store it on your machine.
 
@@ -73,14 +73,14 @@ $index extract, pycppad$$
 $index pycppad, extract$$
 On unix, you could use the command
 $codep
-	tar -xvzf  pycppad-20121020.tar.gz
+	tar -xvzf  pycppad-20140710.tar.gz
 $$
-which would create the directory $code pycppad-20121020$$.
+which would create the directory $code pycppad-20140710$$.
 
 $head Required Setup Information$$
 The value of the following setup variables, in the file
 $codep
-	pycppad-20121020/setup.py
+	pycppad-20140710/setup.py
 $$
 must be set to agree with your system:
 $code
@@ -96,7 +96,7 @@ $index pycppad, build$$
 $subhead With Debugging$$
 $index debugging, build$$
 $index build, debugging$$
-Change into the directory $code pycppad-20121020$$ and execute the command
+Change into the directory $code pycppad-20140710$$ and execute the command
 $codep
 	./setup.py build_ext --inplace --debug --undef NDEBUG
 $$
@@ -169,7 +169,7 @@ $index test, pycppad$$
 $index pycppad, test$$
 You can test of all the 
 $cref/examples/example/$$ in the $code pycppad$$ documentation.
-Change into the directory $code pycppad-20121020$$ and execute the command
+Change into the directory $code pycppad-20140710$$ and execute the command
 $codep
 	python test_example.py
 $$
@@ -194,7 +194,7 @@ You may or may not preform this step:
 $pre
 
 $$
-Change into the directory $code pycppad-20121020$$ and execute the command
+Change into the directory $code pycppad-20140710$$ and execute the command
 $codei%
 	./setup.py build_ext --debug --undef NDEBUG install --prefix=%prefix%
 %$$
@@ -221,7 +221,7 @@ an uninstall command. You can uninstall the $code pycppad$$ package
 by removing the entries
 $codei%
 	%prefix%/lib/python%major%.%minor%/site-packages/pycppad
-	%prefix%/lib/python%major%.%minor%/site-packages/pycppad-20121020.egg-info
+	%prefix%/lib/python%major%.%minor%/site-packages/pycppad-20140710.egg-info
 	%prefix%/share/doc/pycppad
 %$$
 where $icode major$$ and $icode minor$$
@@ -240,7 +240,7 @@ $codei%
 %$$
 unless the distribution directory
 $codep
-	pycppad-20121020
+	pycppad-20140710
 $$
 is in your python path.
 If you have installed $code pycppad$$,
@@ -272,7 +272,7 @@ to your $code @HOME/.bashrc$$ file.
 $head pycppad Documentation$$
 The documentation for $code pycppad$$ starts out in the directory
 $codep
-	pycppad-20121020/doc
+	pycppad-20140710/doc
 $$
 During the installation process, it is copied to the directory
 $codei%

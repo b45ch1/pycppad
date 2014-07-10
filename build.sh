@@ -1,5 +1,5 @@
 #! /bin/bash -e
-pycppad_version='20121020'
+pycppad_version='20140710'
 # ----------------------------------------------------------------------------
 #
 # exit on any error
@@ -17,7 +17,6 @@ then
 fi
 option="$1"
 # ---------------------------------------------------------------------
-cppad_tarball='cppad-20110101.5.gpl.tgz' # local_cppad_directory.gpl.tgz
 external_dir=`pwd`/external              # externals are placed here
 log_dir=`pwd`                            # build progress logs written here
 cppad_download_dir='http://www.coin-or.org/download/source/CppAD'

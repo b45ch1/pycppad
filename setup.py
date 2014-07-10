@@ -7,13 +7,19 @@ from numpy.distutils.misc_util import get_numpy_include_dirs
 # The code below is included verbatim in omh/install.omh
 # BEGIN USER SETTINGS
 # Directory where CppAD include files are located
-cppad_include_dir        = [ '/usr/include' ]
+# cppad_include_dir        = [ '/usr/include' ]
 cppad_include_dir        = [ os.environ['HOME'] + '/prefix/cppad/include' ]
-# Directory where Boost Python library and include files are located
+#
+# Directory where Boost Python include files are located
 boost_python_include_dir = [ '/usr/include' ]
-boost_python_lib_dir     = [ '/usr/lib' ] 
+#
+# Director whre Boost Python library is located
+# boost_python_lib_dir     = [ '/usr/lib' ] 
+boost_python_lib_dir     = [ '/usr/lib64' ] 
+#
 # Name of the Boost Python library in boost_python_lib_dir.
-boost_python_lib         = [ 'boost_python-mt' ]
+# boost_python_lib         = [ 'boost_python-mt' ]
+boost_python_lib         = [ 'boost_python' ]
 # END USER SETTINGS
 # ---------------------------------------------------------------------
 # See http://docs.python.org/distutils/setupscript.html
@@ -23,7 +29,7 @@ boost_python_lib         = [ 'boost_python-mt' ]
 # for documentation on how to use the script setup.py 
 # ---------------------------------------------------------------------
 # Values in setup.py that are replaced by build.sh
-package_version    = '20121020',
+package_version    = '20140710',
 # ---------------------------------------------------------------------
 def remove_duplicates(alist) :
 	n = len(alist)
@@ -69,7 +75,7 @@ brad_email        = 'bradbell @ seanet dot com'
 sebastian_email   = 'sebastian dot walter @ gmail dot com'
 setup(
 	name         = 'pycppad',
-	version      = '20121020',
+	version      = '20140710',
 	license      = 'BSD',
 	description  = 'Python Algorihtmic Differentiation Using CppAD',
 	author       = 'Bradley M. Bell and Sebastian F. Walter',

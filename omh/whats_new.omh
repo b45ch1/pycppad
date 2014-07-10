@@ -1,9 +1,20 @@
 $begin whats_new$$ 
 $dollar @$$
 $spell
+	pycppad
+	numpy
+	cppad
 $$
 
 $section Extensions, Bug Fixes, and Changes$$
+
+
+$head 2014-07-10$$
+Suppress warnings about using deprecated features of the
+numpy C-API; see
+$href%http://docs.scipy.org/doc/numpy-dev/reference/c-api.deprecations.html
+	%numpy c-api deprecation
+%$$
 
 $head 2014-05-29$$
 Add support for the 

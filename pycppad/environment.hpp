@@ -1,6 +1,9 @@
 # ifndef PYCPPAD_SETUP_INCLUDED
 # define PYCPPAD_SETUP_INCLUDED
 
+// Supress warnings about using deprecated numpy features:
+# define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
+
 # include <cppad/cppad.hpp>
 # include <boost/python.hpp>
 # include <numpy/arrayobject.h>
