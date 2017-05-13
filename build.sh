@@ -1,10 +1,6 @@
 #! /bin/bash -e
 pycppad_version='20140710'
 # ----------------------------------------------------------------------------
-#
-# exit on any error
-set -e
-#
 if [ "$1" != "omhelp" ] &&  \
    [ "$1" != "sdist" ] &&  \
    [ "$1" != "all" ]
@@ -16,17 +12,24 @@ then
 	exit 1
 fi
 option="$1"
+# -----------------------------------------------------------------------------
+# bash function that echos and executes a command
+echo_eval() {
+	echo $*
+	eval $*
+}
 # ---------------------------------------------------------------------
 external_dir=`pwd`/external              # externals are placed here
 log_dir=`pwd`                            # build progress logs written here
 cppad_download_dir='http://www.coin-or.org/download/source/CppAD'
-omhelp_download_dir='http://www.seanet.com/~bradbell'
+omhelp_download_dir='https://codeload.github.com/bradbell/omhelp/tar.gz'
+omhelp_version='20170118'
 # ----------------------------------------------------------------------------
 # Update setup.py so it corresponds to current build.sh options above.
 # only edit line corresponding to assignment statement, check not a == case
 echo "sed < setup.py > setup.py.new"
 sed < setup.py > setup.py.new \
-	-e "s|\([\t ]*version *=\).*|\1 '$pycppad_version',|" 
+	-e "s|\([\t ]*version *=\).*|\1 '$pycppad_version',|"
 if ! diff setup.py setup.py.new > /dev/null
 then
 	echo "Replacing setup.py using changes in setup.py.new"
@@ -43,52 +46,28 @@ then
 	mkdir external
 fi
 cd external
-if ! (ls | grep omhelp-) > /dev/null
+omhelp_dir="omhelp-$omhelp_version"
+if [ ! -d $omhelp_dir ]
 then
-	count="0"
-else
-	count=`ls | grep omhelp- | wc -l`
-fi
-if [ "$count" != "1" ]
-then
-	if [ "$count" != "0" ]
-	then
-		echo "rm -r omhelp-*"
-		rm -r omhelp-*
-	fi
-	if [ -e OMhelp.unix.tar.gz ]
-	then
-		echo "rm OMhelp.unix.tar.gz"
-		rm OMhelp.unix.tar.gz
-	fi
-	echo "curl -O $omhelp_download_dir/OMhelp.unix.tar.gz"
-	curl -O "$omhelp_download_dir/OMhelp.unix.tar.gz"
+	omhelp_remote="$omhelp_download_dir/$omhelp_version"
 	#
-	echo "tar -xzf OMhelp.unix.tar.gz"
-	tar -xzf OMhelp.unix.tar.gz
-	#
-	echo "cd omhelp-*"
-	cd omhelp-* 
+	echo_eval curl -O $omhelp_remote
+	echo_eval mv $omhelp_version omhelp-$omhelp_version.tar.gz
+	echo_eval tar -xzf $omhelp_dir.tar.gz
+	echo_eval cd $omhelp_dir
 	#
 	omhelp_dir=`pwd`
 	#
-	echo "./configure --prefix=$omhelp_dir/prefix"
-	./configure --prefix="$omhelp_dir/prefix"
+	echo_eval mkdir build
+	echo_eval cd build
 	#
-	echo "make install"
-	make install
+	echo_eval cmake -D omhelp_prefix=$omhelp_dir/prefix ..
+	echo_eval make install
 	#
-	cd ..
+	cd ../..
 fi
-count=`ls | grep omhelp-* | wc -l`
-if [ "$count" != "1" ]
-then
-	echo "There should be one and only on omhelp-* directory in external"
-	exit 1
-fi
-omhelp_dir=`ls | grep omhelp-`
 cd ..
-omhelp_dir="$external_dir/$omhelp_dir"
+omhelp_dir="$external_dir/omhelp-$omhelp_version"
 #
 # check that every example file is documented
 for file in example/*.py
@@ -110,7 +89,7 @@ do
 	if ! diff $file $file.new > /dev/null
 	then
 		echo "Replacing $file using changes in $file.new"
-		mv $file.new $file 
+		mv $file.new $file
 	else
 		echo "rm $file.new"
 		rm $file.new
@@ -156,7 +135,7 @@ fi
 # ----------------------------------------------------------------------------
 for dir in dist pycppad-$pycppad_version
 do
-	if [ -e "$dir" ] 
+	if [ -e "$dir" ]
 	then
 		echo "rm -r $dir"
 		rm -r $dir
@@ -213,12 +192,12 @@ then
 	exit 1
 fi
 echo "python test_more.py True > test_more.log"
-python test_more.py True > $log_dir/test_more.log 
+python test_more.py True > $log_dir/test_more.log
 #
 number=`grep '^All' $log_dir/test_more.log | \
 	sed -e 's|All \([0-9]*\) .*|\1|'`
 check=`grep '^def' test_more.py | wc -l`
-if [ "$number" != "$check" ] 
+if [ "$number" != "$check" ]
 then
 	echo "build.sh: Expected $check tests but only found $number"
 	exit 1
@@ -237,7 +216,7 @@ else
 	lib="lib"
 fi
 python_version=`ls $prefix_dir/$lib`
-if [ ! -d $prefix_dir/$lib/$python_version/site-packages/pycppad ] 
+if [ ! -d $prefix_dir/$lib/$python_version/site-packages/pycppad ]
 then
 	echo "Install failed to create"
 	echo "$prefix_dir/$python_version/site-packages/pycppad"
